@@ -1,0 +1,29 @@
+secrets:
+  postgres_password:
+    file: ./secrets/postgres_password
+
+services:
+  postgres:
+    image: postgres:17.0-alpine3.20
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    secrets:
+      - postgres_password
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_USER: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  postgres:
+
+networks:
+  transcendence:
+    driver: bridge
