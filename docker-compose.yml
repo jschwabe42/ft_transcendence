@@ -15,11 +15,26 @@ services:
       POSTGRES_USER: postgres
     volumes:
       - postgres:/var/lib/postgresql/data
+    depends_on:
+      - backend
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/code
+      - ../frontend:/code/frontend
+    secrets:
+      - postgres_password
+    ports:
+      - "8000:8000"
+    networks:
+      - transcendence
+    restart: always
+    command: sleep infinity
 
 volumes:
   postgres:
