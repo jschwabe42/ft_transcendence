@@ -1,6 +1,13 @@
 secrets:
   postgres_password:
     file: ./secrets/postgres_password
+  pgadmin_password:
+    file: ./secrets/pgadmin_password
+
+x-global-env:
+  &default-env
+  env_file:
+    - ./secrets/.env
 
 services:
   postgres:
@@ -39,6 +46,15 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    <<: *default-env
+    environment:
+      PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/pgadmin_password
+    secrets:
+      - pgadmin_password
+    ports:
+      - 5050:80
 
 volumes:
   postgres:
