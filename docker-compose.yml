@@ -26,19 +26,12 @@ services:
     build: ./backend
     volumes:
       - ./backend:/code
-      - ../frontend:/code/frontend
     secrets:
       - postgres_password
     ports:
       - "8000:8000"
-    networks:
-      - transcendence
     restart: always
     command: sleep infinity
 
 volumes:
   postgres:
-
-networks:
-  transcendence:
-    driver: bridge
