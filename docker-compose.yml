@@ -15,8 +15,12 @@ services:
       POSTGRES_USER: postgres
     volumes:
       - postgres:/var/lib/postgresql/data
-    depends_on:
-      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres || exit 1"]
+      interval: 20s
+      timeout: 30s
+      retries: 5
+      start_period: 15s
   adminer:
     image: adminer
     restart: always
@@ -31,7 +35,10 @@ services:
     ports:
       - "8000:8000"
     restart: always
-    command: sleep infinity
+    entrypoint: /code/django.sh
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   postgres:
