@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin')
+}}{% endblock %}
+
+{% block branding %}
+<!-- for setting the name typically would use https://docs.djangoproject.com/en/5.1/ref/contrib/admin/#django.contrib.admin.AdminSite.site_header -->
+<div id="site-name"><a href="{% url 'admin:index' %}">Polls Administration</a></div>
+<!-- any of Django's admin templates can be overridden: copy from /usr/local/lib/python3.13/site-packages/django to our custom dir and modify -->
+{% if user.is_anonymous %}
+{% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
