@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# required for django-debug-toolbar
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 # Application definition
 
@@ -49,6 +53,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+import sys
+
+TESTING = "test" in sys.argv
+if not TESTING:
+    INSTALLED_APPS = [
+        *INSTALLED_APPS, 
+        "debug_toolbar",
+    ]
+    MIDDLEWARE = [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',# early, but after encoding response content
+        *MIDDLEWARE,
+    ]
+    
 
 ROOT_URLCONF = 'transcendence.urls'
 
