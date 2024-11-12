@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Recent Pong Games</title>
+</head>
+
+<body>
+    <h2>Recent Games</h2>
+    {% if recent_games_list %}
+    <ul>
+        {% for game in recent_games_list %}
+        <li>
+            <a href="{% url 'pong:game_details' game.id %}">
+                {{ game.player1 }} vs {{ game.player2 }} ({{ game.score1 }}-{{ game.score2 }})
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No games have been played yet.</p>
+    {% endif %}
+</body>
+
+</html>

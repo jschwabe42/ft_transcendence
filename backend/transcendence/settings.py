@@ -35,6 +35,7 @@ INTERNAL_IPS = [
 # Application definition
 
 INSTALLED_APPS = [
+    "pong.apps.PongConfig",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
