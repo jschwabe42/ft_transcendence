@@ -85,9 +85,6 @@ class Dashboard(models.Model):
         return now - datetime.timedelta(days=1) <= self.created_at <= now
     def update_with_game(self, game):
         self.games_played += 1
-        self.update_leaderboard()
-        self.save()
-    def update_leaderboard(self):
         players = Player.objects.all().order_by("-matches_won")
         self.leaderboard = "\n".join([f"{player.name}: {player.matches_won}" for player in players])
         self.save()
