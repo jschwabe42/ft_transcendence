@@ -12,8 +12,8 @@ from django.contrib import admin
 # create game when starting a new game
 # update game when finishing a game/goals are scored
 class Game(models.Model):
-    player1 = models.CharField(max_length=200)
-    player2 = models.CharField(max_length=200)
+    player1 = models.ForeignKey("Player", related_name='games_as_player1', on_delete=models.CASCADE)
+    player2 = models.ForeignKey("Player", related_name='games_as_player2', on_delete=models.CASCADE)
     score1 = models.IntegerField(default=0)
     score2 = models.IntegerField(default=0)
     # calculate duration of game from start to finish
