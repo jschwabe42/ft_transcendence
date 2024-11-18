@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 
+from django.forms import ValidationError
 from django.utils import timezone
 
 # for displaying games in admin panel
@@ -33,7 +34,18 @@ class Game(models.Model):
         self.started_at = timezone.now()
     def end(self):
         self.played_at = timezone.now()
+        if self.score1 > self.score2:
+            self.player1.matches_won += 1
+            self.player2.matches_lost += 1
+        elif self.score1 < self.score2:
+            self.player1.matches_lost += 1
+            self.player2.matches_won += 1
+        self.player1.save()
+        self.player2.save()
         self.save()
+        
+        # update Dashboard
+        Dashboard.get_instance().update_with_game(self)
     def score(self, player):
         if player == self.player1:
             self.score1 += 1
@@ -58,3 +70,34 @@ class Player(models.Model):
     def was_created_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.created_at <= now
+
+    def matches_played(self):
+        return self.matches_won + self.matches
+
+class Dashboard(models.Model):
+    games_played = models.IntegerField(default=0)
+    active_players = models.IntegerField(default=0)
+    leaderboard = models.TextField()
+    def __str__(self):
+        return f"Dashboard: {self.games_played} games, {self.active_players} active players"
+    def were_games_played_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.created_at <= now
+    def update_with_game(self, game):
+        self.games_played += 1
+        self.update_leaderboard()
+        self.save()
+    def update_leaderboard(self):
+        players = Player.objects.all().order_by("-matches_won")
+        self.leaderboard = "\n".join([f"{player.name}: {player.matches_won}" for player in players])
+        self.save()
+
+    def save(self, *args, **kwargs):
+        if not self.pk and Dashboard.objects.exists():
+            raise ValidationError('There is already one Dashboard instance')
+        return super(Dashboard, self).save(*args, **kwargs)
+
+    @classmethod
+    def get_instance(cls):
+        instance, created = cls.objects.get_or_create(pk=1)
+        return instance
