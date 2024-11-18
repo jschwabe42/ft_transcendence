@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 
 # Create your views here.
 
-from .models import Game, Player
+from .models import Game, Player, Dashboard
 
 
 # show recent games for now
@@ -19,3 +19,6 @@ def players(request):
 def player_details(request, player_id):
     player = get_object_or_404(Player, pk=player_id)
     return render(request, "pong/player_details.html", {"player": player})
+
+def dashboard(request):
+    return render(request, "pong/dashboard.html", {"dashboard": Dashboard.get_instance()})
