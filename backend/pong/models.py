@@ -80,9 +80,7 @@ class Dashboard(models.Model):
     leaderboard = models.TextField()
     def __str__(self):
         return f"Dashboard: {self.games_played} games, {self.active_players} active players"
-    def were_games_played_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.created_at <= now
+
     def update_with_game(self, game):
         self.games_played += 1
         players = Player.objects.all().order_by("-matches_won")
