@@ -72,7 +72,7 @@ class Player(models.Model):
         return now - datetime.timedelta(days=1) <= self.created_at <= now
 
     def matches_played(self):
-        return self.matches_won + self.matches
+        return self.matches_won + self.matches_lost
 
 class Dashboard(models.Model):
     games_played = models.IntegerField(default=0)
