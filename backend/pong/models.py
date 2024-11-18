@@ -43,3 +43,18 @@ class Game(models.Model):
     def get_duration(self):
         return self.played_at - self.started_at
 
+class Player(models.Model):
+    name = models.CharField(max_length=200)
+    created_at = models.DateTimeField("date created")
+    matches_won = models.IntegerField(default=0)
+    matches_lost = models.IntegerField(default=0)
+    def __str__(self):
+        return self.name
+    @admin.display(
+        boolean=True,
+        ordering="created_at",
+        description="Created recently?",
+    )
+    def was_created_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.created_at <= now
