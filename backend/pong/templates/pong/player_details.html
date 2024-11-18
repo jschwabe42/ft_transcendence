@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Player Details</title>
+</head>
+
+<body>
+    {% block content %}
+    <div class="player-details">
+        <h2>Player Details</h2>
+        <h3>{{ player.name }}</h3>
+        <p>Wins: {{ player.games_won }}</p>
+        <p>losses: {{ player.games_lost }}</p>
+        <p>created at: {{ player.created_at }}</p>
+    </div>
+    {% endblock %}
+</body>
+
+</html>
