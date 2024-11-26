@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 
 # Application definition
 
@@ -43,13 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.messages',
     'django.contrib.sessions',
+    'django.contrib.messages',
     'django.contrib.staticfiles',
-    
 ]
-
-#'debug_toolbar'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,11 +61,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+import sys
 
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
+TESTING = "test" in sys.argv
+if not TESTING:
+    INSTALLED_APPS = [
+        *INSTALLED_APPS, 
+        "debug_toolbar",
+    ]
+    MIDDLEWARE = [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',# early, but after encoding response content
+        *MIDDLEWARE,
+    ]
 
 ROOT_URLCONF = 'transcendence.urls'
 
@@ -92,10 +99,20 @@ WSGI_APPLICATION = 'transcendence.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
+	# for production
+    # 'default': {
+    #     "ENGINE": "django.db.backends.postgresql",
+    #     "NAME": "postgres",
+    #     "USER": "postgres",
+    #     "PASSWORD": Path("/var/run/secrets/postgres_password").read_text(),
+    #     "HOST": "postgres",
+    #     "PORT": "5432",
+    # }
+	# for development
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+	}
 }
 
 
@@ -123,7 +140,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'CET'
 
 USE_I18N = True
 
@@ -144,7 +161,6 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-# CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 LOGIN_REDIRECT_URL = 'blog-home'
 
@@ -159,5 +175,3 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
-
-# In settings.py
