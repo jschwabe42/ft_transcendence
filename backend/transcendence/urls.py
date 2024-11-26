@@ -41,5 +41,6 @@ if not settings.TESTING:
 
 from django.conf.urls.static import static
 
+# we do not know how this has to be implemented for release
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

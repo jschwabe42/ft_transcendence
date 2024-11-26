@@ -26,14 +26,3 @@ document.querySelectorAll('#New_Chat').forEach(button => {
 		}
 	});
 });
-
-
-
-// document.querySelector('#Info_Button').addEventListener('click', function() {
-// 	let currentUrl = window.location.href;
-// 	let newUrl = currentUrl + "add/";  // Füge den Parameter hinzu
-
-// 	// Navigiere zur neuen URL
-// 	window.location.href = newUrl;
-// })
-
