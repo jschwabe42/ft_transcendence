@@ -1,3 +1,9 @@
+# only requires secrets/.env, secrets/postgres_password to exist
+dev:
+	docker compose build backend
+	docker compose up --remove-orphans -d backend
+
+# requires envars, pgadmin_password (see main.yml)
 run:
 	docker compose build
 	docker compose up --remove-orphans -d
