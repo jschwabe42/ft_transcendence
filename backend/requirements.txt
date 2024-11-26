@@ -1,3 +1,7 @@
-Django>=4.2
-psycopg[binary, pool]>=2.9.1
-django-debug-toolbar>=4.2.6
+django
+django-debug-toolbar
+pillow
+crispy-bootstrap4
+django-crispy-forms
+channels
+daphne
