@@ -43,9 +43,9 @@ services:
       - "8000:8000"
     restart: always
     entrypoint: /code/django.sh
-    depends_on:
-      postgres:
-        condition: service_healthy
+    # depends_on:
+    #   postgres:
+    #     condition: service_healthy
   pgadmin:
     image: dpage/pgadmin4:latest
     <<: *default-env
