@@ -1,0 +1,62 @@
+from channels.generic.websocket import AsyncWebsocketConsumer
+from .models import Game
+from django.contrib.auth.models import User
+import json
+from asgiref.sync import sync_to_async
+
+class GameConsumer(AsyncWebsocketConsumer):
+	async def connect(self):
+		self.game_id = self.scope['url_route']['kwargs']['game_id']
+		self.room_group_name = f'game_{self.game_id}'
+
+		await self.channel_layer.group_add(
+			self.room_group_name,
+			self.channel_name
+		)
+		await self.accept()
+
+	async def disconnect(self, close_code):
+		await self.channel_layer.group_discard(
+			self.room_group_name,
+			self.channel_name
+		)
+
+	async def receive(self, text_data):
+		text_data_json = json.loads(text_data)
+		use = text_data_json['use']
+		user = text_data_json['user']
+		game_id = text_data_json['game_id']
+
+		if use == 'ready_button':
+			await self.save_message(user, game_id)
+			await self.channel_layer.group_send(
+				self.room_group_name,
+				{
+					'type': 'game_message',
+					'use': use,
+					'user': user,
+				}
+			)
+
+	async def game_message(self, event):
+		use = event['use']
+		user = event['user']
+		
+		await self.send(text_data=json.dumps({
+			'use': use,
+			'user': user,
+		}))
+
+	async def save_message(self, user, game_id):
+		game = await sync_to_async(Game.objects.get)(id=game_id)
+		# Use sync_to_async to access related fields in an async context
+		user1 = await sync_to_async(lambda: game.player1.user.username)()
+		user2 = await sync_to_async(lambda: game.player2.user.username)()
+
+		if user1 == user:
+			game.player1_ready = True
+		if user2 == user:
+			game.player2_ready = True
+
+		# Save the game changes
+		await sync_to_async(game.save)()

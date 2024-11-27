@@ -1,0 +1,23 @@
+{%extends "game/game_base.html"%}
+{% block content %}
+<div id="game-data" game-id="{{ game_id }}" player1="{{ game.player1.user }}" player2="{{ game.player2.user }}" curr-user="{{ request.user.username }}"></div>
+
+
+<main role="main" class="container">
+	<div class="ready-bar">
+		<button class="ready" type="" id="user_ready">Ready</button>
+		<p class="is_ready Text">Ready:</p>
+		{% if game.player1_ready %}
+			<p class="is_ready" id="ready_player_one" style="display: block;">{{ game.player1.user }}</p>
+		{% else %}
+			<p class="is_ready" id="ready_player_one" style="display: none;">{{ game.player1.user }}</p>
+		{% endif %}
+
+		{% if game.player2_ready %}
+			<p class="is_ready" id="ready_player_two" style="display: block;">{{ game.player2.user }}</p>
+		{% else %}
+			<p class="is_ready" id="ready_player_two" style="display: none;">{{ game.player2.user }}</p>
+		{% endif %}
+	</div>
+</main>
+{% endblock content %}

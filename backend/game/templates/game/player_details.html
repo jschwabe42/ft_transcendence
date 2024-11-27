@@ -9,10 +9,10 @@
     {% block content %}
     <div class="player-details">
         <h2>Player Details</h2>
-        <h3>{{ player.name }}</h3>
+        <h3>{{ player.user }}</h3>
         <p>Wins: {{ player.games_won }}</p>
         <p>losses: {{ player.games_lost }}</p>
-        <p>created at: {{ player.created_at }}</p>
+        <p>created at: {{ user.date }}</p>
     </div>
     {% endblock %}
 </body>
