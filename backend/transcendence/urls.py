@@ -30,6 +30,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', user_views.custom_logout, name='logout'),
     path('chat/', include('chat.urls')),
+	path('image_app/', include('image_app.urls')),
     # path('__debug__/', include(debug_toolbar.urls)),
 ]
 
