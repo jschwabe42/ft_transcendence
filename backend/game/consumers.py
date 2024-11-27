@@ -24,27 +24,50 @@ class GameConsumer(AsyncWebsocketConsumer):
 	async def receive(self, text_data):
 		text_data_json = json.loads(text_data)
 		use = text_data_json['use']
-		user = text_data_json['user']
-		game_id = text_data_json['game_id']
 
 		if use == 'ready_button':
+			user = text_data_json['user']
+			game_id = text_data_json['game_id']
 			await self.save_message(user, game_id)
 			await self.channel_layer.group_send(
 				self.room_group_name,
 				{
-					'type': 'game_message',
+					'type': 'readyButton', # name of function to send
 					'use': use,
 					'user': user,
 				}
 			)
 
-	async def game_message(self, event):
+		if use == 'KeyboardEvent':
+			user = text_data_json['user']
+			game_id = text_data_json['game_id']
+			key = text_data_json['key']
+			await self.channel_layer.group_send(
+				self.room_group_name,
+				{
+					'type': 'KeyboardEvent',
+					'use': use,
+					'user': user,
+					'key': key,
+				}
+			)
+
+	async def readyButton(self, event):
 		use = event['use']
 		user = event['user']
-		
 		await self.send(text_data=json.dumps({
 			'use': use,
 			'user': user,
+		}))
+
+	async def KeyboardEvent(self, event):
+		use = event['use']
+		user = event['user']
+		key = event['key']
+		await self.send(text_data=json.dumps({
+			'use': use,
+			'user': user,
+			'key': key,
 		}))
 
 	async def save_message(self, user, game_id):

@@ -6,7 +6,7 @@
 <main role="main" class="container">
 	<div class="ready-bar">
 		<button class="ready" type="" id="user_ready">Ready</button>
-		<p class="is_ready Text">Ready:</p>
+		<p class="is_ready Text" id="is_ready_id">Ready:</p>
 		{% if game.player1_ready %}
 			<p class="is_ready" id="ready_player_one" style="display: block;">{{ game.player1.user }}</p>
 		{% else %}
@@ -18,6 +18,9 @@
 		{% else %}
 			<p class="is_ready" id="ready_player_two" style="display: none;">{{ game.player2.user }}</p>
 		{% endif %}
+	</div>
+	<div id="gameContainer">
+		<canvas id="gameCanvas" width="800" height="600"></canvas>
 	</div>
 </main>
 {% endblock content %}

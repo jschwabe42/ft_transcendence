@@ -60,3 +60,13 @@ button.ready:active {
 .is_ready.player2 {
     color: #2196F3; /* Blau für Player 2 */
 }
+
+#gameContainer {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#gameCanvas {
+    border: 2px solid #000; /* Optional: fügt dem Canvas einen Rahmen hinzu */
+    background-color: #f0f0f0; /* Optional: Hintergrundfarbe für das Canvas */
+}
