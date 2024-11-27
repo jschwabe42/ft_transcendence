@@ -86,6 +86,16 @@ let rightpong = {
 	speed: 10,
 }
 
+let ball = {
+	x: canvasWidth / 2,
+	y: canvasHeight / 2,
+	radius: 10,
+	speed: 3,
+	color: "black",
+
+	angle: 200,
+}
+
 let keys = {
 	up_left: false,
 	down_left: false,
@@ -176,7 +186,7 @@ function gameLoop() {
 		return;
 
 	// console.log("Running")
-	// Game loggic updates
+	// Game logic updates
 	updateGame();
 
 	// render game
@@ -186,7 +196,13 @@ function gameLoop() {
 	requestAnimationFrame(gameLoop);
 }
 
+// Update
 function updateGame() {
+	updateRackets();
+	updateBall();
+}
+
+function updateRackets() {
 	if (keys.up_right && rightpong.y > 0) {
 		rightpong.y -= rightpong.speed;
 	}
@@ -201,11 +217,30 @@ function updateGame() {
 	}
 }
 
+function updateBall() {
+	// Update Ball
+}
 
+
+
+
+// render
 function renderGame() {
 	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+	drawRackets();
+	drawBall();
+}
 
+function drawRackets () {
 	ctx.fillStyle = "black";
 	ctx.fillRect(rightpong.x, rightpong.y, rightpong.width, rightpong.height);
 	ctx.fillRect(leftpong.x, leftpong.y, leftpong.width, leftpong.height);
+}
+
+function drawBall() {
+	ctx.beginPath();
+	ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+	ctx.fillStyle = ball.color;
+	ctx.fill();
+	ctx.closePath();
 }
