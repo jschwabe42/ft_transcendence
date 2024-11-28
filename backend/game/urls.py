@@ -1,9 +1,11 @@
 from django.urls import path
 from . import views
+from .api_views import CreateGameView
 
 app_name = "game"
 urlpatterns = [
 	path("", views.recent_games, name="recent_games"),
+	path('api/create-game/', CreateGameView.as_view(), name='api-create-game'),
 	path("new/<int:game_id>/", views.start_game, name="new_game"),
     path("<int:game_id>/", views.game_details, name="game_details"),
     path("players/", views.players, name="players"),

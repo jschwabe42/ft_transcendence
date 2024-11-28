@@ -1,4 +1,5 @@
 let game_is_running = false;
+let game_first_start = true;
 
 const gameData = document.querySelector("#game-data");
 if (!gameData) {
@@ -93,7 +94,10 @@ let ball = {
 	speed: 3,
 	color: "black",
 
-	angle: 200,
+	vSpeed: 10,
+	hSpeed: 10,
+
+	angle: 110,
 }
 
 let keys = {
@@ -182,6 +186,7 @@ function startGame() {
 }
 
 function gameLoop() {
+	// console.log("")
 	if (!game_is_running)
 		return;
 
@@ -193,11 +198,36 @@ function gameLoop() {
 	renderGame();
 
 	// request next frame
+	game_first_start = false;
 	requestAnimationFrame(gameLoop);
+}
+
+let lastTime = 0;
+let accumulatedTime = 0;
+const timeStep = 1000 / 60;
+
+function gameLoop(timestamp) {
+	if (!game_is_running) return;
+
+	// to give a time dependent loop so the clients dont get out of sync
+	if (!lastTime) lastTime = timestamp;
+	const deltaTime = timestamp - lastTime;
+	lastTime = timestamp;
+	accumulatedTime += deltaTime;
+	while (accumulatedTime >= timeStep) {
+		updateGame();
+		accumulatedTime -= timeStep;
+	}
+
+	renderGame();
+
+	requestAnimationFrame(gameLoop);
+	game_first_start = false;
 }
 
 // Update
 function updateGame() {
+	console.log("Update Game Loop");
 	updateRackets();
 	updateBall();
 }
@@ -217,8 +247,75 @@ function updateRackets() {
 	}
 }
 
+function to_rad(angle) {
+	return (angle / 180) * Math.PI;
+}
+
+
 function updateBall() {
-	// Update Ball
+	moveX = Math.cos(to_rad(ball.angle)) * ball.hSpeed;
+	moveY = Math.sin(to_rad(ball.angle)) * ball.vSpeed;
+
+	
+	if (hit_racket())
+		return ;
+
+	if (ball.x > 0 && ball.x < ctx.canvas.width)
+		ball.x += moveX; // moves if ball is in canvas
+	else { // hit goal
+		ball.x = canvasWidth / 2;
+		ball.y = canvasHeight / 2;
+		let randomAngle = Math.random() * 360;
+		// console.log(randomAngle);
+		if ((randomAngle >= 80 && randomAngle <= 100) || (randomAngle >= 260 && randomAngle <= 280)) {
+			randomAngle = 70;
+		}
+		ball.angle = 70;
+		// ball.angle = randomAngle;
+	}
+	if (ball.y > 0 && ball.y < ctx.canvas.height)
+		ball.y += moveY;  // moves if ball is in canvas
+	else { // hit top or buttom wall
+		ball.vSpeed *= -1;
+		moveY = Math.sin(to_rad(ball.angle)) * ball.vSpeed;
+		ball.y += moveY;
+	}
+}
+
+function hit_racket()
+{
+	if (ball.x > 0 + leftpong.width && ball.x < ctx.canvas.width - rightpong.width)
+		return false;
+	if ((ball.y < leftpong.y && ball.x < canvasWidth / 2) || (ball.y < rightpong.y && ball.x > canvasWidth / 2))
+		return false
+	if ((ball.y > leftpong.y + leftpong.height && ball.x < canvasWidth / 2) || (ball.y > rightpong.y + rightpong.height && ball.x > canvasWidth / 2))
+		return false
+	console.log("hit_racket")
+	ball.hSpeed *= -1;
+	moveX = Math.cos(to_rad(ball.angle)) * ball.hSpeed;
+	ball.x += moveX;
+	ball.angle += 5;
+	if ((ball.angle >= 80 && ball.angle <= 100)) {
+		if (ball.angle <= 90) {
+			ball.angle += 10;
+			console.log("Adjust angle += 10", ball.angle)
+		}
+		else {
+			ball.angle -= 10;
+			console.log("Adjust angle -= 10", ball.angle)
+		}
+	}
+	if ((ball.angle >= 260 && ball.angle <= 280)) {
+		if (ball.angle <= 270) {
+			ball.angle -= 10;
+			console.log("Adjust angle -= 10", ball.angle)
+		}
+		else {
+			console.log("Adjust angle += 10", ball.angle)
+			ball.angle += 10;
+		}
+	}
+	return true
 }
 
 

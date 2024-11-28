@@ -41,9 +41,9 @@
 			<ul class="list-group">
 				<li class="list-group-item list-group-item-light">Enter opponent Username</li>
 			</ul>
-			<form method="POST" action="{% url 'game:recent_games' %}">
+			<form id="create-game-form" method="POST">
 				{% csrf_token %}
-				<input class="messageInput" id="opp_name" type="text" name="opp_name" placeholder="Enter opponents Username" />
+				<input class="messageInput" id="opp_name" type="text" name="opp_name" placeholder="Enter opponent's Username" />
 				<button class="add_user" type="submit">Play Game +</button>
 			</form>
 			{% if error_message %}

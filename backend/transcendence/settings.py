@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INTERNAL_IPS = [
-    "127.0.0.1",
+	"127.0.0.1",
 ]
 
 
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 	'users.apps.UsersConfig',
 	'channels',
 	'daphne',
+	'rest_framework',
 	'crispy_forms',
 	'crispy_bootstrap4',
 	'django.contrib.admin',
@@ -66,32 +67,32 @@ import sys
 
 TESTING = "test" in sys.argv
 if not TESTING:
-    INSTALLED_APPS = [
-        *INSTALLED_APPS, 
-        "debug_toolbar",
-    ]
-    MIDDLEWARE = [
-        'debug_toolbar.middleware.DebugToolbarMiddleware',# early, but after encoding response content
-        *MIDDLEWARE,
-    ]
+	INSTALLED_APPS = [
+		*INSTALLED_APPS, 
+		"debug_toolbar",
+	]
+	MIDDLEWARE = [
+		'debug_toolbar.middleware.DebugToolbarMiddleware',# early, but after encoding response content
+		*MIDDLEWARE,
+	]
 
 ROOT_URLCONF = 'transcendence.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # This line should point to the 'templates' directory
-        # 'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+	{
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		'DIRS': [BASE_DIR / 'templates'],  # This line should point to the 'templates' directory
+		# 'DIRS': [],
+		'APP_DIRS': True,
+		'OPTIONS': {
+			'context_processors': [
+				'django.template.context_processors.debug',
+				'django.template.context_processors.request',
+				'django.contrib.auth.context_processors.auth',
+				'django.contrib.messages.context_processors.messages',
+			],
+		},
+	},
 ]
 
 WSGI_APPLICATION = 'transcendence.wsgi.application'
@@ -102,18 +103,18 @@ WSGI_APPLICATION = 'transcendence.wsgi.application'
 
 DATABASES = {
 	# for production
-    # 'default': {
-    #     "ENGINE": "django.db.backends.postgresql",
-    #     "NAME": "postgres",
-    #     "USER": "postgres",
-    #     "PASSWORD": Path("/var/run/secrets/postgres_password").read_text(),
-    #     "HOST": "postgres",
-    #     "PORT": "5432",
-    # }
+	# 'default': {
+	#     "ENGINE": "django.db.backends.postgresql",
+	#     "NAME": "postgres",
+	#     "USER": "postgres",
+	#     "PASSWORD": Path("/var/run/secrets/postgres_password").read_text(),
+	#     "HOST": "postgres",
+	#     "PORT": "5432",
+	# }
 	# for development
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+	'default': {
+		'ENGINE': 'django.db.backends.sqlite3',
+		'NAME': BASE_DIR / 'db.sqlite3',
 	}
 }
 
@@ -122,18 +123,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+	{
+		'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+	},
 ]
 
 
@@ -175,7 +176,7 @@ LOGIN_URL = 'login'
 ASGI_APPLICATION = 'transcendence.asgi.application'
 
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
+	"default": {
+		"BACKEND": "channels.layers.InMemoryChannelLayer"
+	}
 }
