@@ -22,6 +22,15 @@ button.ready {
     transition: background-color 0.3s, transform 0.2s;
 }
 
+#ws {
+    background-color: #32b7b2;
+}
+
+#up_down {
+    background-color: #32b7b2;
+}
+
+
 button.ready:hover {
     background-color: #45a049;
     transform: translateY(-2px);
@@ -33,7 +42,7 @@ button.ready:focus {
 }
 
 button.ready:active {
-    background-color: #388e3c;
+    background-color: #28b02f;
     transform: translateY(2px);
 }
 
@@ -59,6 +68,12 @@ button.ready:active {
 
 .is_ready.player2 {
     color: #2196F3; /* Blau für Player 2 */
+}
+
+.vertical-text {
+    display: inline-block;
+    writing-mode: vertical-rl; /* Text vertikal schreiben */
+    text-orientation: upright; /* Zeichen aufrecht ausrichten */
 }
 
 #gameContainer {

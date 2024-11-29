@@ -27,6 +27,9 @@ class Game(models.Model):
     player1_ready = models.BooleanField(default=False)
     player2_ready = models.BooleanField(default=False)
 
+    player1_control_settings = models.CharField(max_length=255, default='up down')
+    player2_control_settings = models.CharField(max_length=255, default='up down')
+
     def __str__(self):
         return f"{self.player1} vs {self.player2} ({self.score1}-{self.score2})"
 

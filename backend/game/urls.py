@@ -1,11 +1,15 @@
 from django.urls import path
 from . import views
-from .api_views import CreateGameView
+from .api_views import CreateGameView, ScoreBoardView, ControllKeySetting
 
 app_name = "game"
 urlpatterns = [
 	path("", views.recent_games, name="recent_games"),
+	
 	path('api/create-game/', CreateGameView.as_view(), name='api-create-game'),
+	path('api/get-score/', ScoreBoardView.as_view(), name='api-get-score'),
+	path('api/get-gameControl/', ControllKeySetting.as_view(), name='api-get-gameControl'),
+	
 	path("new/<int:game_id>/", views.start_game, name="new_game"),
     path("<int:game_id>/", views.game_details, name="game_details"),
     path("players/", views.players, name="players"),
