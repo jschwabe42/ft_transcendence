@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Create Room</title>
+</head>
+<body>
+	{% include 'navbar.html' %}
+	<h1>Create a New Room</h1>
+
+	<form method="post">
+		{% csrf_token %}
+		<label for="room_name">Room Name:</label>
+		<input type="text" id="room_name" name="room_name" required>
+		<button type="submit">Create Room</button>
+	</form>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Room: {{ room.name }}</title>
+</head>
+<body>
+	{% include 'navbar.html' %}
+	<h1>Welcome to Room: {{ room.name }}</h1>
+
+	<h2>Participants:</h2>
+	<ul>
+		{% for participant in room.participants.all %}
+		<li>{{ participant.user.username }}</li>
+		{% endfor %}
+	</ul>
+
+	<ul id="participants">
+		{% for participant in room.participants.all %}
+		<li>{{ participant.user.username }}</li>
+		{% endfor %}
+	</ul>
+	<form method="post" action="{% url 'quiz:leave_room' room.name %}">
+		{% csrf_token %}
+		<button type="submit">Leave Room</button>
+	</form>
+</body>
+</html>
+
+<script>
+    const roomName = "{{ room.name }}";
+    const chatSocket = new WebSocket(
+        `ws://${window.location.host}/ws/quiz/${roomName}/`
+    );
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const message = data.message;
+
+        // Update the participant list or room data
+        const participantsList = document.getElementById('participants');
+        const newParticipant = document.createElement('li');
+        newParticipant.textContent = message;
+        participantsList.appendChild(newParticipant);
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error("WebSocket closed unexpectedly");
+    };
+</script>
