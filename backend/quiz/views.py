@@ -21,17 +21,10 @@ def create_room(request):
 def join_room(request, room_name):
 	room = get_object_or_404(Room, name=room_name)
 	if room.is_active:
-		Participant.objects.get_or_create(user=request.user, room=room)
+		participant, created = Participant.objects.get_or_create(user=request.user, room=room)
 		room.update_activity()
-		# if created:
-		# 	channel_layer = get_channel_layer()
-		# 	async_to_sync(channel_layer.group_send)(
-		# 		f'quiz_{room_name}',
-		# 		{
-		# 			'type': 'chat_message',
-		# 			'message': f'{request.user.username} joined the room!'
-		# 		}
-		# 	)
+		if created:
+			broadcast_room_update(room_name)
 		return render (request, 'quiz/room.html', {'room': room})
 	return redirect('quiz:quiz_home')
 
@@ -41,7 +34,23 @@ def leave_room(request, room_name):
 	if room.participants.count() == 0:
 		room.is_active = False
 		room.save()
+	else:
+		broadcast_room_update(room_name)
 	return redirect('quiz:quiz_home')
+
+def broadcast_room_update(room_name):
+	room = Room.objects.get(name=room_name)
+	participants = [p.user.username for p in room.participants.all()]
+	channel_layer = get_channel_layer()
+	print(f"Broadcasting update for room {room_name}: {participants}")
+	async_to_sync(channel_layer.group_send)(
+		f"quiz_{room_name}",
+		{
+			"type": "chat_message",
+			"message": "",
+			"participants": participants,
+		}
+	)
 
 # Add to crontab etc to periodically clean up empty rooms
 # from django.utils.timezone import now

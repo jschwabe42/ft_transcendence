@@ -11,12 +11,6 @@
 	<h1>Welcome to Room: {{ room.name }}</h1>
 
 	<h2>Participants:</h2>
-	<ul>
-		{% for participant in room.participants.all %}
-		<li>{{ participant.user.username }}</li>
-		{% endfor %}
-	</ul>
-
 	<ul id="participants">
 		{% for participant in room.participants.all %}
 		<li>{{ participant.user.username }}</li>
@@ -30,23 +24,26 @@
 </html>
 
 <script>
-    const roomName = "{{ room.name }}";
-    const chatSocket = new WebSocket(
-        `ws://${window.location.host}/ws/quiz/${roomName}/`
-    );
+	const roomName = "{{ room.name }}";
+	const participantsList = document.getElementById('participants');
 
-    chatSocket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        const message = data.message;
+	const socket = new WebSocket(
+		`ws://${window.location.host}/ws/quiz/room/${roomName}/`
+	);
 
-        // Update the participant list or room data
-        const participantsList = document.getElementById('participants');
-        const newParticipant = document.createElement('li');
-        newParticipant.textContent = message;
-        participantsList.appendChild(newParticipant);
-    };
+	socket.onmessage = function (e) {
+		const data = JSON.parse(e.data);
+		const participants = data.participants || [];
 
-    chatSocket.onclose = function(e) {
-        console.error("WebSocket closed unexpectedly");
-    };
+		participantsList.innerHTML = '';
+		participants.forEach(participant => {
+			const li = document.createElement('li');
+			li.textContent = participant;
+			participantsList.appendChild(li);
+		});
+	};
+
+	socket.onclose = function (e) {
+		console.error('Socket closed unexpectedly');
+	};
 </script>

@@ -25,13 +25,14 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter , URLRouter
 from chat import routing as chat_routing
 from game import routing as game_routing
+from quiz import routing as quiz_routing
 
 application = ProtocolTypeRouter(
     {
         "http" : get_asgi_application() , 
         "websocket" : AuthMiddlewareStack(
             URLRouter(
-                chat_routing.websocket_urlpatterns + game_routing.websocket_urlpatterns,
+                chat_routing.websocket_urlpatterns + game_routing.websocket_urlpatterns + quiz_routing.websocket_urlpatterns,
             )    
         )
     }
