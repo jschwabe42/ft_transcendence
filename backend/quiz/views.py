@@ -15,6 +15,7 @@ def create_room(request):
 		room.update_activity()
 
 		Participant.objects.get_or_create(user=request.user, room=room)
+		broadcast_room_list_update()
 		return redirect('quiz:join_room', room_name=room.name)
 	return render(request, 'quiz/create_room.html')
 
@@ -34,6 +35,7 @@ def leave_room(request, room_name):
 	if room.participants.count() == 0:
 		room.is_active = False
 		room.save()
+		broadcast_room_list_update()
 	else:
 		broadcast_room_update(room_name)
 	return redirect('quiz:quiz_home')
@@ -49,6 +51,17 @@ def broadcast_room_update(room_name):
 			"type": "chat_message",
 			"message": "",
 			"participants": participants,
+		}
+	)
+
+def broadcast_room_list_update():
+	active_rooms = Room.objects.filter(is_active=True).values_list('name', flat=True)
+	channel_layer = get_channel_layer()
+	async_to_sync(channel_layer.group_send)(
+		"quiz_home",
+		{
+			"type": "room_list_update",
+			"rooms": list(active_rooms),
 		}
 	)
 

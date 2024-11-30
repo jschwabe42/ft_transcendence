@@ -53,3 +53,21 @@ class QuizConsumer(AsyncWebsocketConsumer):
 	def get_participants(self, room_name):
 		room = Room.objects.get(name=room_name)
 		return [participant.user.username for participant in room.participants.all()]
+
+
+
+class RoomListConsumer(AsyncWebsocketConsumer):
+	async def connect(self):
+		self.group_name = 'quiz_home'
+		await self.channel_layer.group_add(self.group_name, self.channel_name)
+		await self.accept()
+
+	async def disconnect(self, close_code):
+		await self.channel_layer.group_discard(self.group_name, self.channel_name)
+
+	async def room_list_update(self, event):
+		rooms = event.get('rooms', [])
+		await self.send(text_data=json.dumps({
+			'type': 'room_list_update',
+			'rooms': rooms,
+		}))

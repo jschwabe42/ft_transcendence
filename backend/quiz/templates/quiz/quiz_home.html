@@ -3,10 +3,8 @@
 <html lang="en">
 
 <head>
-	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 	<title>Quiz Home</title>
 </head>
 
@@ -17,7 +15,7 @@
 		<h1>Welcome to the Quiz App!</h1>
 	</body>
 	<h2>Active Rooms</h2>
-	<ul>
+	<ul id="room-list">
 		{% for room in rooms %}
 		<li>
 			<a href="{% url 'quiz:join_room' room.name %}">{{ room.name }}</a>
@@ -30,3 +28,5 @@
 </body>
 
 </html>
+
+<script src="{% static 'quiz/js/roomsupdate.js' %}"></script>
