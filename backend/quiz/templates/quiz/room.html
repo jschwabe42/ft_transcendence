@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Room: {{ room.name }}</title>
 </head>
-<body>
+<body data-room-name="{{ room.name }}">
 	{% include 'navbar.html' %}
 	<h1>Welcome to Room: {{ room.name }}</h1>
 
@@ -23,27 +23,4 @@
 </body>
 </html>
 
-<script>
-	const roomName = "{{ room.name }}";
-	const participantsList = document.getElementById('participants');
-
-	const socket = new WebSocket(
-		`ws://${window.location.host}/ws/quiz/room/${roomName}/`
-	);
-
-	socket.onmessage = function (e) {
-		const data = JSON.parse(e.data);
-		const participants = data.participants || [];
-
-		participantsList.innerHTML = '';
-		participants.forEach(participant => {
-			const li = document.createElement('li');
-			li.textContent = participant;
-			participantsList.appendChild(li);
-		});
-	};
-
-	socket.onclose = function (e) {
-		console.error('Socket closed unexpectedly');
-	};
-</script>
+<script src="{% static 'quiz/js/roommemberupdate.js' %}"></script>
