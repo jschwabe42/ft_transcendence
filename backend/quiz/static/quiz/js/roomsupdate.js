@@ -1,4 +1,4 @@
-const roomList = document.querySelector('ul');
+const roomList = document.querySelector('#room-list');
 
 const socket = new WebSocket(
 	`ws://${window.location.host}/ws/quiz/home/`
@@ -11,8 +11,9 @@ socket.onmessage = function (event) {
 		data.rooms.forEach(room => {
 			const listItem = document.createElement('li');
 			const roomLink = document.createElement('a');
-			roomLink.href = `/quiz/join/${room}/`;
+			roomLink.href = `/quiz/room/${room}/`;
 			roomLink.textContent = room;
+
 			listItem.appendChild(roomLink);
 			roomList.appendChild(listItem);
 		});
