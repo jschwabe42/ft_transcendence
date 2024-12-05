@@ -16,8 +16,13 @@ def create_room(request):
 			return render(request, 'quiz/create_room.html', {'error': f"Room names cannot contain spaces or any of the following characters: {' '.join(invalid_chars)}", 'room_name': room_name})
 		room, created = Room.objects.get_or_create(name=room_name)
 		room.update_activity()
-		Participant.objects.get_or_create(user=request.user, room=room)
+		# Participant.objects.get_or_create(user=request.user, room=room)
+		participant, created = Participant.objects.get_or_create(user=request.user, room=room)
+		if created:
+			room.leader = participant
+			room.save()
 		broadcast_room_list_update()
+		broadcast_room_update(room.name)
 		return redirect('quiz:join_room', room_name=room.name)
 	return render(request, 'quiz/create_room.html')
 
@@ -33,26 +38,39 @@ def join_room(request, room_name):
 
 def leave_room(request, room_name):
 	room = get_object_or_404(Room, name=room_name)
-	Participant.objects.filter(user=request.user, room=room).delete()
-	if room.participants.count() == 0:
-		room.is_active = False
-		room.save()
-		broadcast_room_list_update()
-	else:
-		broadcast_room_update(room_name)
+	# Participant.objects.filter(user=request.user, room=room).delete()
+	participant = Participant.objects.filter(user=request.user, room=room).first()
+	if participant:
+		if room.leader == participant:
+			remaining_participants = room.participants.exclude(id=participant.id).order_by('joined_at', 'user__username')
+			if remaining_participants.exists():
+				room.leader = remaining_participants.first()
+			else:
+				room.leader = None
+			room.save()
+		participant.delete()
+		if room.participants.count() == 0:
+			room.is_active = False
+			room.save()
+			broadcast_room_list_update()
+		else:
+			broadcast_room_update(room_name)
 	return redirect('quiz:quiz_home')
 
 def broadcast_room_update(room_name):
 	room = Room.objects.get(name=room_name)
 	participants = [p.user.username for p in room.participants.all()]
+	leader = room.leader.user.username if room.leader else None
+	# print("Hello World")
+	# print(f"Broadcasting room update: {participants}, Leader: {leader}")
 	channel_layer = get_channel_layer()
-	print(f"Broadcasting update for room {room_name}: {participants}")
+	# print(f"Broadcasting update for room {room_name}: {participants}")
 	async_to_sync(channel_layer.group_send)(
 		f"quiz_{room_name}",
 		{
 			"type": "chat_message",
-			"message": "",
 			"participants": participants,
+			"leader": leader,
 		}
 	)
 

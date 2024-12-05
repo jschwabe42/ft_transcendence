@@ -8,6 +8,13 @@ class Room(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	last_activity = models.DateTimeField(default=now)
 	is_active = models.BooleanField(default=True)
+	leader= models.OneToOneField(
+		'Participant',
+		on_delete=models.SET_NULL,
+		null=True,
+		blank=True,
+		related_name="leader_of",
+	)
 
 	def update_activity(self):
 		self.last_activity = now()
