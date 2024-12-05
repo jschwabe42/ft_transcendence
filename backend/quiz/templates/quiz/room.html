@@ -20,6 +20,11 @@
 		{% csrf_token %}
 		<button type="submit">Leave Room</button>
 	</form>
+	{% if user == room.leader.user %}
+		<div id="leader-options">
+			<button id="start-game">Start Game</button>
+		</div>
+	{% endif %}
 </body>
 </html>
 
