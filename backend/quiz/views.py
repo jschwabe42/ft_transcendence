@@ -10,10 +10,12 @@ def quiz_home(request):
 
 def create_room(request):
 	if request.method == 'POST':
-		room_name = request.POST.get('room_name', 'New Room')
+		room_name = request.POST.get('room_name', 'New Room').strip()
+		invalid_chars = set(' !?@#$%^&*()+=<>[]{}|\\/:;\'"')
+		if any(char in invalid_chars for char in room_name):
+			return render(request, 'quiz/create_room.html', {'error': f"Room names cannot contain spaces or any of the following characters: {' '.join(invalid_chars)}", 'room_name': room_name})
 		room, created = Room.objects.get_or_create(name=room_name)
 		room.update_activity()
-
 		Participant.objects.get_or_create(user=request.user, room=room)
 		broadcast_room_list_update()
 		return redirect('quiz:join_room', room_name=room.name)

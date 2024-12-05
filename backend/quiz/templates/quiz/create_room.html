@@ -13,8 +13,18 @@
 	<form method="post">
 		{% csrf_token %}
 		<label for="room_name">Room Name:</label>
-		<input type="text" id="room_name" name="room_name" required>
+		<input
+			type="text"
+			id="room_name"
+			name="room_name"
+			pattern="^\w+$"
+			title="Room names can only contain letters, numbers, and underscores."
+			required
+		>
 		<button type="submit">Create Room</button>
 	</form>
+	{% if error %}
+	<p style="color: red;">{{ error }}</p>
+	{% endif %}
 </body>
 </html>
