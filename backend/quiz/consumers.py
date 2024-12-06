@@ -32,21 +32,35 @@ class QuizConsumer(AsyncWebsocketConsumer):
 
 	async def receive(self, text_data):
 		text_data_json = json.loads(text_data)
-		message = text_data_json['message']
-		username = text_data_json['username']
+		msg_type = text_data_json.get('type', '')
 
-		room = await sync_to_async(Room.objects.get)(name=self.room_name)
-		leader = room.leader.user.username if room.leader else None
+		room = await sync_to_async(Room.objects.select_related('leader').get)(name=self.room_name)
+		# leader = room.leader.user.username if room.leader else None
 
-		await self.channel_layer.group_send(
-			self.room_group_name,
-			{
-				'type': 'chat_message',
-				'message': message,
-				'username': username,
-				'leader': leader,
-			}
-		)
+		leader_user = await sync_to_async(lambda: getattr(room.leader, 'user', None))()
+		leader_username = leader_user.username if leader_user else None
+
+		if msg_type == 'start_game':
+			if self.scope["user"].username == leader_username:
+				await self.channel_layer.group_send(
+					self.room_group_name,
+					{
+						"type": "game_start",
+					}
+				)
+
+		if msg_type == 'chat_message':
+			message = text_data_json.get('message', '')
+			username = text_data_json.get('username', '')
+			await self.channel_layer.group_send(
+				self.room_group_name,
+				{
+					'type': 'chat_message',
+					'message': message,
+					'username': username,
+					'leader': leader_username,
+				}
+			)
 
 	async def chat_message(self, event):
 		message = event.get('message', '')
@@ -57,6 +71,11 @@ class QuizConsumer(AsyncWebsocketConsumer):
 			'message': message,
 			'participants': participants,
 			'leader': leader,
+		}))
+
+	async def game_start(self, event):
+		await self.send(text_data=json.dumps({
+			'type': 'game_start',
 		}))
 
 	@sync_to_async

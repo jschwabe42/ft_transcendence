@@ -5,6 +5,14 @@ const socket = new WebSocket(
 	`ws://${window.location.host}/ws/quiz/room/${roomName}/`
 );
 
+document.getElementById('start-game')?.addEventListener('click', () => {
+	socket.send(JSON.stringify({
+		type: 'start_game',
+		room_name: roomName,
+	}));
+});
+
+
 socket.onmessage = function (e) {
 	const data = JSON.parse(e.data);
 	console.log('Server response:', data);
@@ -12,14 +20,20 @@ socket.onmessage = function (e) {
 	// console.log('hello');
 	const leader = data.leader || null;
 
-	console.log('Leader:', leader);
-	participantsList.innerHTML = '';
-	participants.forEach(participant => {
-		const li = document.createElement('li');
-		li.innerHTML = participant === leader ? `${participant} <span>🎮</span>` : participant;
-		
-		participantsList.appendChild(li);
-	});
+	if (data.participants) {
+		console.log('Leader:', leader);
+		participantsList.innerHTML = '';
+		participants.forEach(participant => {
+			const li = document.createElement('li');
+			li.innerHTML = participant === leader ? `${participant} <span>🎮</span>` : participant;
+			
+			participantsList.appendChild(li);
+		});
+	}
+
+	if (data.type === 'game_start') {
+		window.location.href = `/quiz/room/${roomName}/ingame/`;
+	}
 };
 
 // socket.onclose = function (e) {

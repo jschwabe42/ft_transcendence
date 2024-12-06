@@ -85,6 +85,10 @@ def broadcast_room_list_update():
 		}
 	)
 
+def game_view(request, room_name):
+	room = get_object_or_404(Room, name=room_name)
+	return render(request, 'quiz/game.html', {'room': room})
+
 # Add to crontab etc to periodically clean up empty rooms
 # from django.utils.timezone import now
 # from datetime import timedelta
