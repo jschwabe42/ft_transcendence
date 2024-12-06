@@ -14,6 +14,12 @@ socket.onmessage = function (event) {
 			roomLink.href = `/quiz/room/${room}/`;
 			roomLink.textContent = room;
 
+			// if (room.game_started) {
+			// 	roomLink.innerHTML = `<a href="/quiz/game/${room.name}">Join ${room.name} (Game In Progress)</a>`;
+			// } else {
+			// 	roomLink.innerHTML = `<a href="/quiz/join/${room.name}">${room.name}</a>`;
+			// }
+
 			listItem.appendChild(roomLink);
 			roomList.appendChild(listItem);
 		});

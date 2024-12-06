@@ -33,6 +33,8 @@ def join_room(request, room_name):
 		room.update_activity()
 		if created:
 			broadcast_room_update(room_name)
+		if room.game_started:
+			return render(request, 'quiz/game.html', {'room': room})
 		return render (request, 'quiz/room.html', {'room': room})
 	return redirect('quiz:quiz_home')
 
@@ -87,6 +89,8 @@ def broadcast_room_list_update():
 
 def game_view(request, room_name):
 	room = get_object_or_404(Room, name=room_name)
+	if not room.game_started:
+		return render (request, 'quiz/room.html', {'room': room})
 	return render(request, 'quiz/game.html', {'room': room})
 
 # Add to crontab etc to periodically clean up empty rooms

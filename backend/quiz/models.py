@@ -8,6 +8,7 @@ class Room(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	last_activity = models.DateTimeField(default=now)
 	is_active = models.BooleanField(default=True)
+	game_started = models.BooleanField(default=False)
 	leader= models.OneToOneField(
 		'Participant',
 		on_delete=models.SET_NULL,

@@ -18,7 +18,11 @@
 	<ul id="room-list">
 		{% for room in rooms %}
 		<li>
+			{% if room.game_started %}
+			<a href="{% url 'quiz:game_view' room.name %}">Join {{ room.name }} (Game In Progress)</a>
+			{% else %}
 			<a href="{% url 'quiz:join_room' room.name %}">{{ room.name }}</a>
+			{% endif %}
 		</li>
 		{% endfor %}
 	</ul>

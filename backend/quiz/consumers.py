@@ -3,6 +3,7 @@ from .models import Room, Participant
 from django.contrib.auth.models import User
 import json
 from asgiref.sync import sync_to_async
+from django.shortcuts import get_object_or_404
 
 class QuizConsumer(AsyncWebsocketConsumer):
 	async def connect(self):
@@ -74,9 +75,17 @@ class QuizConsumer(AsyncWebsocketConsumer):
 		}))
 
 	async def game_start(self, event):
+		room_name = self.scope['url_route']['kwargs']['room_name']
+		room = await self.start_game(room_name)
 		await self.send(text_data=json.dumps({
 			'type': 'game_start',
 		}))
+
+	@sync_to_async
+	def start_game(self, room_name):
+		room = get_object_or_404(Room, name=room_name)
+		room.game_started = True
+		room.save()
 
 	@sync_to_async
 	def get_participants(self, room_name):
