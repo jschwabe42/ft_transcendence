@@ -3,11 +3,14 @@ from .models import Game
 from django.contrib.auth.models import User
 import json
 from asgiref.sync import sync_to_async
+from .pong import PongGame
+import asyncio
 
 class GameConsumer(AsyncWebsocketConsumer):
 	async def connect(self):
 		self.game_id = self.scope['url_route']['kwargs']['game_id']
 		self.room_group_name = f'game_{self.game_id}'
+		self.game = PongGame("player1", "player2")
 
 		await self.channel_layer.group_add(
 			self.room_group_name,
@@ -20,6 +23,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 			self.room_group_name,
 			self.channel_name
 		)
+		self.game.running = False
 
 	async def receive(self, text_data):
 		text_data_json = json.loads(text_data)
@@ -32,7 +36,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 			await self.channel_layer.group_send(
 				self.room_group_name,
 				{
-					'type': 'readyButton', # name of function to send
+					'type': 'readyButton',
 					'use': use,
 					'user': user,
 				}
@@ -80,6 +84,9 @@ class GameConsumer(AsyncWebsocketConsumer):
 			game.player1_ready = True
 		if user2 == user:
 			game.player2_ready = True
+
+		## Wenn der 2. Ready Drueckt
+		# asyncio.create_task(self.start_game_loop())
 
 		# Save the game changes
 		await sync_to_async(game.save)()
