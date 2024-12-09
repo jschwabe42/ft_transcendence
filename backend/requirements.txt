@@ -7,3 +7,5 @@ django-crispy-forms
 channels
 daphne
 djangorestframework
+requests
+spotipy
