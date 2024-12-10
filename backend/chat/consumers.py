@@ -1,6 +1,5 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import Message, Group
-from django.contrib.auth.models import User
 import json
 from asgiref.sync import sync_to_async
 
@@ -85,7 +84,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 	async def save_message(self, username, message, room_name, room_id):
 		# Benutzer aus der Datenbank abrufen
-		user = await sync_to_async(User.objects.get)(username=username)
+		user = await sync_to_async('users.CustomUser'.objects.get)(username=username)
 		group = await sync_to_async(Group.objects.get)(id=room_id)
 
 		# Nachricht in der Datenbank speichern
@@ -98,7 +97,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 	async def save_new_user(self, username, message, room_name, room_id):
 
 		try:
-			user = await sync_to_async(User.objects.get)(username=message)
+			user = await sync_to_async('users.CustomUser'.objects.get)(username=message)
 			print("User exists")
 
 			group = await sync_to_async(Group.objects.get)(id=room_id)
