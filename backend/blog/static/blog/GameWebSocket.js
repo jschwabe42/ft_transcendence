@@ -160,6 +160,7 @@ function updateGameFromServer(state) {
 	if (scores.player1 != state.scores.player1 || scores.player2 != state.scores.player2) {
 		document.getElementById("player1").innerText = state.scores.player1;
 		document.getElementById("player2").innerText = state.scores.player2;
+		sendGameScores(state.scores.player1, state.scores.player2);
 	}
 	scores.player1 = state.scores.player1;
 	scores.player2 = state.scores.player2;

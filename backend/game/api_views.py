@@ -45,7 +45,8 @@ class ScoreBoardView(APIView):
 		game_id = request.data.get('game_id')
 		score1 = request.data.get('score1')
 		score2 = request.data.get('score2')
-		if not game_id or not score1 or not score2:
+		print(game_id, score1, score2)
+		if not game_id:
 			return Response({"error": "game_id score1 and score2 are requirded"}, status=status.HTTP_400_BAD_REQUEST)
 		
 		try:
@@ -86,7 +87,7 @@ class ControllKeySetting(APIView):
 			return Response({"error": "You are not a player in this game."}, status=status.HTTP_403_FORBIDDEN)
 
 		game.save()
-
+		
 		return Response(
 			{"message": f"Control settings successfully updated for user {user}."},
 			status=status.HTTP_200_OK
