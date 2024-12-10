@@ -87,18 +87,26 @@ class GameConsumer(AsyncWebsocketConsumer):
 		user1 = await sync_to_async(lambda: game.player1.user.username)()
 		user2 = await sync_to_async(lambda: game.player2.user.username)()
 
-		# if not (game.player1_ready and game.player2_ready):
-		if user1 == user:
-			game.player1_ready = True
-		if user2 == user:
-			game.player2_ready = True
+		if not (game.player1_ready and game.player2_ready):
+			if user1 == user:
+				game.player1_ready = True
+			if user2 == user:
+				game.player2_ready = True
+			# create new task (calls start_game function)
+			if game.player1_ready and game.player2_ready:
+				asyncio.create_task(self.start_game_loop())
+			# Save the game changes
+			await sync_to_async(game.save)()
 		
-		# create new task (calls start_game function)
-		if game.player1_ready and game.player2_ready:
-			asyncio.create_task(self.start_game_loop())
-
-		# Save the game changes
-		await sync_to_async(game.save)()
+		
+		# For testing to not start games
+		# if user1 == user:
+		# 	game.player1_ready = True
+		# if user2 == user:
+		# 	game.player2_ready = True
+		# if game.player1_ready and game.player2_ready:
+		# 	asyncio.create_task(self.start_game_loop())
+		# await sync_to_async(game.save)()
 
 
 	async def start_game_loop(self):

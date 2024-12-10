@@ -67,13 +67,16 @@ gameSocket.onmessage = function(e) {
 };
 
 
-
-
 ///// Game
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const canvasHeight = canvas.height;
 const canvasWidth = canvas.width;
+
+let scores = {
+	player1: 0,
+	player2: 0,
+}
 
 let leftpong = {
 	height: 180,
@@ -148,14 +151,27 @@ document.addEventListener('keyup', (event) => {
 
 // Update from server
 function updateGameFromServer(state) {
-	console.log("UpdateGame");
-	console.log(state.paddles.player1.y, "recive1");
-	console.log(state.paddles.player2.y, "recive2");
 	ball.x = state.ball.x;
 	ball.y = state.ball.y;
 
 	leftpong.y = state.paddles.player1.y;
 	rightpong.y = state.paddles.player2.y;
+
+	if (scores.player1 != state.scores.player1 || scores.player2 != state.scores.player2) {
+		document.getElementById("player1").innerText = state.scores.player1;
+		document.getElementById("player2").innerText = state.scores.player2;
+	}
+	scores.player1 = state.scores.player1;
+	scores.player2 = state.scores.player2;
+	if (state.winner.player1 || state.winner.player2)
+		if (state.winner.player1)
+			document.getElementById("player1").style.backgroundColor = "green";
+			document.getElementById("winner").style.display = "block";
+		if (state.winner.player2)
+			document.getElementById("winner").style.display = "block";
+			document.getElementById("player2").style.backgroundColor = "green";
+		
+
 
 	renderGame();
 }

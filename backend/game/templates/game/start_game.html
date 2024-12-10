@@ -40,5 +40,16 @@
 	<div id="gameContainer">
 		<canvas id="gameCanvas" width="800" height="600"></canvas>
 	</div>
+	<div class="score">
+		<div class="player">
+			<p>{{ game.player1.user }}</p>
+			<p id="player1">0</p>
+		</div>
+		<div class="player">
+			<p>{{ game.player2.user }}</p>
+			<p id="player2">0</p>
+		</div>
+	</div>
+	<a id="winner" href="{% url 'game:recent_games' %}", style="display: none;">Back to Games</a>
 </main>
 {% endblock content %}

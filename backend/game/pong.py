@@ -2,6 +2,7 @@ import asyncio
 import math
 import json
 import sys
+import random
 
 
 class PongGame:
@@ -11,15 +12,23 @@ class PongGame:
 		self.canvas_width = 800
 		self.canvas_height = 600
 
+		self.playerOneKeyUp = False
+		self.playerOneKeyDown = False
+		self.playerTwoKeyUp = False
+		self.playerTwoKeyDown = False
+
+		self.paddle_collision = False
+		self.game_tick = 0
+		self.collision_timer = 0
 
 		# Ball state
 		self.ball = {
 			'x': self.canvas_width / 2,
 			'y': self.canvas_height / 2,
 			'radius': 10,
-			'speed': 5,
-			'vx': 5,
-			'vy': 5,
+			'speed': 2,
+			'vx': 2,
+			'vy': random.uniform(0, 3),
 		}
 
 		# Paddle state
@@ -37,52 +46,119 @@ class PongGame:
 				},
 		}
 
-		self.scores = {self.player1: 0, self.player2: 0}
+		self.scores = {
+			self.player1: 0,
+			self.player2: 0,
+		}
+		self.winner = {
+			self.player1: False,
+			self.player2: False,
+		}
 		self.running = False
 
 	def update_game_state(self):
-		paddle = self.paddles["player1"]
-		# print("player1", paddle['y'])
-		paddle = self.paddles["player2"]
-		# print("player2", paddle['y'])
+		self._check_paddle_collision()
+		# move padels
+		if self.playerOneKeyUp == True:
+			paddle = self.paddles["player1"]
+			paddle['y'] -= 5
+		if (self.playerOneKeyDown == True):
+			paddle = self.paddles["player1"]
+			paddle['y'] += 5
+		if self.playerTwoKeyUp == True:
+			paddle = self.paddles["player2"]
+			paddle['y'] -= 5
+		if (self.playerTwoKeyDown == True):
+			paddle = self.paddles["player2"]
+			paddle['y'] += 5
+		# move ball
+		self.move_ball()
 
 
 	def move_paddle(self, player, key):
-		if (key == "KeyDownArrowUp"):
-			if (player == "player1"):
-				self.paddles["player1"]['y'] -= 5
-				print(f"player1 {self.paddles["player1"]['y']}")
-				sys.stdout.flush()
-			else:
-				self.paddles["player2"]['y'] -= 5
-				print(f"player2 {self.paddles["player2"]['y']}")
-				sys.stdout.flush()
+		if (player == "player1"):
+			if (key == "KeyDownArrowUp"):
+				self.playerOneKeyUp = True
+			if (key == "KeyDownArrowDown"):
+				self.playerOneKeyDown = True
+			if (key == "KeyUpArrowUp"):
+				self.playerOneKeyUp = False
+			if (key == "KeyUpArrowDown"):
+				self.playerOneKeyDown = False
 
-		if (key == "KeyDownArrowDown"):
-			if (player == "player1"):
-				self.paddles["player1"]['y'] += 5
-				print(f"player1 {self.paddles["player1"]['y']}")
-				sys.stdout.flush()
-			else:
-				self.paddles["player2"]['y'] += 5
-				print(f"player2 {self.paddles["player2"]['y']}")
-				sys.stdout.flush()
+		if (player == "player2"):
+			if (key == "KeyDownArrowUp"):
+				self.playerTwoKeyUp = True
+			if (key == "KeyDownArrowDown"):
+				self.playerTwoKeyDown = True
+			if (key == "KeyUpArrowUp"):
+				self.playerTwoKeyUp = False
+			if (key == "KeyUpArrowDown"):
+				self.playerTwoKeyDown = False
 
 
 	def _check_paddle_collision(self):
-		print("test")
+		# check if paddls are out of bounce
+		if self.paddles["player1"]['y'] <= 0:
+			self.playerOneKeyUp = False
+		if self.paddles["player1"]['y'] >= self.canvas_height - self.paddle_height:
+			self.playerOneKeyDown = False
+		if self.paddles["player2"]['y'] <= 0:
+			self.playerTwoKeyUp = False
+		if self.paddles["player2"]['y'] >= self.canvas_height - self.paddle_height:
+			self.playerTwoKeyDown = False
 
-	def _reset_ball(self):
-		print("test")
+		# ball paddle collision
+		if self.paddle_collision == False: # if hit no checks for a few iterations
+			# Left Paddle
+			if (self.ball['x'] - self.ball['radius'] <= self.paddles[self.player1]['x'] + self.paddle_width and
+				self.paddles[self.player1]['y'] <= self.ball['y'] <= self.paddles[self.player1]['y'] + self.paddle_height):
+				self.ball['vx'] *= -1
+				self.paddle_collision = True
+				return
+			# Right Paddle
+			if (self.ball['x'] + self.ball['radius'] >= self.paddles[self.player2]['x'] and
+				self.paddles[self.player2]['y'] <= self.ball['y'] <= self.paddles[self.player2]['y'] + self.paddle_height):
+				self.ball['vx'] *= -1
+				self.paddle_collision = True
+				return
+		
+
+	def move_ball(self):
+		if self.ball['y'] <= 0 or self.ball['y'] >= self.canvas_height:
+			self.ball['vy'] *= -1
+		if self.ball['x'] <= 0 or self.ball['x'] >= self.canvas_width:
+			if (self.ball['x'] <= 0):
+				self.scores['player2'] += 1
+			if (self.ball['x'] >= self.canvas_width):
+				self.scores['player1'] += 1
+			self.reset_ball()
+		
+		self.ball['y'] += self.ball['vy'] * self.ball['speed']
+		self.ball['x'] += self.ball['vx'] * self.ball['speed']
+
+
+	def reset_ball(self):
+		self.ball['y'] = self.canvas_height / 2
+		self.ball['x'] = self.canvas_width / 2
+		self.ball['vx'] = 2
+		self.ball['vy'] = random.uniform(0.5, 3)
+		if random.choice([True, False]):
+			self.ball['vx'] *= -1
+		if random.choice([True, False]):
+			self.ball['vy'] *= -1
+		self.ball['speed'] = 2
+		self.paddle_collision = False
+		self.collision_timer = 0
+
+
 
 	def serialize_state(self):
 		return json.dumps({
 			'ball': self.ball,
 			'paddles': self.paddles,
-			'scores': {
-				str(player): score
-				for player, score in self.scores.items()
-			},
+			'scores': self.scores,
+			'winner': self.winner,
 		})
 
 
@@ -90,9 +166,22 @@ class PongGame:
 		self.running = True
 		while self.running:
 			self.update_game_state()
-			# self.move_paddle(self.player1, 'up') 
 			state = self.serialize_state()
-			# print(f"1: {self.paddles["player1"]['y']} 2: {self.paddles["player2"]['y']}")
-			sys.stdout.flush()
 			await broadcast_callback(state)
-			await asyncio.sleep(1 / 60)  # 60 FPS
+			self.game_tick += 1
+			if self.paddle_collision:
+				self.collision_timer += 1
+			if self.collision_timer >= 5:
+				self.paddle_collision = False
+				self.collision_timer = 0
+			if self.game_tick % 1000:
+				self.ball['speed'] += 0.0001
+			if self.scores['player1'] == 5 or self.scores['player2'] == 5:
+				if self.scores['player1'] == 5:
+					self.winner['player1'] = True
+				else:
+					self.winner['player2'] = True
+				self.running = False
+				state = self.serialize_state()
+				await broadcast_callback(state)
+			await asyncio.sleep(1 / 60)

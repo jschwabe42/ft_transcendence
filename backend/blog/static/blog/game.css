@@ -85,3 +85,17 @@ button.ready:active {
     border: 2px solid #000; /* Optional: fügt dem Canvas einen Rahmen hinzu */
     background-color: #f0f0f0; /* Optional: Hintergrundfarbe für das Canvas */
 }
+
+.score {
+    display: flex; /* Aktiviert Flexbox */
+    justify-content: space-between; /* Platz zwischen den beiden Divs */
+    align-items: center; /* Zentriert den Inhalt vertikal */
+}
+
+.player {
+    flex: 1; /* Optional: Macht beide Divs gleich breit */
+    text-align: center; /* Zentriert den Text */
+    padding: 10px; /* Optional: Fügt etwas Innenabstand hinzu */
+    border: 1px solid #ccc; /* Optional: Fügt Rahmen hinzu */
+    margin: 5px; /* Optional: Fügt Abstände zwischen den Divs hinzu */
+}
