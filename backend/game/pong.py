@@ -171,13 +171,13 @@ class PongGame:
 			self.game_tick += 1
 			if self.paddle_collision:
 				self.collision_timer += 1
-			if self.collision_timer >= 5:
+			if self.collision_timer >= 10:
 				self.paddle_collision = False
 				self.collision_timer = 0
 			if self.game_tick % 1000:
 				self.ball['speed'] += 0.0001
-			if self.scores['player1'] == 100 or self.scores['player2'] == 100:
-				if self.scores['player1'] == 100:
+			if self.scores['player1'] == 10 or self.scores['player2'] == 10:
+				if self.scores['player1'] == 10:
 					self.winner['player1'] = True
 				else:
 					self.winner['player2'] = True

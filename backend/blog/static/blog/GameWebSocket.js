@@ -1,5 +1,9 @@
 let game_is_running = false;
 let game_first_start = true;
+// set to starndard in the beginning
+document.getElementById("player1").style.backgroundColor = "white";
+document.getElementById("player2").style.backgroundColor = "white";
+document.getElementById("winner").style.display = "none";
 
 const gameData = document.querySelector("#game-data");
 if (!gameData) {
@@ -108,8 +112,61 @@ let ball = {
 }
 
 
+// Update from server
+function updateGameFromServer(state) {
+	ball.x = state.ball.x;
+	ball.y = state.ball.y;
 
-// Keyboard press happend
+	leftpong.y = state.paddles.player1.y;
+	rightpong.y = state.paddles.player2.y;
+
+	if (scores.player1 != state.scores.player1 || scores.player2 != state.scores.player2) {
+		document.getElementById("player1").innerText = state.scores.player1;
+		document.getElementById("player2").innerText = state.scores.player2;
+		sendGameScores(state.scores.player1, state.scores.player2);
+	}
+	scores.player1 = state.scores.player1;
+	scores.player2 = state.scores.player2;
+	if (state.winner.player1 || state.winner.player2)
+		if (state.winner.player1) {
+			document.getElementById("player1").style.backgroundColor = "green";
+			document.getElementById("winner").style.display = "block";
+			console.log("Player1 Won");
+		}
+		if (state.winner.player2) {
+			document.getElementById("winner").style.display = "block";
+			document.getElementById("player2").style.backgroundColor = "green";
+			console.log("Player2 Won");
+		}
+		
+
+
+	renderGame();
+}
+
+
+// render
+function renderGame() {
+	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+	drawRackets();
+	drawBall();
+}
+
+function drawRackets () {
+	ctx.fillStyle = "black";
+	ctx.fillRect(rightpong.x, rightpong.y, rightpong.width, rightpong.height);
+	ctx.fillRect(leftpong.x, leftpong.y, leftpong.width, leftpong.height);
+}
+
+function drawBall() {
+	ctx.beginPath();
+	ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+	ctx.fillStyle = ball.color;
+	ctx.fill();
+	ctx.closePath();
+}
+
+// Keyboard listener arrows:
 document.addEventListener('keydown', (event) => {
 	const user = gameData.getAttribute("curr-user")
 	if (event.key === "ArrowUp") {
@@ -148,53 +205,42 @@ document.addEventListener('keyup', (event) => {
 		}));
 	}
 });
-
-// Update from server
-function updateGameFromServer(state) {
-	ball.x = state.ball.x;
-	ball.y = state.ball.y;
-
-	leftpong.y = state.paddles.player1.y;
-	rightpong.y = state.paddles.player2.y;
-
-	if (scores.player1 != state.scores.player1 || scores.player2 != state.scores.player2) {
-		document.getElementById("player1").innerText = state.scores.player1;
-		document.getElementById("player2").innerText = state.scores.player2;
-		sendGameScores(state.scores.player1, state.scores.player2);
+// w s
+document.addEventListener('keydown', (event) => {
+	const user = gameData.getAttribute("curr-user")
+	if (event.key === "w") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyDownW"
+		}));
 	}
-	scores.player1 = state.scores.player1;
-	scores.player2 = state.scores.player2;
-	if (state.winner.player1 || state.winner.player2)
-		if (state.winner.player1)
-			document.getElementById("player1").style.backgroundColor = "green";
-			document.getElementById("winner").style.display = "block";
-		if (state.winner.player2)
-			document.getElementById("winner").style.display = "block";
-			document.getElementById("player2").style.backgroundColor = "green";
-		
-
-
-	renderGame();
-}
-
-
-// render
-function renderGame() {
-	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-	drawRackets();
-	drawBall();
-}
-
-function drawRackets () {
-	ctx.fillStyle = "black";
-	ctx.fillRect(rightpong.x, rightpong.y, rightpong.width, rightpong.height);
-	ctx.fillRect(leftpong.x, leftpong.y, leftpong.width, leftpong.height);
-}
-
-function drawBall() {
-	ctx.beginPath();
-	ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-	ctx.fillStyle = ball.color;
-	ctx.fill();
-	ctx.closePath();
-}
+	if (event.key === "s") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyDownS"
+		}));
+	}
+});
+document.addEventListener('keyup', (event) => {
+	const user = gameData.getAttribute("curr-user")
+	if (event.key === "w") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyUpW"
+		}));
+	}
+	if (event.key === "s") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyUpS"
+		}));
+	}
+});

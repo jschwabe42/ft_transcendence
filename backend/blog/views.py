@@ -2,7 +2,7 @@ from typing import Any
 from django.db.models.query import QuerySet
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Post
 from django.contrib.auth.models import User
@@ -69,4 +69,5 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def about(request):
     # return  HttpResponse('<h1>Test</h1>')
-    return  render(request, 'blog/about.html', {'title': 'About'})
+    return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    # return render(request, 'blog/about.html', {'title': 'About'})

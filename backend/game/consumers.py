@@ -60,17 +60,35 @@ class GameConsumer(AsyncWebsocketConsumer):
 
 	async def KeyboardInterrupt(self, user, game_id, key):
 		game = await sync_to_async(Game.objects.get)(id=game_id)
+		user1_control = game.player1_control_settings
+		user2_control = game.player2_control_settings
 		user1 = await sync_to_async(lambda: game.player1.user.username)()
 		user2 = await sync_to_async(lambda: game.player2.user.username)()
 
 		if user1 == user:
+			if user1_control == "w_s":
+				if key == "KeyDownW":
+					key = "KeyDownArrowUp"
+				elif key == "KeyDownS":
+					key = "KeyDownArrowDown"
+				elif key == "KeyUpW":
+					key = "KeyUpArrowUp"
+				elif key == "KeyUpS":
+					key = "KeyUpArrowDown"
 			self.game.move_paddle("player1", key)
-			# print("player1\n", user1)
 		elif user2 == user:
+			if user2_control == "w_s":
+				if key == "KeyDownW":
+					key = "KeyDownArrowUp"
+				elif key == "KeyDownS":
+					key = "KeyDownArrowDown"
+				elif key == "KeyUpW":
+					key = "KeyUpArrowUp"
+				elif key == "KeyUpS":
+					key = "KeyUpArrowDown"
 			self.game.move_paddle("player2", key)
-			# print("player2\n", user2)
 
-
+ 
 
 
 	async def readyButton(self, event):

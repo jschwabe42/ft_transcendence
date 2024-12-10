@@ -45,7 +45,7 @@ class ScoreBoardView(APIView):
 		game_id = request.data.get('game_id')
 		score1 = request.data.get('score1')
 		score2 = request.data.get('score2')
-		print(game_id, score1, score2)
+		# print(game_id, score1, score2)
 		if not game_id:
 			return Response({"error": "game_id score1 and score2 are requirded"}, status=status.HTTP_400_BAD_REQUEST)
 		
