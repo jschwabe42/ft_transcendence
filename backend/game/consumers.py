@@ -6,17 +6,25 @@ from asgiref.sync import sync_to_async
 from .pong import PongGame
 import asyncio
 
+games = {}
+
 class GameConsumer(AsyncWebsocketConsumer):
 	async def connect(self):
 		self.game_id = self.scope['url_route']['kwargs']['game_id']
 		self.room_group_name = f'game_{self.game_id}'
-		self.game = PongGame("player1", "player2")
 
+		# Stelle sicher, dass ein zentrales Spiel verwendet wird
+		if self.game_id not in games:
+			games[self.game_id] = PongGame("player1", "player2")
+		self.game = games[self.game_id]
+
+		# Gruppe hinzufügen
 		await self.channel_layer.group_add(
 			self.room_group_name,
 			self.channel_name
 		)
 		await self.accept()
+
 
 	async def disconnect(self, close_code):
 		await self.channel_layer.group_discard(
@@ -46,15 +54,24 @@ class GameConsumer(AsyncWebsocketConsumer):
 			user = text_data_json['user']
 			game_id = text_data_json['game_id']
 			key = text_data_json['key']
-			await self.channel_layer.group_send(
-				self.room_group_name,
-				{
-					'type': 'KeyboardEvent',
-					'use': use,
-					'user': user,
-					'key': key,
-				}
-			)
+			await self.KeyboardInterrupt(user, game_id, key)
+
+
+
+	async def KeyboardInterrupt(self, user, game_id, key):
+		game = await sync_to_async(Game.objects.get)(id=game_id)
+		user1 = await sync_to_async(lambda: game.player1.user.username)()
+		user2 = await sync_to_async(lambda: game.player2.user.username)()
+
+		if user1 == user:
+			self.game.move_paddle("player1", key)
+			# print("player1\n", user1)
+		elif user2 == user:
+			self.game.move_paddle("player2", key)
+			# print("player2\n", user2)
+
+
+
 
 	async def readyButton(self, event):
 		use = event['use']
@@ -64,29 +81,42 @@ class GameConsumer(AsyncWebsocketConsumer):
 			'user': user,
 		}))
 
-	async def KeyboardEvent(self, event):
-		use = event['use']
-		user = event['user']
-		key = event['key']
-		await self.send(text_data=json.dumps({
-			'use': use,
-			'user': user,
-			'key': key,
-		}))
-
 	async def save_message(self, user, game_id):
 		game = await sync_to_async(Game.objects.get)(id=game_id)
 		# Use sync_to_async to access related fields in an async context
 		user1 = await sync_to_async(lambda: game.player1.user.username)()
 		user2 = await sync_to_async(lambda: game.player2.user.username)()
 
+		# if not (game.player1_ready and game.player2_ready):
 		if user1 == user:
 			game.player1_ready = True
 		if user2 == user:
 			game.player2_ready = True
-
-		## Wenn der 2. Ready Drueckt
-		# asyncio.create_task(self.start_game_loop())
+		
+		# create new task (calls start_game function)
+		if game.player1_ready and game.player2_ready:
+			asyncio.create_task(self.start_game_loop())
 
 		# Save the game changes
 		await sync_to_async(game.save)()
+
+
+	async def start_game_loop(self):
+		async def broadcast_callback(state):
+			await self.channel_layer.group_send(
+				self.room_group_name,
+				{
+					'type': 'game_state',
+					'state': state,
+				}
+			)
+		# start the gameloop
+		await self.game.game_loop(broadcast_callback)
+
+	# send Gamestats to clients
+	async def game_state(self, event):
+		state = event['state']
+		await self.send(text_data=json.dumps({
+			'use': 'game_state',
+			'state': json.loads(state),
+		}))

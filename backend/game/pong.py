@@ -1,6 +1,7 @@
 import asyncio
 import math
 import json
+import sys
 
 
 class PongGame:
@@ -10,12 +11,6 @@ class PongGame:
 		self.canvas_width = 800
 		self.canvas_height = 600
 
-
-		self.playerOneUp = False
-		self.playerOneDown = False
-
-		self.playerTwoUp = False
-		self.playerTwoDown = False
 
 		# Ball state
 		self.ball = {
@@ -46,47 +41,32 @@ class PongGame:
 		self.running = False
 
 	def update_game_state(self):
-		if self.playerOneKeyUp == True:
-			paddle = self.paddles["player1"]
-			paddle['y'] -= 5
-		if (self.playerOneKeyDown == True):
-			paddle = self.paddles["player1"]
-			paddle['y'] += 5
-
-		if self.playerTwoKeyUp == True:
-			paddle = self.paddles["player2"]
-			paddle['y'] -= 5
-		if (self.playerTwoKeyDown == True):
-			paddle = self.paddles["player2"]
-			paddle['y'] += 5
+		paddle = self.paddles["player1"]
+		# print("player1", paddle['y'])
+		paddle = self.paddles["player2"]
+		# print("player2", paddle['y'])
 
 
 	def move_paddle(self, player, key):
-		if (player == "player1"):
-			if (key == "KeyDownArrowUp"):
-				self.playerOneKeyUp = True
-			if (key == "KeyDownArrowDown"):
-				self.playerOneKeyDown = True
-			if (key == "KeyUpArrowUp"):
-				self.playerOneKeyUp = False
-			if (key == "KeyUpArrowDown"):
-				self.playerOneKeyDown = False
+		if (key == "KeyDownArrowUp"):
+			if (player == "player1"):
+				self.paddles["player1"]['y'] -= 5
+				print(f"player1 {self.paddles["player1"]['y']}")
+				sys.stdout.flush()
+			else:
+				self.paddles["player2"]['y'] -= 5
+				print(f"player2 {self.paddles["player2"]['y']}")
+				sys.stdout.flush()
 
-		if (player == "player2"):
-			print("HElloWorld")
-			if (key == "KeyDownArrowUp"):
-				self.playerTwoKeyUp = True
-			if (key == "KeyDownArrowDown"):
-				self.playerTwoKeyDown = True
-			if (key == "KeyUpArrowUp"):
-				self.playerTwoKeyUp = False
-			if (key == "KeyUpArrowDown"):
-				self.playerTwoKeyDown = False
-
-
-
-
-
+		if (key == "KeyDownArrowDown"):
+			if (player == "player1"):
+				self.paddles["player1"]['y'] += 5
+				print(f"player1 {self.paddles["player1"]['y']}")
+				sys.stdout.flush()
+			else:
+				self.paddles["player2"]['y'] += 5
+				print(f"player2 {self.paddles["player2"]['y']}")
+				sys.stdout.flush()
 
 
 	def _check_paddle_collision(self):
@@ -110,7 +90,9 @@ class PongGame:
 		self.running = True
 		while self.running:
 			self.update_game_state()
-			# self.move_paddle(self.player1, 'up')
+			# self.move_paddle(self.player1, 'up') 
 			state = self.serialize_state()
+			# print(f"1: {self.paddles["player1"]['y']} 2: {self.paddles["player2"]['y']}")
+			sys.stdout.flush()
 			await broadcast_callback(state)
 			await asyncio.sleep(1 / 60)  # 60 FPS
