@@ -1,13 +1,13 @@
 
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Chat(models.Model):
     message = models.CharField(max_length=255)
     date_posted = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.author.username}: {self.message}"
@@ -16,7 +16,7 @@ class Group(models.Model):
     groupName = models.CharField(max_length=255)
     date_created = models.DateTimeField(default=timezone.now)
     members = models.ManyToManyField(
-        'users.CustomUser',
+        User,
         related_name="chat_groups"  # Use a unique related_name
     )
 
@@ -26,7 +26,7 @@ class Group(models.Model):
 
 class Message(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="messages")  # Link to Group
-    author = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)  # Link to User model
+    author = models.ForeignKey(User, on_delete=models.CASCADE)  # Link to User model
     content = models.TextField()  # Content of the message
     date_posted = models.DateTimeField(default=timezone.now)
 
