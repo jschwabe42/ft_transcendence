@@ -13,7 +13,7 @@ class UserRegisterForm(UserCreationForm):
         cleaned_data = super(UserRegisterForm, self).clean()
         email = cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("Email already exists")
+            self.add_error('email', 'A user with that email already exists.')
         return cleaned_data
 
     class Meta:
