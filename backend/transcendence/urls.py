@@ -20,6 +20,7 @@ from django.urls import path, include
 from django.conf import settings
 from debug_toolbar.toolbar import debug_toolbar_urls
 from users import views as user_views
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('game/', include("game.urls")),
@@ -29,7 +30,9 @@ urlpatterns = [
     path('profile/', user_views.profile, name='profile'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', user_views.custom_logout, name='logout'),
-    path('chat/', include('chat.urls')),
+    path('chat/', include('chat.urls')),    
+    path('api/token/test/', TokenObtainPairView.as_view(), name='token_obtain_test'),
+    path('api/token/verify/', TokenRefreshView.as_view(), name='token_verify_test'),
     # path('__debug__/', include(debug_toolbar.urls)),
 ]
 
