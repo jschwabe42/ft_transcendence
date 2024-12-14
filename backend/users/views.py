@@ -23,7 +23,8 @@ def register(request):
 
 
 from django.contrib.auth import logout
-
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 #costum Logout, couse Idk I am stupid to get the normal working
 def custom_logout(request):
@@ -35,19 +36,24 @@ def profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid():
+        mod_pwd_form = PasswordChangeForm(request.user, request.POST)
+        if u_form.is_valid() and p_form.is_valid() and mod_pwd_form.is_valid():
             u_form.save()
             p_form.save()
+            user = mod_pwd_form.save()
+            update_session_auth_hash(request, user)
             messages.success(request, f'Your account has been updated')
             return redirect('profile')
 
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
+        mod_pwd_form = PasswordChangeForm(request.user)
 
     context = {
         'u_form': u_form,
         'p_form': p_form,
+        'mod_pwd_form': mod_pwd_form,
     }
 
     return render(request, 'users/profile.html', context)
