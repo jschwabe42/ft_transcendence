@@ -61,7 +61,7 @@ class Game(models.Model):
 
 class Player(models.Model):
     # replace with user OneToOneField?
-    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    profile = models.OneToOneField('users.Profile', on_delete=models.CASCADE, related_name='profile_instance_for_player')
     created_at = models.DateTimeField("date created")
     matches_won = models.IntegerField(default=0)
     matches_lost = models.IntegerField(default=0)
