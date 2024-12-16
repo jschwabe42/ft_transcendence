@@ -11,8 +11,8 @@
     <ul>
         {% for player in players_list %}
         <li>
-            <a href="{% url 'game:player_details' player.profile %}">
-                {{ player.profile.get_name }}
+            <a href="{% url 'game:player_details_by_id' player.id %}">
+                {{ player.display_name }}
             </a>
         </li>
         {% endfor %}

@@ -20,10 +20,5 @@ def player_details_by_id(request, player_id):
     player = get_object_or_404(Player, pk=player_id)
     return render(request, "game/player_details.html", {"player": player})
 
-# for display inside game
-def player_details(request, username):
-    player = get_object_or_404(Player, user__username=username)
-    return render(request, "game/player_details.html", {"player": player})
-
 def dashboard(request):
     return render(request, "game/dashboard.html", {"dashboard": Dashboard.get_instance()})
