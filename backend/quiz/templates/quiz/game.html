@@ -26,17 +26,28 @@
 		</div>
 	{% endif %} -->
 	{% if question %}
-		<div id=""question>
+		<div id="question">
 			<h2>{{ question.question }}</h2>
-			<ul>
-				<li>{{ question.correct_answer }}</li>
-				{% for answer in question.incorrect_answers %}
-					<li>{{ answer }}</li>
-				{% endfor %}
-			</ul>
+				<ul>
+					{% for answer in shuffled_answers %}
+					<li id="answer-option" onclick="submitAnswer('{{ answer }}')">{{ answer }}</li>
+					{% endfor %}
+				</ul>
 		</div>
 	{% endif %}
 </body>
 </html>
 
 <script src="{% static 'quiz/js/roommemberupdate.js' %}"></script>
+<script>
+	function submitAnswer(answer) {
+		fetch("{% url 'quiz:submit_answer' room.name %}", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"X-CSRFToken": "{{ csrf_token }}"
+			},
+			body: JSON.stringify({ answer: answer })
+		});
+	}
+</script>

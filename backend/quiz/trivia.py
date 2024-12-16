@@ -17,20 +17,3 @@ def get_trivia_questions(amount):
 	else:
 		print(f"Failed to retrieve data: {response.status_code}")
 		return None
-
-def store_trivia_questions(filename, amount):
-	questions = get_trivia_questions(amount)
-	if questions:
-		with open(filename, 'w') as file:
-			json.dump(questions, file, indent=4)
-	else:
-		print("No questions to store")
-
-def load_trivia_questions(filename):
-	if os.path.exists(filename):
-		with open(filename, 'r') as file:
-			questions = json.load(file)
-		return questions
-	else:
-		print(f"{filename} does not exist")
-		return None

@@ -1,9 +1,12 @@
+import random
+import json
+import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.timezone import now
 from .models import Room, Participant
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from .trivia import get_trivia_questions, store_trivia_questions, load_trivia_questions
+from .trivia import get_trivia_questions
 import os
 
 # Known issue: Trying to create a room without being logged in
@@ -93,15 +96,46 @@ def broadcast_room_list_update():
 
 def game_view(request, room_name):
 	room = get_object_or_404(Room, name=room_name)
-	filename = f'trivia_questions_{room_name}.json'
-	if not os.path.exists(filename):
-		store_trivia_questions(filename, amount=10)
-	trivia_data =  load_trivia_questions(filename)
-	current_question = trivia_data[0] if trivia_data else None
+	if not room.questions:
+		room.questions = get_trivia_questions(amount=10)
+		room.save()
+	current_question = room.questions[0] if room.questions else None
+	if current_question and not room.current_question:
+		answers = current_question['incorrect_answers'] + [current_question['correct_answer']]
+		random.shuffle(answers)
+		room.current_question = current_question
+		room.shuffled_answers = answers
+		room.save()
 	if not room.game_started:
 		return render (request, 'quiz/room.html', {'room': room})
-	return render(request, 'quiz/game.html', {'room': room, 'question': current_question})
+	return render(request, 'quiz/game.html', {'room': room, 'question': room.current_question, 'shuffled_answers': room.shuffled_answers})
 
+# def submit_answer(request, room_name):
+# 	if request.method == 'POST':
+# 		room = get_object_or_404(Room, name=room_name)
+# 		data = json.loads(requests.body)
+# 		answer = data.get('answer')
+# 		print(f"Received answer: {answer} from user: {request.user.username}")
+# 		return JsonResponse({'status': 'ok'})
+
+# def get_correct_answer(request, room_name):
+# 	room = get_object_or_404(Room, name=room_name)
+# 	correct_answer = room.current_question['correct_answer']
+# 	return JsonResponse({'correct_answer': correct_answer})
+
+# def start_timer(room_name):
+# 	import time
+# 	time.sleep(30)
+# 	room = Room.objects.get(name=room_name)
+# 	correct_answer = room.current_question['correct_answer']
+# 	channel_layer = get_channel_layer()
+# 	async_to_sync(channel_layer.group_send)(
+# 		f"quiz_{room_name}",
+# 		{
+# 			"type": "show_correct_answer",
+# 			"correct_answer": correct_answer,
+# 		}
+# 	)
 # Add to crontab etc to periodically clean up empty rooms
 # from django.utils.timezone import now
 # from datetime import timedelta
