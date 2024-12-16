@@ -11,7 +11,7 @@
     <ul>
         {% for game in recent_games_list %}
         <li>
-            <a href="{% url 'pong:game_details' game.id %}">
+            <a href="{% url 'game:game_details' game.id %}">
                 {{ game.player1 }} vs {{ game.player2 }} ({{ game.score1 }}-{{ game.score2 }})
             </a>
         </li>
