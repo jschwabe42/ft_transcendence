@@ -60,8 +60,7 @@ class Game(models.Model):
         return self.played_at - self.started_at
 
 class Player(models.Model):
-    # replace with user OneToOneField?
-    profile = models.OneToOneField('users.Profile', on_delete=models.CASCADE, related_name='profile_instance_for_player')
+    profile = models.OneToOneField('users.Profile', on_delete=models.CASCADE, related_name='profile_for_player')
     created_at = models.DateTimeField("date created")
     matches_won = models.IntegerField(default=0)
     matches_lost = models.IntegerField(default=0)
