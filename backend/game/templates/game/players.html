@@ -6,13 +6,13 @@
 </head>
 
 <body>
-    <h2>all players</h2>
+    <h2>List of all player profiles</h2>
     {% if players_list %}
     <ul>
         {% for player in players_list %}
         <li>
-            <a href="{% url 'pong:player_details' player.id %}">
-                {{ player.name }}
+            <a href="{% url 'game:player_details' player.profile %}">
+                {{ player.profile.get_name }}
             </a>
         </li>
         {% endfor %}
