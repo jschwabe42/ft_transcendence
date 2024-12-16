@@ -3,6 +3,10 @@ from django.utils.timezone import now
 from .models import Room, Participant
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from .trivia import get_trivia_questions, store_trivia_questions, load_trivia_questions
+import os
+
+# Known issue: Trying to create a room without being logged in
 
 def quiz_home(request):
 	rooms = Room.objects.filter(is_active=True)
@@ -89,9 +93,14 @@ def broadcast_room_list_update():
 
 def game_view(request, room_name):
 	room = get_object_or_404(Room, name=room_name)
+	filename = f'trivia_questions_{room_name}.json'
+	if not os.path.exists(filename):
+		store_trivia_questions(filename, amount=10)
+	trivia_data =  load_trivia_questions(filename)
+	current_question = trivia_data[0] if trivia_data else None
 	if not room.game_started:
 		return render (request, 'quiz/room.html', {'room': room})
-	return render(request, 'quiz/game.html', {'room': room})
+	return render(request, 'quiz/game.html', {'room': room, 'question': current_question})
 
 # Add to crontab etc to periodically clean up empty rooms
 # from django.utils.timezone import now

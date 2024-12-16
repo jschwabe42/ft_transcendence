@@ -25,6 +25,17 @@
 			<button id="start-game">Start Game</button>
 		</div>
 	{% endif %} -->
+	{% if question %}
+		<div id=""question>
+			<h2>{{ question.question }}</h2>
+			<ul>
+				<li>{{ question.correct_answer }}</li>
+				{% for answer in question.incorrect_answers %}
+					<li>{{ answer }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
 </body>
 </html>
 
