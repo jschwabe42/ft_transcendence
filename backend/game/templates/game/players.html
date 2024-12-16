@@ -12,7 +12,7 @@
         {% for player in players_list %}
         <li>
             <a href="{% url 'game:player_details_by_id' player.id %}">
-                {{ player.display_name }}
+                {{ player }}
             </a>
         </li>
         {% endfor %}

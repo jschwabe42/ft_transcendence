@@ -11,9 +11,9 @@
         <h2>Game Details</h2>
         <h3>
             <a href="{% url 'game:player_details_by_id' game.player1.id %}">
-                {{ game.player1.display_name }}
+                {{ game.player1 }}
             </a> vs <a href="{% url 'game:player_details_by_id' game.player2.id %}">
-                {{ game.player2.display_name }}
+                {{ game.player2 }}
             </a>
         </h3>
 

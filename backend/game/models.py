@@ -25,7 +25,7 @@ class Game(models.Model):
     played_at = models.DateTimeField("date finished")
     # obtain from each player the User object and display its username
     def __str__(self):
-        return f"{self.player1.display_name()} vs {self.player2.display_name()} ({self.score1}-{self.score2})"
+        return f"{self.player1} vs {self.player2} ({self.score1}-{self.score2})"
     @admin.display(
         boolean=True,
         ordering="played_at",
@@ -64,10 +64,8 @@ class Player(models.Model):
     created_at = models.DateTimeField("date created")
     matches_won = models.IntegerField(default=0)
     matches_lost = models.IntegerField(default=0)
-    def display_name(self):
-        return self.profile.get_name()
     def __str__(self):
-        return f'{self.profile.get_name()} Profile'
+        return self.profile.get_name()
     @admin.display(
         boolean=True,
         ordering="created_at",
