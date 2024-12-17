@@ -81,6 +81,12 @@ class QuizConsumer(AsyncWebsocketConsumer):
 			'type': 'game_start',
 		}))
 
+	async def show_correct_answer(self, event):
+		correct_answer = event['correct_answer']
+		self.send(text_data=json.dumps({
+			'correct_answer': correct_answer
+		}))
+
 	@sync_to_async
 	def start_game(self, room_name):
 		room = get_object_or_404(Room, name=room_name)

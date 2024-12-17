@@ -5,6 +5,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Room: {{ room.name }}</title>
+		<style>
+		.correct { background-color: green; }
+		.incorrect { background-color: red; }
+	</style>
 </head>
 <body data-room-name="{{ room.name }}">
 	{% include 'navbar.html' %}
@@ -28,9 +32,10 @@
 	{% if question %}
 		<div id="question">
 			<h2>{{ question.question }}</h2>
-				<ul>
+				<ul id="answers">
 					{% for answer in shuffled_answers %}
-					<li id="answer-option" onclick="submitAnswer('{{ answer }}')">{{ answer }}</li>
+					<!-- <button id="answer-option" onclick="submitAnswer('{{ answer }}')">{{ answer }}</button> -->
+					<button id="answer-option" data-answer-url="{% url 'quiz:submit_answer' room.name %}" onclick="submitAnswer('{{ answer }}', this)">{{ answer }}</button>
 					{% endfor %}
 				</ul>
 		</div>
@@ -38,16 +43,4 @@
 </body>
 </html>
 
-<script src="{% static 'quiz/js/roommemberupdate.js' %}"></script>
-<script>
-	function submitAnswer(answer) {
-		fetch("{% url 'quiz:submit_answer' room.name %}", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"X-CSRFToken": "{{ csrf_token }}"
-			},
-			body: JSON.stringify({ answer: answer })
-		});
-	}
-</script>
+<script src="{% static 'quiz/js/game.js' %}"></script>
