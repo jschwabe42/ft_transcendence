@@ -11,6 +11,8 @@ from django.utils import timezone
 
 from django.contrib import admin
 
+from users.models import Profile
+
 # create game when starting a new game
 # update game when finishing a game/goals are scored
 class Game(models.Model):
@@ -21,6 +23,7 @@ class Game(models.Model):
     # calculate duration of game from start to finish
     started_at = models.DateTimeField("date started")
     played_at = models.DateTimeField("date finished")
+    # obtain from each player the User object and display its username
     def __str__(self):
         return f"{self.player1} vs {self.player2} ({self.score1}-{self.score2})"
     @admin.display(
@@ -57,13 +60,12 @@ class Game(models.Model):
         return self.played_at - self.started_at
 
 class Player(models.Model):
-    # replace with user OneToOneField?
-    name = models.CharField(max_length=200)
+    profile = models.OneToOneField('users.Profile', on_delete=models.CASCADE, related_name='profile_for_player')
     created_at = models.DateTimeField("date created")
     matches_won = models.IntegerField(default=0)
     matches_lost = models.IntegerField(default=0)
     def __str__(self):
-        return self.name
+        return self.profile.get_name()
     @admin.display(
         boolean=True,
         ordering="created_at",

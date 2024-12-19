@@ -10,10 +10,10 @@
     <div class="game-details">
         <h2>Game Details</h2>
         <h3>
-            <a href="{% url 'pong:player_details' game.player1.id %}">
-                {{ game.player1.name }}
-            </a> vs <a href="{% url 'pong:player_details' game.player2.id %}">
-                {{ game.player2.name }}
+            <a href="{% url 'game:player_details_by_id' game.player1.id %}">
+                {{ game.player1 }}
+            </a> vs <a href="{% url 'game:player_details_by_id' game.player2.id %}">
+                {{ game.player2 }}
             </a>
         </h3>
 
