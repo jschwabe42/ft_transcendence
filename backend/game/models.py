@@ -10,13 +10,14 @@ from django.utils import timezone
 # for displaying games in admin panel
 
 from django.contrib import admin
+
 from users.models import Profile
 
 # create game when starting a new game
 # update game when finishing a game/goals are scored
 class Game(models.Model):
-    player1 = models.ForeignKey("users.Profile", related_name='games_as_player1', on_delete=models.CASCADE)
-    player2 = models.ForeignKey("users.Profile", related_name='games_as_player2', on_delete=models.CASCADE)
+    player1 = models.ForeignKey("Player", related_name='games_as_player1', on_delete=models.CASCADE)
+    player2 = models.ForeignKey("Player", related_name='games_as_player2', on_delete=models.CASCADE)
     score1 = models.IntegerField(default=0)
     score2 = models.IntegerField(default=0)
     # calculate duration of game from start to finish
@@ -29,20 +30,19 @@ class Game(models.Model):
 
     player1_control_settings = models.CharField(max_length=255, default='up down')
     player2_control_settings = models.CharField(max_length=255, default='up down')
-
+    # obtain from each player the User object and display its username
     def __str__(self):
         return f"{self.player1} vs {self.player2} ({self.score1}-{self.score2})"
-
-    #For displaying in admin page
     @admin.display(
         boolean=True,
         ordering="played_at",
         description="Played recently?",
     )
-
     def was_played_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.played_at <= now
+    def start(self):
+        self.started_at = timezone.now()
     def end(self):
         self.played_at = timezone.now()
         if self.score1 > self.score2:
@@ -66,6 +66,24 @@ class Game(models.Model):
     def get_duration(self):
         return self.played_at - self.started_at
 
+class Player(models.Model):
+    profile = models.OneToOneField('users.Profile', on_delete=models.CASCADE, related_name='profile_for_player')
+    created_at = models.DateTimeField("date created")
+    matches_won = models.IntegerField(default=0)
+    matches_lost = models.IntegerField(default=0)
+    def __str__(self):
+        return self.profile.get_name()
+    @admin.display(
+        boolean=True,
+        ordering="created_at",
+        description="Created recently?",
+    )
+    def was_created_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.created_at <= now
+
+    def matches_played(self):
+        return self.matches_won + self.matches_lost
 
 class Dashboard(models.Model):
     games_played = models.IntegerField(default=0)
@@ -76,7 +94,7 @@ class Dashboard(models.Model):
 
     def update_with_game(self, game):
         self.games_played += 1
-        players = Profile.objects.all().order_by("-matches_won")
+        players = Player.objects.all().order_by("-matches_won")
         self.leaderboard = "\n".join([f"{player.name}: {player.matches_won}" for player in players])
         self.save()
 
