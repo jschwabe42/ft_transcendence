@@ -10,7 +10,7 @@ from channels.layers import get_channel_layer
 from .trivia import get_trivia_questions
 import os
 import threading
-
+from .game_logic import initialize_room, submit_answer
 # Known issue: Trying to create a room without being logged in
 
 def quiz_home(request):
@@ -72,10 +72,7 @@ def broadcast_room_update(room_name):
 	room = Room.objects.get(name=room_name)
 	participants = [p.user.username for p in room.participants.all()]
 	leader = room.leader.user.username if room.leader else None
-	# print("Hello World")
-	# print(f"Broadcasting room update: {participants}, Leader: {leader}")
 	channel_layer = get_channel_layer()
-	# print(f"Broadcasting update for room {room_name}: {participants}")
 	async_to_sync(channel_layer.group_send)(
 		f"quiz_{room_name}",
 		{
@@ -98,16 +95,7 @@ def broadcast_room_list_update():
 
 def game_view(request, room_name):
 	room = get_object_or_404(Room, name=room_name)
-	if not room.questions:
-		room.questions = get_trivia_questions(amount=10)
-		room.save()
-	current_question = room.questions[0] if room.questions else None
-	if current_question and not room.current_question:
-		answers = current_question['incorrect_answers'] + [current_question['correct_answer']]
-		random.shuffle(answers)
-		room.current_question = current_question
-		room.shuffled_answers = answers
-		room.save()
+	room = initialize_room(room)
 	if not room.game_started:
 		return render (request, 'quiz/room.html', {'room': room})
 	return render(request, 'quiz/game.html', {'room': room, 'question': room.current_question, 'shuffled_answers': room.shuffled_answers})
@@ -118,10 +106,7 @@ def submit_answer(request, room_name):
 		data = json.loads(request.body)
 		answer = data.get('answer')
 		print(f"Received answer: {answer} from user: {request.user.username}")
-		if not hasattr(room, 'answers'):
-			room.answers = {}
-		room.answers[request.user.username] = answer
-		room.save()
+		room = submit_answer(room, request.user, answer)
 		return JsonResponse({'status': 'ok'})
 
 def get_correct_answer(request, room_name):
@@ -144,12 +129,24 @@ def start_timer(room_name):
 	)
 
 def start_game(request, room_name):
-	room = get_object_or_404(Room, name=room_name)
-	room.game_started = True
-	room.save()
-	# Start the timer in a separate thread
-	threading.Thread(target=start_timer, args=(room_name,)).start()
-	return redirect('quiz:game', room_name=room_name)
+	if request.method == 'POST':
+		room = get_object_or_404(Room, name=room_name)
+		room.game_started = True
+		room.save()
+		channel_layer = get_channel_layer()
+		async_to_sync(channel_layer.group_send)(
+			f"quiz_{room_name}",
+			{
+				"type": "game_start",
+				"question": room.current_question,
+				"shuffled_answers": room.shuffled_answers,
+			}
+		)
+		# Start the timer in a separate thread
+		# threading.Thread(target=start_timer, args=(room_name,)).start()
+		return redirect('quiz:game_view', room_name=room_name)
+	return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
+
 
 # Add to crontab etc to periodically clean up empty rooms
 # from django.utils.timezone import now

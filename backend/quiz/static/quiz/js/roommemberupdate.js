@@ -30,10 +30,6 @@ socket.onmessage = function (e) {
 			participantsList.appendChild(li);
 		});
 	}
-
-	if (data.type === 'game_start') {
-		window.location.href = `/quiz/room/${roomName}/ingame/`;
-	}
 };
 
 // socket.onclose = function (e) {

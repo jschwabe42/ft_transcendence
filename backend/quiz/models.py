@@ -20,7 +20,6 @@ class Room(models.Model):
 	shuffled_answers = models.JSONField(null=True, blank=True)
 	questions = models.JSONField(null=True, blank=True)
 
-
 	def update_activity(self):
 		self.last_activity = now()
 		self.save()

@@ -21,9 +21,13 @@
 		<button type="submit">Leave Room</button>
 	</form>
 	{% if user == room.leader.user %}
-		<div id="leader-options">
+		<!-- <div id="leader-options">
 			<button id="start-game">Start Game</button>
-		</div>
+		</div> -->
+		<form method="post" action="{% url 'quiz:start_game' room.name %}">
+			{% csrf_token %}
+			<button type="submit">Start Game</button>
+		</form>
 	{% endif %}
 </body>
 </html>
