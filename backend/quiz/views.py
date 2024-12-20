@@ -4,13 +4,13 @@ import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.timezone import now
 from django.http import JsonResponse
-from .models import Room, Participant
+from .models import Room, Participant, Answer
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from .trivia import get_trivia_questions
 import os
 import threading
-from .game_logic import initialize_room, submit_answer
+from .game_logic import initialize_room, handle_submit_answer
 # Known issue: Trying to create a room without being logged in
 
 def quiz_home(request):
@@ -103,10 +103,12 @@ def game_view(request, room_name):
 def submit_answer(request, room_name):
 	if request.method == 'POST':
 		room = get_object_or_404(Room, name=room_name)
+		participant = get_object_or_404(Participant, user=request.user, room=room)
 		data = json.loads(request.body)
 		answer = data.get('answer')
 		print(f"Received answer: {answer} from user: {request.user.username}")
-		room = submit_answer(room, request.user, answer)
+		# room = submit_answer(room, request.user, answer)
+		handle_submit_answer(room, participant, answer)
 		return JsonResponse({'status': 'ok'})
 
 def get_correct_answer(request, room_name):

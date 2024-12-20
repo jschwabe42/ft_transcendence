@@ -1,5 +1,5 @@
 import random
-from .models import Room
+from .models import Room, Participant, Answer
 from .trivia import get_trivia_questions
 
 def initialize_room(room):
@@ -15,9 +15,9 @@ def initialize_room(room):
 		room.save()
 	return room
 
-def submit_answer(room, user, answer):
-	if not hasattr(room, 'answers'):
-		room.answers = {}
-	room.answers[user.username] = answer
-	room.save()
-	return room
+def handle_submit_answer(room, user, answer):
+	Answer.objects.create(
+		room=room,
+		participant=user,
+		answer_given=answer
+	)

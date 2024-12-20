@@ -31,3 +31,12 @@ class Participant(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='participants')
 	joined_at = models.DateTimeField(auto_now_add=True)
+
+class Answer(models.Model):
+	room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='answers')
+	participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name='answers')
+	answer_given = models.JSONField()
+	answered_at = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return f"{self.participant.user.username} answered {self.answer_given} in {self.room.name}"
