@@ -33,7 +33,7 @@ class CreateGameView(APIView):
 		opponent_profile = Profile.objects.get(user=opponent)
 
 		# Create the game
-		game = Game.objects.create(player1=user_profile, player2=opponent_profile)
+		game = Game.objects.create(player1=user_profile.player, player2=opponent_profile.player)
 		game.save()
 
 		return Response({"game_id": game.id, "message": "Game created successfully."}, status=status.HTTP_201_CREATED)
@@ -79,9 +79,9 @@ class ControllKeySetting(APIView):
 		except Game.DoesNotExist:
 			return Response({"error": "Game not found."}, status=status.HTTP_404_NOT_FOUND)
 
-		if user == game.player1.user.username:
+		if user == game.player1.__str__():
 			game.player1_control_settings = control1
-		elif user == game.player2.user.username:
+		elif user == game.player2.__str__():
 			game.player2_control_settings = control2
 		else:
 			return Response({"error": "You are not a player in this game."}, status=status.HTTP_403_FORBIDDEN)
