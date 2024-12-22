@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     replaces = [('game', '0008_game_pending_game_player1_ready_game_player2_ready_and_more'), ('game', '0009_game_player1_control_settings_and_more'), ('game', '0010_alter_game_player1_alter_game_player2'), ('game', '0011_alter_game_player1_alter_game_player2')]
 
     dependencies = [
-        ('game', '0001_initial'),
+        ('game', '0001_initial_squashed'),
         ('users', '0002_profile_player'),
     ]
 

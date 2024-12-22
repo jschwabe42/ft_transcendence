@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('game', '0001_initial'),
+        ('game', '0001_initial_squashed'),
         ('users', '0001_initial'),
     ]
 

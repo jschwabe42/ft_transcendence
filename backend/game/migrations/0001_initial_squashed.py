@@ -7,8 +7,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [('game', '0001_initial'), ('game', '0007_alter_player_profile')]
-
     initial = True
 
     dependencies = [
