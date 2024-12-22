@@ -7,7 +7,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [('game', '0001_initial'), ('game', '0002_alter_player_name'), ('game', '0003_rename_name_player_user'), ('game', '0004_alter_player_user'), ('game', '0005_rename_user_player_profile'), ('game', '0006_alter_player_profile')]
+    # replaces = [('game', '0001_initial'), ('game', '0002_alter_player_name'), ('game', '0003_rename_name_player_user'), ('game', '0004_alter_player_user'), ('game', '0005_rename_user_player_profile'), ('game', '0006_alter_player_profile')]
 
     initial = True
 
