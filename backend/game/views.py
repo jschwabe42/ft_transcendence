@@ -46,7 +46,6 @@ def recent_games(request):
 def start_game(request, game_id):
 	game = get_object_or_404(Game, id=game_id)
 	return render(request, "game/start_game.html", {"game": game, "game_id": game_id})
-	# return render(request, "game/new_game.html")
 
 def game_details(request, game_id):
 	game = get_object_or_404(Game, pk=game_id)

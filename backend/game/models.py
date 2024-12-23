@@ -1,6 +1,5 @@
 import datetime
 from django.db import models
-from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -10,8 +9,6 @@ from django.utils import timezone
 # for displaying games in admin panel
 
 from django.contrib import admin
-
-from users.models import Profile
 
 # create game when starting a new game
 # update game when finishing a game/goals are scored
