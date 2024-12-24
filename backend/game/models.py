@@ -10,6 +10,8 @@ from django.utils import timezone
 
 from django.contrib import admin
 
+from users.models import Profile
+
 # create game when starting a new game
 # update game when finishing a game/goals are scored
 class Game(models.Model):
