@@ -47,14 +47,13 @@ class ScoreBoardView(APIView):
 		score2 = request.data.get('score2')
 		# print(game_id, score1, score2)
 		if not game_id:
-			return Response({"error": "game_id score1 and score2 are requirded"}, status=status.HTTP_400_BAD_REQUEST)
+			return Response({"error": "game_id score1 and score2 are required"}, status=status.HTTP_400_BAD_REQUEST)
 		
 		try:
 			game = Game.objects.get(id=game_id)
 		except Game.DoesNotExist:
 			return Response({"error": "Game not found."}, status=status.HTTP_404_NOT_FOUND)
 		
-		game = Game.objects.get(id=game_id)
 		game.score1 = int(score1)
 		game.score2 = int(score2)
 		game.save()
@@ -79,9 +78,9 @@ class ControllKeySetting(APIView):
 		except Game.DoesNotExist:
 			return Response({"error": "Game not found."}, status=status.HTTP_404_NOT_FOUND)
 
-		if user == game.player1.__str__():
+		if user == game.player1.profile.user.username:
 			game.player1_control_settings = control1
-		elif user == game.player2.__str__():
+		elif user == game.player2.profile.user.username:
 			game.player2_control_settings = control2
 		else:
 			return Response({"error": "You are not a player in this game."}, status=status.HTTP_403_FORBIDDEN)
