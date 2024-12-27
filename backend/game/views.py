@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 
@@ -24,13 +25,13 @@ def recent_games(request):
 						game.save()
 						return redirect('game:new_game', game_id=game.id)
 					else:
-						print("You cannot play against yourself.")
+						logging.error("You cannot play against yourself.")
 						return render(request, "game/recent_games.html", {"error_message": "You cannot play against yourself."})
 				else:
-					print("Invalid Username")
+					logging.error("Invalid Username")
 					return render(request, "game/recent_games.html", {"error_message": "Invalid opponent username."})
 			else:
-				print("No Input")
+				logging.error("No Input")
 				return render(request, "game/recent_games.html", {"error_message": "Please enter an opponent username."})
 		if 'player2_enter_game' in request.POST:
 			game_id = request.POST.get('player2_enter_game')
