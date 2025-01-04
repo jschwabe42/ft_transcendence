@@ -1,3 +1,4 @@
+import logging
 from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import Message, Group
 from django.contrib.auth.models import User
@@ -39,13 +40,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 		# If its a Chatmessage
 		if use == "chat_message":
-			print("Recieve")
+			logging.info("receive")
 			message = text_data_json['message']
 			username = text_data_json['username']
 			room_name = text_data_json['room_name']
 			room_id = text_data_json['room_id']
 
-			print(f"Empfangen: Nachricht='{message}', Benutzer='{username}', Raum='{room_name}', Raum_ID'{room_id}'")
+			logging.info(f"Empfangen: Nachricht='{message}', Benutzer='{username}', Raum='{room_name}', Raum_ID'{room_id}'")
 			await self.save_message(username, message, room_name, room_id)
 
 			# Nachricht an die Gruppe senden
@@ -66,7 +67,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 			room_id = text_data_json['room_id']
 			username = text_data_json['username']
 
-			print(f"Empfangen: Nachricht='{message}', Raum='{room_name}', Raum_ID'{room_id}'")
+			logging.info(f"Empfangen: Nachricht='{message}', Raum='{room_name}', Raum_ID'{room_id}'")
 
 			await self.save_new_user(username, message, room_name, room_id)
 
@@ -99,15 +100,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 		try:
 			user = await sync_to_async(User.objects.get)(username=message)
-			print("User exists")
+			logging.info("User exists")
 
 			group = await sync_to_async(Group.objects.get)(id=room_id)
 			members = await sync_to_async(lambda: list(group.members.all()))()
 			if user in members:
-				print("User already is Part of the Group")
+				logging.info("User already is Part of the Group")
 			else:
-				print("User is not part of the Group")
+				logging.info("User is not part of the Group")
 				await sync_to_async(group.members.add)(user)
 
 		except User.DoesNotExist:
-			print("User doesnt Exist")
+			logging.error("User doesnt Exist")
