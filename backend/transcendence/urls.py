@@ -31,7 +31,7 @@ urlpatterns = [
     path('logout/', user_views.custom_logout, name='logout'),
     path('chat/', include('chat.urls')),
 	path('image_app/', include('image_app.urls')),
-	path('quiz/', include('quiz.urls')),
+	# path('quiz/', include('quiz.urls')),
     # path('__debug__/', include(debug_toolbar.urls)),
 ]
 
