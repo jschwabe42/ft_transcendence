@@ -2,8 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Game, Player, Dashboard
+from .models import Game, Dashboard
 
 admin.site.register(Game)
-admin.site.register(Player)
 admin.site.register(Dashboard)
