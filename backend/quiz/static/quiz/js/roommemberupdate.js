@@ -30,7 +30,23 @@ socket.onmessage = function (e) {
 			participantsList.appendChild(li);
 		});
 	}
+
+	// Potential remove this
+	// if (data.type === 'game_start') {
+	// 	console.log('Game start message received, redirecting...');
+	// 	if (typeof roomName !== 'undefined') {
+	// 		console.log(`Redirecting to: /quiz/room/${roomName}/ingame/`); // Log the redirection URL
+	// 		window.location.href = `/quiz/room/${roomName}/ingame/`;
+	// 	} else {
+	// 		console.error('roomName is not defined');
+	// 	}
+	// }
 };
+
+	// // Potential remove this
+	// if (data.type === 'game_start') {
+	// 	window.location.href = `start_game/${roomName}/`;
+	// }
 
 // socket.onclose = function (e) {
 // 	console.error('Socket closed unexpectedly');

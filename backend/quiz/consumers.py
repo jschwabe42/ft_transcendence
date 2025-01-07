@@ -75,11 +75,18 @@ class QuizConsumer(AsyncWebsocketConsumer):
 		}))
 
 	async def game_start(self, event):
-		room_name = self.scope['url_route']['kwargs']['room_name']
-		room = await self.start_game(room_name)
+		# room_name = self.scope['url_route']['kwargs']['room_name']
+		# room = await self.start_game(room_name)
+		question = event.get('question')
+		shuffled_answers = event.get('shuffled_answers')
+		print(f"Sending game start message: {event}")
+		print(f"Self: {self}")
 		await self.send(text_data=json.dumps({
 			'type': 'game_start',
+			'question': question,
+			'shuffled_answers': shuffled_answers,
 		}))
+		# print(f"Message sent to client: {self.channel_name}")
 
 	async def show_correct_answer(self, event):
 		correct_answer = event['correct_answer']

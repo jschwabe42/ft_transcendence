@@ -96,6 +96,7 @@ def broadcast_room_list_update():
 def game_view(request, room_name):
 	room = get_object_or_404(Room, name=room_name)
 	room = initialize_room(room)
+	# room.save()
 	if not room.game_started:
 		return render (request, 'quiz/room.html', {'room': room})
 	return render(request, 'quiz/game.html', {'room': room, 'question': room.current_question, 'shuffled_answers': room.shuffled_answers})
