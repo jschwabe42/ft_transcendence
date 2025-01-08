@@ -40,9 +40,61 @@ document.addEventListener('DOMContentLoaded', function () {
 				<strong>${room.name}</strong> 
 				- Last activity: ${new Date(room.last_activity).toLocaleString()}
 				${room.is_active ? '(Active)' : '(Inactive)'}
+				<button class="join-button" data-room-id="${room.id}">Join</button>
 			</div>
 		`).join('');
 		roomListContainer.innerHTML = `<h2>Available Rooms</h2>${roomItems}`;
+		
+		document.querySelectorAll('.join-button').forEach(button => {
+			button.addEventListener('click', function () {
+				const roomId = button.getAttribute('data-room-id');
+				joinRoom(roomId);
+			});
+		});
+	}
+
+	/**
+	 * @function joinRoom
+	 * @brief Sends a request to the server to join the specified room
+	 * @param {string} roomId - The ID of the room to join
+	 * @throws {Error} If an error occurs while joining the room
+	 * @async
+	 */
+	function joinRoom(roomId) {
+		const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+		fetch(`/quiz/join_room/${roomId}/`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'X-CSRFToken': csrfToken
+			},
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (data.success) {
+				console.log('Joined room successfully');
+				loadRoomView(data.room_name);
+			} else {
+				console.error('Failed to join room:', data.error);
+			}
+		})
+		.catch(error => {
+			console.error('An error occurred while joining room:', error);
+		});
+	}
+
+	/**
+	 * @function loadRoomView
+	 * @brief Loads and displays the room view for the given room
+	 * @param {string} roomName - The name of the room to load
+	 */
+	function loadRoomView(roomName) {
+		quizAppContent.innerHTML = '';
+		import('./room_view.js').then(module => {
+			module.displayRoomView(roomName);
+		}).catch(error => {
+			console.error('An error occurred while loading room view:', error);
+		});
 	}
 
 	loadRooms();

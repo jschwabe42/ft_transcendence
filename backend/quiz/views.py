@@ -6,11 +6,15 @@ from django.utils.timezone import now
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from datetime import timezone
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+from django.urls import reverse
 
 # Create your views here.
 def index (request):
 	return render(request, 'quiz/index.html')
 
+@login_required
 def create_room(request):
 	"""
 	Create a new room with the given name.
@@ -70,3 +74,30 @@ def room_list_update():
 			}
 		}
 	)
+
+@login_required
+def join_room(request, room_id):
+	"""
+	Join the room with the given room_id.
+	Functions as API Endpoint. /quiz/join_room/<int:room_id>/
+	"""
+	try:
+		room = Room.objects.get(id=room_id)
+		participant, created = Participant.objects.get_or_create(user=request.user, room=room)
+
+		# Return the room details and participants
+		participants = Participant.objects.filter(room=room)
+		participants_data = [{'id': p.user.id, 'username': p.user.username} for p in participants]
+
+		return JsonResponse({
+			'success': True,
+			'room': {
+				'id': room.id,
+				'name': room.name,
+				'last_activity': room.last_activity,
+				'is_active': room.is_active
+			},
+			'participants': participants_data
+		})
+	except Room.DoesNotExist:
+		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
