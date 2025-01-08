@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	const wsUrl = `${protocol}${window.location.host}/ws/rooms/`;
 	const socket = new WebSocket(wsUrl);
 
+	/**
+	 * @function loadRooms
+	 * @brief Fetches the list of rooms from the server and displays them on the page
+	 */
 	async function loadRooms() {
 		try {
 			const response = await fetch('/quiz/api/room_list/');
@@ -22,6 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 
+	/**
+	 * @function displayRooms
+	 * @brief Displays the list of rooms on the page by injecting them into the DOM
+	 */
 	function displayRooms(rooms) {
 		if (rooms.length === 0) {
 			roomListContainer.innerHTML = '<p>No rooms available. Create a new room to get started.</p>';
@@ -36,11 +44,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		`).join('');
 		roomListContainer.innerHTML = `<h2>Available Rooms</h2>${roomItems}`;
 	}
+
 	loadRooms();
 
 	socket.onopen = function () {
 		console.log('WebSocket connection established');
 	};
+
+	// Receives updated room list from the server and displays it
 	socket.onmessage = function (event) {
 		const socket_data = JSON.parse(event.data);
 		if (socket_data.type === 'update_room_list') {

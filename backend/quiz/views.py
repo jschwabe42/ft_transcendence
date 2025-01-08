@@ -12,6 +12,12 @@ def index (request):
 	return render(request, 'quiz/index.html')
 
 def create_room(request):
+	"""
+	Create a new room with the given name.
+	Functions as API Endpoint. /quiz/create_room/
+	Calls room_list_update() to broadcast the updated room list to all connected clients.
+	Sets a room_leader if the room is created.
+	"""
 	if request.method == 'POST':
 		room_name = request.POST.get('room_name', 'New Room').strip()
 		print(f"Received room name: {request.POST.get('room_name', 'New Room').strip()}")
@@ -35,12 +41,20 @@ def create_room(request):
 		})
 	return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
+
 def room_list(request):
+	"""
+	Returns the list of rooms in JSON format.
+	Functions as API Endpoint. /quiz/api/room_list/
+	"""
 	rooms = Room.objects.all().order_by('-last_activity').values('id', 'name', 'last_activity', 'is_active')
 	return JsonResponse({'rooms': list(rooms)})
 
 # Uses the websocket to broadcast the updated room list to all connected clients.
 def room_list_update():
+	"""
+	Uses the websocket to broadcast the updated room list to all connected clients.
+	"""
 	channel_layer = get_channel_layer()
 	rooms = Room.objects.all().order_by('-last_activity').values('id', 'name', 'last_activity', 'is_active')
 
