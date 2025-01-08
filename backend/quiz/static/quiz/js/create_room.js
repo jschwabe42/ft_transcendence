@@ -1,3 +1,5 @@
+const quizAppContent = document.getElementById('quiz-app-content');
+
 document.addEventListener('DOMContentLoaded', function() {
 	const appContent = document.getElementById('quiz-app-content');
 	appContent.innerHTML = `
@@ -50,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			if (data.success) {
 				feedbackDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
 				createRoomForm.reset(); // Reset form on success
+				loadRoomView(data.room_name);
 			} else {
 				feedbackDiv.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
 			}
@@ -59,3 +62,17 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 		});
 });
+
+/**
+ * @function loadRoomView
+ * @brief Loads and displays the room view for the given room
+ * @param {string} roomName - The name of the room to load
+ */
+function loadRoomView(roomName) {
+	quizAppContent.innerHTML = '';
+	import('./room_view.js').then(module => {
+		module.displayRoomView(roomName);
+	}).catch(error => {
+		console.error('An error occurred while loading room view:', error);
+	});
+}

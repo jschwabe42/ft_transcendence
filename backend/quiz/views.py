@@ -38,10 +38,15 @@ def create_room(request):
 			room.leader = participant
 			room.save()
 		room_list_update()
+		participants = Participant.objects.filter(room=room)
+		participants_data = [{'id': p.user.id, 'username': p.user.username} for p in participants]
+
 		return JsonResponse({
 			'success': True,
 			'message': f"Room '{room.name}' created successfully!",
-			'room_name': room.name
+			'room_name': room.name,
+			'room_id': room.id,
+			'participants': participants_data
 		})
 	return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
