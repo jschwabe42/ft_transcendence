@@ -8,9 +8,14 @@ from .models import Game, Dashboard, Player
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 
+
+from django.middleware.csrf import get_token
+import sys
+
 # show recent games for now
 @login_required
 def recent_games(request):
+	csrf_token_view(request)
 	this_user = request.user
 	if request.method == "POST":
 		if 'opp_name' in request.POST:
@@ -35,9 +40,6 @@ def recent_games(request):
 				return render(request, "game/recent_games.html", {"error_message": "Please enter an opponent username."})
 		if 'player2_enter_game' in request.POST:
 			game_id = request.POST.get('player2_enter_game')
-			game = Game.objects.get(id=game_id)
-			game.pending = False
-			game.save()
 			return redirect('game:new_game', game_id=game_id)
 
 	last_games = Game.objects.order_by("-played_at")[:10]
@@ -61,3 +63,9 @@ def player_details_by_id(request, player_id):
 
 def dashboard(request):
 	return render(request, "game/dashboard.html", {"dashboard": Dashboard.get_instance()})
+
+def csrf_token_view(request):
+	csrf_token = get_token(request)
+	print("Token:")
+	print(csrf_token)
+	sys.stdout.flush()

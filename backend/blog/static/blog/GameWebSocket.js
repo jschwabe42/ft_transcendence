@@ -1,5 +1,6 @@
 let game_is_running = false;
 let game_first_start = true;
+
 // set to starndard in the beginning
 document.getElementById("player1").style.backgroundColor = "white";
 document.getElementById("player2").style.backgroundColor = "white";

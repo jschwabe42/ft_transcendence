@@ -5,6 +5,8 @@ import json
 from asgiref.sync import sync_to_async
 from .pong import PongGame
 import asyncio
+from django.utils import timezone
+import sys
 
 games = {}
 
@@ -124,11 +126,21 @@ class GameConsumer(AsyncWebsocketConsumer):
 			game.player2_ready = True
 		if game.player1_ready and game.player2_ready:
 			asyncio.create_task(self.start_game_loop())
+		game.pending = False
 		await sync_to_async(game.save)()
 
 
 	async def start_game_loop(self):
 		async def broadcast_callback(state):
+			# If there is a winner played at time gets set to the end time of the game
+			json_state = json.loads(state)
+			winner = json_state['winner']
+			if winner['player1'] or winner['player2']:
+				game = await sync_to_async(Game.objects.get)(id=self.game_id)
+				game.played_at = timezone.now()
+				await sync_to_async(game.save)()
+			###
+				
 			await self.channel_layer.group_send(
 				self.room_group_name,
 				{
