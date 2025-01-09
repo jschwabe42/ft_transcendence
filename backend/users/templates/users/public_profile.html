@@ -1,4 +1,13 @@
 {%extends "blog/base.html"%}
 {% block content %}
-<h1 class="mb-3">Posted by {{ profile }} </h1>
+<h1 class="mb-3">{{ user_profile.get_name }} </h1>
+<div class="content-section">
+    <div class="media">
+        <img class="rounded-circle account-img" src="{{ user_profile.image.url }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
+        </div>
+    </div>
+</div>
 {% endblock content %}

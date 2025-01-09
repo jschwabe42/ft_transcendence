@@ -1,14 +1,14 @@
 from django.urls import path
 from . import views
 from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
-from users.views import UserPostListView
+from users.views import public_profile
 # , UserPostListView
 
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
     # path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
-    path('user/<str:username>', UserPostListView.as_view(), name='user-profile'),
+    path('user/<str:query_user>', public_profile, name='user-profile'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),

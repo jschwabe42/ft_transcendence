@@ -66,11 +66,7 @@ from django.views.generic import ListView, DetailView
 #     user = get_object_or_404(User, username=user_profile)
 #     return render(request, 'users/public_profile.html', context)
 
-class UserPostListView(ListView):
-    model = Profile
-    template_name = 'users/public_profile.html'
-    context_object_name = 'profile'
-
-    def get_queryset(self):
-        user_profile = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Profile.objects.filter(user=user_profile)
+def public_profile(request, query_user):
+    user_instance = User.objects.get(username=query_user)
+    user_profile = Profile.objects.get(user=user_instance)
+    return render(request, 'users/public_profile.html', {'user_profile': user_profile})
