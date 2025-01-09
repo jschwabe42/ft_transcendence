@@ -30,40 +30,13 @@ class Game(models.Model):
 	player1_control_settings = models.CharField(max_length=255, default='up down')
 	player2_control_settings = models.CharField(max_length=255, default='up down')
 	# obtain from each player the User object and display its username
-	def __str__(self):
-		return f"{self.player1} vs {self.player2} ({self.score1}-{self.score2})"
 	@admin.display(
 		boolean=True,
 		ordering="played_at",
 		description="Played recently?",
 	)
-	def was_played_recently(self):
-		now = timezone.now()
-		return now - datetime.timedelta(days=1) <= self.played_at <= now
-	def start(self):
-		self.started_at = timezone.now()
-	def end(self):
-		self.played_at = timezone.now()
-		if self.score1 > self.score2:
-			self.player1.matches_won += 1
-			self.player2.matches_lost += 1
-		elif self.score1 < self.score2:
-			self.player1.matches_lost += 1
-			self.player2.matches_won += 1
-		self.player1.save()
-		self.player2.save()
-		self.save()
-		
-		# update Dashboard
-		Dashboard.get_instance().update_with_game(self)
-	def score(self, player):
-		if player == self.player1:
-			self.score1 += 1
-		elif player == self.player2:
-			self.score2 += 1
-		self.save()
-	def get_duration(self):
-		return self.played_at - self.started_at
+	def __str__(self):
+		return f"{self.player1} vs {self.player2} ({self.score1}-{self.score2})"
 
 class Player(models.Model):
 	profile = models.OneToOneField('users.Profile', on_delete=models.CASCADE, related_name='profile_for_player')
