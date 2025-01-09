@@ -33,6 +33,7 @@ urlpatterns = [
     path('chat/', include('chat.urls')),    
     path('api/token/test/', TokenObtainPairView.as_view(), name='token_obtain_test'),
     path('api/token/verify/', TokenRefreshView.as_view(), name='token_verify_test'),
+	path('image_app/', include('image_app.urls')),
     # path('__debug__/', include(debug_toolbar.urls)),
 ]
 

@@ -10,11 +10,12 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'blog/chat.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/game.css' %}">
 
 	{% if title%}
-	<title>Django Blog - {{title}}</title>
+	<title>Game - {{title}}</title>
 	{% else %}
-	<title>Django Blog</title>
+	<title>Game</title>
 	{% endif %}
 </head>
 
@@ -27,8 +28,9 @@
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="{% static 'blog/ChatWebSocket.js' %}"></script>
-	<script src="{% static 'blog/ChatRoom.js' %}"></script>
+	<script src="{% static 'blog/GameWebSocket.js' %}"></script>
+	<script src="{% static 'blog/AllGamesAPI.js' %}"></script>
+	<script src="{% static 'blog/GameAPI.js' %}"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
@@ -38,7 +40,17 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
-
 </body>
 
 </html>
+
+
+
+
+<!-- <div class="article-metadata" id="id_chat_item_container" style="font-size: 20px">
+    <br />
+    <input type="text" id="id_message_send_input" />
+    <button type="submit" id="id_message_send_button">Send Message</button>
+    <br />
+    <br />
+</div> -->

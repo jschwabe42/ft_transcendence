@@ -1,6 +1,5 @@
 import datetime
 from django.db import models
-from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -21,8 +20,15 @@ class Game(models.Model):
     score1 = models.IntegerField(default=0)
     score2 = models.IntegerField(default=0)
     # calculate duration of game from start to finish
-    started_at = models.DateTimeField("date started")
-    played_at = models.DateTimeField("date finished")
+    started_at = models.DateTimeField(default=timezone.now)
+    played_at = models.DateTimeField(default=timezone.now)
+    pending = models.BooleanField(default=True)
+
+    player1_ready = models.BooleanField(default=False)
+    player2_ready = models.BooleanField(default=False)
+
+    player1_control_settings = models.CharField(max_length=255, default='up down')
+    player2_control_settings = models.CharField(max_length=255, default='up down')
     # obtain from each player the User object and display its username
     def __str__(self):
         return f"{self.player1} vs {self.player2} ({self.score1}-{self.score2})"

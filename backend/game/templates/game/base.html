@@ -1,25 +1,56 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Recent Pong Games</title>
-</head>
-
-<body>
-    <h2>Recent Games</h2>
-    {% if recent_games_list %}
-    <ul>
-        {% for game in recent_games_list %}
-        <li>
-            <a href="{% url 'game:game_details' game.id %}">
-                {{ game.player1 }} vs {{ game.player2 }} ({{ game.score1 }}-{{ game.score2 }})
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>No games have been played yet.</p>
-    {% endif %}
-</body>
-
-</html>
+{%extends "game/game_base.html"%}
+{% block content %}
+<main role="main" class="container">
+	<div class="row">
+		<div class="col-md-8">
+			{% if recent_games_list %}
+				<ul>
+					<div id="messages">
+						<h2>Recent Games</h2>
+						{% for game in recent_games_list %}
+							{% if game.pending == False %}
+								<a href="{% url 'game:game_details' game.id %}" class="ChatButtonBackground">
+									{{ game.player1 }} vs {{ game.player2 }} ({{ game.score1 }}-{{ game.score2 }})
+								</a>
+							{% endif %}
+						{% endfor %}
+					</div>
+					<div id="messages">
+						<h2>Pending Games</h2>
+						{% for game in recent_games_list %}
+							{% if game.pending == True %}
+								{% if request.user.username == game.player2.profile.user.username %}
+									<form method="POST">
+										{% csrf_token %}
+										<button class="ChatButtonBackground" type="submit" name="player2_enter_game" value="{{ game.id }}">
+											{{ game.player1.profile.user }} vs {{ game.player2.profile.user }} ({{ game.score1 }}-{{ game.score2 }})
+										</button>
+									</form>
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+					</div>
+				</ul>
+			{% else %}
+				<p>No games have been played yet.</p>
+			{% endif %}
+		</div>
+		<div class="content-section">
+			<h3>Play new Game</h3>
+			<p class='text-muted'> Create New GroupChat:
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-light">Enter opponent Username</li>
+			</ul>
+			<form id="create-game-form" method="POST">
+				{% csrf_token %}
+				<input class="messageInput" id="opp_name" type="text" name="opp_name" placeholder="Enter opponent's Username" />
+				<button class="add_user" type="submit">Play Game +</button>
+			</form>
+			{% if error_message %}
+				<p class="alert alert-danger"> {{ error_message }} </p>
+			{% endif %}
+			</p>
+		</div>
+	</div>
+</main>
+{% endblock content %}

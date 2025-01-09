@@ -1,0 +1,101 @@
+/* Hauptcontainer für die Leiste oben */
+.ready-bar {
+    display: flex;
+    align-items: center; /* Vertikale Ausrichtung */
+    justify-content: space-between; /* Platz zwischen den Elementen */
+    background-color: #333; /* Dunkler Hintergrund für die Leiste */
+    padding: 10px 20px; /* Abstand innerhalb der Leiste */
+    border-radius: 10px; /* Abgerundete Ecken */
+    margin: 20px 0; /* Etwas Abstand oben und unten */
+}
+
+/* Der "Ready"-Button */
+button.ready {
+    padding: 8px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#ws {
+    background-color: #32b7b2;
+}
+
+#up_down {
+    background-color: #32b7b2;
+}
+
+
+button.ready:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+button.ready:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(72, 160, 72, 0.6);
+}
+
+button.ready:active {
+    background-color: #28b02f;
+    transform: translateY(2px);
+}
+
+/* Der Text "Ready:" */
+.ready-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    margin: 0 15px; /* Etwas Abstand nach links und rechts */
+}
+
+/* Stil für den Benutzernamen */
+.is_ready {
+    font-size: 18px;
+    color: #fff;
+    margin: 0 10px; /* Etwas Abstand zwischen den Namen */
+}
+
+/* Stil für Player 1 und Player 2 */
+.is_ready.player1 {
+    color: #4CAF50; /* Grün für Player 1 */
+}
+
+.is_ready.player2 {
+    color: #2196F3; /* Blau für Player 2 */
+}
+
+.vertical-text {
+    display: inline-block;
+    writing-mode: vertical-rl; /* Text vertikal schreiben */
+    text-orientation: upright; /* Zeichen aufrecht ausrichten */
+}
+
+#gameContainer {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#gameCanvas {
+    border: 2px solid #000; /* Optional: fügt dem Canvas einen Rahmen hinzu */
+    background-color: #f0f0f0; /* Optional: Hintergrundfarbe für das Canvas */
+}
+
+.score {
+    display: flex; /* Aktiviert Flexbox */
+    justify-content: space-between; /* Platz zwischen den beiden Divs */
+    align-items: center; /* Zentriert den Inhalt vertikal */
+}
+
+.player {
+    flex: 1; /* Optional: Macht beide Divs gleich breit */
+    text-align: center; /* Zentriert den Text */
+    padding: 10px; /* Optional: Fügt etwas Innenabstand hinzu */
+    border: 1px solid #ccc; /* Optional: Fügt Rahmen hinzu */
+    margin: 5px; /* Optional: Fügt Abstände zwischen den Divs hinzu */
+}

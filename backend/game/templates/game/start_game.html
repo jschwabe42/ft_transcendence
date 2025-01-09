@@ -1,0 +1,54 @@
+{%extends "game/game_base.html"%}
+{% block content %}
+<div id="game-data" game-id="{{ game_id }}" player1="{{ game.player1.profile.user }}" player2="{{ game.player2.profile.user }}" curr-user="{{ request.user.username }}"></div>
+
+<main role="main" class="container">
+	<div class="ready-bar">
+		<button class="ready" type="" id="user_ready">Ready</button>
+
+		<form id="w-s" method="POST">
+			{% csrf_token %}
+			<button class="ready" type="submit" id="ws">
+				<span class="vertical-text">WS</span>
+			</button>
+		</form>
+
+		<form id="up-down" method="POST">
+			{% csrf_token %}
+			<button class="ready" type="button" id="up_down">
+				<span class="vertical-text">▲<br>▼</span>
+			</button>
+		</form>
+
+
+
+
+		<p class="is_ready Text" id="is_ready_id">Ready:</p>
+		{% if game.player1_ready %}
+			<p class="is_ready" id="ready_player_one" style="display: block;">{{ game.player1.profile.user }}</p>
+		{% else %}
+			<p class="is_ready" id="ready_player_one" style="display: none;">{{ game.player1.profile.user }}</p>
+		{% endif %}
+        
+		{% if game.player2_ready %}
+			<p class="is_ready" id="ready_player_two" style="display: block;">{{ game.player2.profile.user }}</p>
+		{% else %}
+			<p class="is_ready" id="ready_player_two" style="display: none;">{{ game.player2.profile.user }}</p>
+		{% endif %}
+	</div>
+	<div id="gameContainer">
+		<canvas id="gameCanvas" width="800" height="600"></canvas>
+	</div>
+	<div class="score">
+		<div class="player">
+			<p>{{ game.player1.profile.user }}</p>
+			<p id="player1">0</p>
+		</div>
+		<div class="player">
+			<p>{{ game.player2.profile.user }}</p>
+			<p id="player2">0</p>
+		</div>
+	</div>
+	<a id="winner" href="{% url 'game:recent_games' %}", style="display: none;">Back to Games</a>
+</main>
+{% endblock content %}

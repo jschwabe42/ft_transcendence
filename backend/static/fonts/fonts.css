@@ -1,0 +1,7 @@
+/* app/fonts/fonts.css */
+@font-face {
+	font-family: 'Fredoka';
+	font-weight: 100; /* Use any weight from 100 to 900 */
+	font-style: normal;
+	src: url('./Fredoka-variableFont.ttf') format('truetype'); /* Update path and format */
+}
