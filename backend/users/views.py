@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-from .models import Profile
+from .models import Profile, User
 
 
 def register(request):
@@ -57,3 +58,19 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
+
+from django.views.generic import ListView, DetailView
+
+# @login_required
+# def public_profile(request, user_profile):
+#     user = get_object_or_404(User, username=user_profile)
+#     return render(request, 'users/public_profile.html', context)
+
+class UserPostListView(ListView):
+    model = Profile
+    template_name = 'users/public_profile.html'
+    context_object_name = 'profile'
+
+    def get_queryset(self):
+        user_profile = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Profile.objects.filter(user=user_profile)
