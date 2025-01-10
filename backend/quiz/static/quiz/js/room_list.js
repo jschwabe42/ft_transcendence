@@ -1,9 +1,6 @@
 export function loadRoomList() {
 	const quizAppContent = document.getElementById('quiz-app-content');
 	quizAppContent.innerHTML = `
-	<h2>Available Rooms</h2>
-	<p>Loading rooms...</p>
-
 	<div>
 		<h2> Create a new room</h2>
 		<button id="show-create-room-form" class="btn btn-primary">Create Room</button>
@@ -54,7 +51,7 @@ function initCreateRoomForm() {
 		if (data.success) {
 			feedbackDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
 			createRoomForm.reset(); // Reset form on success
-			loadRoomView(data.room_name);
+			// loadRoomView(data.room_name);
 		} else {
 			feedbackDiv.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
 		}
