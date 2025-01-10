@@ -4,6 +4,8 @@ import json
 import sys
 import random
 
+speed = 15
+
 
 class PongGame:
 	def __init__(self, player1, player2):
@@ -61,16 +63,16 @@ class PongGame:
 		# move padels
 		if self.playerOneKeyUp == True:
 			paddle = self.paddles["player1"]
-			paddle['y'] -= 5
+			paddle['y'] -= speed
 		if (self.playerOneKeyDown == True):
 			paddle = self.paddles["player1"]
-			paddle['y'] += 5
+			paddle['y'] += speed
 		if self.playerTwoKeyUp == True:
 			paddle = self.paddles["player2"]
-			paddle['y'] -= 5
+			paddle['y'] -= speed
 		if (self.playerTwoKeyDown == True):
 			paddle = self.paddles["player2"]
-			paddle['y'] += 5
+			paddle['y'] += speed
 		# move ball
 		self.move_ball()
 
@@ -175,7 +177,7 @@ class PongGame:
 				self.paddle_collision = False
 				self.collision_timer = 0
 			if self.game_tick % 1000:
-				self.ball['speed'] += 0.0001
+				self.ball['speed'] += 0.005
 			if self.scores['player1'] == 10 or self.scores['player2'] == 10:
 				if self.scores['player1'] == 10:
 					self.winner['player1'] = True
