@@ -1,7 +1,7 @@
 let game_is_running = false;
 let game_first_start = true;
 
-// set to starndard in the beginning
+// set to standard in the beginning
 document.getElementById("player1").style.backgroundColor = "white";
 document.getElementById("player2").style.backgroundColor = "white";
 document.getElementById("winner").style.display = "none";
@@ -17,11 +17,11 @@ const player2 = gameData.getAttribute("player2")
 const game_id = gameData.getAttribute("game-id")
 const gameSocket = new WebSocket('ws://' + window.location.host + '/new/' + game_id + '/');
 
-gameSocket.onclose = function(e) {
+gameSocket.onclose = function (e) {
 	console.error('WebSocket geschlossen', e);
 };
 
-gameSocket.onopen = function(e) {
+gameSocket.onopen = function (e) {
 	console.log('WebSocket geöffnet');
 };
 
@@ -53,15 +53,16 @@ function ready_button(player) {
 			ready2.style.display = 'block';
 
 		if (ready1.style.display == 'block' && ready2.style.display == 'block') {
-			let  is_ready_id = document.querySelector('#is_ready_id');
+			let is_ready_id = document.querySelector('#is_ready_id');
 			is_ready_id.style.color = "green";
 		}
 	}
 }
 
-gameSocket.onmessage = function(e) {
+
+gameSocket.onmessage = function (e) {
 	const data = JSON.parse(e.data);
-	if (data.use == "ready_button") 
+	if (data.use == "ready_button")
 		ready_button(data.user)
 	if (data.use == "KeyboardEvent") {
 		keyboardPressed(data.user, data.key)
@@ -134,14 +135,11 @@ function updateGameFromServer(state) {
 			document.getElementById("winner").style.display = "block";
 			console.log("Player1 Won");
 		}
-		if (state.winner.player2) {
-			document.getElementById("winner").style.display = "block";
-			document.getElementById("player2").style.backgroundColor = "green";
-			console.log("Player2 Won");
-		}
-		
-
-
+	if (state.winner.player2) {
+		document.getElementById("winner").style.display = "block";
+		document.getElementById("player2").style.backgroundColor = "green";
+		console.log("Player2 Won");
+	}
 	renderGame();
 }
 
@@ -153,7 +151,7 @@ function renderGame() {
 	drawBall();
 }
 
-function drawRackets () {
+function drawRackets() {
 	ctx.fillStyle = "black";
 	ctx.fillRect(rightpong.x, rightpong.y, rightpong.width, rightpong.height);
 	ctx.fillRect(leftpong.x, leftpong.y, leftpong.width, leftpong.height);

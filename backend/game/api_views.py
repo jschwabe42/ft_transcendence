@@ -45,7 +45,6 @@ class CreateGameView(APIView):
 		print(opponent_username, user_username)
 		sys.stdout.flush
 
-
 		# Create the game
 		game = Game.objects.create(player1=user_profile.player, player2=opponent_profile.player)
 		game.save()
@@ -53,7 +52,7 @@ class CreateGameView(APIView):
 		return Response({"game_id": game.id, "message": "Game created successfully."}, status=status.HTTP_201_CREATED)
 
 class ScoreBoardView(APIView):
-	#For testing CLI comment permission_classes cause canot acces csrf_token
+	# For testing CLI comment permission_classes cause canot acces csrf_token
 	permission_classes = [IsAuthenticated]
 
 	def post(self, request):
@@ -61,10 +60,10 @@ class ScoreBoardView(APIView):
 		score1 = request.data.get('score1')
 		score2 = request.data.get('score2')
 
-		print("HelloWorld")
-		print(game_id, score1, score2)
-		print("\n\n")
-		sys.stdout.flush()
+		# print("HelloWorld")
+		# print(game_id, score1, score2)
+		# print("\n\n")
+		# sys.stdout.flush()
 		# print(game_id, score1, score2)
 		if not game_id:
 			return Response({"error": "game_id score1 and score2 are required"}, status=status.HTTP_400_BAD_REQUEST)
@@ -81,13 +80,12 @@ class ScoreBoardView(APIView):
 		return Response({"scores": "Game successfully saved score."}, status=status.HTTP_200_OK)
 	
 
-class ControllKeySetting(APIView):
+class ControlKeySetting(APIView):
 	# permission_classes = [IsAuthenticated]
 
 	def post(self, request):
 		game_id = request.data.get('game_id')
 		username = request.data.get('username')
-
 
 		if (username):
 			user = username

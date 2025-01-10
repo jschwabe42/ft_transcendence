@@ -1,4 +1,3 @@
-
 import argparse
 import requests
 
@@ -47,14 +46,9 @@ def main():
 if __name__ == "__main__":
 	main()
 
-#how to get this fucking Token?
-
-# python3 cli_controll_Keys.py --url http://localhost:8000/game/api/get-gameControl/ \
+# python3 cli_control_keys.py --url http://localhost:8000/game/api/get-gameControl/ \
 #                           --token your_token \
 #                           --username Jsanger \
 #                           --control1 w_s \
 #                           --control2 w_s \
-#                           --game_id 19
-
-#up down
-#w_s
+#                           --game_id id

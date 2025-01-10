@@ -1,4 +1,4 @@
-document.getElementById("create-game-form").addEventListener("submit", async function(event) {
+document.getElementById("create-game-form").addEventListener("submit", async function (event) {
 	console.log("Access API");
 	event.preventDefault();
 	const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -12,9 +12,10 @@ document.getElementById("create-game-form").addEventListener("submit", async fun
 			'Content-Type': 'application/json',
 			'X-CSRFToken': csrfToken,
 		},
-		body: JSON.stringify({	opponent: oppName,
-								username: UserName,
-		 }),
+		body: JSON.stringify({
+			opponent: oppName,
+			username: UserName,
+		}),
 	});;
 	const data = await response.json();
 	if (response.ok) {

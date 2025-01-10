@@ -7,8 +7,6 @@ from users.models import Profile
 from .models import Game, Dashboard, Player
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-
-
 from django.middleware.csrf import get_token
 import sys
 

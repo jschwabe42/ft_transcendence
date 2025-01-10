@@ -2,14 +2,6 @@ import argparse
 import requests
 
 
-## Try to get the csrf_token but how?
-# from django.test import RequestFactory
-# from django.middleware.csrf import get_token
-# from django.contrib.auth.models import User
-
-# request = RequestFactory().get('/some-url/')
-# csrf_token = get_token(request)
-
 def create_game(api_url, csrfToken, username, opponent):
 
 	headers = {
@@ -47,8 +39,6 @@ def main():
 
 if __name__ == "__main__":
 	main()
-
-#how to get this fucking Token?
 
 # python3 pong_start.py --url http://localhost:8000/game/api/create-game/ \
 #                           --token your_token \

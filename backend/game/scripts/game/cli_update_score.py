@@ -3,7 +3,6 @@ import requests
 
 
 def update_score(api_url, csrfToken, score1, score2, game_id):
-
 	# print(score1)
 	# print(score2)
 	# print(game_id)
@@ -49,10 +48,8 @@ def main():
 if __name__ == "__main__":
 	main()
 
-#how to get this fucking Token?
-
 # python3 cli_update_score.py --url http://localhost:8000/game/api/get-score/ \
 #                           --token your_token \
 #                           --score_player1 5 \
 #                           --score_player2 8 \
-#                           --game_id 14
+#                           --game_id id
