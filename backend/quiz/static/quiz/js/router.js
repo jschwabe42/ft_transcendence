@@ -1,4 +1,5 @@
 import { loadRoomList } from './room_list.js';
+import { displayRoom } from './room_display.js';
 
 class Router {
 	constructor() {
@@ -24,6 +25,18 @@ class Router {
 		if (handler) {
 			handler();
 		} else {
+			// this.showNotFound();
+			this.handleDynamicRoute(path);
+		}
+	}
+
+	handleDynamicRoute(path) {
+		const quizPathRegex = /^\/quiz\/([^\/]+)\/?$/;
+		const match = path.match(quizPathRegex);
+		if (match) {
+			const roomName = match[1];
+			displayRoom(roomName);
+		} else {
 			this.showNotFound();
 		}
 	}
@@ -36,4 +49,7 @@ class Router {
 const router = new Router();
 
 router.addRoute('/quiz/', loadRoomList);
+// router.addRoute('/quiz/room/', displayRoom);
+// router.addRoute('/quiz/:roomName', displayRoom);
 router.handleRouteChange();
+export default router;

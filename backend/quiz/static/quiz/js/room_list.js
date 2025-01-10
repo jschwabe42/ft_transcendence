@@ -1,3 +1,5 @@
+import router from './router.js';
+
 export function loadRoomList() {
 	const quizAppContent = document.getElementById('quiz-app-content');
 	quizAppContent.innerHTML = `
@@ -52,6 +54,7 @@ function initCreateRoomForm() {
 			feedbackDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
 			createRoomForm.reset(); // Reset form on success
 			// loadRoomView(data.room_name);
+			joinRoom(data.room_id);
 		} else {
 			feedbackDiv.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
 		}
@@ -120,5 +123,30 @@ function displayRooms(rooms) {
 			const roomId = button.getAttribute('data-room-id');
 			joinRoom(roomId);
 		});
+	});
+}
+
+function joinRoom(roomId) {
+	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+	fetch(`/quiz/join_room/${roomId}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'X-CSRFToken': csrfToken
+		},
+		body: `room_id=${roomId}`
+	})
+
+	.then(response => response.json())
+	.then(data => {
+		if (data.success) {
+			const room_name = data.room.name;
+			router.navigateTo(`/quiz/${room_name}/`);
+		} else {
+			alert(data.error);
+		}
+	})
+	.catch(error => {
+		alert(`An error occurred: ${error}`);
 	});
 }
