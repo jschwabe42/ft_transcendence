@@ -90,8 +90,6 @@ class GameConsumer(AsyncWebsocketConsumer):
 					key = "KeyUpArrowDown"
 			self.game.move_paddle("player2", key)
 
- 
-
 
 	async def readyButton(self, event):
 		use = event['use']
@@ -118,9 +116,8 @@ class GameConsumer(AsyncWebsocketConsumer):
 			game.pending = False
 			# Save the game changes
 			await sync_to_async(game.save)()
-		
-		
-		# # For testing to not start games
+
+		# For testing to not start games
 		# if user1 == user:
 		# 	game.player1_ready = True
 		# if user2 == user:
@@ -150,8 +147,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 				await sync_to_async(player1.save)()
 				await sync_to_async(player2.save)()
 				await sync_to_async(game.save)()
-			###
-				
+
 			await self.channel_layer.group_send(
 				self.room_group_name,
 				{
