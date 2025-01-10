@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 
 class Room(models.Model):
+	id = models.BigAutoField(primary_key=True)
 	name = models.CharField(max_length=100, unique=True)
 	# participants = models.ManyToManyField(User, related_name="quiz_rooms", blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)

@@ -9,6 +9,7 @@ from datetime import timezone
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def index (request):
@@ -80,6 +81,30 @@ def room_list_update():
 		}
 	)
 
+def room_member_update(room_id):
+	"""
+	Uses the websocket to broadcast the updated room members list to all connected clients. (Maybe change this later on to fetch the data inside the consumer)
+	"""
+	room = get_object_or_404(Room, id=room_id)
+	participants = list(room.participants.values_list('user__username', flat=True))
+	leader = room.leader.user.username if room.leader else None
+
+	data = {
+		'room_name': room.name,
+		'participants': participants,
+		'leader': leader,
+	}
+
+	channel_layer = get_channel_layer()
+	
+	async_to_sync(channel_layer.group_send)(
+		f"room_{room_id}",
+		{
+			'type': 'update_room_members',
+			'data': data,
+		}
+	)
+
 @login_required
 def join_room(request, room_id):
 	"""
@@ -93,6 +118,8 @@ def join_room(request, room_id):
 		# Return the room details and participants
 		participants = Participant.objects.filter(room=room)
 		participants_data = [{'id': p.user.id, 'username': p.user.username} for p in participants]
+
+		room_member_update(room.id)
 
 		return JsonResponse({
 			'success': True,

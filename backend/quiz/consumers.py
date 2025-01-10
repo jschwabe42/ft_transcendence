@@ -1,7 +1,10 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 
-class RoomConsumer(AsyncWebsocketConsumer):
+class RoomListConsumer(AsyncWebsocketConsumer):
+	"""
+	Websocket consumer that broadcasts the updated room list to all connected clients.
+	"""
 	async def connect(self):
 		await self.channel_layer.group_add("rooms", self.channel_name)
 		await self.accept()
@@ -16,6 +19,39 @@ class RoomConsumer(AsyncWebsocketConsumer):
 		# print("Broadcasting room list update:", event)
 		msg = {
 			'type': 'update_room_list',  # This is the type of the message
-			'data': event['data']  
+			'data': event['data']
+		}
+		await self.send(text_data=json.dumps(msg))
+
+
+
+class RoomMembersConsumer(AsyncWebsocketConsumer):
+	"""
+	Websocket consumer for each room, for the room members list and game state.
+	"""
+	async def connect(self):
+		self.room_id = self.scope['url_route']['kwargs']['room_id']  # Get room_id from URL
+		self.room_group_name = f"room_{self.room_id}"  # Room-specific group
+
+		await self.channel_layer.group_add(
+			self.room_group_name,
+			self.channel_name
+		)
+		await self.accept()
+
+	async def disconnect(self, close_code):
+		await self.channel_layer.group_discard(
+			self.room_group_name,
+			self.channel_name
+		)
+
+	async def update_room_members(self, event):
+		"""
+		Sends the updated room members list to all the users in the group
+		"""
+		# print("Broadcasting room members update:", event)
+		msg = {
+			'type': 'update_room_members',  # This is the type of the message
+			'data': event['data']
 		}
 		await self.send(text_data=json.dumps(msg))
