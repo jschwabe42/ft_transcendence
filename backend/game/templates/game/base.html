@@ -19,13 +19,14 @@
 						<h2>Pending Games</h2>
 						{% for game in recent_games_list %}
 							{% if game.pending == True %}
-								{% if request.user.username == game.player2.profile.user.username %}
+								{% if request.user.username == game.player2.profile.user.username or request.user.username == game.player1.profile.user.username %}
 									<form method="POST">
 										{% csrf_token %}
 										<button class="ChatButtonBackground" type="submit" name="player2_enter_game" value="{{ game.id }}">
 											{{ game.player1.profile.user }} vs {{ game.player2.profile.user }} ({{ game.score1 }}-{{ game.score2 }})
 										</button>
 									</form>
+
 								{% endif %}
 							{% endif %}
 						{% endfor %}
@@ -41,8 +42,10 @@
 			<ul class="list-group">
 				<li class="list-group-item list-group-item-light">Enter opponent Username</li>
 			</ul>
+			<div> </div>
 			<form id="create-game-form" method="POST">
 				{% csrf_token %}
+				<div id="username" data-username="{{ request.user.username }}"></div>
 				<input class="messageInput" id="opp_name" type="text" name="opp_name" placeholder="Enter opponent's Username" />
 				<button class="add_user" type="submit">Play Game +</button>
 			</form>

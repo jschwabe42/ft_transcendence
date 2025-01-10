@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .api_views import CreateGameView, ScoreBoardView, ControllKeySetting
+from .api_views import CreateGameView, ScoreBoardView, ControlKeySetting
 
 app_name = "game"
 urlpatterns = [
@@ -11,7 +11,7 @@ urlpatterns = [
 
 	path('api/create-game/', CreateGameView.as_view(), name='api-create-game'),
 	path('api/get-score/', ScoreBoardView.as_view(), name='api-get-score'),
-	path('api/get-gameControl/', ControllKeySetting.as_view(), name='api-get-gameControl'),
+	path('api/get-gameControl/', ControlKeySetting.as_view(), name='api-get-gameControl'),
 
 	path("new/<int:game_id>/", views.start_game, name="new_game"),
 	path("dashboard/", views.dashboard, name="dashboard"),
