@@ -4,6 +4,7 @@ from users.models import Profile
 from .models import Game, Dashboard
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+import sys
 
 # For api
 from rest_framework.views import APIView
@@ -13,10 +14,12 @@ from rest_framework import status
 
 # API for game creation
 class CreateGameView(APIView):
+	#For testing CLI comment permission_classes cause canot acces csrf_token
 	permission_classes = [IsAuthenticated]
 
 	def post(self, request):
 		opponent_username = request.data.get('opponent')
+		user_username = request.data.get('username')
 		if not opponent_username:
 			return Response({"error": "Opponent username is required."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -28,9 +31,19 @@ class CreateGameView(APIView):
 		except User.DoesNotExist:
 			return Response({"error": "Opponent does not exist."}, status=status.HTTP_404_NOT_FOUND)
 
-		# Retrieve user profiles
-		user_profile = Profile.objects.get(user=request.user)
+		if (user_username):
+			try:
+				user = User.objects.get(username=user_username)
+			except User.DoesNotExist:
+				return Response({"error": "User does not exist."}, status=status.HTTP_404_NOT_FOUND)
+		else:
+			user_profile = Profile.objects.get(user=request.user)
+
 		opponent_profile = Profile.objects.get(user=opponent)
+		user_profile = Profile.objects.get(user=user)
+
+		print(opponent_username, user_username)
+		sys.stdout.flush
 
 		# Create the game
 		game = Game.objects.create(player1=user_profile.player, player2=opponent_profile.player)
@@ -39,12 +52,18 @@ class CreateGameView(APIView):
 		return Response({"game_id": game.id, "message": "Game created successfully."}, status=status.HTTP_201_CREATED)
 
 class ScoreBoardView(APIView):
+	# For testing CLI comment permission_classes cause canot acces csrf_token
 	permission_classes = [IsAuthenticated]
 
 	def post(self, request):
 		game_id = request.data.get('game_id')
 		score1 = request.data.get('score1')
 		score2 = request.data.get('score2')
+
+		# print("HelloWorld")
+		# print(game_id, score1, score2)
+		# print("\n\n")
+		# sys.stdout.flush()
 		# print(game_id, score1, score2)
 		if not game_id:
 			return Response({"error": "game_id score1 and score2 are required"}, status=status.HTTP_400_BAD_REQUEST)
@@ -61,14 +80,26 @@ class ScoreBoardView(APIView):
 		return Response({"scores": "Game successfully saved score."}, status=status.HTTP_200_OK)
 	
 
-class ControllKeySetting(APIView):
-	permission_classes = [IsAuthenticated]
+class ControlKeySetting(APIView):
+	# permission_classes = [IsAuthenticated]
 
 	def post(self, request):
 		game_id = request.data.get('game_id')
-		user = request.user.username
+		username = request.data.get('username')
+
+		if (username):
+			user = username
+		else:
+			user = request.user.username
+
 		control1 = request.data.get('control1')
 		control2 = request.data.get('control2')
+
+		# print("\n\n\n\n")
+		# print("Test")
+		# print(game_id, control1, control2)
+		# print("\n\n\n\n")
+		# sys.stdout.flush()
 
 		if not game_id or control1 is None or control2 is None:
 			return Response({"error": "game_id, control1, and control2 are required."}, status=status.HTTP_400_BAD_REQUEST)
