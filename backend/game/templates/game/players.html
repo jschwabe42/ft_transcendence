@@ -22,8 +22,9 @@
         <ul class="list-group">
             {% for player in players_list %}
             <li class="list-group-item" style="text-align: center;">
-                <a href="{% url 'game:player_details_by_id' player.id %}" class="mx-auto btn btn-primary">{{ player
-                    }}</a>
+                <a href="{% url 'game:player_details_by_id' player.id %}" class="mx-auto btn btn-primary">
+                    {{ player }}
+                </a>
                 <!-- @note alignment should not be a single column, preferably using multiple cards per row -->
             </li>
             {% endfor %}
