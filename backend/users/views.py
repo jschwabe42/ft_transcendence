@@ -64,11 +64,7 @@ def profile(request):
 from django.views.generic import ListView, DetailView
 from django.db.models import F
 
-# @login_required
-# def public_profile(request, user_profile):
-#     user = get_object_or_404(User, username=user_profile)
-#     return render(request, 'users/public_profile.html', context)
-
+@login_required
 def public_profile(request, query_user):
 	user_instance = User.objects.get(username=query_user)
 	user_profile = Profile.objects.get(user=user_instance)
