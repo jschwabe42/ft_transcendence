@@ -1,25 +1,42 @@
+{% extends "game/game_base.html" %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Players of pong</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Players</title>
+    <link rel="stylesheet" href="{% static 'blog/main.css' %}">
 </head>
+<!-- @note ordering? -->
+
 
 <body>
-    <h2>List of all player profiles</h2>
-    {% if players_list %}
-    <ul>
+    <div class="mx-auto" style="width: fit-content; margin-bottom: 30px; display: flex; flex-wrap: wrap;">
+        <h2>Players of pong</h2>
+    </div>
+    <div class="players-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
+        {% if players_list %}
         {% for player in players_list %}
-        <li>
-            <a href="{% url 'game:player_details_by_id' player.id %}">
-                {{ player }}
-            </a>
-        </li>
-        {% endfor %}
+        <div class="card" style="width: 200px; text-align: center;">
+            <!-- @note alignment should not be a single column -->
+            <!-- <img src="{{ player.profile.image.url }}" class="card-img-top"> -->
+            <div class="card-body">
+                <h5 class="card-title">{{ player }}</h5>
+                <p class="card-text">{{ player.win_to_loss_ratio }}</p>
+                <a href="{% url 'game:player_details_by_id' player.id %}" class="btn btn-primary">View Profile</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
     </ul>
     {% else %}
     <p>No players have been created yet.</p>
     {% endif %}
 </body>
+
+{% endblock %}
 
 </html>
