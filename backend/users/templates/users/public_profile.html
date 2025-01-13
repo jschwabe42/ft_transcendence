@@ -1,41 +1,55 @@
-{%extends "game/game_base.html"%}
-<!doctype html>
+{% extends "game/game_base.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
 <html lang="en">
 
-{% block content %}
-<div class="content-section">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <div class="media">
-        <img class="rounded-circle account-img" src="{{ user_profile.image.url }}">
-        <div class="media-body">
-            <h2 class="account-heading">{{ user_profile.get_name }}</h2>
-            <p class="text-secondary">{{ user_profile.player.created_at|date:"F j, Y" }}</p>
-        </div>
-    </div>
-    <legend class="border-bottom mb-4">1v1 history</legend>
-    <div class="list-group">
-        {% for game in games_won %}
-        <div class="p-2" style="width: 200px;">
-            <!-- <a href="#" class="list-group-item list-group-item-action list-group-item-success"></a> -->
-            <a href="{% url 'game:game_details' game.id %}" class="list-group-item list-group-item-action list-group-item-success"
-                aria-current="true">
-                {{ game.player1 }} vs {{ game.player2 }}
-            </a>
-            <small class="text-muted"> {{ game.played_at|date:"Y-m-d @ H:i" }}</small>
-        </div>
-        {% endfor %}
-        {% for game in games_lost %}
-        <div class="position-relative end-0 p-2" style="width: 200px;">
-            <a href="{% url 'game:game_details' game.id %}" class="list-group-item list-group-item-action list-group-item-danger"
-                aria-current="true">
-                {{ game.player1 }} vs {{ game.player2 }}
-            </a>
-            <small class="text-muted"> {{ game.played_at|date:"Y-m-d @ H:i" }}</small>
-        </div>
-        {% endfor %}
-    </div>
-</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{% static 'users/styles.css' %}">
+</head>
 
-{% endblock content %}
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="media-body">
+                <div class="media">
+                    <img class="mx-auto rounded-circle account-img" src="{{ user_profile.image.url }}">
+                </div>
+                <h1>{{ user_profile.user.username }}</h1>
+                <p class="profile-date">{{ user_profile.player.created_at|date:"Y-m-d @ H:i" }}</p>
+            </div>
+        </div>
+        <div class="games-container">
+            <div class="games-won">
+                <h2>Games Won</h2>
+                {% for game in games_won %}
+                <div class="game-item">
+                    <a href="{% url 'game:game_details' game.id %}"
+                        class="list-group-item list-group-item-action list-group-item-success" aria-current="true">
+                        {{ game.player1 }} vs {{ game.player2 }}
+                    </a>
+                    <small class="text-muted">{{ game.played_at|date:"Y-m-d @ H:i" }}</small>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="games-lost">
+                <h2>Games Lost</h2>
+                {% for game in games_lost %}
+                <div class="game-item">
+                    <a href="{% url 'game:game_details' game.id %}"
+                        class="list-group-item list-group-item-action list-group-item-danger" aria-current="true">
+                        {{ game.player1 }} vs {{ game.player2 }}
+                    </a>
+                    <small class="text-muted">{{ game.played_at|date:"Y-m-d @ H:i" }}</small>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
 
 </html>
+{% endblock %}
