@@ -8,5 +8,17 @@
             <p class="text-secondary">{{ user_profile.player.created_at|date:"F j, Y" }}</p>
         </div>
     </div>
-</div>
-{% endblock content %}
+    <legend class="border-bottom mb-4">match history</legend>
+    {% for game in games %}
+    <div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">
+                <a href="{% url 'game:game_details' game.id %}">
+                    {{ game.player1 }} vs {{ game.player2 }}
+                </a>
+            </h2>
+            <p class="text-secondary">{{ game.played_at|date:"Y-m-d @ H:i" }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock content %}

@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+from game.models import Game
+
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from .models import Profile, User
 
@@ -69,4 +71,5 @@ from django.views.generic import ListView, DetailView
 def public_profile(request, query_user):
     user_instance = User.objects.get(username=query_user)
     user_profile = Profile.objects.get(user=user_instance)
-    return render(request, 'users/public_profile.html', {'user_profile': user_profile})
+    games = Game.objects.filter(player1=user_profile.player) | Game.objects.filter(player2=user_profile.player)
+    return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games})
