@@ -1,6 +1,10 @@
-{%extends "blog/base.html"%}
+{%extends "game/game_base.html"%}
+<!doctype html>
+<html lang="en">
+
 {% block content %}
 <div class="content-section">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <div class="media">
         <img class="rounded-circle account-img" src="{{ user_profile.image.url }}">
         <div class="media-body">
@@ -9,16 +13,28 @@
         </div>
     </div>
     <legend class="border-bottom mb-4">match history</legend>
-    {% for game in games %}
-    <div class="media">
-        <div class="media-body">
-            <h2 class="account-heading">
-                <a href="{% url 'game:game_details' game.id %}">
-                    {{ game.player1 }} vs {{ game.player2 }}
-                </a>
-            </h2>
-            <p class="text-secondary">{{ game.played_at|date:"Y-m-d @ H:i" }}</p>
+    <div class="list-group">
+        {% for game in games_won %}
+        <div class="mx-auto p-2" style="width: 200px;">
+            <a href="{% url 'game:game_details' game.id %}" class="list-group-item list-group-item-action active"
+                aria-current="true">
+                {{ game.player1 }} vs {{ game.player2 }}
+            </a>
+            <small class="text-muted"> {{ game.played_at|date:"Y-m-d @ H:i" }}</small>
+        </div>
+        {% endfor %}
+        {% for game in games_lost %}
+        <div class="mx-auto p-2" style="width: 200px;">
+            <a href="{% url 'game:game_details' game.id %}" class="list-group-item list-group-item-action active"
+                aria-current="true">
+                {{ game.player1 }} vs {{ game.player2 }}
+            </a>
+            <small class="text-muted"> {{ game.played_at|date:"Y-m-d @ H:i" }}</small>
         </div>
         {% endfor %}
     </div>
-    {% endblock content %}
+</div>
+
+{% endblock content %}
+
+</html>

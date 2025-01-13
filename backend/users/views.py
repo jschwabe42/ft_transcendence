@@ -62,6 +62,7 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 from django.views.generic import ListView, DetailView
+from django.db.models import F
 
 # @login_required
 # def public_profile(request, user_profile):
@@ -72,4 +73,6 @@ def public_profile(request, query_user):
     user_instance = User.objects.get(username=query_user)
     user_profile = Profile.objects.get(user=user_instance)
     games = Game.objects.filter(player1=user_profile.player) | Game.objects.filter(player2=user_profile.player)
-    return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games})
+    games_won = games.filter(player1=user_profile.player, score1__gt=F('score2')) | games.filter(player2=user_profile.player, score2__gt=F('score1'))
+    games_lost = [game for game in games if game not in games_won]
+    return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost})
