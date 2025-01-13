@@ -5,59 +5,59 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <link rel="stylesheet" href="{% static 'users/styles.css' %}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>User Profile</title>
+	<link rel="stylesheet" href="{% static 'users/styles.css' %}">
 </head>
 
 <body>
-    <div class="profile-container">
-        <div class="profile-header">
-            <div class="media-body">
-                <div class="media">
-                    <img class="mx-auto rounded-circle account-img" src="{{ user_profile.image.url }}">
-                </div>
-                <h1>{{ user_profile.user.username }}</h1>
-                <p class="profile-date">{{ user_profile.player.created_at|date:"Y-m-d @ H:i" }}</p>
-                <hr>
-                <div class="profile-stats">
-                    <div class="profile-stat">
-                        {% if user_profile.player.matches_lost == 0 %}
-                        <h3>Perfect</h3>
-                        {% else %}
-                        <h4>{{ user_profile.player.win_to_loss_ratio }}</h4>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="games-container">
-            <div class="games-won">
-                <h3>Wins</h3>
-                {% for game in games_won %}
-                <div class="game-item">
-                    <a href="{% url 'game:game_details' game.id %}"
-                        class="list-group-item list-group-item-action list-group-item-success" aria-current="true">
-                        {{ game.player1 }} vs {{ game.player2 }}
-                    </a>
-                    <small class="text-muted">{{ game.played_at|date:"Y-m-d @ H:i" }}</small>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="games-lost">
-                <h3>Losses</h3>
-                {% for game in games_lost %}
-                <div class="game-item">
-                    <a href="{% url 'game:game_details' game.id %}"
-                        class="list-group-item list-group-item-action list-group-item-danger" aria-current="true">
-                        {{ game.player1 }} vs {{ game.player2 }}
-                    </a>
-                    <small class="text-muted">{{ game.played_at|date:"Y-m-d @ H:i" }}</small>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+	<div class="profile-container">
+		<div class="profile-header">
+			<div class="media-body">
+				<div class="media">
+					<img class="mx-auto rounded-circle account-img" src="{{ user_profile.image.url }}">
+				</div>
+				<h1>{{ user_profile.user.username }}</h1>
+				<p class="profile-date">{{ user_profile.player.created_at|date:"Y-m-d @ H:i" }}</p>
+				<hr>
+				<div class="profile-stats">
+					<div class="profile-stat">
+						{% if user_profile.player.matches_lost == 0 %}
+						<h3>Perfect</h3>
+						{% else %}
+						<h4>{{ user_profile.player.win_to_loss_ratio }}</h4>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="games-container">
+			<div class="games-won">
+				<h3>Wins</h3>
+				{% for game in games_won %}
+				<div class="game-item">
+					<a href="{% url 'game:game_details' game.id %}"
+						class="list-group-item list-group-item-action list-group-item-success" aria-current="true">
+						{{ game.player1 }} vs {{ game.player2 }}
+					</a>
+					<small class="text-muted">{{ game.played_at|date:"Y-m-d @ H:i" }}</small>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="games-lost">
+				<h3>Losses</h3>
+				{% for game in games_lost %}
+				<div class="game-item">
+					<a href="{% url 'game:game_details' game.id %}"
+						class="list-group-item list-group-item-action list-group-item-danger" aria-current="true">
+						{{ game.player1 }} vs {{ game.player2 }}
+					</a>
+					<small class="text-muted">{{ game.played_at|date:"Y-m-d @ H:i" }}</small>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
 </body>
 
 </html>

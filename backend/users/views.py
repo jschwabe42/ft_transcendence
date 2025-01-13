@@ -1,13 +1,12 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
-from game.models import Game
-
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.db.models import F
 from .models import Profile, User
+from game.models import Game
 
 
 def register(request):
@@ -60,9 +59,6 @@ def profile(request):
 	}
 
 	return render(request, 'users/profile.html', context)
-
-from django.views.generic import ListView, DetailView
-from django.db.models import F
 
 @login_required
 def public_profile(request, query_user):

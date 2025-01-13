@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from users.models import Profile
+from users.views import public_profile
 from .models import Game, Dashboard, Player
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -54,8 +55,6 @@ def game_details(request, game_id):
 
 def players(request):
 	return render(request, "game/players.html", {"players_list": Player.objects.order_by("-created_at")[:10]})
-
-from users.views import public_profile
 
 def player_details_by_id(request, player_id):
 	player = get_object_or_404(Player, pk=player_id)
