@@ -20,11 +20,21 @@
                 </div>
                 <h1>{{ user_profile.user.username }}</h1>
                 <p class="profile-date">{{ user_profile.player.created_at|date:"Y-m-d @ H:i" }}</p>
+                <hr>
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        {% if user_profile.player.matches_lost == 0 %}
+                        <h3>Perfect</h3>
+                        {% else %}
+                        <h4>{{ user_profile.player.win_to_loss_ratio }}</h4>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
         <div class="games-container">
             <div class="games-won">
-                <h2>Games Won</h2>
+                <h3>Wins</h3>
                 {% for game in games_won %}
                 <div class="game-item">
                     <a href="{% url 'game:game_details' game.id %}"
@@ -36,7 +46,7 @@
                 {% endfor %}
             </div>
             <div class="games-lost">
-                <h2>Games Lost</h2>
+                <h3>Losses</h3>
                 {% for game in games_lost %}
                 <div class="game-item">
                     <a href="{% url 'game:game_details' game.id %}"
@@ -48,7 +58,6 @@
                 {% endfor %}
             </div>
         </div>
-    </div>
 </body>
 
 </html>

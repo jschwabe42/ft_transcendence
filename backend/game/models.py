@@ -56,6 +56,12 @@ class Player(models.Model):
 
 	def matches_played(self):
 		return self.matches_won + self.matches_lost
+	def win_to_loss_ratio(self):
+		if self.matches_lost == 0:
+			return self.matches_won
+		if self.matches_lost == 0:
+			return self.matches_won
+		return round(self.matches_won / self.matches_lost, 2)
 
 class Dashboard(models.Model):
 	games_played = models.IntegerField(default=0)
