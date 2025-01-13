@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Players</title>
-    <link rel="stylesheet" href="{% static 'blog/main.css' %}">
+    <link rel="stylesheet" href="{% static 'users/styles.css' %}">
 </head>
 <!-- @note ordering? -->
 
@@ -17,19 +17,17 @@
     <div class="mx-auto" style="width: fit-content; margin-bottom: 30px; display: flex; flex-wrap: wrap;">
         <h2>Players of pong</h2>
     </div>
-    <div class="players-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
+    <div class="players-container">
         {% if players_list %}
-        {% for player in players_list %}
-        <div class="card" style="width: 200px; text-align: center;">
-            <!-- @note alignment should not be a single column -->
-            <!-- <img src="{{ player.profile.image.url }}" class="card-img-top"> -->
-            <div class="card-body">
-                <h5 class="card-title">{{ player }}</h5>
-                <p class="card-text">{{ player.win_to_loss_ratio }}</p>
-                <a href="{% url 'game:player_details_by_id' player.id %}" class="btn btn-primary">View Profile</a>
-            </div>
+        <ul class="list-group">
+            {% for player in players_list %}
+            <li class="list-group-item" style="text-align: center;">
+                <a href="{% url 'game:player_details_by_id' player.id %}" class="mx-auto btn btn-primary">{{ player
+                    }}</a>
+                <!-- @note alignment should not be a single column, preferably using multiple cards per row -->
+            </li>
             {% endfor %}
-        </div>
+        </ul>
     </div>
     </ul>
     {% else %}
