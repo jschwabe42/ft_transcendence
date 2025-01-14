@@ -1,26 +1,41 @@
+{% extends "game/game_base.html" %}
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Game Details</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Game Details</title>
+	<link rel="stylesheet" href="{% static 'users/styles.css' %}">
 </head>
 
 <body>
-    {% block content %}
-    <div class="game-details">
-        <h2>Game Details</h2>
-        <h3>
-            <a href="{% url 'game:player_details_by_id' game.player1.id %}">
-                {{ game.player1 }}
-            </a> vs <a href="{% url 'game:player_details_by_id' game.player2.id %}">
-                {{ game.player2 }}
-            </a>
-        </h3>
+	{% block content %}
+	<div class="profile-container" style="text-align: center;">
+		<h1>{{ game.score1 }} - {{ game.score2 }}</h1>
 
-        <p>Score: {{ game.score1 }} - {{ game.score2 }}</p>
-        <p>Played at: {{ game.played_at }}</p>
-    </div>
-    {% endblock %}
+		<p class=" profile-date" style="text-align: center;">{{ game.played_at|date:"Y-m-d @ H:i" }}</p>
+	</div>
+	<div class="games-container" style="display: flex; justify-content: center;">
+		<div class="player-one" style="display: flex; justify-content: center; padding-right: 100px;">
+			<h3>
+				<a href="{% url 'game:player_details_by_id' game.player1.id %}">
+					{{ game.player1 }}
+				</a>
+			</h3>
+		</div>
+		<div class="player-two" style="display: flex; justify-content: center; padding-left: 100px;">
+			<h3>
+				<a href="{% url 'game:player_details_by_id' game.player2.id %}">
+					{{ game.player2 }}
+				</a>
+			</h3>
+		</div>
+	</div>
+	</div>
+	{% endblock %}
 </body>
+
 
 </html>
