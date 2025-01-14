@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from users.models import Profile
+from users.views import public_profile
 from .models import Game, Dashboard, Player
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -57,7 +58,7 @@ def players(request):
 
 def player_details_by_id(request, player_id):
 	player = get_object_or_404(Player, pk=player_id)
-	return render(request, "game/player_details.html", {"player": player})
+	return redirect(public_profile, query_user=player.profile.user)
 
 def dashboard(request):
 	return render(request, "game/dashboard.html", {"dashboard": Dashboard.get_instance()})

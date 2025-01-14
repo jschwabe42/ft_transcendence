@@ -1,25 +1,41 @@
+{% extends "game/game_base.html" %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Players of pong</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Players</title>
+    <link rel="stylesheet" href="{% static 'users/styles.css' %}">
 </head>
+<!-- @note ordering? -->
+
 
 <body>
-    <h2>List of all player profiles</h2>
-    {% if players_list %}
-    <ul>
-        {% for player in players_list %}
-        <li>
-            <a href="{% url 'game:player_details_by_id' player.id %}">
-                {{ player }}
-            </a>
-        </li>
-        {% endfor %}
+    <div class="mx-auto" style="width: fit-content; margin-bottom: 30px; display: flex; flex-wrap: wrap;">
+        <h2>Players of pong</h2>
+    </div>
+    <div class="players-container">
+        {% if players_list %}
+        <ul class="list-group">
+            {% for player in players_list %}
+            <li class="list-group-item" style="text-align: center;">
+                <a href="{% url 'game:player_details_by_id' player.id %}" class="mx-auto btn btn-primary">
+                    {{ player }}
+                </a>
+                <!-- @note alignment should not be a single column, preferably using multiple cards per row -->
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
     </ul>
     {% else %}
     <p>No players have been created yet.</p>
     {% endif %}
 </body>
+
+{% endblock %}
 
 </html>
