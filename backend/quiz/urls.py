@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 app_name = 'quiz'
@@ -8,4 +8,5 @@ urlpatterns = [
 	path('api/room_list/', views.room_list, name='room_list'),
 	path('join_room/<int:room_id>/', views.join_room, name='join_room'),
 	path('', views.index, name='index'),
+	re_path(r'^.*$', views.index, name='index'),
 ]
