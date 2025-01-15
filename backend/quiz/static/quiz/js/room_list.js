@@ -141,6 +141,8 @@ function joinRoom(roomId) {
 	.then(data => {
 		if (data.success) {
 			const room_name = data.room.name;
+			const room_id = data.room.id;
+			localStorage.setItem('currentRoom', JSON.stringify({ room_id, room_name }));
 			router.navigateTo(`/quiz/${room_name}/`);
 		} else {
 			alert(data.error);

@@ -49,7 +49,6 @@ class RoomMembersConsumer(AsyncWebsocketConsumer):
 		"""
 		Sends the updated room members list to all the users in the group
 		"""
-		# print("Broadcasting room members update:", event)
 		msg = {
 			'type': 'update_room_members',  # This is the type of the message
 			'data': event['data']

@@ -2,10 +2,91 @@
  * Display the room view for the user.
  */
 export function displayRoom(roomName) {
+	listener();
 	const quizAppContent = document.getElementById('quiz-app-content');
 	quizAppContent.innerHTML = `
 		<h2>Welcome to ${roomName}</h2>
 		<p>You have successfully joined the room!</p>
 		<p>Here you can start participating in the quiz.</p>
+		<ul id="participants-list"></ul>
 	`;
+	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+	if (currentRoom && currentRoom.room_name === roomName) {
+		initRoomWebSocket(currentRoom.room_id);
+	} else {
+		console.error('Room details not found');
+	}
+}
+
+function updateParticipantsList(participants, leader) {
+	const participantsList = document.getElementById('participants-list');
+	participantsList.innerHTML = '';
+	const headerP = document.createElement('p');
+	headerP.innerText = 'Participants:';
+	participantsList.appendChild(headerP);
+	participants.forEach(participant => {
+		const li = document.createElement('li');
+		li.innerHTML = participant === leader ? `${participant} <span>🎮</span>` : participant;
+		participantsList.appendChild(li);
+	});
+}
+
+function initRoomWebSocket(room_id) {
+	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+	const wsUrl = `${protocol}${window.location.host}/ws/rooms/${room_id}/`;
+	const socket = new WebSocket(wsUrl);
+
+	socket.onopen = function () {
+		console.log('Room Specific WebSocket connection established');
+		console.log('Connected to room:', wsUrl);
+	};
+	
+	socket.onmessage = function (event) {
+		const socket_data = JSON.parse(event.data);
+		console.log('Received message:', socket_data);
+		if (socket_data.type === 'update_room_members') {
+			updateParticipantsList(socket_data.data.participants, socket_data.data.leader);
+		}
+	};
+
+	socket.onclose = function() {
+		console.log('Room Specific WebSocket connection closed');
+	};
+
+	socket.onerror = function(error) {
+		console.error('Room Specific WebSocket error:', error);
+	};
+}
+
+function leaveRoom(room_id) {
+	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+	console.log("Calling leave room API");
+	fetch('/quiz/leave_room/', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'X-CSRFToken': csrfToken
+		},
+		body: `room_id=${encodeURIComponent(room_id)}`
+	})
+	.then(response=>response.json())
+	.then(data => {
+		if (data.success) {
+			console.log('Left room successfully');
+		} else {
+			console.error('Error leaving room:', data.error);
+		}
+	})
+	.catch(error => {
+		console.error('An error occurred:', error);
+	});
+}
+
+function listener() {
+	window.addEventListener('beforeunload', function (event) {
+		const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+		if (currentRoom) {
+			leaveRoom(currentRoom.room_id);
+		}
+	});
 }

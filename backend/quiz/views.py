@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+import time
 
 # Create your views here.
 def index (request):
@@ -25,7 +26,7 @@ def create_room(request):
 	"""
 	if request.method == 'POST':
 		room_name = request.POST.get('room_name', 'New Room').strip()
-		print(f"Received room name: {request.POST.get('room_name', 'New Room').strip()}")
+		# print(f"Received room name: {request.POST.get('room_name', 'New Room').strip()}")
 		invalid_chars = set(' !?@#$%^&*()+=<>[]{}|\\/:;\'"')
 		if any(char in invalid_chars for char in room_name):
 			return JsonResponse({
@@ -118,7 +119,6 @@ def join_room(request, room_id):
 		# Return the room details and participants
 		participants = Participant.objects.filter(room=room)
 		participants_data = [{'id': p.user.id, 'username': p.user.username} for p in participants]
-
 		room_member_update(room.id)
 
 		return JsonResponse({
@@ -133,3 +133,21 @@ def join_room(request, room_id):
 		})
 	except Room.DoesNotExist:
 		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
+
+@login_required
+def leave_room(request, room_id):
+	"""
+	Leave the room with the given room_id.
+	Functions as API Endpoint. /quiz/leave_room/<int:room_id>/
+	"""
+	try:
+		room = Room.objects.get(id=room_id)
+		participant = Participant.objects.filter(user=request.user, room=room).first()
+		if participant:
+			participant.delete()
+		room_member_update(room.id)
+		return JsonResponse({'success': True, 'message': 'Left room successfully!'})
+	except Room.DoesNotExist:
+		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
+	except Participant.DoesNotExist:
+		return JsonResponse({'success': False, 'error': 'You are not a part of this room!'})
