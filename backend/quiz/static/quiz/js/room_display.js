@@ -1,3 +1,4 @@
+import router from './router.js';
 /**
  * Display the room view for the user.
  */
@@ -9,6 +10,7 @@ export function displayRoom(roomName) {
 		<p>You have successfully joined the room!</p>
 		<p>Here you can start participating in the quiz.</p>
 		<ul id="participants-list"></ul>
+		<button id="leave-room-button" class="btn btn-danger">Leave Room</button>
 	`;
 	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
 	if (currentRoom && currentRoom.room_name === roomName) {
@@ -17,6 +19,12 @@ export function displayRoom(roomName) {
 	} else {
 		console.error('Room details not found');
 	}
+
+	const leaveRoomButton = document.getElementById('leave-room-button');
+	leaveRoomButton.addEventListener('click', function () {
+		leaveRoom(currentRoom.room_id);
+		router.navigateTo('/quiz/');
+	});
 }
 
 /**
@@ -60,10 +68,10 @@ function initRoomWebSocket(room_id) {
 
 	socket.onclose = function() {
 		// Might be redundant to leave room here if beforeunload works correctly
-		const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
-		if (currentRoom) {
-			leaveRoom(currentRoom.room_id);
-		}
+		// const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+		// if (currentRoom) {
+		// 	leaveRoom(currentRoom.room_id);
+		// }
 		console.log('Room Specific WebSocket connection closed');
 	};
 
