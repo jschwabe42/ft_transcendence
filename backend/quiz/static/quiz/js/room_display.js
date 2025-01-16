@@ -12,6 +12,7 @@ export function displayRoom(roomName) {
 	`;
 	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
 	if (currentRoom && currentRoom.room_name === roomName) {
+		updateParticipantsList(currentRoom.participants, currentRoom.leader);
 		initRoomWebSocket(currentRoom.room_id);
 	} else {
 		console.error('Room details not found');

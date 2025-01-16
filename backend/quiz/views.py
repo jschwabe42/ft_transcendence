@@ -118,16 +118,16 @@ def join_room(request, room_id):
 
 		# Return the room details and participants
 		participants = Participant.objects.filter(room=room)
-		participants_data = [{'id': p.user.id, 'username': p.user.username} for p in participants]
+		participants_data = [p.user.username for p in participants]
 		room_member_update(room.id)
-
 		return JsonResponse({
 			'success': True,
 			'room': {
 				'id': room.id,
 				'name': room.name,
 				'last_activity': room.last_activity,
-				'is_active': room.is_active
+				'is_active': room.is_active,
+				'leader': room.leader.user.username if room.leader else None,
 			},
 			'participants': participants_data
 		})

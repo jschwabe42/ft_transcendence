@@ -142,7 +142,9 @@ function joinRoom(roomId) {
 		if (data.success) {
 			const room_name = data.room.name;
 			const room_id = data.room.id;
-			localStorage.setItem('currentRoom', JSON.stringify({ room_id, room_name }));
+			const leader = data.room.leader;
+			const participants = data.participants;
+			localStorage.setItem('currentRoom', JSON.stringify({ room_id, room_name, leader, participants }));
 			router.navigateTo(`/quiz/${room_name}/`);
 		} else {
 			alert(data.error);
