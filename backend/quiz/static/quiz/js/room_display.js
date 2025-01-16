@@ -19,6 +19,10 @@ export function displayRoom(roomName) {
 	}
 }
 
+/**
+ * Stupid function name I just realized, maybe change later.
+ * Sets the html for the participants as well as adding a leader symbol.
+ */
 function updateParticipantsList(participants, leader) {
 	const participantsList = document.getElementById('participants-list');
 	participantsList.innerHTML = '';
@@ -32,6 +36,10 @@ function updateParticipantsList(participants, leader) {
 	});
 }
 
+/**
+ * Loads the room specific WebSocket connection.
+ * Also calls leave Room on close, might be redundant or false, right now functions as a fallback to beforeunload.
+ */
 function initRoomWebSocket(room_id) {
 	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
 	const wsUrl = `${protocol}${window.location.host}/ws/rooms/${room_id}/`;
@@ -64,6 +72,9 @@ function initRoomWebSocket(room_id) {
 	};
 }
 
+/**
+ * Sends a POST request to the server to leave the room.
+ */
 function leaveRoom(room_id) {
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 	console.log("Calling leave room API");
@@ -88,6 +99,10 @@ function leaveRoom(room_id) {
 	});
 }
 
+/**
+ * The listener to make sure a user leaves the room when they close the tab.
+ * Might change the event to something else, but beforeunload seems to work fine.
+ */
 function listener() {
 	window.addEventListener('beforeunload', function (event) {
 		const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));

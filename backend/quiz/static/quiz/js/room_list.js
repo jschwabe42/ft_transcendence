@@ -1,6 +1,8 @@
 import router from './router.js';
 
-
+/**
+ * The main function of the file, sets the base html and calls the other functions
+ */
 export function loadRoomList() {
 	const quizAppContent = document.getElementById('quiz-app-content');
 	quizAppContent.innerHTML = `
@@ -25,6 +27,9 @@ export function loadRoomList() {
 	loadRooms();
 }
 
+/**
+ * Initializes the create room form and handles form submission
+ */
 function initCreateRoomForm() {
 	const showFormBtn = document.getElementById('show-create-room-form');
 	const formContainer = document.getElementById('create-room-form-con');
@@ -66,6 +71,9 @@ function initCreateRoomForm() {
 	});
 }
 
+/**
+ * Initializes the WebSocket connection for the room list
+ */
 function initWebSocket() {
 	const quizAppContent = document.getElementById('quiz-app-content');
 	const roomListContainer = document.createElement('div');
@@ -89,6 +97,9 @@ function initWebSocket() {
 	};
 }
 
+/**
+ * Calls the room_list api to get the list of rooms and displays them. Could theoretically later be replaced by the router receiving the room list from the server
+ */
 async function loadRooms() {
 	const roomListContainer = document.getElementById('room-list');
 	try {
@@ -103,6 +114,9 @@ async function loadRooms() {
 	}
 }
 
+/**
+ * Takes the rooms from loadfRooms/webseocket and displays them.
+ */
 function displayRooms(rooms) {
 	const roomListContainer = document.getElementById('room-list');
 	if (rooms.length === 0) {
@@ -127,6 +141,9 @@ function displayRooms(rooms) {
 	});
 }
 
+/**
+ * Add functionality to the join button, and calls the router to navigate to the room specific view.
+ */
 function joinRoom(roomId) {
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 	fetch(`/quiz/join_room/${roomId}/`, {

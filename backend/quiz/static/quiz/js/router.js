@@ -48,8 +48,10 @@ class Router {
 
 const router = new Router();
 
+/**
+ * The main view of the quiz app
+ */
 router.addRoute('/quiz/', loadRoomList);
-// router.addRoute('/quiz/room/', displayRoom);
-// router.addRoute('/quiz/:roomName', displayRoom);
+
 router.handleRouteChange();
 export default router;
