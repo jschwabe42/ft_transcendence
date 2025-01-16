@@ -33,7 +33,7 @@ application = ProtocolTypeRouter(
         "websocket" : AuthMiddlewareStack(
             URLRouter(
                 chat_routing.websocket_urlpatterns + game_routing.websocket_urlpatterns + quiz_routing.websocket_urlpatterns,
-            )    
+            )
         )
     }
 )

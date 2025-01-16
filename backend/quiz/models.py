@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 
 class Room(models.Model):
+	id = models.BigAutoField(primary_key=True)
 	name = models.CharField(max_length=100, unique=True)
 	# participants = models.ManyToManyField(User, related_name="quiz_rooms", blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -16,9 +17,10 @@ class Room(models.Model):
 		blank=True,
 		related_name="leader_of",
 	)
-	current_question = models.JSONField(null=True, blank=True)
-	shuffled_answers = models.JSONField(null=True, blank=True)
-	questions = models.JSONField(null=True, blank=True)
+
+	# current_question = models.JSONField(null=True, blank=True)
+	# shuffled_answers = models.JSONField(null=True, blank=True)
+	# questions = models.JSONField(null=True, blank=True)
 
 	def update_activity(self):
 		self.last_activity = now()
