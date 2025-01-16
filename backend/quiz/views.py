@@ -142,14 +142,22 @@ def leave_room(request, room_id):
 	Functions as API Endpoint. /quiz/leave_room/<int:room_id>/
 	"""
 	try:
-		print(f"Leaving room with id: {room_id}", flush=True)
-
 		room = Room.objects.get(id=room_id)
-		print(f"Leaving room with id: {room.id}", flush=True)
 		participant = Participant.objects.filter(user=request.user, room=room).first()
 		if participant:
+			if room.leader == participant:
+				remaining_participants = Participant.objects.filter(room=room).exclude(id=participant.id).order_by('joined_at', 'user__username')
+				if remaining_participants.exists():
+					room.leader = remaining_participants.first()
+				else:
+					room.leader = None
+				room.save()
 			participant.delete()
-		room_member_update(room.id)
+			if room.participants.count() == 0:
+				room.delete()
+				room_list_update()
+			else:
+				room_member_update(room.id)
 		return JsonResponse({'success': True, 'message': 'Left room successfully!'})
 	except Room.DoesNotExist:
 		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
