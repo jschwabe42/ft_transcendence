@@ -113,6 +113,7 @@ def join_room(request, room_id):
 	Functions as API Endpoint. /quiz/join_room/<int:room_id>/
 	"""
 	try:
+		print(f"Joining room with id: {room_id}", flush=True)
 		room = Room.objects.get(id=room_id)
 		participant, created = Participant.objects.get_or_create(user=request.user, room=room)
 
@@ -141,7 +142,10 @@ def leave_room(request, room_id):
 	Functions as API Endpoint. /quiz/leave_room/<int:room_id>/
 	"""
 	try:
+		print(f"Leaving room with id: {room_id}", flush=True)
+
 		room = Room.objects.get(id=room_id)
+		print(f"Leaving room with id: {room.id}", flush=True)
 		participant = Participant.objects.filter(user=request.user, room=room).first()
 		if participant:
 			participant.delete()

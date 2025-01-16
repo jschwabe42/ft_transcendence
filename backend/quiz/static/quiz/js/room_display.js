@@ -51,6 +51,11 @@ function initRoomWebSocket(room_id) {
 	};
 
 	socket.onclose = function() {
+		// Might be redundant to leave room here if beforeunload works correctly
+		const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+		if (currentRoom) {
+			leaveRoom(currentRoom.room_id);
+		}
 		console.log('Room Specific WebSocket connection closed');
 	};
 
@@ -62,7 +67,7 @@ function initRoomWebSocket(room_id) {
 function leaveRoom(room_id) {
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 	console.log("Calling leave room API");
-	fetch('/quiz/leave_room/', {
+	fetch(`/quiz/leave_room/${room_id}/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded',

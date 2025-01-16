@@ -1,5 +1,6 @@
 import router from './router.js';
 
+
 export function loadRoomList() {
 	const quizAppContent = document.getElementById('quiz-app-content');
 	quizAppContent.innerHTML = `
