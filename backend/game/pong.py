@@ -57,7 +57,6 @@ class PongGame:
 			self.player2: False,
 		}
 		self.running = False
-		self.pause = False
 
 	def update_game_state(self):
 		self._check_paddle_collision()
@@ -168,8 +167,6 @@ class PongGame:
 	async def game_loop(self, broadcast_callback):
 		self.running = True
 		while self.running:
-			if self.pause == True:
-				continue
 			self.update_game_state()
 			state = self.serialize_state()
 			await broadcast_callback(state)
