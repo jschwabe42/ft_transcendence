@@ -39,6 +39,7 @@ class Profile(models.Model):
 class Friends(models.Model):
 	origin = models.ForeignKey(User, models.CASCADE)
 	target = models.ForeignKey(User, models.CASCADE, related_name='target_for_friends')
+	accepted = models.BooleanField(default=False)
 
 	def __hash__(self):
 		return hash((self.origin, self.target))
@@ -52,37 +53,27 @@ class Friends(models.Model):
 
 	def has_target(self, some_user):
 		return self.target == some_user
-	
+
 	def has_origin(self, some_user):
 		return self.origin == some_user
-		
+
 
 # need to always check origin user of a request
-class Friends_Manager(models.Model):
-	friendships_active = set()
-	friendships_inactive = set()
-
+class Friends_Manager:
+	@staticmethod
 	# origin should be the request user, target is their request
-	def friends_request(self, origin, string_target_friend):
-		if not User.objects.exists(string_target_friend):
-			raise ValidationError('the user you are trying to befriend does not exist!')
-		target_friend = User.objects.get(string_target_friend)
+	def friends_request(origin, string_target_friend):
+		if not User.objects.filter(username=string_target_friend).exists():
+			raise ValidationError('The user you are trying to befriend does not exist!')
+		target_friend = User.objects.get(username=string_target_friend)
 		if target_friend == origin:
 			raise ValidationError('You cannot befriend yourself!')
-		current_set = Friends(origin, target_friend)
-		if current_set not in self.friendships_active and current_set not in self.friendships_inactive:
-			reversed_set = Friends(target_friend, origin)
-			if reversed_set not in self.friendships_active and reversed_set not in self.friendships_inactive:
-				self.__send_friendship_request(current_set)
-			elif reversed_set not in self.friendships_active and reversed_set in self.friendships_inactive:
-				# handle redirect to accept as the target? (reversed_set in inactive) @follow-up
-				raise ValidationError('there is already a friends request from this user for you to accept.')
-			else:
-				raise ValidationError('there is already a request or friendship in between these users')
-		elif current_set in self.friendships_inactive:
-			raise ValidationError('You cannot send more than one request to the same user!')
-		elif current_set in self.friendships_active:
-			raise ValidationError('You are already friends with this user!')
+		if Friends.objects.filter(origin=target_friend, target=origin).exists():
+			# handle redirect to accept as the target? (reversed_set in inactive) @follow-up
+			raise ValidationError('there is already a friends request from this user for you to accept.')
+		if Friends.objects.filter(origin=origin, target=target_friend).exists():
+			raise ValidationError('There is already a request or friendship between these users')
+		Friends.objects.create(origin=origin, target=target_friend, accepted=False)
 
 	# cancel the request as origin
 	def cancel_friends_request(self, origin):
