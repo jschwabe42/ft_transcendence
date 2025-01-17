@@ -43,52 +43,32 @@ class Friends(models.Model):
 
 	def __hash__(self):
 		return hash((self.origin, self.target))
-	# not sure how to test initialization @follow-up
-	# friendship exists
-	# not sure if this will work but for now we just assume
-	# Friends(User1, User2) != Friends(User2, User1)
-	# @follow-up
 	def __eq__(self, other):
 		return (self.origin, self.target) == (other.origin, other.target)
+	
 
-	def has_target(self, some_user):
-		return self.target == some_user
-
-	def has_origin(self, some_user):
-		return self.origin == some_user
-
-
-# need to always check origin user of a request
 class Friends_Manager:
-	def __get_existing_user_instance(string_target_friend):
-		if not User.objects.filter(username=string_target_friend).exists():
-			raise ValidationError('The target user does not exist!')
-		return User.objects.get(username=string_target_friend)
 
-	def __delete_friendship(friendship):
-		if friendship:
-			friendship.delete()
-
-	@staticmethod
 	# origin should be the request user, target is their request
-	def friends_request(origin, string_target_friend):
+	@staticmethod
+	def friends_request(origin_user, target_username):
 		"""User instance, target username"""
-		target_friend = Friends_Manager.__get_existing_user_instance(string_target_friend)
-		if target_friend == origin:
+		target_friend = Friends_Manager.__get_existing_user_instance(target_username)
+		if target_friend == origin_user:
 			raise ValidationError('You cannot befriend yourself!')
-		if Friends.objects.filter(origin=target_friend, target=origin).exists():
+		if Friends.objects.filter(origin=target_friend, target=origin_user).exists():
 			# handle redirect to accept as the target? (reversed_set in inactive) @follow-up
 			raise ValidationError('there is already a friends request from this user for you to accept.')
-		if Friends.objects.filter(origin=origin, target=target_friend).exists():
+		if Friends.objects.filter(origin=origin_user, target=target_friend).exists():
 			raise ValidationError('There is already a request or friendship between these users')
-		Friends.objects.create(origin=origin, target=target_friend, accepted=False)
+		Friends.objects.create(origin=origin_user, target=target_friend, accepted=False)
 
-	@staticmethod
 	# cancel the request as origin
-	def cancel_friends_request(origin, string_target_friend):
+	@staticmethod
+	def cancel_friends_request(origin_user, target_username):
 		"""User instance, target username"""
-		target_friend = Friends_Manager.__get_existing_user_instance(string_target_friend)
-		Friends_Manager.__delete_friendship(Friends.objects.filter(origin=origin, target=target_friend, accepted=False).first())
+		target_user = Friends_Manager.__get_existing_user_instance(target_username)
+		Friends_Manager.__delete_friendship(Friends.objects.filter(origin=origin_user, target=target_user, accepted=False).first())
 
 	# deny request as target
 	@staticmethod
@@ -97,54 +77,15 @@ class Friends_Manager:
 		origin_user = Friends_Manager.__get_existing_user_instance(origin_username)
 		Friends_Manager.__delete_friendship(Friends.objects.filter(origin=origin_user, target=target_user, accepted=False).first())
 
-	def accept_request_as_target(self, target_friend):
-		"""User instance: accept"""
-		for friendship in self.friendships_inactive:
-			if friendship.has_target(target_friend):
-				origin, destination = friendship# is this necessary? @audit
-				self.__accept_friendship(Friends(origin, destination))
-
-	# view should either send as user either direct or instance
-	def remove_friend(self, remover, string_user_to_unfriend):
-		"""User: part of a friendship, only works on active friendships"""
-		if not User.objects.exists(string_user_to_unfriend):
-			raise ValidationError('the user you are trying to befriend does not exist!')
-		user_to_unfriend = User.objects.get(string_user_to_unfriend)
-		self.__remove_active_friendship(remover, user_to_unfriend)
-
-
-	# @todo some way to check for outstanding friend requests/instances and interacting with those as a user
+	# @todo some way to check for outstanding friend requests/instances and interacting with those as a user (for views access/UX)
 
 	# internal 
-	def __accept_friendship(self, instance):
-		self.friendships_active.add(instance)
-		self.friendships_inactive.remove(instance)
+	def __get_existing_user_instance(string_target_friend):
+		if not User.objects.filter(username=string_target_friend).exists():
+			raise ValidationError('The target user does not exist!')
+		return User.objects.get(username=string_target_friend)
 
-	def __cancel_or_deny_friendship(self, instance):
-		self.friendships_inactive.remove(instance)
-
-	def __send_friendship_request(self, instance):
-		self.friendships_inactive.add(instance)
-
-	def __remove_active_friendship(self, remover, user_to_unfriend):
-		friendship = Friends(remover, user_to_unfriend)
-		reverse_friendship = Friends(user_to_unfriend, remover)
-		for instance in self.friendships_active:
-			if instance == friendship or instance == reverse_friendship:
-				self.friendships_active.remove(instance)
-
-	# @audit does this even work
-	# def __is_inactive(self, maybe_exists):
-	# 	return self.friendships_inactive.__contains__(maybe_exists)
-
-	# def __is_active(self, maybe_exists):
-	# 	return self.friendships_active.__contains__(maybe_exists)
-
-	# def __remove_friendship_with_instance(self, probably_exists):
-	# 	if self.is_active(probably_exists):
-	# 		self.friendships_active.remove(probably_exists)
-	# 	elif self.is_inactive(probably_exists):
-	# 		self.cancel_or_deny_friendship(probably_exists)
-	# 	else:
-	# 		raise ValidationError("cannot delete non-existent friendship")
+	def __delete_friendship(friendship):
+		if friendship:
+			friendship.delete()
 
