@@ -8,6 +8,7 @@ urlpatterns = [
 	path('api/room_list/', views.room_list, name='room_list'),
 	path('join_room/<int:room_id>/', views.join_room, name='join_room'),
 	path('leave_room/<int:room_id>/', views.leave_room, name='leave_room'),
+	path('update_room_settings/<int:room_id>/', views.update_room_settings, name='update_room_settings'),
 	path('', views.index, name='index'),
 	re_path(r'^.*$', views.index, name='index'),
 ]

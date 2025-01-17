@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from .models import Room, Participant
+from .models import Room, Participant, RoomSettings
 from django.utils import timezone
 from django.utils.timezone import now
 from channels.layers import get_channel_layer
@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+import json
 import time
 
 # Create your views here.
@@ -38,6 +39,7 @@ def create_room(request):
 		participant, created = Participant.objects.get_or_create(user=request.user, room=room)
 		if created:
 			room.leader = participant
+			room.settings = RoomSettings.objects.create(room=room)
 			room.save()
 		room_list_update()
 		participants = Participant.objects.filter(room=room)
@@ -129,6 +131,7 @@ def join_room(request, room_id):
 				'last_activity': room.last_activity,
 				'is_active': room.is_active,
 				'leader': room.leader.user.username if room.leader else None,
+				'current_user': request.user.username,
 			},
 			'participants': participants_data
 		})
@@ -163,3 +166,25 @@ def leave_room(request, room_id):
 		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
 	except Participant.DoesNotExist:
 		return JsonResponse({'success': False, 'error': 'You are not a part of this room!'})
+	
+@login_required
+def update_room_settings(request, room_id):
+	"""
+	Update the room settings for the room with the given room_id.
+	Functions as API Endpoint. /quiz/update_room_settings/<int:room_id>/
+	"""
+	if request.method == 'POST':
+		try:
+			room = Room.objects.get(id=room_id)
+			if room.leader.user != request.user:
+				return JsonResponse({'success': False, 'error': 'You are not the leader of this room!'})
+			data = json.loads(request.body)
+			question_count = data.get('question_count', 5)
+			room.settings.question_count = question_count
+			room.settings.save()
+			return JsonResponse({'success': True, 'message': 'Room settings updated successfully!'})
+		except Room.DoesNotExist:
+			return JsonResponse({'success': False, 'error': 'Room does not exist!'})
+		except RoomSettings.DoesNotExist:
+			return JsonResponse({'success': False, 'error': 'Room settings do not exist!'})
+	return JsonResponse({'success': False, 'error': 'Invalid request method.'})

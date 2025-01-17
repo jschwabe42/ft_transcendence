@@ -11,11 +11,30 @@ export function displayRoom(roomName) {
 		<p>Here you can start participating in the quiz.</p>
 		<ul id="participants-list"></ul>
 		<button id="leave-room-button" class="btn btn-danger">Leave Room</button>
+
+		<button id="settings-button" class="btn btn-primary" style="display: none;">Settings</button>
+		<div id="settings-menu" style="display: none;">
+			<label for="question-count">Number of Questions:</label>
+			<select id="question-count">
+				<option value="3">3</option>
+				<option value="5" selected>5</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+			</select>
+			<button id="save-settings-button" class="btn btn-success">Save</button>
+		</div>
 	`;
 	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
 	if (currentRoom && currentRoom.room_name === roomName) {
 		updateParticipantsList(currentRoom.participants, currentRoom.leader);
 		initRoomWebSocket(currentRoom.room_id);
+		console.log('Current room:', currentRoom);
+		console.log('Current user:', currentRoom.current_user);
+		console.log('Leader:', currentRoom.leader);
+		if (currentRoom.leader === currentRoom.current_user) {
+			document.getElementById('settings-button').style.display = 'block';
+		}
 	} else {
 		console.error('Room details not found');
 	}
@@ -24,6 +43,18 @@ export function displayRoom(roomName) {
 	leaveRoomButton.addEventListener('click', function () {
 		leaveRoom(currentRoom.room_id);
 		router.navigateTo('/quiz/');
+	});
+
+	const settingsButton = document.getElementById('settings-button');
+	settingsButton.addEventListener('click', function () {
+		const settingsMenu = document.getElementById('settings-menu');
+		settingsMenu.style.display = settingsMenu.style.display === 'none' ? 'block' : 'none';
+	});
+
+	const saveSettingsButton = document.getElementById('save-settings-button');
+	saveSettingsButton.addEventListener('click', function () {
+		const questionCount = document.getElementById('question-count').value;
+		updateRoomSettings(currentRoom.room_id, questionCount);
 	});
 }
 
@@ -39,7 +70,7 @@ function updateParticipantsList(participants, leader) {
 	participantsList.appendChild(headerP);
 	participants.forEach(participant => {
 		const li = document.createElement('li');
-		li.innerHTML = participant === leader ? `${participant} <span>🎮</span>` : participant;
+		li.innerHTML = participant === leader ? `${participant} <span>👑</span>` : participant;
 		participantsList.appendChild(li);
 	});
 }
@@ -78,6 +109,32 @@ function initRoomWebSocket(room_id) {
 	socket.onerror = function(error) {
 		console.error('Room Specific WebSocket error:', error);
 	};
+}
+
+/**
+ * Update the room settings.
+ */
+function updateRoomSettings(roomId, questionCount) {
+	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+	fetch(`/quiz/update_room_settings/${roomId}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': csrfToken
+		},
+		body: JSON.stringify({ question_count: questionCount })
+	})
+	.then(response => response.json())
+	.then(data => {
+		if (data.success) {
+			console.log('Room settings updated successfully');
+		} else {
+			console.error('Error updating room settings:', data.error);
+		}
+	})
+	.catch(error => {
+		console.error('An error occurred:', error);
+	});
 }
 
 /**
