@@ -55,12 +55,25 @@ class Friends_Manager(models.Model):
 	friendships_active = set()
 	friendships_inactive = set()
 
-	def friends_request(self, origin, target_friend):
+	# origin should be the request user, target is their request
+	def friends_request(self, origin, string_target_friend):
+		target_friend = User.objects.get(string_target_friend)
 		if target_friend == origin:
 			raise ValidationError('You cannot befriend yourself!')
 		current_set = Friends(origin, target_friend)
 		if current_set not in self.friendships_active and current_set not in self.friendships_inactive:
+			reversed_set = Friends(target_friend, origin)
+			if reversed_set not in self.friendships_active and reversed_set not in self.friendships_inactive:
 			self.friendships_inactive.add(Friends(origin, target_friend))
+			elif reversed_set not in self.friendships_active and reversed_set in self.friendships_inactive:
+				# handle auto-accept if we are the target? (reversed_set in inactive) @follow-up
+				raise ValidationError('there is already a friends request from this user for you to accept.')
+			else:
+				raise ValidationError('there is already a request or friendship in between these users')
+		elif current_set in self.friendships_inactive:
+			raise ValidationError('You cannot send more than one request to the same user!')
+		elif current_set in self.friendships_active:
+			raise ValidationError('You are already friends with this user!')
 
 	# is this ok like this? @follow-up
 	def cancel_or_deny_request(self, origin_or_target):
