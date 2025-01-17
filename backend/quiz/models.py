@@ -17,7 +17,7 @@ class Room(models.Model):
 		blank=True,
 		related_name="leader_of",
 	)
-
+	settings = models.OneToOneField('RoomSettings', on_delete=models.CASCADE, null=True, blank=True, related_name='room_settings')
 	# current_question = models.JSONField(null=True, blank=True)
 	# shuffled_answers = models.JSONField(null=True, blank=True)
 	# questions = models.JSONField(null=True, blank=True)
@@ -42,3 +42,12 @@ class Answer(models.Model):
 
 	def __str__(self):
 		return f"{self.participant.user.username} answered {self.answer_given} in {self.room.name}"
+
+class RoomSettings(models.Model):
+	room = models.OneToOneField(Room, on_delete=models.CASCADE, related_name='room_settings')
+
+	# Number of questions asked to the users
+	question_count = models.PositiveSmallIntegerField(default=5)
+
+	def __str__(self):
+		return f"Settings for room {self.room.name}"
