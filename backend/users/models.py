@@ -59,8 +59,8 @@ class Friends_Manager:
 		if Friends.objects.filter(origin=target_friend, target=origin_user).exists():
 			# handle redirect to accept as the target? (reversed_set in inactive) @follow-up
 			raise ValidationError('there is already a friends request from this user for you to accept.')
-		if Friends.objects.filter(origin=origin_user, target=target_friend).exists():
-			raise ValidationError('There is already a request or friendship between these users')
+		if Friends.objects.filter(origin=origin_user, target=target_friend, accepted=True).exists():
+			raise ValidationError('There is already a friendship between these users')
 		Friends.objects.create(origin=origin_user, target=target_friend, accepted=False)
 
 	# cancel the request as origin
@@ -77,6 +77,13 @@ class Friends_Manager:
 		origin_user = Friends_Manager.__get_existing_user_instance(origin_username)
 		Friends_Manager.__delete_friendship(Friends.objects.filter(origin=origin_user, target=target_user, accepted=False).first())
 
+	# accept request as target
+	@staticmethod
+	def accept_request_as_target(target_user, origin_username):
+		"""User instance (target), origin username: accept"""
+		origin_user = Friends_Manager.__get_existing_user_instance(origin_username)
+		Friends_Manager.__create_friendship(Friends.objects.filter(origin=origin_user, target=target_user, accepted=False).first())
+
 	# @todo some way to check for outstanding friend requests/instances and interacting with those as a user (for views access/UX)
 
 	# internal 
@@ -89,3 +96,10 @@ class Friends_Manager:
 		if friendship:
 			friendship.delete()
 
+	def __create_friendship(friendship):
+		if friendship:
+			friendship.accepted = True
+			friendship.save()
+			# some sort of confirmation for the user @todo
+		else:
+			raise ValueError('the request you are trying to accept does not exist')
