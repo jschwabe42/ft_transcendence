@@ -32,3 +32,11 @@ class FriendsManagerTest(TestCase):
 			Friends_Manager.cancel_friends_request(self.user2, 'nonexistentuser')
 		self.assertFalse(Friends.objects.filter(origin=self.user1, target=self.user2).exists())
 
+	def test_deny_friends_request(self):
+		# Test denying a friend request
+		Friends_Manager.friends_request(self.user1, 'user2')
+		Friends_Manager.deny_friends_request(self.user2, 'user1')
+		with self.assertRaises(ValidationError):
+			Friends_Manager.deny_friends_request(self.user2, 'nonexistentuser')
+		self.assertFalse(Friends.objects.filter(origin=self.user1, target=self.user2).exists())
+

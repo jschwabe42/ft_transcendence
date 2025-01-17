@@ -90,11 +90,12 @@ class Friends_Manager:
 		target_friend = Friends_Manager.__get_existing_user_instance(string_target_friend)
 		Friends_Manager.__delete_friendship(Friends.objects.filter(origin=origin, target=target_friend, accepted=False).first())
 
-	def deny_friends_request(self, target):
-		"""User instance: deny"""
-		for friendship in self.friendships_inactive:
-			if friendship.has_target(target):
-				self.__cancel_or_deny_friendship(friendship)
+	# deny request as target
+	@staticmethod
+	def deny_friends_request(target_user, origin_username):
+		"""User instance (target), origin username: deny"""
+		origin_user = Friends_Manager.__get_existing_user_instance(origin_username)
+		Friends_Manager.__delete_friendship(Friends.objects.filter(origin=origin_user, target=target_user, accepted=False).first())
 
 	def accept_request_as_target(self, target_friend):
 		"""User instance: accept"""
