@@ -61,6 +61,8 @@ class Friends_Manager:
 			raise ValidationError('there is already a friends request from this user for you to accept.')
 		if Friends.objects.filter(origin=origin_user, target=target_friend, accepted=True).exists():
 			raise ValidationError('There is already a friendship between these users')
+		elif Friends.objects.filter(origin=origin_user, target=target_friend, accepted=False).exists():
+			raise ValidationError('you cannot request the same user again before your request was handled')
 		Friends.objects.create(origin=origin_user, target=target_friend, accepted=False)
 
 	# cancel the request as origin
@@ -68,14 +70,20 @@ class Friends_Manager:
 	def cancel_friends_request(origin_user, target_username):
 		"""User instance, target username"""
 		target_user = Friends_Manager.__get_existing_user_instance(target_username)
-		Friends_Manager.__delete_friendship(Friends.objects.filter(origin=origin_user, target=target_user, accepted=False).first())
+		try:
+			Friends_Manager.__delete_friendship(Friends.objects.filter(origin=origin_user, target=target_user, accepted=False).first())
+		except ValueError:
+			raise ValidationError('you did not send the friend request, you can only deny it!')
 
 	# deny request as target
 	@staticmethod
 	def deny_friends_request(target_user, origin_username):
 		"""User instance (target), origin username: deny"""
 		origin_user = Friends_Manager.__get_existing_user_instance(origin_username)
-		Friends_Manager.__delete_friendship(Friends.objects.filter(origin=origin_user, target=target_user, accepted=False).first())
+		try:
+			Friends_Manager.__delete_friendship(Friends.objects.filter(origin=origin_user, target=target_user, accepted=False).first())
+		except ValueError:
+			raise ValidationError('you sent the friend request, you can only cancel it!')
 
 	# accept request as target
 	@staticmethod
@@ -83,6 +91,14 @@ class Friends_Manager:
 		"""User instance (target), origin username: accept"""
 		origin_user = Friends_Manager.__get_existing_user_instance(origin_username)
 		Friends_Manager.__create_friendship(Friends.objects.filter(origin=origin_user, target=target_user, accepted=False).first())
+
+	# delete a friendship from either side
+	@staticmethod
+	def remove_friend(remover, target_username):
+		"""either User instance, other username: remove"""
+		target_user = Friends_Manager.__get_existing_user_instance(target_username)
+		friendship_either_way = Friends.objects.filter(origin=remover, target=target_user, accepted=True).first() or Friends.objects.filter(origin=target_user, target=remover, accepted=True).first()
+		Friends_Manager.__delete_friendship(friendship=friendship_either_way)
 
 	# @todo some way to check for outstanding friend requests/instances and interacting with those as a user (for views access/UX)
 
@@ -95,6 +111,8 @@ class Friends_Manager:
 	def __delete_friendship(friendship):
 		if friendship:
 			friendship.delete()
+		else:
+			raise ValueError('the friendship you are trying to delete does not exist')
 
 	def __create_friendship(friendship):
 		if friendship:
