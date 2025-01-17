@@ -23,6 +23,7 @@ export function displayRoom(roomName) {
 				<option value="20">20</option>
 			</select>
 			<button id="save-settings-button" class="btn btn-success">Save</button>
+			 <div id="popup-message" class="popup-message" style="display: none;">Settings saved successfully!</div>
 		</div>
 	`;
 	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
@@ -73,6 +74,19 @@ function updateParticipantsList(participants, leader) {
 		li.innerHTML = participant === leader ? `${participant} <span>👑</span>` : participant;
 		participantsList.appendChild(li);
 	});
+
+	// Update the leader in the local storage and show settings button if applicable
+	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+	if (currentRoom) {
+		currentRoom.leader = leader;
+		localStorage.setItem('currentRoom', JSON.stringify(currentRoom));
+	}
+	const currentUser = currentRoom.current_user;
+	if (currentRoom.current_user === currentRoom.leader) {
+		document.getElementById('settings-button').style.display = 'block';
+	} else {
+		document.getElementById('settings-button').style.display = 'none';
+	}
 }
 
 /**
@@ -128,6 +142,7 @@ function updateRoomSettings(roomId, questionCount) {
 	.then(data => {
 		if (data.success) {
 			console.log('Room settings updated successfully');
+			showPopupMessage('Settings saved successfully!');
 		} else {
 			console.error('Error updating room settings:', data.error);
 		}
@@ -137,6 +152,14 @@ function updateRoomSettings(roomId, questionCount) {
 	});
 }
 
+function showPopupMessage(message) {
+	const popupMessage = document.getElementById('popup-message');
+	popupMessage.innerText = message;
+	popupMessage.style.display = 'block';
+	setTimeout(() => {
+		popupMessage.style.display = 'none';
+	}, 5000);
+}
 /**
  * Sends a POST request to the server to leave the room.
  */
