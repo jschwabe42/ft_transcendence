@@ -73,7 +73,7 @@ class Friends_Manager(models.Model):
 		if current_set not in self.friendships_active and current_set not in self.friendships_inactive:
 			reversed_set = Friends(target_friend, origin)
 			if reversed_set not in self.friendships_active and reversed_set not in self.friendships_inactive:
-				self.friendships_inactive.add(Friends(origin, target_friend))
+				self.__send_friendship_request(current_set)
 			elif reversed_set not in self.friendships_active and reversed_set in self.friendships_inactive:
 				# handle redirect to accept as the target? (reversed_set in inactive) @follow-up
 				raise ValidationError('there is already a friends request from this user for you to accept.')
@@ -89,43 +89,62 @@ class Friends_Manager(models.Model):
 		"""User instance"""
 		for friendship in self.friendships_inactive:
 			if friendship.has_origin(origin):
-				self.friendships_inactive.remove(friendship)
+				self.__cancel_or_deny_friendship(friendship)
 
 	def deny_friends_request(self, target):
 		"""User instance: deny"""
 		for friendship in self.friendships_inactive:
 			if friendship.has_target(target):
-				self.friendships_inactive.remove(friendship)
+				self.__cancel_or_deny_friendship(friendship)
 
 	def accept_request_as_target(self, target_friend):
 		"""User instance: accept"""
 		for friendship in self.friendships_inactive:
 			if friendship.has_target(target_friend):
-				origin, destination = friendship
-				self.friendships_active.add(Friends(origin, destination))
-				self.friendships_inactive.remove(friendship)
+				origin, destination = friendship# is this necessary? @audit
+				self.__accept_friendship(Friends(origin, destination))
 
-	# @todo some way to check for outstanding friend requests/instances
+	# view should either send as user either direct or instance
+	def remove_friend(self, remover, string_user_to_unfriend):
+		"""User: part of a friendship, only works on active friendships"""
+		if not User.objects.exists(string_user_to_unfriend):
+			raise ValidationError('the user you are trying to befriend does not exist!')
+		user_to_unfriend = User.objects.get(string_user_to_unfriend)
+		self.__remove_active_friendship(remover, user_to_unfriend)
 
-	# taking an instance seems quite logical
-	def accept_request_with_instance(self, maybe_friendship):
-		self.friendships_inactive.remove(maybe_friendship)
-		self.friendships_active.add(maybe_friendship)
 
-	def cancel_or_deny_with_instance(self, maybe_friendship):
-		self.friendships_inactive.remove(maybe_friendship)
+	# @todo some way to check for outstanding friend requests/instances and interacting with those as a user
 
-	def is_inactive(self, maybe_exists):
-		return self.friendships_inactive.__contains__(maybe_exists)
-	
-	def is_active(self, maybe_exists):
-		return self.friendships_active.__contains__(maybe_exists)
+	# internal 
+	def __accept_friendship(self, instance):
+		self.friendships_active.add(instance)
+		self.friendships_inactive.remove(instance)
 
-	def remove_friendship_with_instance(self, probably_exists):
-		if self.is_active(probably_exists):
-			self.friendships_active.remove(probably_exists)
-		elif self.is_inactive(probably_exists):
-			self.cancel_or_deny_with_instance(probably_exists)
-		else:
-			raise ValidationError("cannot delete non-existent friendship")
+	def __cancel_or_deny_friendship(self, instance):
+		self.friendships_inactive.remove(instance)
+
+	def __send_friendship_request(self, instance):
+		self.friendships_inactive.add(instance)
+
+	def __remove_active_friendship(self, remover, user_to_unfriend):
+		friendship = Friends(remover, user_to_unfriend)
+		reverse_friendship = Friends(user_to_unfriend, remover)
+		for instance in self.friendships_active:
+			if instance == friendship or instance == reverse_friendship:
+				self.friendships_active.remove(instance)
+
+	# @audit does this even work
+	# def __is_inactive(self, maybe_exists):
+	# 	return self.friendships_inactive.__contains__(maybe_exists)
+
+	# def __is_active(self, maybe_exists):
+	# 	return self.friendships_active.__contains__(maybe_exists)
+
+	# def __remove_friendship_with_instance(self, probably_exists):
+	# 	if self.is_active(probably_exists):
+	# 		self.friendships_active.remove(probably_exists)
+	# 	elif self.is_inactive(probably_exists):
+	# 		self.cancel_or_deny_friendship(probably_exists)
+	# 	else:
+	# 		raise ValidationError("cannot delete non-existent friendship")
 
