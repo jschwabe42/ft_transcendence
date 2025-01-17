@@ -60,12 +60,20 @@ class Friends(models.Model):
 
 # need to always check origin user of a request
 class Friends_Manager:
+	def __get_existing_user_instance(string_target_friend):
+		if not User.objects.filter(username=string_target_friend).exists():
+			raise ValidationError('The target user does not exist!')
+		return User.objects.get(username=string_target_friend)
+
+	def __delete_friendship(friendship):
+		if friendship:
+			friendship.delete()
+
 	@staticmethod
 	# origin should be the request user, target is their request
 	def friends_request(origin, string_target_friend):
-		if not User.objects.filter(username=string_target_friend).exists():
-			raise ValidationError('The user you are trying to befriend does not exist!')
-		target_friend = User.objects.get(username=string_target_friend)
+		"""User instance, target username"""
+		target_friend = Friends_Manager.__get_existing_user_instance(string_target_friend)
 		if target_friend == origin:
 			raise ValidationError('You cannot befriend yourself!')
 		if Friends.objects.filter(origin=target_friend, target=origin).exists():
@@ -75,12 +83,12 @@ class Friends_Manager:
 			raise ValidationError('There is already a request or friendship between these users')
 		Friends.objects.create(origin=origin, target=target_friend, accepted=False)
 
+	@staticmethod
 	# cancel the request as origin
-	def cancel_friends_request(self, origin):
-		"""User instance"""
-		for friendship in self.friendships_inactive:
-			if friendship.has_origin(origin):
-				self.__cancel_or_deny_friendship(friendship)
+	def cancel_friends_request(origin, string_target_friend):
+		"""User instance, target username"""
+		target_friend = Friends_Manager.__get_existing_user_instance(string_target_friend)
+		Friends_Manager.__delete_friendship(Friends.objects.filter(origin=origin, target=target_friend, accepted=False).first())
 
 	def deny_friends_request(self, target):
 		"""User instance: deny"""
