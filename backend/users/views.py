@@ -75,14 +75,38 @@ def public_profile(request, query_user):
 
 from .models import Friends_Manager
 
-# use POST for requests? @note currently will display an error in web view 
+# @follow-up some way of displaying errors to the user (without template?, e.g. HttpResponses)
+# use POST for requests?
+# merge into single handler function? @follow-up
+# @note currently will display an error in web view 
+# (we are returning none instead of http response)
 # but creates a record in users_friends in the database
 @login_required
 def friend_request(request, query_user):
-	"""/user/username/friend-request"""
-	try:
-		Friends_Manager.friends_request(origin_user=request.user, target_username=query_user)
-	except ValueError:
-		print('something failed in friend request.')
-	except ValidationError:
-		print('something failed in friend request.')
+	"""/user/target_username/friend-request"""
+	Friends_Manager.friends_request(origin_user=request.user, target_username=query_user)
+	return public_profile(request=request, query_user=query_user)
+
+@login_required
+def cancel_friend_request(request, query_user):
+	"""/user/target_username/cancel-friend-request"""
+	Friends_Manager.cancel_friends_request(origin_user=request.user, target_username=query_user)
+	return public_profile(request=request, query_user=query_user)
+
+@login_required
+def deny_friend_request(request, query_user):
+	"""/user/origin_username/deny-friend-request"""
+	Friends_Manager.deny_friends_request(target_user=request.user, origin_username=query_user)
+	return redirect('/game/players')
+
+@login_required
+def accept_friend_request(request, query_user):
+	"""/user/origin_username/accept-friend-request"""
+	Friends_Manager.accept_request_as_target(target_user=request.user, origin_username=query_user)
+	return public_profile(request=request, query_user=query_user)
+
+@login_required
+def remove_friend(request, query_user):
+	"""/user/other_username/remove-friend"""
+	Friends_Manager.remove_friend(remover=request.user, target_username=query_user)
+	return public_profile(request=request, query_user=query_user)
