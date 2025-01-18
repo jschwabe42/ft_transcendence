@@ -23,6 +23,7 @@ from users import views as user_views
 
 urlpatterns = [
 	path('user/<str:query_user>', user_views.public_profile, name='user-profile'),
+	path('user/<str:query_user>/friend-request', user_views.friend_request, name='user-profile'),
 	path('game/', include("game.urls")),
 	path('admin/', admin.site.urls),
 	path('', include('blog.urls')),

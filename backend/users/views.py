@@ -1,3 +1,5 @@
+import logging
+from django.forms import ValidationError
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
@@ -70,3 +72,17 @@ def public_profile(request, query_user):
 	games_won = sorted(games_won, key=lambda game: game.played_at, reverse=True)
 	games_lost = sorted(games_lost, key=lambda game: game.played_at, reverse=True)
 	return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost})
+
+from .models import Friends_Manager
+
+# use POST for requests? @note currently will display an error in web view 
+# but creates a record in users_friends in the database
+@login_required
+def friend_request(request, query_user):
+	"""/user/username/friend-request"""
+	try:
+		Friends_Manager.friends_request(origin_user=request.user, target_username=query_user)
+	except ValueError:
+		print('something failed in friend request.')
+	except ValidationError:
+		print('something failed in friend request.')
