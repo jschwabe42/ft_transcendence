@@ -80,7 +80,18 @@ def public_profile(request, query_user):
 		friend_requests_received = Friends_Manager.fetch_received(target=user_instance)
 		# @follow-up allow removal of friends
 		return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost, 'manage_friends': friends, 'friend_requests_received': friend_requests_received, 'friend_requests_sent': friend_requests_sent})
-	return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost, 'friends': friends})
+	friend_requests_sent_requestee = Friends_Manager.fetch_sent(origin=request.user).__contains__(user_instance)
+	friend_requests_received_requestee = Friends_Manager.fetch_received(target=request.user).__contains__(user_instance)
+	has_sent = False
+	is_friend = False
+	has_received = False
+	if friend_requests_sent_requestee:
+		has_sent = True
+	if friends.__contains__(request.user):
+		is_friend = True
+	elif friend_requests_received_requestee:
+		has_received = True
+	return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost, 'friends': friends, 'sender': request.user, 'has_sent': has_sent, 'is_friend': is_friend, 'has_received': has_received})
 
 
 # @todo implement UI to cancel, accept/deny friend requests (logic for management exists)
