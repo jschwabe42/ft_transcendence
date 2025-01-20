@@ -92,7 +92,7 @@ def public_profile(request, query_user):
 def friend_request(request, target_username):
 	"""/user/target_username/friend-request"""
 	Friends_Manager.friends_request(origin_user=request.user, target_username=target_username)
-	return public_profile(request=request, query_user=target_username)
+	return redirect('/user/' + target_username)
 
 @login_required
 def cancel_friend_request(request, target_username):
