@@ -20,7 +20,7 @@
 				</div>
 				<h1>{{ user_profile.user.username }}</h1>
 				<p class="profile-date">{{ user_profile.player.created_at|date:"Y-m-d @ H:i" }}</p>
-				{% if sender and not is_friend and not has_received %}
+				{% if sender and not is_friend and not has_received and not has_sent %}
 				<a href="{% url 'users:friend-request' user_profile.user.username %}" class="list-group">
 					<button type="button" class="btn btn-transparent">friend-request</button>
 				</a>
