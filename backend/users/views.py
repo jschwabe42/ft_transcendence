@@ -82,31 +82,31 @@ from .models import Friends_Manager
 # (we are returning none instead of http response)
 # but creates a record in users_friends in the database
 @login_required
-def friend_request(request, query_user):
+def friend_request(request, target_username):
 	"""/user/target_username/friend-request"""
-	Friends_Manager.friends_request(origin_user=request.user, target_username=query_user)
-	return public_profile(request=request, query_user=query_user)
+	Friends_Manager.friends_request(origin_user=request.user, target_username=target_username)
+	return public_profile(request=request, query_user=target_username)
 
 @login_required
-def cancel_friend_request(request, query_user):
+def cancel_friend_request(request, target_username):
 	"""/user/target_username/cancel-friend-request"""
-	Friends_Manager.cancel_friends_request(origin_user=request.user, target_username=query_user)
-	return public_profile(request=request, query_user=query_user)
+	Friends_Manager.cancel_friends_request(origin_user=request.user, target_username=target_username)
+	return public_profile(request=request, query_user=target_username)
 
 @login_required
-def deny_friend_request(request, query_user):
+def deny_friend_request(request, origin_username):
 	"""/user/origin_username/deny-friend-request"""
-	Friends_Manager.deny_friends_request(target_user=request.user, origin_username=query_user)
+	Friends_Manager.deny_friends_request(target_user=request.user, origin_username=origin_username)
 	return redirect('/game/players')
 
 @login_required
-def accept_friend_request(request, query_user):
+def accept_friend_request(request, origin_username):
 	"""/user/origin_username/accept-friend-request"""
-	Friends_Manager.accept_request_as_target(target_user=request.user, origin_username=query_user)
-	return public_profile(request=request, query_user=query_user)
+	Friends_Manager.accept_request_as_target(target_user=request.user, origin_username=origin_username)
+	return public_profile(request=request, query_user=origin_username)
 
 @login_required
-def remove_friend(request, query_user):
+def remove_friend(request, other_username):
 	"""/user/other_username/remove-friend"""
-	Friends_Manager.remove_friend(remover=request.user, target_username=query_user)
-	return public_profile(request=request, query_user=query_user)
+	Friends_Manager.remove_friend(remover=request.user, target_username=other_username)
+	return public_profile(request=request, query_user=other_username)
