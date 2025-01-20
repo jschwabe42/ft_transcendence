@@ -25,7 +25,9 @@
 				<h3>received requests</h3>
 				{% for received in friend_requests_received %}
 				<div class="btn-group" role="group" aria-label="accept or decline friend request">
-					<button type="button" class="btn btn-danger">deny</button>
+					<a href="{% url 'users:deny-friend-request' received.username %}" class="list-group">
+						<button type="button" class="btn btn-danger">deny</button>
+					</a>
 					<a href="{% url 'users:public-profile' received.username %}" class="list-group">
 						<button type="button" class="btn btn-warning">
 							{{ received.username }}
@@ -39,7 +41,9 @@
 				<h3>sent requests</h3>
 				{% for sent in friend_requests_sent %}
 				<div class="btn-group" role="group" aria-label="cancel friend request">
-					<button type="button" class="btn btn-danger">cancel</button>
+					<a href="{% url 'users:cancel-friend-request' sent.username %}" class="list-group">
+						<button type="button" class="btn btn-danger">cancel</button>
+					</a>
 					<a href="{% url 'users:public-profile' sent.username %}" class="list-group">
 						<button type="button" class="btn btn-warning">
 							{{ sent.username }}

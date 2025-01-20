@@ -98,13 +98,13 @@ def friend_request(request, target_username):
 def cancel_friend_request(request, target_username):
 	"""/user/target_username/cancel-friend-request"""
 	Friends_Manager.cancel_friends_request(origin_user=request.user, target_username=target_username)
-	return public_profile(request=request, query_user=target_username)
+	return redirect('/user/' + request.user.username)
 
 @login_required
 def deny_friend_request(request, origin_username):
 	"""/user/origin_username/deny-friend-request"""
 	Friends_Manager.deny_friends_request(target_user=request.user, origin_username=origin_username)
-	return redirect('/game/players')
+	return redirect('/user/' + request.user.username)
 
 @login_required
 def accept_friend_request(request, origin_username):
