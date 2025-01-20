@@ -75,10 +75,8 @@ def public_profile(request, query_user):
 	games_lost = sorted(games_lost, key=lambda game: game.played_at, reverse=True)
 	friends = Friends_Manager.fetch_friends_public(user_instance=user_instance)
 	if request.user == user_instance:
-		# allow management of pending requests
 		friend_requests_sent = Friends_Manager.fetch_sent(origin=user_instance)
 		friend_requests_received = Friends_Manager.fetch_received(target=user_instance)
-		# @follow-up allow removal of friends
 		return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost, 'manage_friends': friends, 'friend_requests_received': friend_requests_received, 'friend_requests_sent': friend_requests_sent})
 	friend_requests_sent_requestee = Friends_Manager.fetch_sent(origin=request.user).__contains__(user_instance)
 	friend_requests_received_requestee = Friends_Manager.fetch_received(target=request.user).__contains__(user_instance)
@@ -93,12 +91,8 @@ def public_profile(request, query_user):
 		has_received = True
 	return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost, 'friends': friends, 'sender': request.user, 'has_sent': has_sent, 'is_friend': is_friend, 'has_received': has_received})
 
-
-# @todo implement UI to cancel, accept/deny friend requests (logic for management exists)
-
 # @follow-up some way of displaying errors to the user (without template?, e.g. HttpResponses)
 # (we are returning raw errors that are meant for development)
-# but creates a record in users_friends in the database
 @login_required
 def friend_request(request, target_username):
 	"""/user/target_username/friend-request"""

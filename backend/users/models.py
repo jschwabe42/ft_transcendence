@@ -101,17 +101,6 @@ class Friends_Manager:
 		friendship_either_way = Friends.objects.filter(origin=remover, target=target_user, accepted=True).first() or Friends.objects.filter(origin=target_user, target=remover, accepted=True).first()
 		Friends_Manager.__delete_friendship(friendship=friendship_either_way)
 
-	# @follow-up keep?
-	# def fetch_friendship_public(target_username):
-	# 	"""User instance: get active friendships of both users (accepted friendships)"""
-	# 	target_user = Friends_Manager.__get_existing_user_instance(target_username)
-	# 	accepted_friendships_incoming = Friends.objects.filter(target=target_user, accepted=True)
-	# 	accepted_friendships_outgoing = Friends.objects.filter(origin=target_user, accepted=True)
-	# 	accepted_friendships = list(accepted_friendships_outgoing) + list(accepted_friendships_incoming)
-	# 	print(accepted_friendships_incoming, accepted_friendships_outgoing)
-	# 	print(accepted_friendships)
-	# 	return accepted_friendships
-
 	# get user instances of friends
 	def fetch_friends_public(user_instance):
 		"""User instance: get active friends (accepted friendships)"""
@@ -124,8 +113,7 @@ class Friends_Manager:
 			friends.add(friendship.target)
 		return friends
 
-	# only accepted friendships will be public if needed
-	# this can be called by target to deny/accept @todo
+	# this is only called in a user (self-serving) context
 	def fetch_received(target):
 		"""receiver User instance: get inactive (not yet accepted)"""
 		origin_users = set()
