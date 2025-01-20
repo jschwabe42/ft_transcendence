@@ -74,6 +74,12 @@ def public_profile(request, query_user):
 	games_won = sorted(games_won, key=lambda game: game.played_at, reverse=True)
 	games_lost = sorted(games_lost, key=lambda game: game.played_at, reverse=True)
 	friends = Friends_Manager.fetch_friends_public(user_instance=user_instance)
+	if request.user == user_instance:
+		# allow management of pending requests
+		friend_requests_sent = Friends_Manager.fetch_sent(origin=user_instance)
+		friend_requests_received = Friends_Manager.fetch_received(target=user_instance)
+		# @follow-up allow removal of friends
+		return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost, 'friends': friends, 'friend_requests_received': friend_requests_received, 'friend_requests_sent': friend_requests_sent})
 	return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost, 'friends': friends})
 
 

@@ -21,6 +21,34 @@
 				<h1>{{ user_profile.user.username }}</h1>
 				<p class="profile-date">{{ user_profile.player.created_at|date:"Y-m-d @ H:i" }}</p>
 				<hr>
+				{% if friend_requests_received %}
+				<h3>received requests</h3>
+				{% for received in friend_requests_received %}
+				<div class="btn-group" role="group" aria-label="accept or decline friend request">
+					<button type="button" class="btn btn-danger">deny</button>
+					<a href="{% url 'users:public-profile' received.username %}" class="list-group">
+						<button type="button" class="btn btn-warning">
+							{{ received.username }}
+						</button>
+					</a>
+					<button type="button" class="btn btn-success">accept</button>
+				</div>
+				{% endfor %}
+				{% endif %}
+				{% if friend_requests_sent %}
+				<h3>sent requests</h3>
+				{% for sent in friend_requests_sent %}
+				<div class="btn-group" role="group" aria-label="cancel friend request">
+					<button type="button" class="btn btn-danger">cancel</button>
+					<a href="{% url 'users:public-profile' sent.username %}" class="list-group">
+						<button type="button" class="btn btn-warning">
+							{{ sent.username }}
+						</button>
+					</a>
+				</div>
+				{% endfor %}
+				{% endif %}
+				<hr>
 				<div class="profile-stats">
 					<div class="profile-stat">
 						{% if user_profile.player.matches_lost == 0 %}
