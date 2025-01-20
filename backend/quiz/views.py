@@ -12,6 +12,8 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 import json
 import time
+from .trivia import generate_trivia
+import random
 
 # Create your views here.
 def index (request):
@@ -188,3 +190,37 @@ def update_room_settings(request, room_id):
 		except RoomSettings.DoesNotExist:
 			return JsonResponse({'success': False, 'error': 'Room settings do not exist!'})
 	return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+
+@login_required
+def start_game(request, room_name):
+	"""
+	Start the game in the room with the given room_name.
+	Functions as API Endpoint. /quiz/start_game/<str:room_name>/
+	"""
+	try:
+		room = Room.objects.get(name=room_name)
+		if room.leader.user != request.user:
+			return JsonResponse({'success': False, 'error': 'You are not the leader of this room!'})
+		room.is_active = True
+		questions = generate_trivia(room.settings.question_count)
+		room.questions = questions
+		room.current_question = questions[0]
+		room.shuffled_answers = random.sample(questions[0]['incorrect_answers'] + [questions[0]['correct_answer']], len(questions[0]['incorrect_answers']) + 1)
+		room.save()
+		room_list_update()
+		# Send websocket with the question and shuffled answers
+		channel_layer = get_channel_layer()
+		async_to_sync(channel_layer.group_send)(
+			f"room_{room.id}",
+			{
+				'type': 'start_game',
+				'data': {
+					'question': room.current_question['question'],
+					'answers': room.shuffled_answers,
+				}
+			}
+		)
+
+		return JsonResponse({'success': True, 'message': 'Game started successfully!'})
+	except Room.DoesNotExist:
+		return JsonResponse({'success': False, 'error': 'Room does not exist!'})

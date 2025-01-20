@@ -9,6 +9,7 @@ urlpatterns = [
 	path('join_room/<int:room_id>/', views.join_room, name='join_room'),
 	path('leave_room/<int:room_id>/', views.leave_room, name='leave_room'),
 	path('update_room_settings/<int:room_id>/', views.update_room_settings, name='update_room_settings'),
+	path('start_game/<int:room_id>/', views.start_game, name='start_game'),
 	path('', views.index, name='index'),
 	re_path(r'^.*$', views.index, name='index'),
 ]

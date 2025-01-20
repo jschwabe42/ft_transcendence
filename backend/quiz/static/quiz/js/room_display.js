@@ -11,20 +11,23 @@ export function displayRoom(roomName) {
 		<p>Here you can start participating in the quiz.</p>
 		<ul id="participants-list"></ul>
 		<button id="leave-room-button" class="btn btn-danger">Leave Room</button>
-
+		
 		<button id="settings-button" class="btn btn-primary" style="display: none;">Settings</button>
+
 		<div id="settings-menu" style="display: none;">
-			<label for="question-count">Number of Questions:</label>
-			<select id="question-count">
-				<option value="3">3</option>
+		<label for="question-count">Number of Questions:</label>
+		<select id="question-count">
+		<option value="3">3</option>
 				<option value="5" selected>5</option>
 				<option value="10">10</option>
 				<option value="15">15</option>
 				<option value="20">20</option>
-			</select>
-			<button id="save-settings-button" class="btn btn-success">Save</button>
-			 <div id="popup-message" class="popup-message" style="display: none;">Settings saved successfully!</div>
+				</select>
+				<button id="save-settings-button" class="btn btn-success">Save</button>
+				<div id="popup-message" class="popup-message" style="display: none;">Settings saved successfully!</div>
 		</div>
+
+		<button id="start-game-button" class="btn btn-primary" style="display: none;">Start Game</button>
 	`;
 	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
 	if (currentRoom && currentRoom.room_name === roomName) {
@@ -35,6 +38,7 @@ export function displayRoom(roomName) {
 		console.log('Leader:', currentRoom.leader);
 		if (currentRoom.leader === currentRoom.current_user) {
 			document.getElementById('settings-button').style.display = 'block';
+			document.getElementById('start-game-button').style.display = 'block';
 		}
 	} else {
 		console.error('Room details not found');
@@ -56,6 +60,18 @@ export function displayRoom(roomName) {
 	saveSettingsButton.addEventListener('click', function () {
 		const questionCount = document.getElementById('question-count').value;
 		updateRoomSettings(currentRoom.room_id, questionCount);
+	});
+
+	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+	const startGameButton = document.getElementById('start-game-button');
+	startGameButton.addEventListener('click', () => {
+	fetch(`/quiz/start_game/${roomName}/`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': csrfToken
+			}
+		});
 	});
 }
 

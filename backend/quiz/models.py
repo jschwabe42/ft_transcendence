@@ -18,9 +18,9 @@ class Room(models.Model):
 		related_name="leader_of",
 	)
 	settings = models.OneToOneField('RoomSettings', on_delete=models.CASCADE, null=True, blank=True, related_name='room_settings')
-	# current_question = models.JSONField(null=True, blank=True)
-	# shuffled_answers = models.JSONField(null=True, blank=True)
-	# questions = models.JSONField(null=True, blank=True)
+	current_question = models.JSONField(null=True, blank=True)
+	shuffled_answers = models.JSONField(null=True, blank=True)
+	questions = models.JSONField(null=True, blank=True)
 
 	def update_activity(self):
 		self.last_activity = now()
