@@ -58,6 +58,18 @@
 				{% endfor %}
 			</div>
 		</div>
+		{% if friends %}
+		<div class="friends-container">
+			<h3>Friends</h3>
+			<div class="friend-item">
+				{% for friend in friends %}
+				<a href="{% url 'users:public-profile' friend.username %}" class="list-group">
+					{{ friend.username }}
+				</a>
+				{% endfor %}
+			</div>
+		</div>
+		{% endif %}
 </body>
 
 </html>

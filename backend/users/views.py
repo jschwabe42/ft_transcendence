@@ -62,6 +62,8 @@ def profile(request):
 
 	return render(request, 'users/profile.html', context)
 
+from .models import Friends_Manager
+
 @login_required
 def public_profile(request, query_user):
 	user_instance = User.objects.get(username=query_user)
@@ -71,15 +73,14 @@ def public_profile(request, query_user):
 	games_lost = [game for game in games if game not in games_won]
 	games_won = sorted(games_won, key=lambda game: game.played_at, reverse=True)
 	games_lost = sorted(games_lost, key=lambda game: game.played_at, reverse=True)
-	return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost})
+	friends = Friends_Manager.fetch_friends_public(user_instance=user_instance)
+	return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost, 'friends': friends})
 
-from .models import Friends_Manager
+
+# @todo implement UI to cancel, accept/deny friend requests (logic for management exists)
 
 # @follow-up some way of displaying errors to the user (without template?, e.g. HttpResponses)
-# use POST for requests?
-# merge into single handler function? @follow-up
-# @note currently will display an error in web view 
-# (we are returning none instead of http response)
+# (we are returning raw errors that are meant for development)
 # but creates a record in users_friends in the database
 @login_required
 def friend_request(request, target_username):

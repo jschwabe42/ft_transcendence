@@ -49,7 +49,8 @@ class Friends(models.Model):
 
 class Friends_Manager:
 
-	# origin should be the request user, target is their request
+	# origin should be the request user, target is their request, also used as origin_user/target_user
+	# origin_username and target_username are their usernames
 	@staticmethod
 	def friends_request(origin_user, target_username):
 		"""User instance, target username"""
@@ -100,7 +101,55 @@ class Friends_Manager:
 		friendship_either_way = Friends.objects.filter(origin=remover, target=target_user, accepted=True).first() or Friends.objects.filter(origin=target_user, target=remover, accepted=True).first()
 		Friends_Manager.__delete_friendship(friendship=friendship_either_way)
 
-	# @todo some way to check for outstanding friend requests/instances and interacting with those as a user (for views access/UX)
+	# @follow-up keep?
+	# def fetch_friendship_public(target_username):
+	# 	"""User instance: get active friendships of both users (accepted friendships)"""
+	# 	target_user = Friends_Manager.__get_existing_user_instance(target_username)
+	# 	accepted_friendships_incoming = Friends.objects.filter(target=target_user, accepted=True)
+	# 	accepted_friendships_outgoing = Friends.objects.filter(origin=target_user, accepted=True)
+	# 	accepted_friendships = list(accepted_friendships_outgoing) + list(accepted_friendships_incoming)
+	# 	print(accepted_friendships_incoming, accepted_friendships_outgoing)
+	# 	print(accepted_friendships)
+	# 	return accepted_friendships
+
+	# get user instances of friends
+	def fetch_friends_public(user_instance):
+		"""User instance: get active friends (accepted friendships)"""
+		friends = set()
+		accepted_friendships_incoming = Friends.objects.filter(target=user_instance, accepted=True)
+		for friendship in accepted_friendships_incoming:
+			friends.add(friendship.origin)
+		accepted_friendships_outgoing = Friends.objects.filter(origin=user_instance, accepted=True)
+		for friendship in accepted_friendships_outgoing:
+			friends.add(friendship.target)
+		return friends
+
+	# only accepted friendships will be public if needed
+	# this can be called by target to deny/accept @todo
+	def fetch_received(target):
+		"""receiver User instance: get inactive (not yet accepted)"""
+		origin_users = set()
+		requests_received = Friends_Manager.__get_requests_received(user_instance=target)
+		for received in requests_received:
+			origin_users.add(received.origin)
+		return origin_users
+
+	# requests can be accepted/denied
+	def __get_requests_received(user_instance):
+		return Friends.objects.filter(target=user_instance, accepted=False)
+
+	# this can be called by sender/origin user to cancel the request @todo
+	def fetch_sent(origin):
+		"""sender User instance: get inactive (not yet accepted)"""
+		target_users_cancelable = set()
+		requests_sent = Friends_Manager.__get_requests_sent(user_instance=origin)
+		for sent in requests_sent:
+			target_users_cancelable.add(sent.target)
+		return target_users_cancelable
+
+	# requests can be canceled
+	def __get_requests_sent(user_instance):
+		return Friends.objects.filter(origin=user_instance, accepted=False)
 
 	# internal 
 	def __get_existing_user_instance(string_target_friend):
