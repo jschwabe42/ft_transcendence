@@ -125,6 +125,7 @@ def join_room(request, room_id):
 		participants = Participant.objects.filter(room=room)
 		participants_data = [p.user.username for p in participants]
 		room_member_update(room.id)
+		print(f"Room is active? {room.is_active}", flush=True)
 		return JsonResponse({
 			'success': True,
 			'room': {
@@ -134,7 +135,7 @@ def join_room(request, room_id):
 				'is_active': room.is_active,
 				'leader': room.leader.user.username if room.leader else None,
 				'current_user': request.user.username,
-				'is_active': room.is_active,
+				'is_ingame': room.is_ingame,
 			},
 			'participants': participants_data
 		})
@@ -204,7 +205,7 @@ def start_game(request, room_id):
 		room = Room.objects.get(id=room_id)
 		if room.leader.user != request.user:
 			return JsonResponse({'success': False, 'error': 'You are not the leader of this room!'})
-		room.is_active = True
+		room.is_ingame = True
 		questions = get_trivia_questions(room.settings.question_count)
 		if not questions:
 			return JsonResponse({'success': False, 'error': 'Failed to retrieve trivia questions.'}, status=500)

@@ -21,6 +21,7 @@ class Room(models.Model):
 	current_question = models.JSONField(null=True, blank=True)
 	shuffled_answers = models.JSONField(null=True, blank=True)
 	questions = models.JSONField(null=True, blank=True)
+	is_ingame = models.BooleanField(default=False)
 
 	def update_activity(self):
 		self.last_activity = now()

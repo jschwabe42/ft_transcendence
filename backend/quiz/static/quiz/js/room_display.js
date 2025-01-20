@@ -35,7 +35,7 @@ export function displayRoom(roomName) {
 		console.log('Current room:', currentRoom);
 		console.log('Current user:', currentRoom.current_user);
 		console.log('Leader:', currentRoom.leader);
-		if (currentRoom.is_active === true) {
+		if (currentRoom.is_ingame === true) {
 			startGame();
 		}
 		if (currentRoom.leader === currentRoom.current_user) {
