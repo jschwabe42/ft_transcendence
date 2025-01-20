@@ -79,7 +79,7 @@ def public_profile(request, query_user):
 		friend_requests_sent = Friends_Manager.fetch_sent(origin=user_instance)
 		friend_requests_received = Friends_Manager.fetch_received(target=user_instance)
 		# @follow-up allow removal of friends
-		return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost, 'friends': friends, 'friend_requests_received': friend_requests_received, 'friend_requests_sent': friend_requests_sent})
+		return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost, 'manage_friends': friends, 'friend_requests_received': friend_requests_received, 'friend_requests_sent': friend_requests_sent})
 	return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost, 'friends': friends})
 
 
@@ -116,4 +116,4 @@ def accept_friend_request(request, origin_username):
 def remove_friend(request, other_username):
 	"""/user/other_username/remove-friend"""
 	Friends_Manager.remove_friend(remover=request.user, target_username=other_username)
-	return public_profile(request=request, query_user=other_username)
+	return redirect('/user/' + request.user.username)
