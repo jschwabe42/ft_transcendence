@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 import json
 import time
-from .trivia import generate_trivia
+from .trivia import get_trivia_questions
 import random
 
 # Create your views here.
@@ -134,6 +134,7 @@ def join_room(request, room_id):
 				'is_active': room.is_active,
 				'leader': room.leader.user.username if room.leader else None,
 				'current_user': request.user.username,
+				'is_active': room.is_active,
 			},
 			'participants': participants_data
 		})
@@ -184,6 +185,7 @@ def update_room_settings(request, room_id):
 			question_count = data.get('question_count', 5)
 			room.settings.question_count = question_count
 			room.settings.save()
+			print(f"Success", flush=True)
 			return JsonResponse({'success': True, 'message': 'Room settings updated successfully!'})
 		except Room.DoesNotExist:
 			return JsonResponse({'success': False, 'error': 'Room does not exist!'})
@@ -192,35 +194,40 @@ def update_room_settings(request, room_id):
 	return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
 @login_required
-def start_game(request, room_name):
+def start_game(request, room_id):
 	"""
-	Start the game in the room with the given room_name.
+	Start the game in the room with the given room_id.
 	Functions as API Endpoint. /quiz/start_game/<str:room_name>/
 	"""
+	print(f"Starting game in room: {room_id}", flush=True)
 	try:
-		room = Room.objects.get(name=room_name)
+		room = Room.objects.get(id=room_id)
 		if room.leader.user != request.user:
 			return JsonResponse({'success': False, 'error': 'You are not the leader of this room!'})
 		room.is_active = True
-		questions = generate_trivia(room.settings.question_count)
+		questions = get_trivia_questions(room.settings.question_count)
+		if not questions:
+			return JsonResponse({'success': False, 'error': 'Failed to retrieve trivia questions.'}, status=500)
 		room.questions = questions
 		room.current_question = questions[0]
 		room.shuffled_answers = random.sample(questions[0]['incorrect_answers'] + [questions[0]['correct_answer']], len(questions[0]['incorrect_answers']) + 1)
 		room.save()
 		room_list_update()
+		# print(f"Game started in room: {room_id}", flush=True)
+		# print(f"Current question: {room.current_question['question']}", flush=True)
+		# print(f"Correct answer: {room.current_question['correct_answer']}", flush=True)
+		# print(f"Shuffled answers: {room.shuffled_answers}", flush=True)
 		# Send websocket with the question and shuffled answers
 		channel_layer = get_channel_layer()
 		async_to_sync(channel_layer.group_send)(
-			f"room_{room.id}",
+			f"room_{room_id}",
 			{
 				'type': 'start_game',
 				'data': {
-					'question': room.current_question['question'],
-					'answers': room.shuffled_answers,
 				}
 			}
 		)
-
 		return JsonResponse({'success': True, 'message': 'Game started successfully!'})
 	except Room.DoesNotExist:
+		print(f"Room does not exist: {room_id}", flush=True)
 		return JsonResponse({'success': False, 'error': 'Room does not exist!'})

@@ -15,5 +15,5 @@ def get_trivia_questions(amount):
 			question['incorrect_answers'] = [html.unescape(ans) for ans in question['incorrect_answers']]
 		return data['results']
 	else:
-		print(f"Failed to retrieve data: {response.status_code}")
+		print(f"Failed to retrieve data: {response.status_code}", flush=True)
 		return None

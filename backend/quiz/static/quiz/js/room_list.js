@@ -163,7 +163,8 @@ function joinRoom(roomId) {
 			const leader = data.room.leader;
 			const participants = data.participants;
 			const current_user = data.room.current_user;
-			localStorage.setItem('currentRoom', JSON.stringify({ room_id, room_name, leader, participants, current_user }));
+			const is_active = data.room.is_active;
+			localStorage.setItem('currentRoom', JSON.stringify({ room_id, room_name, leader, participants, current_user, is_active }));
 			router.navigateTo(`/quiz/${room_name}/`);
 		} else {
 			alert(data.error);

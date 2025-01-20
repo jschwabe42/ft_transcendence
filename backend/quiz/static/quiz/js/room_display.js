@@ -6,9 +6,8 @@ export function displayRoom(roomName) {
 	listener();
 	const quizAppContent = document.getElementById('quiz-app-content');
 	quizAppContent.innerHTML = `
-		<h2>Welcome to ${roomName}</h2>
-		<p>You have successfully joined the room!</p>
-		<p>Here you can start participating in the quiz.</p>
+		<h2 id="room-header">Welcome to ${roomName}</h2>
+		<p id="room-description">You have successfully joined the room!<br>Here you can start participating in the quiz.</p>
 		<ul id="participants-list"></ul>
 		<button id="leave-room-button" class="btn btn-danger">Leave Room</button>
 		
@@ -36,6 +35,9 @@ export function displayRoom(roomName) {
 		console.log('Current room:', currentRoom);
 		console.log('Current user:', currentRoom.current_user);
 		console.log('Leader:', currentRoom.leader);
+		if (currentRoom.is_active === true) {
+			startGame();
+		}
 		if (currentRoom.leader === currentRoom.current_user) {
 			document.getElementById('settings-button').style.display = 'block';
 			document.getElementById('start-game-button').style.display = 'block';
@@ -65,7 +67,8 @@ export function displayRoom(roomName) {
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 	const startGameButton = document.getElementById('start-game-button');
 	startGameButton.addEventListener('click', () => {
-	fetch(`/quiz/start_game/${roomName}/`, {
+		console.log('Starting game...');
+		fetch(`/quiz/start_game/${currentRoom.room_id}/`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -125,6 +128,9 @@ function initRoomWebSocket(room_id) {
 		if (socket_data.type === 'update_room_members') {
 			updateParticipantsList(socket_data.data.participants, socket_data.data.leader);
 		}
+		if (socket_data.type === 'start_game') {
+			startGame();
+		}
 	};
 
 	socket.onclose = function() {
@@ -176,6 +182,17 @@ function showPopupMessage(message) {
 		popupMessage.style.display = 'none';
 	}, 5000);
 }
+
+/**
+ * Sets a different header, hides the buttons.
+ */
+function startGame() {
+	document.getElementById('room-header').innerText = 'Quiz in Progress';
+	document.getElementById('room-description').innerText = 'The quiz has started! Good luck!';
+	document.getElementById('settings-button').style.display = 'none';
+	document.getElementById('start-game-button').style.display = 'none';
+}
+
 /**
  * Sends a POST request to the server to leave the room.
  */
