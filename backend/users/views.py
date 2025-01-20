@@ -94,25 +94,25 @@ def public_profile(request, query_user):
 @login_required
 def friend_request(request, target_username):
 	"""/user/target_username/friend-request"""
-	Friends_Manager.friends_request(origin_user=request.user, target_username=target_username)
+	Friends_Manager.friends_request(origin=request.user, target_username=target_username)
 	return redirect('/user/' + target_username)
 
 @login_required
 def cancel_friend_request(request, target_username):
 	"""/user/target_username/cancel-friend-request"""
-	Friends_Manager.cancel_friends_request(origin_user=request.user, target_username=target_username)
+	Friends_Manager.cancel_friends_request(origin=request.user, target_username=target_username)
 	return redirect('/user/' + request.user.username)
 
 @login_required
 def deny_friend_request(request, origin_username):
 	"""/user/origin_username/deny-friend-request"""
-	Friends_Manager.deny_friends_request(target_user=request.user, origin_username=origin_username)
+	Friends_Manager.deny_friends_request(target=request.user, origin_username=origin_username)
 	return redirect('/user/' + request.user.username)
 
 @login_required
 def accept_friend_request(request, origin_username):
 	"""/user/origin_username/accept-friend-request"""
-	Friends_Manager.accept_request_as_target(target_user=request.user, origin_username=origin_username)
+	Friends_Manager.accept_request_as_target(target=request.user, origin_username=origin_username)
 	return redirect('/user/' + request.user.username)
 
 @login_required
