@@ -64,3 +64,33 @@ class RoomMembersConsumer(AsyncWebsocketConsumer):
 			'data': event['data']
 		}
 		await self.send(text_data=json.dumps(msg))
+
+	async def countdown_start(self, event):
+		"""
+		Sends the countdown start signal to all the users in the group
+		"""
+		msg = {
+			'type': 'countdown_start',
+			'data': event['data']
+		}
+		await self.send(text_data=json.dumps(msg))
+
+	async def countdown_update(self, event):
+		"""
+		Sends the countdown update signal to all the users in the group
+		"""
+		msg = {
+			'type': 'countdown_update',
+			'data': event['data']
+		}
+		await self.send(text_data=json.dumps(msg))
+
+	async def countdown_end(self, event):
+		"""
+		Sends the countdown end signal to all the users in the group
+		"""
+		msg = {
+			'type': 'countdown_end',
+			'data': event['data']
+		}
+		await self.send(text_data=json.dumps(msg))

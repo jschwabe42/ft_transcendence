@@ -228,7 +228,48 @@ def start_game(request, room_id):
 				}
 			}
 		)
+
+		countdown(20, room_id)
+
 		return JsonResponse({'success': True, 'message': 'Game started successfully!'})
 	except Room.DoesNotExist:
 		print(f"Room does not exist: {room_id}", flush=True)
 		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
+
+def countdown(countdown_time, room_id):
+	"""
+	Countdown timer for the game.
+	"""
+	room = get_object_or_404(Room, id=room_id)
+	channel_layer = get_channel_layer()
+	async_to_sync(channel_layer.group_send)(
+		f"room_{room_id}",
+		{
+			'type': 'countdown_start',
+			'data': {
+				'time': countdown_time
+			}
+		}
+	)
+
+	for i in range(countdown_time - 1, 0, -1):
+		time.sleep(1)
+		async_to_sync(channel_layer.group_send)(
+			f"room_{room_id}",
+			{
+				'type': 'countdown_update',
+				'data': {
+					'time': i
+				}
+			}
+		)
+	
+	async_to_sync(channel_layer.group_send)(
+		f"room_{room_id}",
+		{
+			'type': 'countdown_end',
+			'data': {
+				'time': 0
+			}
+		}
+	)

@@ -1,4 +1,6 @@
 import router from './router.js';
+
+let roomSocket = null;
 /**
  * Display the room view for the user.
  */
@@ -27,6 +29,7 @@ export function displayRoom(roomName) {
 		</div>
 
 		<button id="start-game-button" class="btn btn-primary" style="display: none;">Start Game</button>
+		<div id="countdown" class="countdown" style="display: none;"></div>
 	`;
 	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
 	if (currentRoom && currentRoom.room_name === roomName) {
@@ -116,6 +119,7 @@ function initRoomWebSocket(room_id) {
 	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
 	const wsUrl = `${protocol}${window.location.host}/ws/rooms/${room_id}/`;
 	const socket = new WebSocket(wsUrl);
+	roomSocket = socket;
 
 	socket.onopen = function () {
 		console.log('Room Specific WebSocket connection established');
@@ -130,6 +134,20 @@ function initRoomWebSocket(room_id) {
 		}
 		if (socket_data.type === 'start_game') {
 			startGame();
+		}
+
+		if (socket_data.type === 'countdown_start') {
+			const countdown = document.getElementById('countdown');
+			countdown.innerHTML = socket_data.data.time;
+			countdown.style.display = 'block';
+		}
+		if (socket_data.type === 'countdown_update') {
+			const countdown = document.getElementById('countdown');
+			countdown.innerHTML = socket_data.data.time;
+		}
+		if (socket_data.type === 'countdown_end') {
+			const countdown = document.getElementById('countdown');
+			countdown.style.display = 'none';
 		}
 	};
 
@@ -211,6 +229,9 @@ function leaveRoom(room_id) {
 	.then(data => {
 		if (data.success) {
 			console.log('Left room successfully');
+			if (roomSocket) {
+				roomSocket.close();
+			}
 		} else {
 			console.error('Error leaving room:', data.error);
 		}
