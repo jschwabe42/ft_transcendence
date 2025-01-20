@@ -110,7 +110,7 @@ def deny_friend_request(request, origin_username):
 def accept_friend_request(request, origin_username):
 	"""/user/origin_username/accept-friend-request"""
 	Friends_Manager.accept_request_as_target(target_user=request.user, origin_username=origin_username)
-	return public_profile(request=request, query_user=origin_username)
+	return redirect('/user/' + request.user.username)
 
 @login_required
 def remove_friend(request, other_username):

@@ -33,7 +33,9 @@
 							{{ received.username }}
 						</button>
 					</a>
-					<button type="button" class="btn btn-success">accept</button>
+					<a href="{% url 'users:accept-friend-request' received.username %}" class="list-group">
+						<button type="button" class="btn btn-success">accept</button>
+					</a>
 				</div>
 				{% endfor %}
 				{% endif %}
