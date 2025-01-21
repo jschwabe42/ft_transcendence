@@ -93,6 +93,34 @@
 			</div>
 		</div>
 		<div class="games-container">
+			{% if friends or manage_friends %}
+			<div class="friends-container">
+				<h3>Friends</h3>
+				{% for friend in friends %}
+				<div class="friend-item">
+					<a href="{% url 'users:public-profile' friend.username %}" class="list-group">
+						{{ friend.username }}
+					</a>
+				</div>
+				{% endfor %}
+				{% for friend in manage_friends %}
+				<div class="friend-item">
+					<div class="btn-group" role="group" aria-label="accept or decline friend request">
+						<a href="{% url 'users:remove-friend' friend.username %}" class="list-group">
+							<button type="button" class="btn btn-danger">remove</button>
+						</a>
+						<a href="{% url 'users:public-profile' friend.username %}" class="list-group">
+							<button type="button" class="btn btn-transparent">
+								{{ friend.username }}
+							</button>
+						</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			{% else %}
+			<p>No friends yet.</p>
+			{% endif %}
 			{% if games_won %}
 			<div class="games-won">
 				<h3>Wins</h3>
@@ -122,34 +150,6 @@
 			</div>
 			{% endif %}
 		</div>
-		{% if friends or manage_friends %}
-		<div class="friends-container">
-			<h3>Friends</h3>
-			{% for friend in friends %}
-			<div class="friend-item">
-				<a href="{% url 'users:public-profile' friend.username %}" class="list-group">
-					{{ friend.username }}
-				</a>
-			</div>
-			{% endfor %}
-			{% for friend in manage_friends %}
-			<div class="friend-item">
-				<div class="btn-group" role="group" aria-label="accept or decline friend request">
-					<a href="{% url 'users:remove-friend' friend.username %}" class="list-group">
-						<button type="button" class="btn btn-danger">remove</button>
-					</a>
-					<a href="{% url 'users:public-profile' friend.username %}" class="list-group">
-						<button type="button" class="btn btn-transparent">
-							{{ friend.username }}
-						</button>
-					</a>
-				</div>
-			</div>
-			{% endfor %}
-		</div>
-		{% else %}
-		<p>No friends yet.</p>
-		{% endif %}
 </body>
 
 </html>
