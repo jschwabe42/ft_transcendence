@@ -19,17 +19,20 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.conf import settings
 from debug_toolbar.toolbar import debug_toolbar_urls
-from users import views as user_views
+from users import views as users_views
+from game.views import players as players_pong
 
 urlpatterns = [
-	path('user/<str:query_user>', user_views.public_profile, name='user-profile'),
+	path('user/', include("users.urls")),
+	path('register/', users_views.register, name='register'),
+	path('profile/', users_views.profile, name='profile'),
+	path('logout/', users_views.custom_logout, name='logout'),
+	path('users/', players_pong, name='players'),
+
 	path('game/', include("game.urls")),
 	path('admin/', admin.site.urls),
 	path('', include('blog.urls')),
-	path('register/', user_views.register, name='register'),
-	path('profile/', user_views.profile, name='profile'),
 	path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
-	path('logout/', user_views.custom_logout, name='logout'),
 	path('chat/', include('chat.urls')),
 	path('image_app/', include('image_app.urls')),
 	# path('__debug__/', include(debug_toolbar.urls)),

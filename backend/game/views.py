@@ -58,7 +58,7 @@ def players(request):
 
 def player_details_by_id(request, player_id):
 	player = get_object_or_404(Player, pk=player_id)
-	return redirect(public_profile, query_user=player.profile.user)
+	return redirect('/user/' + player.profile.user.username)
 
 def dashboard(request):
 	return render(request, "game/dashboard.html", {"dashboard": Dashboard.get_instance()})
