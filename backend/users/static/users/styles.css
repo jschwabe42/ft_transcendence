@@ -1,0 +1,46 @@
+.profile-container {
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+}
+
+.profile-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.profile-date {
+	font-size: 14px;
+	color: #888;
+}
+
+.friends-container {
+	padding-left: 7%;
+	justify-content: space-between;
+}
+
+.games-container {
+	display: flex;
+	padding: auto;
+	justify-content: space-between;
+}
+
+.friend-item {
+	text-align: center;
+}
+
+.games-won,
+.games-lost {
+	width: 35%;
+	padding-left: 2%;
+	text-align: center;
+}
+
+.game-item {
+	margin-bottom: 10px;
+}

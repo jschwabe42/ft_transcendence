@@ -50,7 +50,7 @@ class CreateGameView(APIView):
 		return Response({"game_id": game.id, "message": "Game created successfully."}, status=status.HTTP_201_CREATED)
 
 class ScoreBoardView(APIView):
-	#For testing CLI comment permission_classes cause canot acces csrf_token
+	# For testing CLI comment permission_classes cause canot acces csrf_token
 	permission_classes = [IsAuthenticated]
 
 	def post(self, request):
@@ -73,13 +73,12 @@ class ScoreBoardView(APIView):
 		return Response({"scores": "Game successfully saved score."}, status=status.HTTP_200_OK)
 	
 
-class ControllKeySetting(APIView):
+class ControlKeySetting(APIView):
 	# permission_classes = [IsAuthenticated]
 
 	def post(self, request):
 		game_id = request.data.get('game_id')
 		username = request.data.get('username')
-
 
 		if (username):
 			user = username
