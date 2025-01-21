@@ -42,6 +42,7 @@
 					<button type="button" class="btn btn-success">accept</button>
 				</a>
 				{% endif %}
+				{% if friend_requests_received or friend_requests_sent %}
 				<hr>
 				{% if friend_requests_received %}
 				<h3>received requests</h3>
@@ -76,6 +77,8 @@
 				</div>
 				{% endfor %}
 				{% endif %}
+				{% endif %}
+				{% if user_profile.player.matches_lost != 0 or user_profile.player.matches_lost != 0 %}
 				<hr>
 				<div class="profile-stats">
 					<div class="profile-stat">
@@ -86,9 +89,11 @@
 						{% endif %}
 					</div>
 				</div>
+				{% endif %}
 			</div>
 		</div>
 		<div class="games-container">
+			{% if games_won %}
 			<div class="games-won">
 				<h3>Wins</h3>
 				{% for game in games_won %}
@@ -101,6 +106,8 @@
 				</div>
 				{% endfor %}
 			</div>
+			{% endif %}
+			{% if games_lost %}
 			<div class="games-lost">
 				<h3>Losses</h3>
 				{% for game in games_lost %}
@@ -113,6 +120,7 @@
 				</div>
 				{% endfor %}
 			</div>
+			{% endif %}
 		</div>
 		{% if friends or manage_friends %}
 		<div class="friends-container">
