@@ -33,7 +33,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 			self.room_group_name,
 			self.channel_name
 		)
-		self.game.running = False
+
 
 	async def receive(self, text_data):
 		text_data_json = json.loads(text_data)
@@ -110,22 +110,9 @@ class GameConsumer(AsyncWebsocketConsumer):
 				game.player1_ready = True
 			if user2 == user:
 				game.player2_ready = True
-			# create new task (calls start_game function)
 			if game.player1_ready and game.player2_ready:
 				asyncio.create_task(self.start_game_loop())
-			game.pending = False
-			# Save the game changes
 			await sync_to_async(game.save)()
-
-		# For testing to not start games
-		# if user1 == user:
-		# 	game.player1_ready = True
-		# if user2 == user:
-		# 	game.player2_ready = True
-		# if game.player1_ready and game.player2_ready:
-		# 	asyncio.create_task(self.start_game_loop())
-		# game.pending = False
-		# await sync_to_async(game.save)()
 
 
 	async def start_game_loop(self):
@@ -135,6 +122,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 			winner = json_state['winner']
 			if winner['player1'] or winner['player2']:
 				game = await sync_to_async(Game.objects.get)(id=self.game_id)
+				game.pending = False
 				game.played_at = timezone.now()
 				player1 = await sync_to_async(lambda: game.player1)()
 				player2 = await sync_to_async(lambda: game.player2)()

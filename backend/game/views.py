@@ -15,28 +15,7 @@ import sys
 @login_required
 def recent_games(request):
 	csrf_token_view(request)
-	this_user = request.user
 	if request.method == "POST":
-		if 'opp_name' in request.POST:
-			opponent = request.POST.get('opp_name', '').strip()
-			if opponent:
-				if User.objects.filter(username=opponent).exists():
-					opp = User.objects.get(username=opponent)
-					if opp != this_user:
-						user_profile = Profile.objects.get(user=this_user)
-						opp_profile = Profile.objects.get(user=opp)
-						game = Game.objects.create(player1=user_profile, player2=opp_profile)
-						game.save()
-						return redirect('game:new_game', game_id=game.id)
-					else:
-						logging.error("You cannot play against yourself.")
-						return render(request, "game/recent_games.html", {"error_message": "You cannot play against yourself."})
-				else:
-					logging.error("Invalid Username")
-					return render(request, "game/recent_games.html", {"error_message": "Invalid opponent username."})
-			else:
-				logging.error("No Input")
-				return render(request, "game/recent_games.html", {"error_message": "Please enter an opponent username."})
 		if 'player2_enter_game' in request.POST:
 			game_id = request.POST.get('player2_enter_game')
 			return redirect('game:new_game', game_id=game_id)
