@@ -20,11 +20,7 @@
 				</div>
 				<h1>{{ user_profile.user.username }}</h1>
 				<p class="profile-date">{{ user_profile.player.created_at|date:"Y-m-d @ H:i" }}</p>
-				{% if sender and not is_friend and not has_received and not has_sent %}
-				<a href="{% url 'users:friend-request' user_profile.user.username %}" class="list-group">
-					<button type="button" class="btn btn-transparent">friend-request</button>
-				</a>
-				{% endif %}
+				{% if public %}
 				{% if has_sent %}
 				<a href="{% url 'users:cancel-friend-request' user_profile.user.username %}" class="list-group">
 					<button type="button" class="btn btn-danger">cancel</button>
@@ -33,16 +29,19 @@
 				<a href="{% url 'users:remove-friend' user_profile.user.username %}" class="list-group">
 					<button type="button" class="btn btn-danger">remove</button>
 				</a>
-				{% endif %}
-				{% if has_received %}
+				{% elif has_received %}
 				<a href="{% url 'users:deny-friend-request' user_profile.user.username %}" class="list-group">
 					<button type="button" class="btn btn-danger">deny</button>
 				</a>
 				<a href="{% url 'users:accept-friend-request' user_profile.user.username %}" class="list-group">
 					<button type="button" class="btn btn-success">accept</button>
 				</a>
+				{% else %}
+				<a href="{% url 'users:friend-request' user_profile.user.username %}" class="list-group">
+					<button type="button" class="btn btn-transparent">friend-request</button>
+				</a>
 				{% endif %}
-				{% if friend_requests_received or friend_requests_sent %}
+				{% elif friend_requests_received or friend_requests_sent %}
 				<hr>
 				{% if friend_requests_received %}
 				<h3>received requests</h3>
