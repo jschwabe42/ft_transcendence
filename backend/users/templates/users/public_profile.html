@@ -21,15 +21,15 @@
 				<h1>{{ user_profile.user.username }}</h1>
 				<p class="profile-date">{{ user_profile.player.created_at|date:"Y-m-d @ H:i" }}</p>
 				{% if user_profile.user != request_user %}
-				{% if has_sent %}
+				{% if user_profile.user in friend_requests_sent %}
 				<a href="{% url 'users:cancel-friend-request' user_profile.user.username %}" class="list-group">
 					<button type="button" class="btn btn-danger">cancel</button>
 				</a>
-				{% elif is_friend %}
+				{% elif request_user in friends %}
 				<a href="{% url 'users:remove-friend' user_profile.user.username %}" class="list-group">
 					<button type="button" class="btn btn-danger">remove</button>
 				</a>
-				{% elif has_received %}
+				{% elif user_profile.user in friend_requests_received %}
 				<a href="{% url 'users:deny-friend-request' user_profile.user.username %}" class="list-group">
 					<button type="button" class="btn btn-danger">deny</button>
 				</a>
