@@ -72,21 +72,21 @@ def public_profile(request, query_user):
 	games_won = sorted(games_won, key=lambda game: game.played_at, reverse=True)
 	games_lost = sorted(games_lost, key=lambda game: game.played_at, reverse=True)
 	friends = Friends_Manager.fetch_friends_public(user_instance=user_instance)
-	has_sent = False
-	is_friend = False
-	has_received = False
 	if request.user == user_instance:
 		friend_requests_sent = Friends_Manager.fetch_sent(origin=user_instance)
 		friend_requests_received = Friends_Manager.fetch_received(target=user_instance)
-		return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games_won': games_won, 'games_lost': games_lost, 'manage_friends': friends, 'friend_requests_received': friend_requests_received, 'friend_requests_sent': friend_requests_sent, 'public': False, 'has_sent': has_sent, 'is_friend': is_friend, 'has_received': has_received})
+		return render(request, 'users/public_profile.html', {'request_user': request.user, 'user_profile': user_profile, 'games_won': games_won, 'games_lost': games_lost, 'friends': friends, 'friend_requests_received': friend_requests_received, 'friend_requests_sent': friend_requests_sent})
 	else:
+		has_sent = False
+		is_friend = False
+		has_received = False
 		if Friends_Manager.fetch_sent(origin=request.user).__contains__(user_instance):
 			has_sent = True
 		if friends.__contains__(request.user):
 			is_friend = True
 		elif Friends_Manager.fetch_received(target=request.user).__contains__(user_instance):
 			has_received = True
-		return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games_won': games_won, 'games_lost': games_lost, 'friends': friends, 'public': True, 'has_sent': has_sent, 'is_friend': is_friend, 'has_received': has_received})
+		return render(request, 'users/public_profile.html', {'request_user': request.user, 'user_profile': user_profile, 'games_won': games_won, 'games_lost': games_lost, 'friends': friends, 'has_sent': has_sent, 'is_friend': is_friend, 'has_received': has_received})
 
 # @follow-up some way of displaying errors to the user (without template?, e.g. HttpResponses)
 # (we are returning raw errors that are meant for development)
