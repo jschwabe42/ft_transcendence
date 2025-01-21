@@ -14,11 +14,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='profile',
-            name='player',
-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='profile_player', to='game.player'),
-        ),
         migrations.CreateModel(
             name='Friends',
             fields=[
