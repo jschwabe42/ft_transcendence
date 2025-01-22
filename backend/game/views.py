@@ -33,11 +33,10 @@ def game_details(request, game_id):
 	return render(request, "game/game_details.html", {"game": game})
 
 def players(request):
-	return render(request, "game/players.html", {"players_list": Player.objects.order_by("-created_at")[:10]})
-
-def player_details_by_id(request, player_id):
-	player = get_object_or_404(Player, pk=player_id)
-	return redirect('/user/' + player.profile.user.username)
+	# order by user instances associated
+	users_players = User.objects.order_by("-date_joined")[:10]
+	return render(request, "game/players.html", {"players_list": users_players})
+	
 
 def dashboard(request):
 	return render(request, "game/dashboard.html", {"dashboard": Dashboard.get_instance()})
