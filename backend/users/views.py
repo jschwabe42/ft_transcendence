@@ -34,7 +34,7 @@ def custom_logout(request):
 	return render(request, 'users/logout.html') # Redirects the user to the login page
 
 @login_required
-def profile(request):
+def account(request):
 	if request.method == 'POST':
 		u_form = UserUpdateForm(request.POST, instance=request.user)
 		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -45,7 +45,7 @@ def profile(request):
 			user = mod_pwd_form.save()
 			update_session_auth_hash(request, user)
 			messages.success(request, f'Your account has been updated')
-			return redirect('profile')
+			return redirect('account')
 
 	else:
 		u_form = UserUpdateForm(instance=request.user)
@@ -58,7 +58,7 @@ def profile(request):
 		'mod_pwd_form': mod_pwd_form,
 	}
 
-	return render(request, 'users/profile.html', context)
+	return render(request, 'users/account.html', context)
 
 from .models import Friends_Manager
 

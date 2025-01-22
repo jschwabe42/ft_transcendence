@@ -25,7 +25,7 @@ from game.views import players as players_pong
 urlpatterns = [
 	path('user/', include("users.urls")),
 	path('register/', users_views.register, name='register'),
-	path('profile/', users_views.profile, name='profile'),
+	path('account/', users_views.account, name='account'),
 	path('logout/', users_views.custom_logout, name='logout'),
 	path('users/', players_pong, name='players'),
 
