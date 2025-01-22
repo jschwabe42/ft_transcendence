@@ -20,18 +20,17 @@ from django.urls import path, include
 from django.conf import settings
 from debug_toolbar.toolbar import debug_toolbar_urls
 from users import views as users_views
-from game.views import players as players_pong
 
 urlpatterns = [
 	path('user/', include("users.urls")),
 	path('register/', users_views.register, name='register'),
 	path('account/', users_views.account, name='account'),
 	path('logout/', users_views.custom_logout, name='logout'),
-	path('users/', players_pong, name='players'),
+	path('users/', users_views.players, name='players'),
 
 	path('game/', include("game.urls")),
 	path('admin/', admin.site.urls),
-	path('', players_pong, name='players'),
+	path('', users_views.players, name='players'),
 	path('', include('blog.urls')),
 	path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
 	path('chat/', include('chat.urls')),

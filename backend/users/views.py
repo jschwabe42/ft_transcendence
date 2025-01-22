@@ -113,3 +113,7 @@ def remove_friend(request, other_username):
 	"""/user/other_username/remove-friend"""
 	Friends_Manager.remove_friend(remover=request.user, target_username=other_username)
 	return redirect('/user/' + request.user.username)
+
+def players(request):
+	users_players = User.objects.order_by("-date_joined")[:10]
+	return render(request, "users/players.html", {"players_list": users_players})

@@ -32,11 +32,6 @@ def game_details(request, game_id):
 	game = get_object_or_404(Game, pk=game_id)
 	return render(request, "game/game_details.html", {"game": game})
 
-def players(request):
-	# order by user instances associated
-	users_players = User.objects.order_by("-date_joined")[:10]
-	return render(request, "game/players.html", {"players_list": users_players})
-
 def csrf_token_view(request):
 	csrf_token = get_token(request)
 	print("Token:")

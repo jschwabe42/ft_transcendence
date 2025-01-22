@@ -3,6 +3,7 @@ from . import views
 
 app_name = "users"
 urlpatterns = [
+    path("players/", views.players, name="players"),
 	path('<str:query_user>', views.public_profile, name='public-profile'),
 
 	# friendship management
