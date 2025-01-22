@@ -16,7 +16,9 @@ def game_logic(room_id):
 	print(f"Current Question: {room.current_question}", flush=True)
 	countdown(3, room_id)
 	send_question(room_id, room.current_question['question'], room.shuffled_answers)
-
+	countdown(room.settings.time_per_qestion, room_id)
+	collect_answers(room_id, room.current_question['question'])
+	# Add a function here to check individual answers, updated scores etc.
 
 def countdown(countdown_time, room_id):
 	"""
@@ -95,6 +97,24 @@ def send_question(room_id, question, answers):
 			'data': {
 				'question': question,
 				'answers': answers
+			}
+		}
+	)
+
+def solve_question(room_id, question, answers, correct_answer):
+	"""
+	Sends the correct answer to the clients
+	"""
+	room = get_object_or_404(Room, id=room_id)
+	channel_layer = get_channel_layer()
+	async_to_sync(channel_layer.group_send)(
+		f"room_{room_id}",
+		{
+			'type': 'solve_question',
+			'data': {
+				'question': question,
+				'answers': answers,
+				'correct_answer': correct_answer,
 			}
 		}
 	)
