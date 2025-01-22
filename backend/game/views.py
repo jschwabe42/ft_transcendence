@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from users.models import Profile
 from users.views import public_profile
-from .models import Game, Dashboard, Player
+from .models import Game, Player
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.middleware.csrf import get_token
@@ -36,10 +36,6 @@ def players(request):
 	# order by user instances associated
 	users_players = User.objects.order_by("-date_joined")[:10]
 	return render(request, "game/players.html", {"players_list": users_players})
-	
-
-def dashboard(request):
-	return render(request, "game/dashboard.html", {"dashboard": Dashboard.get_instance()})
 
 def csrf_token_view(request):
 	csrf_token = get_token(request)

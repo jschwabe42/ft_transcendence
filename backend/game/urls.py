@@ -13,5 +13,4 @@ urlpatterns = [
 	path('api/get-gameControl/', ControlKeySetting.as_view(), name='api-get-gameControl'),
 
 	path("new/<int:game_id>/", views.start_game, name="new_game"),
-	path("dashboard/", views.dashboard, name="dashboard"),
 ]

@@ -1,7 +1,7 @@
 
 # Create your views here.
 from users.models import Profile
-from .models import Game, Dashboard
+from .models import Game
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 import sys
