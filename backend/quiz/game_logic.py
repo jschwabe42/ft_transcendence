@@ -45,7 +45,8 @@ def countdown(countdown_time, room_id):
 				}
 			}
 		)
-	
+
+	time.sleep(1)
 	async_to_sync(channel_layer.group_send)(
 		f"room_{room_id}",
 		{
