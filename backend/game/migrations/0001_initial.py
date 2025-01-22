@@ -13,15 +13,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Dashboard',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('games_played', models.IntegerField(default=0)),
-                ('active_players', models.IntegerField(default=0)),
-                ('leaderboard', models.TextField()),
-            ],
-        ),
-        migrations.CreateModel(
             name='Game',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -40,7 +31,6 @@ class Migration(migrations.Migration):
             name='Player',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(verbose_name='date created')),
                 ('matches_won', models.IntegerField(default=0)),
                 ('matches_lost', models.IntegerField(default=0)),
             ],

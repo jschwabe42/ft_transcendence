@@ -23,7 +23,7 @@ class Profile(models.Model):
 		from game.models import Player  # Import Player model here to avoid circular import
 		super().save(*args, **kwargs)
 		if not self.player:
-			player = Player.objects.create(profile=self, created_at=timezone.now())
+			player = Player.objects.create(profile=self)
 			self.player = player
 			self.save()
 		img = Image.open(self.image.path)

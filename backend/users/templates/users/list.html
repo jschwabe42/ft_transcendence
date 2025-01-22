@@ -20,10 +20,10 @@
     <div class="players-container">
         {% if players_list %}
         <ul class="list-group">
-            {% for player in players_list %}
+            {% for player_user in players_list %}
             <li class="list-group-item" style="text-align: center;">
-                <a href="{% url 'game:player_details_by_id' player.id %}" class="mx-auto btn btn-primary">
-                    {{ player }}
+                <a href="{% url 'users:public-profile' player_user.username %}" class="mx-auto btn btn-primary">
+                    {{ player_user }}
                 </a>
                 <!-- @note alignment should not be a single column, preferably using multiple cards per row -->
             </li>

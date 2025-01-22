@@ -19,7 +19,7 @@
 					<img class="mx-auto rounded-circle account-img" src="{{ user_profile.image.url }}">
 				</div>
 				<h1>{{ user_profile.user.username }}</h1>
-				<p class="profile-date">{{ user_profile.player.created_at|date:"Y-m-d @ H:i" }}</p>
+				<p class="profile-date">{{ user_profile.user.date_joined|date:"Y-m-d @ H:i" }}</p>
 				{% if user_profile.user != request_user %}
 				{% if user_profile.user in friend_requests_sent %}
 				<a href="{% url 'users:cancel-friend-request' user_profile.user.username %}" class="list-group">
@@ -81,11 +81,7 @@
 				<hr>
 				<div class="profile-stats">
 					<div class="profile-stat">
-						{% if user_profile.player.matches_lost == 0 %}
-						<h3>Perfect</h3>
-						{% else %}
 						<h4>{{ user_profile.player.win_to_loss_ratio }}</h4>
-						{% endif %}
 					</div>
 				</div>
 				{% endif %}

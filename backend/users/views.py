@@ -1,6 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
@@ -34,7 +32,7 @@ def custom_logout(request):
 	return render(request, 'users/logout.html') # Redirects the user to the login page
 
 @login_required
-def profile(request):
+def account(request):
 	if request.method == 'POST':
 		u_form = UserUpdateForm(request.POST, instance=request.user)
 		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -45,7 +43,7 @@ def profile(request):
 			user = mod_pwd_form.save()
 			update_session_auth_hash(request, user)
 			messages.success(request, f'Your account has been updated')
-			return redirect('profile')
+			return redirect('account')
 
 	else:
 		u_form = UserUpdateForm(instance=request.user)
@@ -58,7 +56,7 @@ def profile(request):
 		'mod_pwd_form': mod_pwd_form,
 	}
 
-	return render(request, 'users/profile.html', context)
+	return render(request, 'users/account.html', context)
 
 from .models import Friends_Manager
 
@@ -113,3 +111,7 @@ def remove_friend(request, other_username):
 	"""/user/other_username/remove-friend"""
 	Friends_Manager.remove_friend(remover=request.user, target_username=other_username)
 	return redirect('/user/' + request.user.username)
+
+def list(request):
+	users_players = User.objects.order_by("-date_joined")[:10]
+	return render(request, "users/list.html", {"players_list": users_players})

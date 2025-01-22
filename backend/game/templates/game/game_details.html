@@ -20,15 +20,15 @@
 	<div class="games-container" style="display: flex; justify-content: center;">
 		<div class="player-one" style="display: flex; justify-content: center; padding-right: 100px;">
 			<h3>
-				<a href="{% url 'game:player_details_by_id' game.player1.id %}">
-					{{ game.player1 }}
+				<a href="{% url 'users:public-profile' game.player1.profile.user.username %}">
+					{{ game.player1.profile.user.username }}
 				</a>
 			</h3>
 		</div>
 		<div class="player-two" style="display: flex; justify-content: center; padding-left: 100px;">
 			<h3>
-				<a href="{% url 'game:player_details_by_id' game.player2.id %}">
-					{{ game.player2 }}
+				<a href="{% url 'users:public-profile' game.player2.profile.user.username %}">
+					{{ game.player2.profile.user.username }}
 				</a>
 			</h3>
 		</div>
