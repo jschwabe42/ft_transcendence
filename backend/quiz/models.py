@@ -38,8 +38,8 @@ class Participant(models.Model):
 class Answer(models.Model):
 	room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='answers')
 	participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name='answers')
-	answer_given = models.JSONField(default=dict)
-	question = models.JSONField(default=dict)
+	answer_given = models.JSONField(null=True, blank=True, default=dict)
+	question = models.JSONField(null=True, blank=True, default=dict)
 	answered_at = models.DateTimeField(auto_now_add=True)
 	is_disqualified = models.BooleanField(default=False)
 

@@ -2,7 +2,7 @@
 /**
  * Sends a Post request to the server to submit an answer.
  */
-export function submitAnswer(roomId, answer) {
+export function submitAnswer(roomId, question, answer) {
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 	fetch(`/quiz/submit_answer/${roomId}/`, {
 		method: 'POST',
@@ -10,7 +10,7 @@ export function submitAnswer(roomId, answer) {
 			'Content-Type': 'application/json',
 			'X-CSRFToken': csrfToken
 		},
-		body: JSON.stringify({ answer: answer })
+		body: JSON.stringify({question: question, answer: answer })
 	})
 	.then(response => response.json())
 	.then(data => {
