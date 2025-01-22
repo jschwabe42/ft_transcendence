@@ -39,12 +39,12 @@ export function displayQuestion(question, answers) {
 	answers.forEach((answer, index) => {
 		const button = document.createElement('button');
 		button.className = 'answer-option btn btn-primary';
-		button.setAttribute('data-answer', index + 1);
+		button.setAttribute('data-answer', answer);
 		button.innerText = answer;
 		button.addEventListener('click', function () {
 			const answer = this.getAttribute('data-answer');
 			const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
-			submitAnswer(currentRoom.room_id, answer);
+			submitAnswer(currentRoom.room_id, question, answer);
 		});
 		answerOptions.appendChild(button);
 	});

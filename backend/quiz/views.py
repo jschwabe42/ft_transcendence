@@ -249,7 +249,11 @@ def submit_answer(request, room_id):
 			room = get_object_or_404(Room, id=room_id)
 			participant = get_object_or_404(Participant, user=request.user, room=room)
 
+			print(f"Room: {room.name}, Participant: {participant.user.username}", flush=True)
+			print(f"Request body: {request.body}", flush=True)
+
 			data = json.loads(request.body)
+			print(f"Data: {data}", flush=True)
 			answer_given = data.get('answer', None)
 			question = data.get('question', None)
 			answer = Answer.objects.create(
