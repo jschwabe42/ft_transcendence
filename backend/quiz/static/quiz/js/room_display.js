@@ -231,6 +231,7 @@ function startGame() {
 	document.getElementById('room-description').innerText = 'The quiz has started! Good luck!';
 	document.getElementById('settings-button').style.display = 'none';
 	document.getElementById('start-game-button').style.display = 'none';
+	document.getElementById('settings-menu').style.display = 'none';
 }
 
 /**
