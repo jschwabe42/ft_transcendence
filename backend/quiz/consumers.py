@@ -124,3 +124,13 @@ class RoomMembersConsumer(AsyncWebsocketConsumer):
 			'data': event['data']
 		}
 		await self.send(text_data=json.dumps(msg))
+
+	async def end_game(self, event):
+		"""
+		Sends the end game signal to all the users in the group
+		"""
+		msg = {
+			'type': 'end_game',
+			'data': event['data']
+		}
+		await self.send(text_data=json.dumps(msg))

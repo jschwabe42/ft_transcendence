@@ -211,8 +211,6 @@ def start_game(request, room_id):
 		if not questions:
 			return JsonResponse({'success': False, 'error': 'Failed to retrieve trivia questions.'}, status=500)
 		room.questions = questions
-		room.current_question = questions[0]
-		room.shuffled_answers = random.sample(questions[0]['incorrect_answers'] + [questions[0]['correct_answer']], len(questions[0]['incorrect_answers']) + 1)
 		room.save()
 		room_list_update()
 		# print(f"Game started in room: {room_id}", flush=True)

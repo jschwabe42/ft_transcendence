@@ -166,6 +166,11 @@ function initRoomWebSocket(room_id) {
 		if (socket_data.type === 'clear_question') {
 			clearQuestionAndAnswers();
 		}
+
+		if (socket_data.type === 'end_game') {
+			console.log('Game has ended');
+			endGame();
+		}
 	};
 
 	socket.onclose = function() {
@@ -226,6 +231,19 @@ function startGame() {
 	document.getElementById('room-description').innerText = 'The quiz has started! Good luck!';
 	document.getElementById('settings-button').style.display = 'none';
 	document.getElementById('start-game-button').style.display = 'none';
+}
+
+/**
+ * Sets the header back to normal, shows the buttons.
+ */
+function endGame() {
+	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+	document.getElementById('room-header').innerText = `Welcome to ${currentRoom.room_name}`;
+	document.getElementById('room-description').innerText = 'The quiz has ended!';
+	if (currentRoom.leader === currentRoom.current_user) {
+		document.getElementById('settings-button').style.display = 'block';
+		document.getElementById('start-game-button').style.display = 'block';
+	}
 }
 
 /**

@@ -7,21 +7,30 @@ import time
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.timezone import now
+import random
 
 def game_logic(room_id):
 	"""
 	Implements the game logic for the quiz game.
 	"""
 	room = Room.objects.get(id=room_id)
-	print(f"Current Question: {room.current_question}", flush=True)
+
 	countdown(3, room_id)
-	send_question(room_id, room.current_question['question'], room.shuffled_answers)
-	countdown(room.settings.time_per_qestion, room_id)
-	collect_answers(room_id, room.current_question['question'])
-	# Add a function here to check individual answers, updated scores etc.
-	solve_question(room_id, room.current_question['question'], room.shuffled_answers, room.current_question['correct_answer'])
-	countdown(5, room_id)
-	clear_question(room_id)
+
+	for i in range(room.settings.question_count):
+		room.current_question = room.questions[i]
+		room.shuffled_answers = random.sample(room.questions[i]['incorrect_answers'] + [room.questions[i]['correct_answer']], len(room.questions[i]['incorrect_answers']) + 1)
+		print(f"Current Question: {room.current_question}", flush=True)
+		send_question(room_id, room.current_question['question'], room.shuffled_answers)
+		# countdown(room.settings.time_per_qestion, room_id)
+		countdown(5, room_id)
+		collect_answers(room_id, room.current_question['question'])
+		# Add a function here to check individual answers, updated scores etc.
+		solve_question(room_id, room.current_question['question'], room.shuffled_answers, room.current_question['correct_answer'])
+		countdown(5, room_id)
+		clear_question(room_id)
+	end_game(room_id)
+
 
 def countdown(countdown_time, room_id):
 	"""
@@ -135,3 +144,21 @@ def clear_question(room_id):
 			'data': {}
 		}
 	)
+
+def end_game(room_id):
+	"""
+	Ends the game and returns the user to the room view.
+	"""
+	room = get_object_or_404(Room, id=room_id)
+	channel_layer = get_channel_layer()
+	async_to_sync(channel_layer.group_send)(
+		f"room_{room_id}",
+		{
+			'type': 'end_game',
+			'data': {}
+		}
+	)
+	room.is_ingame = False
+	room.save()
+	room.update_activity()
+	# return JsonResponse({'message': 'Game ended successfully.'})
