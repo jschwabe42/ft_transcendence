@@ -134,7 +134,7 @@ function initRoomWebSocket(room_id) {
 	
 	socket.onmessage = function (event) {
 		const socket_data = JSON.parse(event.data);
-		// if (socket_data.type !== 'countdown_update')
+		if (socket_data.type !== 'countdown_update')
 			console.log('Received message:', socket_data);
 		if (socket_data.type === 'update_room_members') {
 			updateParticipantsList(socket_data.data.participants, socket_data.data.leader);
