@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from .models import Room, Participant, RoomSettings
+from .models import Room, Participant, RoomSettings, Answer
 from django.utils import timezone
 from django.utils.timezone import now
 from channels.layers import get_channel_layer
@@ -13,6 +13,7 @@ from django.shortcuts import get_object_or_404
 import json
 import time
 from .trivia import get_trivia_questions
+from .game_logic import game_logic, countdown
 import random
 
 # Create your views here.
@@ -229,47 +230,38 @@ def start_game(request, room_id):
 			}
 		)
 
-		countdown(20, room_id)
+		# countdown(20, room_id)
+		game_logic(room_id)
 
 		return JsonResponse({'success': True, 'message': 'Game started successfully!'})
 	except Room.DoesNotExist:
 		print(f"Room does not exist: {room_id}", flush=True)
 		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
 
-def countdown(countdown_time, room_id):
+@login_required
+def submit_answer(request, room_id):
 	"""
-	Countdown timer for the game.
+	Collects an answer from the user and saves it in the database.
+	Functions as API Endpoint. /quiz/submit_answer/<int:room_id>/
 	"""
-	room = get_object_or_404(Room, id=room_id)
-	channel_layer = get_channel_layer()
-	async_to_sync(channel_layer.group_send)(
-		f"room_{room_id}",
-		{
-			'type': 'countdown_start',
-			'data': {
-				'time': countdown_time
-			}
-		}
-	)
+	try:
+		if request.method == 'POST':
+			room = get_object_or_404(Room, id=room_id)
+			participant = get_object_or_404(Participant, user=request.user, room=room)
 
-	for i in range(countdown_time - 1, 0, -1):
-		time.sleep(1)
-		async_to_sync(channel_layer.group_send)(
-			f"room_{room_id}",
-			{
-				'type': 'countdown_update',
-				'data': {
-					'time': i
-				}
-			}
-		)
-	
-	async_to_sync(channel_layer.group_send)(
-		f"room_{room_id}",
-		{
-			'type': 'countdown_end',
-			'data': {
-				'time': 0
-			}
-		}
-	)
+			data = json.loads(request.body)
+			answer_given = data.get('answer', None)
+			question = data.get('question', None)
+			answer = Answer.objects.create(
+				room=room,
+				participant=participant,
+				answer_given=answer_given,
+				question=question,
+			)
+
+			return JsonResponse({'success': True, 'message': 'Answer submitted successfully!'})
+		return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+	except Room.DoesNotExist:
+		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
+	except Participant.DoesNotExist:
+		return JsonResponse({'success': False, 'error': 'You are not a part of this room!'})
