@@ -26,11 +26,11 @@ urlpatterns = [
 	path('register/', users_views.register, name='register'),
 	path('account/', users_views.account, name='account'),
 	path('logout/', users_views.custom_logout, name='logout'),
-	path('users/', users_views.players, name='players'),
+	path('users/', users_views.list, name='players'),
 
 	path('game/', include("game.urls")),
 	path('admin/', admin.site.urls),
-	path('', users_views.players, name='players'),
+	path('', users_views.list, name='players'),
 	path('', include('blog.urls')),
 	path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
 	path('chat/', include('chat.urls')),
