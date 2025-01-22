@@ -22,8 +22,8 @@ def game_logic(room_id):
 		room.shuffled_answers = random.sample(room.questions[i]['incorrect_answers'] + [room.questions[i]['correct_answer']], len(room.questions[i]['incorrect_answers']) + 1)
 		print(f"Current Question: {room.current_question}", flush=True)
 		send_question(room_id, room.current_question['question'], room.shuffled_answers)
-		# countdown(room.settings.time_per_qestion, room_id)
-		countdown(5, room_id)
+		countdown(room.settings.time_per_qestion, room_id)
+		# countdown(5, room_id)
 		collect_answers(room_id, room.current_question['question'])
 		# Add a function here to check individual answers, updated scores etc.
 		solve_question(room_id, room.current_question['question'], room.shuffled_answers, room.current_question['correct_answer'])
@@ -161,4 +161,3 @@ def end_game(room_id):
 	room.is_ingame = False
 	room.save()
 	room.update_activity()
-	# return JsonResponse({'message': 'Game ended successfully.'})
