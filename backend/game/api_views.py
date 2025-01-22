@@ -1,7 +1,7 @@
 
 # Create your views here.
 from users.models import Profile
-from .models import Game, Dashboard
+from .models import Game
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 import sys
@@ -42,8 +42,6 @@ class CreateGameView(APIView):
 		opponent_profile = Profile.objects.get(user=opponent)
 		user_profile = Profile.objects.get(user=user)
 
-		print(opponent_username, user_username)
-		sys.stdout.flush
 
 		# Create the game
 		game = Game.objects.create(player1=user_profile.player, player2=opponent_profile.player)
@@ -60,11 +58,6 @@ class ScoreBoardView(APIView):
 		score1 = request.data.get('score1')
 		score2 = request.data.get('score2')
 
-		# print("HelloWorld")
-		# print(game_id, score1, score2)
-		# print("\n\n")
-		# sys.stdout.flush()
-		# print(game_id, score1, score2)
 		if not game_id:
 			return Response({"error": "game_id score1 and score2 are required"}, status=status.HTTP_400_BAD_REQUEST)
 		
@@ -94,12 +87,6 @@ class ControlKeySetting(APIView):
 
 		control1 = request.data.get('control1')
 		control2 = request.data.get('control2')
-
-		# print("\n\n\n\n")
-		# print("Test")
-		# print(game_id, control1, control2)
-		# print("\n\n\n\n")
-		# sys.stdout.flush()
 
 		if not game_id or control1 is None or control2 is None:
 			return Response({"error": "game_id, control1, and control2 are required."}, status=status.HTTP_400_BAD_REQUEST)

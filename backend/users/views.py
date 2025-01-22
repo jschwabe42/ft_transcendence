@@ -1,6 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
@@ -34,7 +32,7 @@ def custom_logout(request):
 	return render(request, 'users/logout.html') # Redirects the user to the login page
 
 @login_required
-def profile(request):
+def account(request):
 	if request.method == 'POST':
 		u_form = UserUpdateForm(request.POST, instance=request.user)
 		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -45,7 +43,7 @@ def profile(request):
 			user = mod_pwd_form.save()
 			update_session_auth_hash(request, user)
 			messages.success(request, f'Your account has been updated')
-			return redirect('profile')
+			return redirect('account')
 
 	else:
 		u_form = UserUpdateForm(instance=request.user)
@@ -58,7 +56,9 @@ def profile(request):
 		'mod_pwd_form': mod_pwd_form,
 	}
 
-	return render(request, 'users/profile.html', context)
+	return render(request, 'users/account.html', context)
+
+from .models import Friends_Manager
 
 @login_required
 def public_profile(request, query_user):
@@ -69,4 +69,49 @@ def public_profile(request, query_user):
 	games_lost = [game for game in games if game not in games_won]
 	games_won = sorted(games_won, key=lambda game: game.played_at, reverse=True)
 	games_lost = sorted(games_lost, key=lambda game: game.played_at, reverse=True)
-	return render(request, 'users/public_profile.html', {'user_profile': user_profile, 'games': games, 'games_won': games_won, 'games_lost': games_lost})
+	friends = Friends_Manager.fetch_friends_public(user_instance=user_instance)
+	if request.user == user_instance:
+		# privately manage own user profile
+		friend_requests_sent = Friends_Manager.fetch_sent(origin=user_instance)
+		friend_requests_received = Friends_Manager.fetch_received(target=user_instance)
+	else:
+		# check for the request user if he is an origin or a target of a request by the user_instance
+		friend_requests_sent = Friends_Manager.fetch_sent(origin=request.user)
+		friend_requests_received = Friends_Manager.fetch_received(target=request.user)
+	return render(request, 'users/public_profile.html', {'request_user': request.user, 'user_profile': user_profile, 'games_won': games_won, 'games_lost': games_lost, 'friends': friends, 'friend_requests_sent': friend_requests_sent, 'friend_requests_received': friend_requests_received})
+
+# @follow-up some way of displaying errors to the user (without template?, e.g. HttpResponses)
+# (we are returning raw errors that are meant for development)
+@login_required
+def friend_request(request, target_username):
+	"""/user/target_username/friend-request"""
+	Friends_Manager.friends_request(origin=request.user, target_username=target_username)
+	return redirect('/user/' + target_username)
+
+@login_required
+def cancel_friend_request(request, target_username):
+	"""/user/target_username/cancel-friend-request"""
+	Friends_Manager.cancel_friends_request(origin=request.user, target_username=target_username)
+	return redirect('/user/' + request.user.username)
+
+@login_required
+def deny_friend_request(request, origin_username):
+	"""/user/origin_username/deny-friend-request"""
+	Friends_Manager.deny_friends_request(target=request.user, origin_username=origin_username)
+	return redirect('/user/' + request.user.username)
+
+@login_required
+def accept_friend_request(request, origin_username):
+	"""/user/origin_username/accept-friend-request"""
+	Friends_Manager.accept_request_as_target(target=request.user, origin_username=origin_username)
+	return redirect('/user/' + request.user.username)
+
+@login_required
+def remove_friend(request, other_username):
+	"""/user/other_username/remove-friend"""
+	Friends_Manager.remove_friend(remover=request.user, target_username=other_username)
+	return redirect('/user/' + request.user.username)
+
+def list(request):
+	users_players = User.objects.order_by("-date_joined")[:10]
+	return render(request, "users/list.html", {"players_list": users_players})

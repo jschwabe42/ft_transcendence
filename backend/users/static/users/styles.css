@@ -19,14 +19,25 @@
 	color: #888;
 }
 
+.friends-container {
+	padding-left: 7%;
+	justify-content: space-between;
+}
+
 .games-container {
 	display: flex;
+	padding: auto;
 	justify-content: space-between;
+}
+
+.friend-item {
+	text-align: center;
 }
 
 .games-won,
 .games-lost {
-	width: 48%;
+	width: 35%;
+	padding-left: 2%;
 	text-align: center;
 }
 
