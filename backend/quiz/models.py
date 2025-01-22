@@ -38,8 +38,10 @@ class Participant(models.Model):
 class Answer(models.Model):
 	room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='answers')
 	participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name='answers')
-	answer_given = models.JSONField()
+	answer_given = models.JSONField(default=dict)
+	question = models.JSONField(default=dict)
 	answered_at = models.DateTimeField(auto_now_add=True)
+	is_disqualified = models.BooleanField(default=False)
 
 	def __str__(self):
 		return f"{self.participant.user.username} answered {self.answer_given} in {self.room.name}"
@@ -49,6 +51,11 @@ class RoomSettings(models.Model):
 
 	# Number of questions asked to the users
 	question_count = models.PositiveSmallIntegerField(default=5)
+
+	# Not yet implemented inside the settings menu
+	time_per_qestion = models.PositiveSmallIntegerField(default=30)
+	time_after_question = models.PositiveSmallIntegerField(default=20)
+	time_after_game_end = models.PositiveSmallIntegerField(default=20)
 
 	def __str__(self):
 		return f"Settings for room {self.room.name}"
