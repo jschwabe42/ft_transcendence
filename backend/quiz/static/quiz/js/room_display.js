@@ -1,4 +1,5 @@
 import router from './router.js';
+import { submitAnswer, displayQuestion } from './quiz_logic.js';
 
 let roomSocket = null;
 /**
@@ -30,6 +31,11 @@ export function displayRoom(roomName) {
 
 		<button id="start-game-button" class="btn btn-primary" style="display: none;">Start Game</button>
 		<div id="countdown" class="countdown" style="display: none;"></div>
+
+		<div id="quiz-questions" class="quiz-questions" style="display:none;">
+			<div id="question-container" class="question-container"></div>
+			<div id="answer-options" class="answer-options"></div>
+		</div>
 	`;
 	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
 	if (currentRoom && currentRoom.room_name === roomName) {
@@ -128,7 +134,8 @@ function initRoomWebSocket(room_id) {
 	
 	socket.onmessage = function (event) {
 		const socket_data = JSON.parse(event.data);
-		console.log('Received message:', socket_data);
+		if (socket_data.type !== 'countdown_update')
+			console.log('Received message:', socket_data);
 		if (socket_data.type === 'update_room_members') {
 			updateParticipantsList(socket_data.data.participants, socket_data.data.leader);
 		}
@@ -148,6 +155,10 @@ function initRoomWebSocket(room_id) {
 		if (socket_data.type === 'countdown_end') {
 			const countdown = document.getElementById('countdown');
 			countdown.style.display = 'none';
+		}
+
+		if (socket_data.type === 'new_question') {
+			displayQuestion(socket_data.data.question, socket_data.data.answers);
 		}
 	};
 

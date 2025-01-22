@@ -12,7 +12,10 @@ def game_logic(room_id):
 	"""
 	Implements the game logic for the quiz game.
 	"""
-	countdown(20, room_id)
+	room = Room.objects.get(id=room_id)
+	print(f"Current Question: {room.current_question}", flush=True)
+	countdown(3, room_id)
+	send_question(room_id, room.current_question['question'], room.shuffled_answers)
 
 
 def countdown(countdown_time, room_id):

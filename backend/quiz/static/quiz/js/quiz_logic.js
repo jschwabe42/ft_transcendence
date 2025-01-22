@@ -1,0 +1,52 @@
+
+/**
+ * Sends a Post request to the server to submit an answer.
+ */
+export function submitAnswer(roomId, answer) {
+	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+	fetch(`/quiz/submit_answer/${roomId}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': csrfToken
+		},
+		body: JSON.stringify({ answer: answer })
+	})
+	.then(response => response.json())
+	.then(data => {
+		if (data.success) {
+			console.log('Answer submitted successfully');
+		} else {
+			console.error('Error submitting answer:', data.error);
+		}
+	})
+	.catch(error => {
+		console.error('An error occurred:', error);
+	});
+}
+
+/**
+ * Displays the question and answer options.
+ */
+export function displayQuestion(question, answers) {
+	const questionContainer = document.getElementById('question-container');
+	const answerOptions = document.getElementById('answer-options');
+	const quizQuestionContainer = document.getElementById('quiz-questions');
+
+	questionContainer.innerHTML = question;
+	answerOptions.innerHTML = '';
+
+	answers.forEach((answer, index) => {
+		const button = document.createElement('button');
+		button.className = 'answer-option btn btn-primary';
+		button.setAttribute('data-answer', index + 1);
+		button.innerText = answer;
+		button.addEventListener('click', function () {
+			const answer = this.getAttribute('data-answer');
+			const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+			submitAnswer(currentRoom.room_id, answer);
+		});
+		answerOptions.appendChild(button);
+	});
+	quizQuestionContainer.style.display = 'block';
+}
