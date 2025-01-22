@@ -1,0 +1,154 @@
+{% extends "game/game_base.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>User Profile</title>
+	<link rel="stylesheet" href="{% static 'users/styles.css' %}">
+</head>
+
+<body>
+	<div class="profile-container">
+		<div class="profile-header">
+			<div class="media-body">
+				<div class="media">
+					<img class="mx-auto rounded-circle account-img" src="{{ user_profile.image.url }}">
+				</div>
+				<h1>{{ user_profile.user.username }}</h1>
+				<p class="profile-date">{{ user_profile.user.date_joined|date:"Y-m-d @ H:i" }}</p>
+				{% if user_profile.user != request_user %}
+				{% if user_profile.user in friend_requests_sent %}
+				<a href="{% url 'users:cancel-friend-request' user_profile.user.username %}" class="list-group">
+					<button type="button" class="btn btn-danger">cancel</button>
+				</a>
+				{% elif request_user in friends %}
+				<a href="{% url 'users:remove-friend' user_profile.user.username %}" class="list-group">
+					<button type="button" class="btn btn-danger">remove</button>
+				</a>
+				{% elif user_profile.user in friend_requests_received %}
+				<a href="{% url 'users:deny-friend-request' user_profile.user.username %}" class="list-group">
+					<button type="button" class="btn btn-danger">deny</button>
+				</a>
+				<a href="{% url 'users:accept-friend-request' user_profile.user.username %}" class="list-group">
+					<button type="button" class="btn btn-success">accept</button>
+				</a>
+				{% else %}
+				<a href="{% url 'users:friend-request' user_profile.user.username %}" class="list-group">
+					<button type="button" class="btn btn-transparent">friend-request</button>
+				</a>
+				{% endif %}
+				{% elif friend_requests_received or friend_requests_sent %}
+				<hr>
+				{% if friend_requests_received %}
+				<h3>received requests</h3>
+				{% for received in friend_requests_received %}
+				<div class="btn-group" role="group" aria-label="accept or decline friend request">
+					<a href="{% url 'users:deny-friend-request' received.username %}" class="list-group">
+						<button type="button" class="btn btn-danger">deny</button>
+					</a>
+					<a href="{% url 'users:public-profile' received.username %}" class="list-group">
+						<button type="button" class="btn btn-warning">
+							{{ received.username }}
+						</button>
+					</a>
+					<a href="{% url 'users:accept-friend-request' received.username %}" class="list-group">
+						<button type="button" class="btn btn-success">accept</button>
+					</a>
+				</div>
+				{% endfor %}
+				{% endif %}
+				{% if friend_requests_sent %}
+				<h3>sent requests</h3>
+				{% for sent in friend_requests_sent %}
+				<div class="btn-group" role="group" aria-label="cancel friend request">
+					<a href="{% url 'users:cancel-friend-request' sent.username %}" class="list-group">
+						<button type="button" class="btn btn-danger">cancel</button>
+					</a>
+					<a href="{% url 'users:public-profile' sent.username %}" class="list-group">
+						<button type="button" class="btn btn-warning">
+							{{ sent.username }}
+						</button>
+					</a>
+				</div>
+				{% endfor %}
+				{% endif %}
+				{% endif %}
+				{% if user_profile.player.matches_lost != 0 or user_profile.player.matches_lost != 0 %}
+				<hr>
+				<div class="profile-stats">
+					<div class="profile-stat">
+						<h4>{{ user_profile.player.win_to_loss_ratio }}</h4>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="games-container">
+			{% if friends %}
+			<div class="friends-container">
+				<h3>Friends</h3>
+				{% if user_profile.user != request_user %}
+				{% for friend in friends %}
+				<div class="friend-item">
+					<a href="{% url 'users:public-profile' friend.username %}" class="list-group">
+						{{ friend.username }}
+					</a>
+				</div>
+				{% endfor %}
+				{% else %}
+				{% for friend in friends %}
+				<div class="friend-item">
+					<div class="btn-group" role="group" aria-label="accept or decline friend request">
+						<a href="{% url 'users:remove-friend' friend.username %}" class="list-group">
+							<button type="button" class="btn btn-danger">remove</button>
+						</a>
+						<a href="{% url 'users:public-profile' friend.username %}" class="list-group">
+							<button type="button" class="btn btn-transparent">
+								{{ friend.username }}
+							</button>
+						</a>
+					</div>
+				</div>
+				{% endfor %}
+				{% endif %}
+			</div>
+			{% else %}
+			<p>No friends yet.</p>
+			{% endif %}
+			{% if games_won %}
+			<div class="games-won">
+				<h3>Wins</h3>
+				{% for game in games_won %}
+				<div class="game-item">
+					<a href="{% url 'game:game_details' game.id %}"
+						class="list-group-item list-group-item-action list-group-item-success" aria-current="true">
+						{{ game.player1 }} vs {{ game.player2 }}
+					</a>
+					<small class="text-muted">{{ game.played_at|date:"Y-m-d @ H:i" }}</small>
+				</div>
+				{% endfor %}
+			</div>
+			{% endif %}
+			{% if games_lost %}
+			<div class="games-lost">
+				<h3>Losses</h3>
+				{% for game in games_lost %}
+				<div class="game-item">
+					<a href="{% url 'game:game_details' game.id %}"
+						class="list-group-item list-group-item-action list-group-item-danger" aria-current="true">
+						{{ game.player1 }} vs {{ game.player2 }}
+					</a>
+					<small class="text-muted">{{ game.played_at|date:"Y-m-d @ H:i" }}</small>
+				</div>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+</body>
+
+</html>
+{% endblock %}

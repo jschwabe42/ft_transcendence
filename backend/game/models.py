@@ -40,42 +40,13 @@ class Game(models.Model):
 
 class Player(models.Model):
 	profile = models.OneToOneField('users.Profile', on_delete=models.CASCADE, related_name='profile_for_player')
-	created_at = models.DateTimeField("date created")
 	matches_won = models.IntegerField(default=0)
 	matches_lost = models.IntegerField(default=0)
 	def __str__(self):
-		return self.profile.get_name()
-	@admin.display(
-		boolean=True,
-		ordering="created_at",
-		description="Created recently?",
-	)
-	def was_created_recently(self):
-		now = timezone.now()
-		return now - datetime.timedelta(days=1) <= self.created_at <= now
-
-	def matches_played(self):
-		return self.matches_won + self.matches_lost
-
-class Dashboard(models.Model):
-	games_played = models.IntegerField(default=0)
-	active_players = models.IntegerField(default=0)
-	leaderboard = models.TextField()
-	def __str__(self):
-		return f"Dashboard: {self.games_played} games, {self.active_players} active players"
-
-	def update_with_game(self, game):
-		self.games_played += 1
-		players = Player.objects.all().order_by("-matches_won")
-		self.leaderboard = "\n".join([f"{player.name}: {player.matches_won}" for player in players])
-		self.save()
-
-	def save(self, *args, **kwargs):
-		if not self.pk and Dashboard.objects.exists():
-			raise ValidationError('There is already one Dashboard instance')
-		return super(Dashboard, self).save(*args, **kwargs)
-
-	@classmethod
-	def get_instance(cls):
-		instance, created = cls.objects.get_or_create(pk=1)
-		return instance
+		return self.profile.user.username
+	def win_to_loss_ratio(self):
+		if self.matches_lost == 0:
+			return self.matches_won
+		if self.matches_lost == 0:
+			return self.matches_won
+		return round(self.matches_won / self.matches_lost, 2)
