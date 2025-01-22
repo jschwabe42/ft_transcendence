@@ -3,11 +3,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-from users.models import Profile
-from users.views import public_profile
-from .models import Game, Player
+from .models import Game
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 from django.middleware.csrf import get_token
 import sys
 
