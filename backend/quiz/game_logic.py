@@ -19,6 +19,9 @@ def game_logic(room_id):
 	countdown(room.settings.time_per_qestion, room_id)
 	collect_answers(room_id, room.current_question['question'])
 	# Add a function here to check individual answers, updated scores etc.
+	solve_question(room_id, room.current_question['question'], room.shuffled_answers, room.current_question['correct_answer'])
+	countdown(5, room_id)
+	clear_question(room_id)
 
 def countdown(countdown_time, room_id):
 	"""
@@ -116,5 +119,19 @@ def solve_question(room_id, question, answers, correct_answer):
 				'answers': answers,
 				'correct_answer': correct_answer,
 			}
+		}
+	)
+
+def clear_question(room_id):
+	"""
+	Clears the current question from the client.
+	"""
+	room = get_object_or_404(Room, id=room_id)
+	channel_layer = get_channel_layer()
+	async_to_sync(channel_layer.group_send)(
+		f"room_{room_id}",
+		{
+			'type': 'clear_question',
+			'data': {}
 		}
 	)

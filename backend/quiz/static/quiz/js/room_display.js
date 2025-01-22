@@ -1,5 +1,5 @@
 import router from './router.js';
-import { submitAnswer, displayQuestion } from './quiz_logic.js';
+import { submitAnswer, displayQuestion, displayCorrectAnswer, clearQuestionAndAnswers } from './quiz_logic.js';
 
 let roomSocket = null;
 /**
@@ -159,6 +159,12 @@ function initRoomWebSocket(room_id) {
 
 		if (socket_data.type === 'new_question') {
 			displayQuestion(socket_data.data.question, socket_data.data.answers);
+		}
+		if (socket_data.type === 'solve_question') {
+			displayCorrectAnswer(socket_data.data.correct_answer);
+		}
+		if (socket_data.type === 'clear_question') {
+			clearQuestionAndAnswers();
 		}
 	};
 

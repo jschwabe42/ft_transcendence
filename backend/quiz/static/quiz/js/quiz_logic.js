@@ -50,3 +50,33 @@ export function displayQuestion(question, answers) {
 	});
 	quizQuestionContainer.style.display = 'block';
 }
+
+/**
+ * Displays the correct answer (colours the buttons).
+ */
+export function displayCorrectAnswer(correctAnswer) {
+	const answerButtons = document.querySelectorAll('.answer-option');
+
+	answerButtons.forEach(button => {
+		button.disabled = true;
+		const answer = button.getAttribute('data-answer');
+		if (answer === correctAnswer) {
+			button.style.backgroundColor = 'green';
+		} else {
+			button.style.backgroundColor = 'red';
+		}
+	});
+}
+
+/**
+ * Clears the question and answer options.
+ */
+export function clearQuestionAndAnswers() {
+	const questionContainer = document.getElementById('question-container');
+	const answerOptions = document.getElementById('answer-options');
+	const quizQuestionContainer = document.getElementById('quiz-questions');
+
+	questionContainer.innerHTML = '';
+	answerOptions.innerHTML = '';
+	quizQuestionContainer.style.display = 'none';
+}
