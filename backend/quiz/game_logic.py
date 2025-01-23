@@ -86,7 +86,7 @@ def collect_answers(room_id, question):
 	for participant in participants:
 		answer = Answer.objects.filter(room=room, participant=participant, question=question).first()
 		if answer:
-			if answer.answered_at <= room.question_start + timezone.timedelta(seconds=room.settings.time_per_qestion and answer.answered_at >= room.question_start):
+			if answer.answered_at <= room.question_start + timezone.timedelta(seconds=room.settings.time_per_qestion) and answer.answered_at >= room.question_start:
 				answer.is_disqualified = False
 			else:
 				answer.is_disqualified = True
