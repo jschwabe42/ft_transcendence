@@ -1,5 +1,5 @@
 import router from './router.js';
-import { submitAnswer, displayQuestion, displayCorrectAnswer, clearQuestionAndAnswers } from './quiz_logic.js';
+import { submitAnswer, displayQuestion, displayCorrectAnswer, clearQuestionAndAnswers, displayUserAnswers } from './quiz_logic.js';
 
 let roomSocket = null;
 /**
@@ -170,6 +170,11 @@ function initRoomWebSocket(room_id) {
 		if (socket_data.type === 'end_game') {
 			console.log('Game has ended');
 			endGame();
+		}
+
+		if (socket_data.type === 'user_answers') {
+			console.log('User answers:', socket_data.data.answers);
+			displayUserAnswers(socket_data.data.answers);
 		}
 	};
 

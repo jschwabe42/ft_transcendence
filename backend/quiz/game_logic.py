@@ -20,13 +20,13 @@ def game_logic(room_id):
 	for i in range(room.settings.question_count):
 		room.current_question = room.questions[i]
 		room.shuffled_answers = random.sample(room.questions[i]['incorrect_answers'] + [room.questions[i]['correct_answer']], len(room.questions[i]['incorrect_answers']) + 1)
-		print(f"Current Question: {room.current_question}", flush=True)
+		# print(f"Current Question: {room.current_question}", flush=True)
 		send_question(room_id, room.current_question['question'], room.shuffled_answers)
-		countdown(room.settings.time_per_qestion, room_id)
-		# countdown(5, room_id)
+		# countdown(room.settings.time_per_qestion, room_id)
+		countdown(5, room_id)
 		collect_answers(room_id, room.current_question['question'])
 		solve_question(room_id, room.current_question['question'], room.shuffled_answers, room.current_question['correct_answer'])
-		process_answers(room_id, room.current_question)
+		process_answers(room_id, room.current_question['question'])
 		countdown(5, room_id)
 		clear_question(room_id)
 		delete_answers(room_id)
@@ -83,7 +83,7 @@ def collect_answers(room_id, question):
 	for participant in participants:
 		answer = Answer.objects.filter(room=room, participant=participant, question=question).first()
 		if answer:
-			if answer.answered_at <= current_time - timezone.timedelta(seconds=room.settings.time_per_qestion):
+			if answer.answered_at >= current_time - timezone.timedelta(seconds=room.settings.time_per_qestion):
 				answer.is_disqualified = False
 			else:
 				answer.is_disqualified = True
@@ -173,7 +173,9 @@ def process_answers(room_id, question):
 
 	for participant in participants:
 		answer = Answer.objects.filter(room=room, participant=participant, question=question).first()
-		if answer:
+		print(f"Answer: {answer.answer_given}", flush=True)
+		print(f"Answer qualify: {answer.is_disqualified}", flush=True)
+		if answer and not answer.is_disqualified:
 			answers_data.append({
 				'username': participant.user.username,
 				'profile_image': participant.user.profile.image.url,

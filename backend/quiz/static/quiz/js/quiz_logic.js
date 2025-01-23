@@ -80,3 +80,19 @@ export function clearQuestionAndAnswers() {
 	answerOptions.innerHTML = '';
 	quizQuestionContainer.style.display = 'none';
 }
+
+export function displayUserAnswers(answersData) {
+	const answerOptions = document.getElementById('answer-options');
+	answersData.forEach(data => {
+		const answerButton = [...answerOptions.children].find(button => button.getAttribute('data-answer') === data.answer);
+		if (answerButton) {
+			const userInfo = document.createElement('div');
+			userInfo.className = 'user-info';
+			userInfo.innerHTML = `
+				<img src="${data.profile_image}" alt="${data.username}'s profile picture" class="profile-picture">
+				<span class="username">${data.username}</span>
+			`;
+			answerButton.appendChild(userInfo);
+		}
+	});
+}
