@@ -34,6 +34,7 @@ class Participant(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='participants')
 	joined_at = models.DateTimeField(auto_now_add=True)
+	score = models.IntegerField(default=0)
 
 class Answer(models.Model):
 	room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='answers')
