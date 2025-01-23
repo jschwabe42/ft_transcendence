@@ -14,7 +14,7 @@ def register(request):
 			user = form.save()  # Only saves the User instance; Profile creation is handled by the signal
 			username = form.cleaned_data.get('username')
 			messages.success(request, f'Your account has been created! You can now log in!')
-			return redirect('login')
+			return redirect('users:login')
 	else:
 		form = UserRegisterForm()
 	
