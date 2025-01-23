@@ -88,11 +88,13 @@ export function displayUserAnswers(answersData) {
 		if (answerButton) {
 			const userInfo = document.createElement('div');
 			userInfo.className = 'user-info';
+			// Add to below line with css later
+			// <img src="${data.profile_image}" alt="${data.username}'s profile picture" class="profile-picture">
 			userInfo.innerHTML = `
-				<img src="${data.profile_image}" alt="${data.username}'s profile picture" class="profile-picture">
 				<span class="username">${data.username}</span>
 			`;
-			answerButton.appendChild(userInfo);
+			// answerButton.appendChild(userInfo);
+			answerButton.parentNode.insertBefore(userInfo, answerButton.nextSibling);
 		}
 	});
 }
