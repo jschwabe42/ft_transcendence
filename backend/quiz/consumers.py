@@ -134,3 +134,13 @@ class RoomMembersConsumer(AsyncWebsocketConsumer):
 			'data': event['data']
 		}
 		await self.send(text_data=json.dumps(msg))
+
+	async def user_answers(self, event):
+		"""
+		Sends the user answers signal to all the users in the group
+		"""
+		msg = {
+			'type': 'user_answers',
+			'data': event['data']
+		}
+		await self.send(text_data=json.dumps(msg))

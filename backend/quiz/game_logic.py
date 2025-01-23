@@ -25,8 +25,8 @@ def game_logic(room_id):
 		countdown(room.settings.time_per_qestion, room_id)
 		# countdown(5, room_id)
 		collect_answers(room_id, room.current_question['question'])
-		# Add a function here to check individual answers, updated scores etc.
 		solve_question(room_id, room.current_question['question'], room.shuffled_answers, room.current_question['correct_answer'])
+		process_answers(room_id, room.current_question)
 		countdown(5, room_id)
 		clear_question(room_id)
 	end_game(room_id)
@@ -161,3 +161,31 @@ def end_game(room_id):
 	room.is_ingame = False
 	room.save()
 	room.update_activity()
+
+def process_answers(room_id, question):
+	"""
+	Processes the answers given by the participants, updates the scores and sends all answers to the clients.
+	"""
+	room = get_object_or_404(Room, id=room_id)
+	participants = Participant.objects.filter(room=room)
+	answers_data = []
+
+	for participant in participants:
+		answer = Answer.objects.filter(room=room, participant=participant, question=question).first()
+		if answer:
+			answers_data.append({
+				'username': participant.user.username,
+				# 'profile_image': participant.user.profile_image.url,
+				'answer': answer.answer_given,
+			})
+
+	channel_layer = get_channel_layer()
+	async_to_sync(channel_layer.group_send)(
+		f"room_{room_id}",
+		{
+			'type': 'user_answers',
+			'data': {
+				'answers': answers_data
+			}
+		}
+	)
