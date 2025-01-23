@@ -83,14 +83,21 @@ def collect_answers(room_id, question):
 	participants = Participant.objects.filter(room=room)
 	current_time = timezone.now()
 
+	max_points = 1000
+	min_points = 500
+
 	for participant in participants:
 		answer = Answer.objects.filter(room=room, participant=participant, question=question).first()
 		if answer:
 			if answer.answered_at <= room.question_start + timezone.timedelta(seconds=room.settings.time_per_qestion) and answer.answered_at >= room.question_start:
 				answer.is_disqualified = False
+				time_diff = (answer.answered_at - room.question_start).total_seconds()
+				score = max_points - ((max_points - min_points) * (time_diff / room.settings.time_per_question))
+				participant.score += int(score)
 			else:
 				answer.is_disqualified = True
 			answer.save()
+			participant.save()
 		else:
 			Answer.objects.create(
 				room=room,
@@ -99,6 +106,9 @@ def collect_answers(room_id, question):
 				question=question,
 				is_disqualified=True
 			)
+			participant.score -= 100
+			answer.save()
+			participant.save()
 
 def send_question(room_id, question, answers):
 	"""
