@@ -20,6 +20,8 @@ def game_logic(room_id):
 	for i in range(room.settings.question_count):
 		room.current_question = room.questions[i]
 		room.shuffled_answers = random.sample(room.questions[i]['incorrect_answers'] + [room.questions[i]['correct_answer']], len(room.questions[i]['incorrect_answers']) + 1)
+		room.question_start = now()
+		room.save()
 		# print(f"Current Question: {room.current_question}", flush=True)
 		send_question(room_id, room.current_question['question'], room.shuffled_answers)
 		# countdown(room.settings.time_per_qestion, room_id)
@@ -84,7 +86,7 @@ def collect_answers(room_id, question):
 	for participant in participants:
 		answer = Answer.objects.filter(room=room, participant=participant, question=question).first()
 		if answer:
-			if answer.answered_at >= current_time - timezone.timedelta(seconds=room.settings.time_per_qestion):
+			if answer.answered_at <= room.question_start + timezone.timedelta(seconds=room.settings.time_per_qestion and answer.answered_at >= room.question_start):
 				answer.is_disqualified = False
 			else:
 				answer.is_disqualified = True
