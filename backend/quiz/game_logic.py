@@ -29,6 +29,7 @@ def game_logic(room_id):
 		process_answers(room_id, room.current_question)
 		countdown(5, room_id)
 		clear_question(room_id)
+		delete_answers(room_id)
 	end_game(room_id)
 
 
@@ -189,3 +190,11 @@ def process_answers(room_id, question):
 			}
 		}
 	)
+
+def delete_answers(room_id):
+	"""
+	Deletes all answers for a given room.
+	"""
+	room = get_object_or_404(Room, id=room_id)
+	answers = Answer.objects.filter(room=room)
+	answers.delete()
