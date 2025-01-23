@@ -176,7 +176,7 @@ def process_answers(room_id, question):
 		if answer:
 			answers_data.append({
 				'username': participant.user.username,
-				# 'profile_image': participant.user.profile_image.url,
+				'profile_image': participant.user.profile.image.url,
 				'answer': answer.answer_given,
 			})
 
