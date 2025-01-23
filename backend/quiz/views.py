@@ -247,19 +247,30 @@ def submit_answer(request, room_id):
 			room = get_object_or_404(Room, id=room_id)
 			participant = get_object_or_404(Participant, user=request.user, room=room)
 
-			print(f"Room: {room.name}, Participant: {participant.user.username}", flush=True)
-			print(f"Request body: {request.body}", flush=True)
+			# print(f"Room: {room.name}, Participant: {participant.user.username}", flush=True)
+			# print(f"Request body: {request.body}", flush=True)
 
 			data = json.loads(request.body)
-			print(f"Data: {data}", flush=True)
+			# print(f"Data: {data}", flush=True)
 			answer_given = data.get('answer', None)
 			question = data.get('question', None)
-			answer = Answer.objects.create(
-				room=room,
-				participant=participant,
-				answer_given=answer_given,
-				question=question,
-			)
+
+			existing_answer = Answer.objects.filter(room=room, participant=participant, question=question).first()
+			if existing_answer and existing_answer.answer_given != answer_given:
+				existing_answer.delete()
+				answer = Answer.objects.create(
+					room=room,
+					participant=participant,
+					answer_given=answer_given,
+					question=question,
+				)
+			elif not existing_answer:
+				answer = Answer.objects.create(
+					room=room,
+					participant=participant,
+					answer_given=answer_given,
+					question=question,
+				)
 
 			return JsonResponse({'success': True, 'message': 'Answer submitted successfully!'})
 		return JsonResponse({'success': False, 'error': 'Invalid request method.'})
