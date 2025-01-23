@@ -24,8 +24,8 @@ def game_logic(room_id):
 		room.save()
 		# print(f"Current Question: {room.current_question}", flush=True)
 		send_question(room_id, room.current_question['question'], room.shuffled_answers)
-		# countdown(room.settings.time_per_qestion, room_id)
-		countdown(5, room_id)
+		countdown(room.settings.time_per_qestion, room_id)
+		# countdown(5, room_id)
 		collect_answers(room_id, room.current_question['question'])
 		solve_question(room_id, room.current_question['question'], room.shuffled_answers, room.current_question['correct_answer'])
 		process_answers(room_id, room.current_question['question'])
@@ -91,9 +91,10 @@ def collect_answers(room_id, question):
 		if answer:
 			if answer.answered_at <= room.question_start + timezone.timedelta(seconds=room.settings.time_per_question) and answer.answered_at >= room.question_start:
 				answer.is_disqualified = False
-				time_diff = (answer.answered_at - room.question_start).total_seconds()
-				score = max_points - ((max_points - min_points) * (time_diff / room.settings.time_per_question))
-				participant.score += int(score)
+				if (answer.answer_given == room.current_question['correct_answer']):
+					time_diff = (answer.answered_at - room.question_start).total_seconds()
+					score = max_points - ((max_points - min_points) * (time_diff / room.settings.time_per_question))
+					participant.score += int(score)
 			else:
 				answer.is_disqualified = True
 			answer.save()
