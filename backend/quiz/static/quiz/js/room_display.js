@@ -1,5 +1,5 @@
 import router from './router.js';
-import { submitAnswer, displayQuestion, displayCorrectAnswer, clearQuestionAndAnswers, displayUserAnswers } from './quiz_logic.js';
+import { submitAnswer, displayQuestion, displayCorrectAnswer, clearQuestionAndAnswers, displayUserAnswers, displayScore } from './quiz_logic.js';
 
 let roomSocket = null;
 /**
@@ -99,6 +99,8 @@ function updateParticipantsList(participants, leader) {
 	participantsList.appendChild(headerP);
 	participants.forEach(participant => {
 		const li = document.createElement('li');
+		li.id = `participant-${participant}`;
+		console.log("List id: ", li.id);
 		li.innerHTML = participant === leader ? `${participant} <span>👑</span>` : participant;
 		participantsList.appendChild(li);
 	});
@@ -175,6 +177,7 @@ function initRoomWebSocket(room_id) {
 		if (socket_data.type === 'user_answers') {
 			console.log('User answers:', socket_data.data.answers);
 			displayUserAnswers(socket_data.data.answers);
+			displayScore(socket_data.data.participants_data);
 		}
 	};
 
@@ -237,6 +240,15 @@ function startGame() {
 	document.getElementById('settings-button').style.display = 'none';
 	document.getElementById('start-game-button').style.display = 'none';
 	document.getElementById('settings-menu').style.display = 'none';
+
+	// potentially set them to 0 here or in updateParticipantsList
+	const participantListItems = document.querySelectorAll('li[id^="participant-"]');
+	participantListItems.forEach(li => {
+		const scoreSpan = li.querySelector('.score-list');
+		if (scoreSpan) {
+			scoreSpan.innerHTML = '';
+		}
+	});
 }
 
 /**

@@ -98,3 +98,20 @@ export function displayUserAnswers(answersData) {
 		}
 	});
 }
+
+export function displayScore(participantData) {
+	participantData.forEach(data => {
+		const participantLi = document.getElementById(`participant-${data.username}`);
+		if (participantLi) {
+			const scoreSpan = participantLi.querySelector('.score-list');
+			if (scoreSpan) {
+				scoreSpan.innerHTML = `(${data.score} points)`;
+			} else {
+				const newScoreSpan = document.createElement('span');
+				newScoreSpan.className = 'score-list';
+				newScoreSpan.innerText = `(${data.score} points)`;
+				participantLi.appendChild(newScoreSpan);
+			}
+		}
+	});
+}

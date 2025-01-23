@@ -182,6 +182,7 @@ def process_answers(room_id, question):
 	room = get_object_or_404(Room, id=room_id)
 	participants = Participant.objects.filter(room=room)
 	answers_data = []
+	participants_data = []
 
 	for participant in participants:
 		answer = Answer.objects.filter(room=room, participant=participant, question=question).first()
@@ -190,7 +191,14 @@ def process_answers(room_id, question):
 				'username': participant.user.username,
 				'profile_image': participant.user.profile.image.url,
 				'answer': answer.answer_given,
+				# Potentially add the new score here
+				# 'score': participant.score,
 			})
+
+		participants_data.append({
+			'username': participant.user.username,
+			'score': participant.score,
+		})
 
 	channel_layer = get_channel_layer()
 	async_to_sync(channel_layer.group_send)(
@@ -198,7 +206,8 @@ def process_answers(room_id, question):
 		{
 			'type': 'user_answers',
 			'data': {
-				'answers': answers_data
+				'answers': answers_data,
+				'participants_data': participants_data,
 			}
 		}
 	)
