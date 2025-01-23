@@ -55,7 +55,7 @@ class RoomSettings(models.Model):
 	question_count = models.PositiveSmallIntegerField(default=5)
 
 	# Not yet implemented inside the settings menu
-	time_per_qestion = models.PositiveSmallIntegerField(default=30)
+	time_per_question = models.PositiveSmallIntegerField(default=30)
 	time_after_question = models.PositiveSmallIntegerField(default=20)
 	time_after_game_end = models.PositiveSmallIntegerField(default=20)
 
