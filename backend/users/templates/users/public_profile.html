@@ -18,6 +18,7 @@
 				<div class="media">
 					<img class="mx-auto rounded-circle account-img" src="{{ user_profile.image.url }}">
 				</div>
+				<p>Status: {{ user_profile.online|yesno:"Online,Offline" }}</p>
 				<h1>{{ user_profile.user.username }}</h1>
 				<p class="profile-date">{{ user_profile.user.date_joined|date:"Y-m-d @ H:i" }}</p>
 				{% if user_profile.user != request_user %}
