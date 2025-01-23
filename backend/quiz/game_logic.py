@@ -30,6 +30,7 @@ def game_logic(room_id):
 		countdown(5, room_id)
 		clear_question(room_id)
 		delete_answers(room_id)
+	reset_scores(room_id)
 	end_game(room_id)
 
 
@@ -173,8 +174,6 @@ def process_answers(room_id, question):
 
 	for participant in participants:
 		answer = Answer.objects.filter(room=room, participant=participant, question=question).first()
-		print(f"Answer: {answer.answer_given}", flush=True)
-		print(f"Answer qualify: {answer.is_disqualified}", flush=True)
 		if answer and not answer.is_disqualified:
 			answers_data.append({
 				'username': participant.user.username,
@@ -200,3 +199,13 @@ def delete_answers(room_id):
 	room = get_object_or_404(Room, id=room_id)
 	answers = Answer.objects.filter(room=room)
 	answers.delete()
+
+def reset_scores(room_id):
+	"""
+	Resets the scores of all participants in the room.
+	"""
+	room = get_object_or_404(Room, id=room_id)
+	participants = Participant.objects.filter(room=room)
+	for participant in participants:
+		participant.score = 0
+		participant.save()
