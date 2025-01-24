@@ -18,16 +18,24 @@
 	padding: 10px 20px;
 }
 
-/* #participants-list {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 200px;
-    height: calc(100vh - 40px);
-    overflow-y: auto;
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
-} 
-*/
+/* Sets the participants list to the left side */
+#participants-list {
+	position: fixed;
+	top: 60px;
+	left: 20px;
+	/* width: 200px; */
+	max-width: 35vw;
+	height: calc(100vh - 40px);
+	overflow-y: auto;
+	/* border: 1px solid #ddd; */
+	padding: 10px;
+	border-radius: 5px;
+}
+
+/* Controls the welcome to room header etc, might be removed at some point */
+.room-header-container {
+	margin-top: 60px;
+	margin-left: calc(200px + 20px);
+	padding-right: 20px;
+	max-width: calc(100vw - 240px);
+}
