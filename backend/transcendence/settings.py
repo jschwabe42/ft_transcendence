@@ -63,6 +63,8 @@ MIDDLEWARE = [
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+import os
+import secrets
 import sys
 
 TESTING = "test" in sys.argv
@@ -118,6 +120,10 @@ DATABASES = {
 	}
 }
 
+# for 42 api - enables requesting bearer token
+CLIENT_ID=os.getenv("REMOTE_OAUTH_UID")
+REMOTE_OAUTH_SECRET=Path("/var/run/secrets/oauth_api_secret").read_text()
+SECRET_STATE=secrets.token_urlsafe(32)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
