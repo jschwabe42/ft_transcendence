@@ -19,7 +19,10 @@ export function displayRoom(roomName) {
 			<span class="sr-only">Leave Room</span>
 		</button>
 		
-		<button id="settings-button" class="btn btn-primary" style="display: none;">Settings</button>
+		<button id="settings-button" class="btn btn-primary" style="display: none;" title="Settings">
+			<i class="bi bi-gear-fill"></i>
+			<span class="sr-only">Settings</span>
+		</button>
 
 		<div id="settings-menu" style="display: none;">
 		<label for="question-count">Number of Questions:</label>
