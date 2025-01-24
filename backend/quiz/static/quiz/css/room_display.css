@@ -39,3 +39,19 @@
 	padding-right: 20px;
 	max-width: calc(100vw - 240px);
 }
+
+/* Sets the position of the settings button */
+#settings-button {
+	position: fixed;
+	top: 120px;
+	right: 20px;
+	padding: 10px 20px;
+}
+
+/* Sets the settings menu below the settings button */
+#settings-menu {
+	position: fixed;
+	top: 180px;
+	right: 20px;
+	padding:10px 20px;
+}
