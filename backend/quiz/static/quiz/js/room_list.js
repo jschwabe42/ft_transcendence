@@ -6,19 +6,27 @@ import router from './router.js';
 export function loadRoomList() {
 	const quizAppContent = document.getElementById('quiz-app-content');
 	quizAppContent.innerHTML = `
-	<div>
-		<h2> Create a new room</h2>
-		<button id="show-create-room-form" class="btn btn-primary">Create Room</button>
-		<div id="create-room-form-con" class="mt-3" style="display: none;">
-			<form id="create-room-form">
-				<div class="mb-3">
-					<label for="roomName" class="form-label">Room Name</label>
-					<input type="text" id="roomName" name="room_name" class="form-control" placeholder="Enter room name" required>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div id="room-list" class="list-group"></div>
+			</div>
+
+			<div class="col-md-6 text.end">
+				<h2> Create a new room</h2>
+				<button id="show-create-room-form" class="btn btn-primary">Create Room</button>
+				<div id="create-room-form-con" class="mt-3" style="display: none;">
+					<form id="create-room-form">
+						<div class="mb-3">
+							<label for="roomName" class="form-label">Room Name</label>
+							<input type="text" id="roomName" name="room_name" class="form-control" placeholder="Enter room name" required>
+						</div>
+						<button type="submit" class="btn btn-success">Submit</button>
+					</form>
 				</div>
-				<button type="submit" class="btn btn-success">Submit</button>
-			</form>
+			</div>
+			<div id="create-room-feedback" class="mt-3"></div>
 		</div>
-		<div id="create-room-feedback" class="mt-3"></div>
 	</div>
 	`;
 
@@ -75,11 +83,13 @@ function initCreateRoomForm() {
  * Initializes the WebSocket connection for the room list
  */
 function initWebSocket() {
-	const quizAppContent = document.getElementById('quiz-app-content');
-	const roomListContainer = document.createElement('div');
-	roomListContainer.id = 'room-list';
-	roomListContainer.innerHTML = '<h2>Available Rooms</h2><p>Loading rooms...</p>';
-	quizAppContent.prepend(roomListContainer);
+	const roomListContainer = document.getElementById('room-list');
+	roomListContainer.innerHTML = '<p>Loading rooms...</p>';
+	// const quizAppContent = document.getElementById('quiz-app-content');
+	// const roomListContainer = document.createElement('div');
+	// roomListContainer.id = 'room-list';
+	// roomListContainer.innerHTML = '<h2>Available Rooms</h2><p>Loading rooms...</p>';
+	// quizAppContent.prepend(roomListContainer);
 
 	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
 	const wsUrl = `${protocol}${window.location.host}/ws/rooms/`;
