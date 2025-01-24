@@ -55,3 +55,10 @@
 	right: 20px;
 	padding:10px 20px;
 }
+
+#countdown {
+	position: fixed;
+	top: 60px;
+	right: 20px;
+	/* margin-top: 40px; */
+}
