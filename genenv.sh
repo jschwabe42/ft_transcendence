@@ -2,6 +2,7 @@
 
 env_vars=(
     "PGADMIN_DEFAULT_EMAIL"
+    "REMOTE_OAUTH_UID"
 )
 
 if [ ! -f secrets/.env ]; then
