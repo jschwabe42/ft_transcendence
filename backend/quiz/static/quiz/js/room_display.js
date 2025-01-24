@@ -12,7 +12,7 @@ export function displayRoom(roomName) {
 		<h2 id="room-header">Welcome to ${roomName}</h2>
 		<p id="room-description">You have successfully joined the room!<br>Here you can start participating in the quiz.</p>
 		<ul id="participants-list"></ul>
-		<button id="leave-room-button" class="btn btn-danger">
+		<button id="leave-room-button" class="btn btn-danger" title="Leave Room">
 			<i class="bi bi-door-open-fill" aria-hidden="true"></i>
 			<span class="sr-only">Leave Room</span>
 		</button>

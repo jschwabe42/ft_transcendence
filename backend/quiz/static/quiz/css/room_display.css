@@ -10,9 +10,24 @@
 	outline: none !important;
 }
 
+/* Fixes the leave room button to the bottom right */
 #leave-room-button {
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
 	padding: 10px 20px;
 }
+
+/* #participants-list {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 200px;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+} 
+*/
