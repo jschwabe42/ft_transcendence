@@ -8,10 +8,9 @@ export function loadRoomList() {
 	quizAppContent.innerHTML = `
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-6 room-list-column">
 				<div id="room-list" class="list-group"></div>
 			</div>
-
 			<div class="col-md-6 text.end">
 				<h2> Create a new room</h2>
 				<button id="show-create-room-form" class="btn btn-primary">Create Room</button>
@@ -138,7 +137,7 @@ function displayRooms(rooms) {
 			<strong>${room.name}</strong> 
 			- Last activity: ${new Date(room.last_activity).toLocaleString()}
 			${room.is_active ? '(Active)' : '(Inactive)'}
-			<button class="join-button" data-room-id="${room.id}">Join</button>
+			<button id="join-button" class="join-button btn btn-primary" data-room-id="${room.id}">Join</button>
 		</div>
 	`).join('');
 	roomListContainer.innerHTML = `<h2>Available Rooms</h2>${roomItems}`;
