@@ -20,5 +20,5 @@ urlpatterns = [
     re_path(r'^user(s)?/(?P<other_username>[^/]+)/remove-friend$', views.remove_friend, name='remove-friend'),
 
     # WIP: oauth with 42 API
-    path('oauth/', CreateOAUTHUserView.as_view(), name='oauth'),
+    path('oauth/', CreateOAUTHUserView.authorize_api_user, name='oauth'),
 ]
