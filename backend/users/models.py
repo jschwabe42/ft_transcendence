@@ -11,6 +11,7 @@ class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	player = models.OneToOneField('game.Player', on_delete=models.CASCADE, related_name='profile_player', null=True, blank=True)
 	image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+	online = models.BooleanField(default=False)
 
 	def get_name(self):
 		return self.user.username
