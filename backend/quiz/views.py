@@ -125,6 +125,9 @@ def join_room(request, room_id):
 		# Return the room details and participants
 		participants = Participant.objects.filter(room=room)
 		participants_data = [p.user.username for p in participants]
+		if (room.leader is None):
+			room.leader = participant
+			room.save()
 		room_member_update(room.id)
 		print(f"Room is active? {room.is_active}", flush=True)
 		return JsonResponse({
@@ -162,8 +165,10 @@ def leave_room(request, room_id):
 				room.save()
 			participant.delete()
 			if room.participants.count() == 0:
-				room.delete()
-				room_list_update()
+				time.sleep(5)
+				if room.participants.count() == 0:
+					room.delete()
+					room_list_update()
 			else:
 				room_member_update(room.id)
 		return JsonResponse({'success': True, 'message': 'Left room successfully!'})
@@ -171,7 +176,7 @@ def leave_room(request, room_id):
 		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
 	except Participant.DoesNotExist:
 		return JsonResponse({'success': False, 'error': 'You are not a part of this room!'})
-	
+
 @login_required
 def update_room_settings(request, room_id):
 	"""
