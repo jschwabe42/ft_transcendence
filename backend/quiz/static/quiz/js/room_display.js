@@ -1,5 +1,6 @@
 import router from './router.js';
 import { submitAnswer, displayQuestion, displayCorrectAnswer, clearQuestionAndAnswers, displayUserAnswers, displayScore } from './quiz_logic.js';
+import { joinRoom } from './room_list.js';
 
 let roomSocket = null;
 /**
@@ -342,6 +343,7 @@ function endGame() {
  * Sends a POST request to the server to leave the room.
  */
 function leaveRoom(room_id) {
+	removeListeners();
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 	console.log("Calling leave room API");
 	fetch(`/quiz/leave_room/${room_id}/`, {
@@ -373,10 +375,33 @@ function leaveRoom(room_id) {
  * Might change the event to something else, but beforeunload seems to work fine.
  */
 function listener() {
-	window.addEventListener('beforeunload', function (event) {
-		const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
-		if (currentRoom) {
-			leaveRoom(currentRoom.room_id);
-		}
-	});
+	window.addEventListener('beforeunload', handleBeforeUnload);
+	window.addEventListener('load', handleLoad);
+}
+function handleBeforeUnload(event) {
+	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+	if (currentRoom) {
+		leaveRoom(currentRoom.room_id);
+	}
+}
+function handleLoad(event) {
+	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+	if (currentRoom && currentRoom.room_name) {
+		joinRoom(currentRoom.room_id)
+		.catch(error => {
+			console.error('An error occurred:', error);
+			router.navigateTo('/quiz/');
+		});
+	} else {
+		router.navigateTo('/quiz/');
+	}
+}
+
+
+/**
+ * Removes the event listeners to make sure they dont interfere with other functionality of the website.
+ */
+function removeListeners() {
+	window.removeEventListener('beforeunload', handleBeforeUnload);
+	window.removeEventListener('load', handleLoad);
 }

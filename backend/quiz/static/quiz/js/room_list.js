@@ -153,9 +153,9 @@ function displayRooms(rooms) {
 /**
  * Add functionality to the join button, and calls the router to navigate to the room specific view.
  */
-function joinRoom(roomId) {
+export function joinRoom(roomId) {
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-	fetch(`/quiz/join_room/${roomId}/`, {
+	return fetch(`/quiz/join_room/${roomId}/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded',
@@ -177,9 +177,11 @@ function joinRoom(roomId) {
 			router.navigateTo(`/quiz/${room_name}/`);
 		} else {
 			alert(data.error);
+			throw new Error(data.error);
 		}
 	})
 	.catch(error => {
-		alert(`An error occurred: ${error}`);
+		// alert(`An error occurred: ${error}`);
+		throw error;
 	});
 }
