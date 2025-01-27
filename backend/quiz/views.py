@@ -283,3 +283,25 @@ def submit_answer(request, room_id):
 		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
 	except Participant.DoesNotExist:
 		return JsonResponse({'success': False, 'error': 'You are not a part of this room!'})
+
+@login_required
+def get_room_settings(request, room_id):
+	"""
+	Returns the room settings for the room with the given room_id.
+	Functions as API Endpoint. /quiz/api/get_room_settings/<int:room_id>/
+	"""
+	try:
+		room = Room.objects.get(id=room_id)
+		settings = room.settings
+		return JsonResponse({
+			'success': True,
+			'settings': {
+				'question_count': settings.question_count,
+				'time_per_question': settings.time_per_question,
+			}
+		})
+	except Room.DoesNotExist:
+		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
+	except RoomSettings.DoesNotExist:
+		return JsonResponse({'success': False, 'error': 'Room settings do not exist!'})
+	return JsonResponse({'success': False, 'error': 'Invalid request method.'})

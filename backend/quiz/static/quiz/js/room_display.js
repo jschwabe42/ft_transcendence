@@ -92,7 +92,12 @@ export function displayRoom(roomName) {
 	const settingsButton = document.getElementById('settings-button');
 	settingsButton.addEventListener('click', function () {
 		const settingsMenu = document.getElementById('settings-menu');
-		settingsMenu.style.display = settingsMenu.style.display === 'none' ? 'block' : 'none';
+		if (settingsMenu.style.display === 'none') {
+			fetchSettings(currentRoom.room_id);
+			settingsMenu.style.display = 'block';
+		} else {
+			settingsMenu.style.display = 'none';
+		}
 	});
 
 	// Add event listener for option buttons
@@ -294,6 +299,29 @@ function startGame() {
 		}
 	});
 }
+
+/**
+ * Fetches the settings for the room and correctly marks the buttons.
+ */
+function fetchSettings(roomId) {
+	fetch(`/quiz/api/get_room_settings/${roomId}/`)
+		.then(response => response.json())
+		.then(data => {
+			const settings = data.settings;
+			document.querySelectorAll('.setting').forEach(setting => {
+				const settingName = setting.dataset.setting;
+				const value = settings[settingName];
+				if (value) {
+					const selectedButton = setting.querySelector(`.btn[data-value="${value}"]`);
+					if (selectedButton) {
+						setting.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+						selectedButton.classList.add('active');
+					}
+				}
+			});
+		});
+}
+
 
 /**
  * Sets the header back to normal, shows the buttons.
