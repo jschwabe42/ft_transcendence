@@ -56,13 +56,6 @@
 	padding:10px 20px;
 }
 
-#countdown {
-	position: fixed;
-	top: 60px;
-	right: 20px;
-	/* margin-top: 40px; */
-}
-
 #settings-menu .btn-outline-primary.active {
 	background-color: #1c4f73 !important;
 	border-color: #1c4f73 !important;
@@ -98,4 +91,11 @@
 
 #settings-menu .card-title {
 	font-weight: bold;
+}
+
+#countdown {
+	position: fixed;
+	top: 60px;
+	right: 20px;
+	/* margin-top: 40px; */
 }
