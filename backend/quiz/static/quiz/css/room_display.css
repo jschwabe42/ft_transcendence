@@ -62,3 +62,40 @@
 	right: 20px;
 	/* margin-top: 40px; */
 }
+
+#settings-menu .btn-outline-primary.active {
+	background-color: #1c4f73 !important;
+	border-color: #1c4f73 !important;
+	color: white !important;
+}
+
+#settings-menu .btn-outline-primary {
+	border-color: #1c4f73 !important;
+	color: #1c4f73 !important;
+}
+
+#settings-menu .btn-outline-primary:hover {
+	background-color: #163d5a  !important;
+	border-color: #163d5a !important;
+	color: white !important;
+}
+
+
+#settings-menu .btn-outline-primary:focus {
+	outline: none !important;
+	box-shadow: 0 0 0 0.1rem rgba(28, 79, 115, 0.5) !important;
+}
+
+#settings-menu .btn-group .btn-outline-primary:first-child {
+	border-top-left-radius: 10px !important;
+	border-bottom-left-radius: 10px !important;
+}
+
+#settings-menu .btn-group .btn-outline-primary:last-child {
+	border-top-right-radius: 10px !important;
+	border-bottom-right-radius: 10px !important;
+}
+
+#settings-menu .card-title {
+	font-weight: bold;
+}
