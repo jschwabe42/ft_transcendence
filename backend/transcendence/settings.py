@@ -120,9 +120,13 @@ DATABASES = {
 	}
 }
 
-# for 42 api - enables requesting bearer token
+# for 42 api - enables requesting bearer token: requires running Makefile to export the variable(s)
 CLIENT_ID=os.getenv("REMOTE_OAUTH_UID")
-REMOTE_OAUTH_SECRET=Path("/var/run/secrets/oauth_api_secret").read_text()
+import platform
+if platform.system() == "Darwin":  # macOS
+	REMOTE_OAUTH_SECRET = Path("../secrets/oauth_api_secret").read_text().strip()
+else:  # Assume Linux (Docker)
+	REMOTE_OAUTH_SECRET = Path("/var/run/secrets/oauth_api_secret").read_text().strip()
 SECRET_STATE=secrets.token_urlsafe(32)
 
 # Password validation
