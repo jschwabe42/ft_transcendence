@@ -22,6 +22,7 @@ class Migration(migrations.Migration):
                 ('image', models.ImageField(default='default.jpg', upload_to='profile_pics')),
                 ('player', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='profile_player', to='game.player')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('online', models.BooleanField(default=False)),
             ],
         ),
         migrations.CreateModel(
