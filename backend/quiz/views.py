@@ -165,7 +165,7 @@ def leave_room(request, room_id):
 				room.save()
 			participant.delete()
 			if room.participants.count() == 0:
-				time.sleep(5)
+				time.sleep(3)
 				if room.participants.count() == 0:
 					room.delete()
 					room_list_update()
