@@ -37,6 +37,18 @@ export function displayRoom(roomName) {
 						<button type="button" class="btn btn-outline-primary" data-value="20">20</button>
 					</div>
 				</div>
+
+				<div class="mb-3 setting" data-setting="time_per_question">
+					<label class="form-label">Time per Question:</label>
+					<div class="btn-group" role="group" aria-label="Time per Question">
+						<button type="button" class="btn btn-outline-primary" data-value="5">5</button>
+						<button type="button" class="btn btn-outline-primary" data-value="10">10</button>
+						<button type="button" class="btn btn-outline-primary" data-value="20">20</button>
+						<button type="button" class="btn btn-outline-primary" data-value="30">30</button>
+						<button type="button" class="btn btn-outline-primary" data-value="40">40</button>
+					</div>
+				</div>
+
 				<button id="save-settings-button" class="btn btn-success">Save</button>
 				<div id="popup-message" class="alert alert-success mt-3" role="alert" style="display: none;">
 					Settings saved successfully!

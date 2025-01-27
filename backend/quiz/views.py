@@ -187,7 +187,9 @@ def update_room_settings(request, room_id):
 			settings = data.get('settings', {})
 			print(f"Data: {data}", flush=True)
 			question_count = settings.get('question_count', 5)
+			time_per_question = settings.get('time_per_question', 20)
 			room.settings.question_count = question_count
+			room.settings.time_per_question = time_per_question
 			room.settings.save()
 			print(f"Room settings updated: {room.settings.question_count}", flush=True)
 			print(f"Success", flush=True)
