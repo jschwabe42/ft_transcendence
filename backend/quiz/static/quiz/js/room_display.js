@@ -24,17 +24,24 @@ export function displayRoom(roomName) {
 			<span class="sr-only">Settings</span>
 		</button>
 
-		<div id="settings-menu" style="display: none;">
-		<label for="question-count">Number of Questions:</label>
-		<select id="question-count">
-		<option value="3">3</option>
-				<option value="5" selected>5</option>
-				<option value="10">10</option>
-				<option value="15">15</option>
-				<option value="20">20</option>
-				</select>
+		<div id="settings-menu" class="card" style="display: none;">
+			<div class="card-body">
+				<h5 class="card-title">Settings</h5>
+				<div class="mb-3 setting" data-setting="question_count">
+					<label class="form-label">Number of Questions:</label>
+					<div class="btn-group" role="group" aria-label="Number of Questions">
+						<button type="button" class="btn btn-outline-primary" data-value="3">3</button>
+						<button type="button" class="btn btn-outline-primary" data-value="5">5</button>
+						<button type="button" class="btn btn-outline-primary" data-value="10">10</button>
+						<button type="button" class="btn btn-outline-primary" data-value="15">15</button>
+						<button type="button" class="btn btn-outline-primary" data-value="20">20</button>
+					</div>
+				</div>
 				<button id="save-settings-button" class="btn btn-success">Save</button>
-				<div id="popup-message" class="popup-message" style="display: none;">Settings saved successfully!</div>
+				<div id="popup-message" class="alert alert-success mt-3" role="alert" style="display: none;">
+					Settings saved successfully!
+				</div>
+			</div>
 		</div>
 
 		<button id="start-game-button" class="btn btn-primary" style="display: none;">Start Game</button>
@@ -69,16 +76,33 @@ export function displayRoom(roomName) {
 		router.navigateTo('/quiz/');
 	});
 
+	// Event listener to toggle the settings menu
 	const settingsButton = document.getElementById('settings-button');
 	settingsButton.addEventListener('click', function () {
 		const settingsMenu = document.getElementById('settings-menu');
 		settingsMenu.style.display = settingsMenu.style.display === 'none' ? 'block' : 'none';
 	});
 
+	// Add event listener for option buttons
+	document.querySelectorAll('.btn-group button').forEach(button => {
+		button.addEventListener('click', function () {
+			const settings_group = button.closest('.setting');
+			settings_group.querySelectorAll('.btn'). forEach(btn => btn.classList.remove('active'));
+			button.classList.add('active');
+		});
+	});
+
 	const saveSettingsButton = document.getElementById('save-settings-button');
 	saveSettingsButton.addEventListener('click', function () {
-		const questionCount = document.getElementById('question-count').value;
-		updateRoomSettings(currentRoom.room_id, questionCount);
+		const settings = {};
+		document.querySelectorAll('.setting').forEach(setting => {
+			const settingName = setting.dataset.setting;
+			console.log('Setting:', settingName);
+			const selectedOption = setting.querySelector('.btn.active').dataset.value;
+			console.log('Selected option:', selectedOption);
+			settings[settingName] = selectedOption;
+		});
+		updateRoomSettings(currentRoom.room_id, settings);
 	});
 
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
@@ -206,7 +230,7 @@ function initRoomWebSocket(room_id) {
 /**
  * Update the room settings.
  */
-function updateRoomSettings(roomId, questionCount) {
+function updateRoomSettings(roomId, settings) {
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 	fetch(`/quiz/update_room_settings/${roomId}/`, {
 		method: 'POST',
@@ -214,7 +238,7 @@ function updateRoomSettings(roomId, questionCount) {
 			'Content-Type': 'application/json',
 			'X-CSRFToken': csrfToken
 		},
-		body: JSON.stringify({ question_count: questionCount })
+		body: JSON.stringify({ settings })
 	})
 	.then(response => response.json())
 	.then(data => {

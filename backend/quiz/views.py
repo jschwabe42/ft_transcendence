@@ -184,9 +184,12 @@ def update_room_settings(request, room_id):
 			if room.leader.user != request.user:
 				return JsonResponse({'success': False, 'error': 'You are not the leader of this room!'})
 			data = json.loads(request.body)
-			question_count = data.get('question_count', 5)
+			settings = data.get('settings', {})
+			print(f"Data: {data}", flush=True)
+			question_count = settings.get('question_count', 5)
 			room.settings.question_count = question_count
 			room.settings.save()
+			print(f"Room settings updated: {room.settings.question_count}", flush=True)
 			print(f"Success", flush=True)
 			return JsonResponse({'success': True, 'message': 'Room settings updated successfully!'})
 		except Room.DoesNotExist:
