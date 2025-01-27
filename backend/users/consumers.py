@@ -25,7 +25,6 @@ class OnlineStatusConsumer(AsyncWebsocketConsumer):
 		# update last interaction
 		user_profile = self.scope["user"].profile
 		user_profile.online = True
-		user_profile.last_interaction = timezone.now()
 		user_profile.save()
 		print(f'{user_profile.user.username} is kept alive')
 		sys.stdout.flush()
@@ -38,6 +37,7 @@ class OnlineStatusConsumer(AsyncWebsocketConsumer):
 		user_profile.save()
 		print(f'{user_profile.user.username} was disconnected')
 
+# @audit not working
 class UserProfileConsumer(AsyncWebsocketConsumer):
 	async def connect(self):
 		self.username = self.scope['url_route']['kwargs']['username']

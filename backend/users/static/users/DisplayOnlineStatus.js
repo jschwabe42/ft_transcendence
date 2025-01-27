@@ -3,7 +3,7 @@ let profileWebsocket;
 /**
  * gets called upon displaying the public profile of a user
  * updates if there is a status change
- * 
+ * @audit non-functional web socket
  */
 function initProfileWebsocket(username) {
 	profileWebsocket = new WebSocket(`ws://${window.location.host}/ws/user/${username}/`);
