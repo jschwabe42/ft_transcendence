@@ -1,5 +1,6 @@
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
+from .api_views import CreateOAUTHUserView
 from . import views
 
 app_name = "users"
@@ -17,4 +18,7 @@ urlpatterns = [
     re_path(r'^user(s)?/(?P<origin_username>[^/]+)/deny-friend-request$', views.deny_friend_request, name='deny-friend-request'),
     re_path(r'^user(s)?/(?P<origin_username>[^/]+)/accept-friend-request$', views.accept_friend_request, name='accept-friend-request'),
     re_path(r'^user(s)?/(?P<other_username>[^/]+)/remove-friend$', views.remove_friend, name='remove-friend'),
+
+    # WIP: oauth with 42 API
+    path('oauth/', CreateOAUTHUserView.as_view(), name='oauth'),
 ]
