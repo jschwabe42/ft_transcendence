@@ -163,8 +163,10 @@ function updateParticipantsList(participants, leader) {
 	const currentUser = currentRoom.current_user;
 	if (currentRoom.current_user === currentRoom.leader) {
 		document.getElementById('settings-button').style.display = 'block';
+		document.getElementById('start-game-button').style.display = 'block';
 	} else {
 		document.getElementById('settings-button').style.display = 'none';
+		document.getElementById('start-game-button').style.display = 'none';
 	}
 }
 
