@@ -13,11 +13,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='profile',
-            name='last_interaction',
-            field=models.DateTimeField(default=django.utils.timezone.now),
-        ),
-        migrations.AddField(
-            model_name='profile',
             name='online',
             field=models.BooleanField(default=False),
         ),

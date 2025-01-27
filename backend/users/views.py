@@ -76,7 +76,7 @@ def public_profile(request, query_user):
 		friend_requests_sent = Friends_Manager.fetch_sent(origin=user_instance)
 		friend_requests_received = Friends_Manager.fetch_received(target=user_instance)
 	else:
-		UserProfileConsumer.connect(user_instance.username)
+		# UserProfileConsumer.connect(user_instance.username)#@audit not working (DisplayOnlineStatus.js)
 		# check for the request user if he is an origin or a target of a request by the user_instance
 		friend_requests_sent = Friends_Manager.fetch_sent(origin=request.user)
 		friend_requests_received = Friends_Manager.fetch_received(target=request.user)
