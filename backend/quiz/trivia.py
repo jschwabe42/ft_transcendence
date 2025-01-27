@@ -2,9 +2,16 @@ import requests
 import json
 import html
 import os
+from .models import Room, Participant, RoomSettings, Answer
 
-def get_trivia_questions(amount):
-	url = f"https://opentdb.com/api.php?amount={amount}"
+def get_trivia_questions(settings):
+	url = f"https://opentdb.com/api.php?amount={settings.question_count}"
+
+	if settings.difficulty != 'any':
+		url += f"&difficulty={settings.difficulty}"
+
+	print(f"URL: {url}", flush=True)
+
 	response = requests.get(url)
 
 	if response.status_code == 200:

@@ -28,6 +28,17 @@ export function displayRoom(roomName) {
 		<div id="settings-menu" class="card" style="display: none;">
 			<div class="card-body">
 				<h5 class="card-title">Settings</h5>
+
+				<div class="mb-3 setting" data-setting="difficulty">
+					<label class="form-label">Difficulty:</label>
+					<div class="btn-group" role="group" aria-label="Number of Questions">
+						<button type="button" class="btn btn-outline-primary" data-value="any">Any</button>
+						<button type="button" class="btn btn-outline-primary" data-value="easy">Easy</button>
+						<button type="button" class="btn btn-outline-primary" data-value="medium">Medium</button>
+						<button type="button" class="btn btn-outline-primary" data-value="hard">Hard</button>
+					</div>
+				</div>
+
 				<div class="mb-3 setting" data-setting="question_count">
 					<label class="form-label">Number of Questions:</label>
 					<div class="btn-group" role="group" aria-label="Number of Questions">

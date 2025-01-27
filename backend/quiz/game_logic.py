@@ -24,7 +24,7 @@ def game_logic(room_id):
 		room.save()
 		# print(f"Current Question: {room.current_question}", flush=True)
 		send_question(room_id, room.current_question['question'], room.shuffled_answers)
-		countdown(room.settings.time_per_qestion, room_id)
+		countdown(room.settings.time_per_question, room_id)
 		# countdown(5, room_id)
 		collect_answers(room_id, room.current_question['question'])
 		solve_question(room_id, room.current_question['question'], room.shuffled_answers, room.current_question['correct_answer'])

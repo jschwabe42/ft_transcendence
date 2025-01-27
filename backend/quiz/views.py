@@ -193,11 +193,11 @@ def update_room_settings(request, room_id):
 			print(f"Data: {data}", flush=True)
 			question_count = settings.get('question_count', 5)
 			time_per_question = settings.get('time_per_question', 20)
+			difficulty = settings.get('difficulty', 'any')
 			room.settings.question_count = question_count
 			room.settings.time_per_question = time_per_question
+			room.settings.difficulty = difficulty
 			room.settings.save()
-			print(f"Room settings updated: {room.settings.question_count}", flush=True)
-			print(f"Success", flush=True)
 			return JsonResponse({'success': True, 'message': 'Room settings updated successfully!'})
 		except Room.DoesNotExist:
 			return JsonResponse({'success': False, 'error': 'Room does not exist!'})
@@ -217,7 +217,7 @@ def start_game(request, room_id):
 		if room.leader.user != request.user:
 			return JsonResponse({'success': False, 'error': 'You are not the leader of this room!'})
 		room.is_ingame = True
-		questions = get_trivia_questions(room.settings.question_count)
+		questions = get_trivia_questions(room.settings)
 		if not questions:
 			return JsonResponse({'success': False, 'error': 'Failed to retrieve trivia questions.'}, status=500)
 		room.questions = questions
@@ -303,6 +303,7 @@ def get_room_settings(request, room_id):
 			'settings': {
 				'question_count': settings.question_count,
 				'time_per_question': settings.time_per_question,
+				'difficulty': settings.difficulty,
 			}
 		})
 	except Room.DoesNotExist:
