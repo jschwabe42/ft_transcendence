@@ -342,6 +342,7 @@ function fetchSettings(roomId) {
  */
 function endGame() {
 	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+	currentRoom.is_ingame = false;
 	document.getElementById('room-header').innerText = `Welcome to ${currentRoom.room_name}`;
 	document.getElementById('room-description').innerText = 'The quiz has ended!';
 	if (currentRoom.leader === currentRoom.current_user) {
