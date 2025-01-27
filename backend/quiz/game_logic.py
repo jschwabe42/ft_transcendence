@@ -19,7 +19,15 @@ def game_logic(room_id):
 
 	for i in range(room.settings.question_count):
 		room.current_question = room.questions[i]
-		room.shuffled_answers = random.sample(room.questions[i]['incorrect_answers'] + [room.questions[i]['correct_answer']], len(room.questions[i]['incorrect_answers']) + 1)
+
+		incorrect_answers = room.questions[i]['incorrect_answers']
+		correct_answer = room.questions[i]['correct_answer']
+
+		if set(incorrect_answers + [correct_answer]) == {"True", "False"}:
+			room.shuffled_answers = ["True", "False"]
+		else:
+			room.shuffled_answers = random.sample(incorrect_answers + [correct_answer], len(incorrect_answers) + 1)
+
 		room.question_start = now()
 		room.save()
 		# print(f"Current Question: {room.current_question}", flush=True)
