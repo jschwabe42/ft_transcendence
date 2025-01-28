@@ -8,6 +8,12 @@
 	margin-top: 40px;
 }
 
+.button-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .answer-option {
 	padding: 15px 20px;
 	font-size: 1.2em;
@@ -29,4 +35,8 @@
 	border: 4px solid #0496ff !important;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
 	transform: scale(1.05) !important;
+}
+
+.user-info {
+	margin-top: 20px;
 }

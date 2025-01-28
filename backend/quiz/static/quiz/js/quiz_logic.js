@@ -99,6 +99,14 @@ export function displayUserAnswers(answersData) {
 	answersData.forEach(data => {
 		const answerButton = [...answerOptions.children].find(button => button.getAttribute('data-answer') === data.answer);
 		if (answerButton) {
+			let buttonContainer = answerButton.parentNode;
+			if (!buttonContainer.classList.contains('button-container')) {
+				buttonContainer = document.createElement('div');
+				buttonContainer.className = 'button-container';
+				answerButton.parentNode.insertBefore(buttonContainer, answerButton);
+				buttonContainer.appendChild(answerButton);
+			}
+
 			const userInfo = document.createElement('div');
 			userInfo.className = 'user-info';
 			// Add to below line with css later
@@ -106,8 +114,7 @@ export function displayUserAnswers(answersData) {
 			userInfo.innerHTML = `
 				<span class="username">${data.username}</span>
 			`;
-			// answerButton.appendChild(userInfo);
-			answerButton.parentNode.insertBefore(userInfo, answerButton.nextSibling);
+			buttonContainer.appendChild(userInfo);
 		}
 	});
 }
