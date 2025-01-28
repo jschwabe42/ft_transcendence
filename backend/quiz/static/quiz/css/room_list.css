@@ -1,3 +1,12 @@
+/* body {
+	background-image: url('bg.jpg') !important;
+	background-size: cover !important;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	background-attachment: fixed !important;
+} */
+
+
 /* Overwrites the primary button, which is notably the join and create room button */
 .btn-primary {
 	background-color: #1c4f73 !important;
