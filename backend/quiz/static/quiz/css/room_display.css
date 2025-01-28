@@ -32,7 +32,7 @@
 	border-radius: 5px;
 }
 
-/* Controls the welcome to room header etc, might be removed at some point */
+/* Controls the welcome to room header etc */
 .room-header-container {
 	position: absolute;
 	margin-top: 4px;
@@ -43,6 +43,11 @@
 	flex-direction: column;
 	align-items: center;
 	text-align: center;
+}
+
+#room-header {
+	height: 50px;
+	max-height: 50px;
 }
 
 /* Sets the position of the settings button */

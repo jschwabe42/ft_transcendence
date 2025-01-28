@@ -1,0 +1,26 @@
+.answer-options {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+	gap: 10px;
+	padding: 20px;
+	overflow-x: auto;
+	margin-top: 40px;
+}
+
+.answer-option {
+	padding: 15px 20px;
+	font-size: 1.2em;
+	text-align: center;
+	height: 100px;
+	width: 250px;
+	max-height: 100px;
+	max-width: 250px;
+	white-space: normal; /* Allow text to wrap to the next line */
+	word-wrap: break-word; /* Break long words to fit within the button */
+	word-break: break-word; /* Ensure long words break correctly */
+	overflow: hidden; /* Hide any overflow text */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}

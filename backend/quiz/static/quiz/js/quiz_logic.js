@@ -35,7 +35,7 @@ export function displayQuestion(question, answers) {
 
 	room_header.innerHTML = question;
 	room_paragraph.innerHTML = '';
-	room_paragraph.innerHTML = question;
+	// room_paragraph.innerHTML = question;
 	answerOptions.innerHTML = '';
 
 	answers.forEach((answer, index) => {
