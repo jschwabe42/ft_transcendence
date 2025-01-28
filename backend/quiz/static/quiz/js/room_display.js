@@ -34,7 +34,7 @@ export function displayRoom(roomName) {
 				<div class="mb-3 setting" data-setting="category">
 					<label class="form-label">Category:</label>
 					<select id="category-select" class="form-select">
-						<option value="any">Any</option>
+						<option value="0">Any</option>
 						<option value="9">General Knowledge</option>
 					</select>
 				</div>
@@ -133,8 +133,20 @@ export function displayRoom(roomName) {
 		const settings = {};
 		document.querySelectorAll('.setting').forEach(setting => {
 			const settingName = setting.dataset.setting;
+
+			let selectedOption;
+			const selectElement = setting.querySelector('select');
+			if (selectElement) {
+				selectedOption = selectElement.value;
+			} else {
+				const activeButton = setting.querySelector('.btn.active');
+				if (activeButton) {
+					selectedOption = activeButton.dataset.value;
+				}
+			}
+
 			console.log('Setting:', settingName);
-			const selectedOption = setting.querySelector('.btn.active').dataset.value;
+			// const selectedOption = setting.querySelector('.btn.active').dataset.value;
 			console.log('Selected option:', selectedOption);
 			settings[settingName] = selectedOption;
 		});
@@ -334,11 +346,16 @@ function fetchSettings(roomId) {
 			document.querySelectorAll('.setting').forEach(setting => {
 				const settingName = setting.dataset.setting;
 				const value = settings[settingName];
-				if (value) {
-					const selectedButton = setting.querySelector(`.btn[data-value="${value}"]`);
-					if (selectedButton) {
-						setting.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
-						selectedButton.classList.add('active');
+				if (value !== undefined) {
+					const selectElement = setting.querySelector('select');
+					if (selectElement) {
+						selectElement.value = value;
+					} else {
+						const selectedButton = setting.querySelector(`.btn[data-value="${value}"]`);
+						if (selectedButton) {
+							setting.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+							selectedButton.classList.add('active');
+						}
 					}
 				}
 			});

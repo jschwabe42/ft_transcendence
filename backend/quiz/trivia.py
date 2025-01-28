@@ -10,6 +10,9 @@ def get_trivia_questions(settings):
 	if settings.difficulty != 'any':
 		url += f"&difficulty={settings.difficulty}"
 
+	if settings.category != 0:
+		url += f"&category={settings.category}"
+
 	print(f"URL: {url}", flush=True)
 
 	response = requests.get(url)

@@ -195,10 +195,13 @@ def update_room_settings(request, room_id):
 			question_count = settings.get('question_count', 5)
 			time_per_question = settings.get('time_per_question', 20)
 			difficulty = settings.get('difficulty', 'any')
+			category = settings.get('category', 0)
 			room.settings.question_count = question_count
 			room.settings.time_per_question = time_per_question
 			room.settings.difficulty = difficulty
+			room.settings.category = category
 			room.settings.save()
+			print(f"Category: {room.settings.category}", flush=True)
 			return JsonResponse({'success': True, 'message': 'Room settings updated successfully!'})
 		except Room.DoesNotExist:
 			return JsonResponse({'success': False, 'error': 'Room does not exist!'})
@@ -305,6 +308,7 @@ def get_room_settings(request, room_id):
 				'question_count': settings.question_count,
 				'time_per_question': settings.time_per_question,
 				'difficulty': settings.difficulty,
+				'category': settings.category,
 			}
 		})
 	except Room.DoesNotExist:
