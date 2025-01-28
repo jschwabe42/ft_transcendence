@@ -112,7 +112,7 @@ export function displayUserAnswers(answersData) {
 			// Add to below line with css later
 			// <img src="${data.profile_image}" alt="${data.username}'s profile picture" class="profile-picture">
 			userInfo.innerHTML = `
-				<span class="username">${data.username}</span>
+				<span class="username">${data.username}: +${data.score_difference} points</span>
 			`;
 			buttonContainer.appendChild(userInfo);
 		}

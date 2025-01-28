@@ -206,8 +206,10 @@ def process_answers(room_id, question):
 				'username': participant.user.username,
 				'profile_image': participant.user.profile.image.url,
 				'answer': answer.answer_given,
+				'score_difference': participant.score_difference,
 				# Potentially add the new score here
 				# 'score': participant.score,
+				# Potentially add the is disqualified here to display the users who were disqualified to everyone
 			})
 
 		participants_data.append({
