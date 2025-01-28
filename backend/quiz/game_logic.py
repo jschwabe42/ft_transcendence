@@ -32,7 +32,7 @@ def game_logic(room_id):
 		room.save()
 		# print(f"Current Question: {room.current_question}", flush=True)
 		send_question(room_id, room.current_question['question'], room.shuffled_answers)
-		countdown(room.settings.time_per_question, room_id)
+		countdown_question_time(room.settings.time_per_question, room_id)
 		# countdown(5, room_id)
 		collect_answers(room_id, room.current_question['question'])
 		solve_question(room_id, room.current_question['question'], room.shuffled_answers, room.current_question['correct_answer'])
@@ -247,3 +247,54 @@ def reset_scores(room_id):
 	for participant in participants:
 		participant.score = 0
 		participant.save()
+
+def all_users_answered(room_id):
+	"""
+	Checks if all users have answered the current question.
+	"""
+	room = get_object_or_404(Room, id=room_id)
+	total_participants = room.participants.count()
+	answers_received = Answer.objects.filter(room=room, question=room.current_question['question']).count()
+	return answers_received >= total_participants
+
+
+def countdown_question_time(countdown_time, room_id):
+	"""
+	Countdown timer for the game.
+	"""
+	room = get_object_or_404(Room, id=room_id)
+	channel_layer = get_channel_layer()
+	async_to_sync(channel_layer.group_send)(
+		f"room_{room_id}",
+		{
+			'type': 'countdown_start',
+			'data': {
+				'time': countdown_time
+			}
+		}
+	)
+	time.sleep(1)
+
+	for i in range(countdown_time - 1, 0, -1):
+		if (all_users_answered(room_id)):
+			break
+		async_to_sync(channel_layer.group_send)(
+			f"room_{room_id}",
+			{
+				'type': 'countdown_update',
+				'data': {
+					'time': i
+				}
+			}
+		)
+		time.sleep(1)
+
+	async_to_sync(channel_layer.group_send)(
+		f"room_{room_id}",
+		{
+			'type': 'countdown_end',
+			'data': {
+				'time': 0
+			}
+		}
+	)
