@@ -14,9 +14,7 @@ urlpatterns = [
 	),
 	path('logout/', views.custom_logout, name='logout'),
 	# friendship management: both `user` and `users` prefix
-	re_path(
-		r'^user(s)?/(?P<query_user>[^/]+)$', views.public_profile, name='public-profile'
-	),
+	re_path(r'^user(s)?/(?P<query_user>[^/]+)$', views.public_profile, name='public-profile'),
 	re_path(
 		r'^user(s)?/(?P<target_username>[^/]+)/friend-request$',
 		views.friend_request,

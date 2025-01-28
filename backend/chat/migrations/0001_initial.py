@@ -59,9 +59,7 @@ class Migration(migrations.Migration):
 				),
 				(
 					'members',
-					models.ManyToManyField(
-						related_name='chat_groups', to=settings.AUTH_USER_MODEL
-					),
+					models.ManyToManyField(related_name='chat_groups', to=settings.AUTH_USER_MODEL),
 				),
 			],
 		),

@@ -1,7 +1,5 @@
 import asyncio
-import math
 import json
-import sys
 import random
 
 speed = 15
@@ -60,16 +58,16 @@ class PongGame:
 	def update_game_state(self):
 		self._check_paddle_collision()
 		# move padels
-		if self.playerOneKeyUp == True:
+		if self.playerOneKeyUp:
 			paddle = self.paddles['player1']
 			paddle['y'] -= speed
-		if self.playerOneKeyDown == True:
+		if self.playerOneKeyDown:
 			paddle = self.paddles['player1']
 			paddle['y'] += speed
-		if self.playerTwoKeyUp == True:
+		if self.playerTwoKeyUp:
 			paddle = self.paddles['player2']
 			paddle['y'] -= speed
-		if self.playerTwoKeyDown == True:
+		if self.playerTwoKeyDown:
 			paddle = self.paddles['player2']
 			paddle['y'] += speed
 		# move ball
@@ -108,7 +106,7 @@ class PongGame:
 			self.playerTwoKeyDown = False
 
 		# ball paddle collision
-		if self.paddle_collision == False:  # if hit no checks for a few iterations
+		if not self.paddle_collision:  # if hit no checks for a few iterations
 			# Left Paddle
 			if (
 				self.ball['x'] - self.ball['radius']

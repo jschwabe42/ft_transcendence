@@ -2,8 +2,6 @@
 from users.models import Profile
 from .models import Game
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-import sys
 
 # For api
 from rest_framework.views import APIView
@@ -35,17 +33,13 @@ class CreateGameView(APIView):
 		try:
 			opponent = User.objects.get(username=opponent_username)
 		except User.DoesNotExist:
-			return Response(
-				{'error': 'Opponent does not exist.'}, status=status.HTTP_404_NOT_FOUND
-			)
+			return Response({'error': 'Opponent does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
 		if user_username:
 			try:
 				user = User.objects.get(username=user_username)
 			except User.DoesNotExist:
-				return Response(
-					{'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND
-				)
+				return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 		else:
 			user_profile = Profile.objects.get(user=request.user)
 
@@ -53,9 +47,7 @@ class CreateGameView(APIView):
 		user_profile = Profile.objects.get(user=user)
 
 		# Create the game
-		game = Game.objects.create(
-			player1=user_profile.player, player2=opponent_profile.player
-		)
+		game = Game.objects.create(player1=user_profile.player, player2=opponent_profile.player)
 		game.save()
 
 		return Response(
@@ -82,17 +74,13 @@ class ScoreBoardView(APIView):
 		try:
 			game = Game.objects.get(id=game_id)
 		except Game.DoesNotExist:
-			return Response(
-				{'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND
-			)
+			return Response({'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 		game.score1 = int(score1)
 		game.score2 = int(score2)
 		game.save()
 
-		return Response(
-			{'scores': 'Game successfully saved score.'}, status=status.HTTP_200_OK
-		)
+		return Response({'scores': 'Game successfully saved score.'}, status=status.HTTP_200_OK)
 
 
 class ControlKeySetting(APIView):
@@ -119,9 +107,7 @@ class ControlKeySetting(APIView):
 		try:
 			game = Game.objects.get(id=game_id)
 		except Game.DoesNotExist:
-			return Response(
-				{'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND
-			)
+			return Response({'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 		if user == game.player1.profile.user.username:
 			game.player1_control_settings = control1

@@ -1,10 +1,8 @@
-import logging
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from .models import Game
-from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
 import sys
 

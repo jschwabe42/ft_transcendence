@@ -1,3 +1,9 @@
+# noqa
+
+from django.contrib.auth import logout
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from .models import Friends_Manager
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -12,23 +18,17 @@ def register(request):
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():
+			# @audit does this do anything?
 			user = (
 				form.save()
 			)  # Only saves the User instance; Profile creation is handled by the signal
 			username = form.cleaned_data.get('username')
-			messages.success(
-				request, f'Your account has been created! You can now log in!'
-			)
+			messages.success(request, 'Your account has been created! You can now log in!')
 			return redirect('users:login')
 	else:
 		form = UserRegisterForm()
 
 	return render(request, 'users/register.html', {'form': form})
-
-
-from django.contrib.auth import logout
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
 
 
 # costum Logout, couse Idk I am stupid to get the normal working
@@ -41,16 +41,14 @@ def custom_logout(request):
 def account(request):
 	if request.method == 'POST':
 		u_form = UserUpdateForm(request.POST, instance=request.user)
-		p_form = ProfileUpdateForm(
-			request.POST, request.FILES, instance=request.user.profile
-		)
+		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
 		mod_pwd_form = PasswordChangeForm(request.user, request.POST)
 		if u_form.is_valid() and p_form.is_valid() and mod_pwd_form.is_valid():
 			u_form.save()
 			p_form.save()
 			user = mod_pwd_form.save()
 			update_session_auth_hash(request, user)
-			messages.success(request, f'Your account has been updated')
+			messages.success(request, 'Your account has been updated')
 			return redirect('account')
 
 	else:
@@ -67,9 +65,6 @@ def account(request):
 	return render(request, 'users/account.html', context)
 
 
-from .models import Friends_Manager
-
-
 @login_required
 def public_profile(request, query_user):
 	user_instance = User.objects.get(username=query_user)
@@ -77,9 +72,9 @@ def public_profile(request, query_user):
 	games = Game.objects.filter(player1=user_profile.player) | Game.objects.filter(
 		player2=user_profile.player
 	)
-	games_won = games.filter(
-		player1=user_profile.player, score1__gt=F('score2')
-	) | games.filter(player2=user_profile.player, score2__gt=F('score1'))
+	games_won = games.filter(player1=user_profile.player, score1__gt=F('score2')) | games.filter(
+		player2=user_profile.player, score2__gt=F('score1')
+	)
 	games_lost = [game for game in games if game not in games_won]
 	games_won = sorted(games_won, key=lambda game: game.played_at, reverse=True)
 	games_lost = sorted(games_lost, key=lambda game: game.played_at, reverse=True)
@@ -113,36 +108,28 @@ def public_profile(request, query_user):
 @login_required
 def friend_request(request, target_username):
 	"""/user/target_username/friend-request"""
-	Friends_Manager.friends_request(
-		origin=request.user, target_username=target_username
-	)
+	Friends_Manager.friends_request(origin=request.user, target_username=target_username)
 	return redirect('/user/' + target_username)
 
 
 @login_required
 def cancel_friend_request(request, target_username):
 	"""/user/target_username/cancel-friend-request"""
-	Friends_Manager.cancel_friends_request(
-		origin=request.user, target_username=target_username
-	)
+	Friends_Manager.cancel_friends_request(origin=request.user, target_username=target_username)
 	return redirect('/user/' + request.user.username)
 
 
 @login_required
 def deny_friend_request(request, origin_username):
 	"""/user/origin_username/deny-friend-request"""
-	Friends_Manager.deny_friends_request(
-		target=request.user, origin_username=origin_username
-	)
+	Friends_Manager.deny_friends_request(target=request.user, origin_username=origin_username)
 	return redirect('/user/' + request.user.username)
 
 
 @login_required
 def accept_friend_request(request, origin_username):
 	"""/user/origin_username/accept-friend-request"""
-	Friends_Manager.accept_request_as_target(
-		target=request.user, origin_username=origin_username
-	)
+	Friends_Manager.accept_request_as_target(target=request.user, origin_username=origin_username)
 	return redirect('/user/' + request.user.username)
 
 

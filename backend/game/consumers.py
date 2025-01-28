@@ -5,7 +5,6 @@ from asgiref.sync import sync_to_async
 from .pong import PongGame
 import asyncio
 from django.utils import timezone
-import sys
 
 games = {}
 

@@ -1,9 +1,7 @@
-from django.utils import timezone
 import json
 import sys
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
-from asgiref.sync import async_to_sync
 
 
 class OnlineStatusConsumer(AsyncWebsocketConsumer):
@@ -19,7 +17,7 @@ class OnlineStatusConsumer(AsyncWebsocketConsumer):
 			await self.kill()
 
 	async def receive(self, text_data):
-		text_data_json = json.loads(text_data)
+		text_data_json = json.loads(text_data)  # noqa
 
 	@sync_to_async
 	def keep_alive(self):

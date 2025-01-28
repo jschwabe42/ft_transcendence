@@ -1,6 +1,6 @@
 # chat/views.py
 import logging
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Group
 
@@ -33,7 +33,7 @@ def room_detail(request, room_id):
 	for member in members:
 		if member == user:
 			is_in_group = True
-	if is_in_group == False:
+	if not is_in_group:
 		return redirect('chat')
 
 	# print(test.group.groupName)

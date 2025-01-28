@@ -1,27 +1,19 @@
-import datetime
 from django.db import models
 
 # Create your models here.
 
-from django.forms import ValidationError
 from django.utils import timezone
 
 # for displaying games in admin panel
 
 from django.contrib import admin
 
-from users.models import Profile
-
 
 # create game when starting a new game
 # update game when finishing a game/goals are scored
 class Game(models.Model):
-	player1 = models.ForeignKey(
-		'Player', related_name='games_as_player1', on_delete=models.CASCADE
-	)
-	player2 = models.ForeignKey(
-		'Player', related_name='games_as_player2', on_delete=models.CASCADE
-	)
+	player1 = models.ForeignKey('Player', related_name='games_as_player1', on_delete=models.CASCADE)
+	player2 = models.ForeignKey('Player', related_name='games_as_player2', on_delete=models.CASCADE)
 	score1 = models.IntegerField(default=0)
 	score2 = models.IntegerField(default=0)
 	# calculate duration of game from start to finish

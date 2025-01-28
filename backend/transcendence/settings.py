@@ -81,9 +81,7 @@ ROOT_URLCONF = 'transcendence.urls'
 TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [
-			BASE_DIR / 'templates'
-		],  # This line should point to the 'templates' directory
+		'DIRS': [BASE_DIR / 'templates'],  # This line should point to the 'templates' directory
 		# 'DIRS': [],
 		'APP_DIRS': True,
 		'OPTIONS': {
@@ -160,7 +158,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
 	BASE_DIR / 'static',
 	BASE_DIR / 'quiz/static',
-	]
+]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 

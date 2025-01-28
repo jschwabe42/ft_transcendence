@@ -48,9 +48,7 @@ def main():
 
 	args = parser.parse_args()
 
-	update_score(
-		args.url, args.token, args.score_player1, args.score_player2, args.game_id
-	)
+	update_score(args.url, args.token, args.score_player1, args.score_player2, args.game_id)
 
 
 if __name__ == '__main__':

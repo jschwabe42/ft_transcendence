@@ -34,6 +34,4 @@ class Message(models.Model):
 	date_posted = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return (
-			f'{self.author.username}: {self.content[:20]}...'  # Preview of the message
-		)
+		return f'{self.author.username}: {self.content[:20]}...'  # Preview of the message
