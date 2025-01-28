@@ -14,6 +14,7 @@ export function displayRoom(roomName) {
 			<h2 id="room-header">Welcome to ${roomName}</h2>
 			<p id="room-description">You have successfully joined the room!<br>Here you can start participating in the quiz.</p>
 			<button id="start-game-button" class="btn btn-primary" style="display: none;">Start Game</button>
+			<div id="answer-options" class="answer-options"></div>
 		</div>
 		<ul id="participants-list"></ul>
 		<button id="leave-room-button" class="btn btn-danger" title="Leave Room">
@@ -72,11 +73,6 @@ export function displayRoom(roomName) {
 
 		<div class="circle" id="countdown" >
 			<h1></h1>
-		</div>
-
-		<div id="quiz-questions" class="quiz-questions" style="display:none;">
-			<div id="question-container" class="question-container"></div>
-			<div id="answer-options" class="answer-options"></div>
 		</div>
 	`;
 	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));

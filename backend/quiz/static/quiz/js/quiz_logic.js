@@ -29,11 +29,13 @@ export function submitAnswer(roomId, question, answer) {
  * Displays the question and answer options.
  */
 export function displayQuestion(question, answers) {
-	const questionContainer = document.getElementById('question-container');
 	const answerOptions = document.getElementById('answer-options');
-	const quizQuestionContainer = document.getElementById('quiz-questions');
+	const room_header = document.getElementById('room-header');
+	const room_paragraph = document.getElementById('room-description');
 
-	questionContainer.innerHTML = question;
+	room_header.innerHTML = question;
+	room_paragraph.innerHTML = '';
+	room_paragraph.innerHTML = question;
 	answerOptions.innerHTML = '';
 
 	answers.forEach((answer, index) => {
@@ -72,13 +74,14 @@ export function displayCorrectAnswer(correctAnswer) {
  * Clears the question and answer options.
  */
 export function clearQuestionAndAnswers() {
-	const questionContainer = document.getElementById('question-container');
-	const answerOptions = document.getElementById('answer-options');
-	const quizQuestionContainer = document.getElementById('quiz-questions');
 
-	questionContainer.innerHTML = '';
+	const answerOptions = document.getElementById('answer-options');
+	const room_header = document.getElementById('room-header');
+	const room_paragraph = document.getElementById('room-description');
+
+	room_header.innerText = '';
+	room_paragraph.innerText = '';
 	answerOptions.innerHTML = '';
-	quizQuestionContainer.style.display = 'none';
 }
 
 export function displayUserAnswers(answersData) {
