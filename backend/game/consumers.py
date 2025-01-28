@@ -9,6 +9,7 @@ import sys
 
 games = {}
 
+
 class GameConsumer(AsyncWebsocketConsumer):
 	async def connect(self):
 		self.game_id = self.scope['url_route']['kwargs']['game_id']
@@ -16,23 +17,15 @@ class GameConsumer(AsyncWebsocketConsumer):
 
 		# Stelle sicher, dass ein zentrales Spiel verwendet wird
 		if self.game_id not in games:
-			games[self.game_id] = PongGame("player1", "player2")
+			games[self.game_id] = PongGame('player1', 'player2')
 		self.game = games[self.game_id]
 
 		# Gruppe hinzufügen
-		await self.channel_layer.group_add(
-			self.room_group_name,
-			self.channel_name
-		)
+		await self.channel_layer.group_add(self.room_group_name, self.channel_name)
 		await self.accept()
 
-
 	async def disconnect(self, close_code):
-		await self.channel_layer.group_discard(
-			self.room_group_name,
-			self.channel_name
-		)
-
+		await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
 	async def receive(self, text_data):
 		text_data_json = json.loads(text_data)
@@ -48,7 +41,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 					'type': 'readyButton',
 					'use': use,
 					'user': user,
-				}
+				},
 			)
 
 		if use == 'KeyboardEvent':
@@ -56,8 +49,6 @@ class GameConsumer(AsyncWebsocketConsumer):
 			game_id = text_data_json['game_id']
 			key = text_data_json['key']
 			await self.KeyboardInterrupt(user, game_id, key)
-
-
 
 	async def KeyboardInterrupt(self, user, game_id, key):
 		game = await sync_to_async(Game.objects.get)(id=game_id)
@@ -67,36 +58,39 @@ class GameConsumer(AsyncWebsocketConsumer):
 		user2 = await sync_to_async(lambda: game.player2.profile.user.username)()
 
 		if user1 == user:
-			if user1_control == "w_s":
-				if key == "KeyDownW":
-					key = "KeyDownArrowUp"
-				elif key == "KeyDownS":
-					key = "KeyDownArrowDown"
-				elif key == "KeyUpW":
-					key = "KeyUpArrowUp"
-				elif key == "KeyUpS":
-					key = "KeyUpArrowDown"
-			self.game.move_paddle("player1", key)
+			if user1_control == 'w_s':
+				if key == 'KeyDownW':
+					key = 'KeyDownArrowUp'
+				elif key == 'KeyDownS':
+					key = 'KeyDownArrowDown'
+				elif key == 'KeyUpW':
+					key = 'KeyUpArrowUp'
+				elif key == 'KeyUpS':
+					key = 'KeyUpArrowDown'
+			self.game.move_paddle('player1', key)
 		elif user2 == user:
-			if user2_control == "w_s":
-				if key == "KeyDownW":
-					key = "KeyDownArrowUp"
-				elif key == "KeyDownS":
-					key = "KeyDownArrowDown"
-				elif key == "KeyUpW":
-					key = "KeyUpArrowUp"
-				elif key == "KeyUpS":
-					key = "KeyUpArrowDown"
-			self.game.move_paddle("player2", key)
-
+			if user2_control == 'w_s':
+				if key == 'KeyDownW':
+					key = 'KeyDownArrowUp'
+				elif key == 'KeyDownS':
+					key = 'KeyDownArrowDown'
+				elif key == 'KeyUpW':
+					key = 'KeyUpArrowUp'
+				elif key == 'KeyUpS':
+					key = 'KeyUpArrowDown'
+			self.game.move_paddle('player2', key)
 
 	async def readyButton(self, event):
 		use = event['use']
 		user = event['user']
-		await self.send(text_data=json.dumps({
-			'use': use,
-			'user': user,
-		}))
+		await self.send(
+			text_data=json.dumps(
+				{
+					'use': use,
+					'user': user,
+				}
+			)
+		)
 
 	async def save_message(self, user, game_id):
 		game = await sync_to_async(Game.objects.get)(id=game_id)
@@ -113,7 +107,6 @@ class GameConsumer(AsyncWebsocketConsumer):
 				asyncio.create_task(self.start_game_loop())
 			await sync_to_async(game.save)()
 
-
 	async def start_game_loop(self):
 		async def broadcast_callback(state):
 			# If there is a winner played at time gets set to the end time of the game
@@ -125,10 +118,10 @@ class GameConsumer(AsyncWebsocketConsumer):
 				game.played_at = timezone.now()
 				player1 = await sync_to_async(lambda: game.player1)()
 				player2 = await sync_to_async(lambda: game.player2)()
-				if (winner['player1']):
+				if winner['player1']:
 					player1.matches_won += 1
 					player2.matches_lost += 1
-				if (winner['player2']):
+				if winner['player2']:
 					player2.matches_won += 1
 					player1.matches_lost += 1
 				await sync_to_async(player1.save)()
@@ -140,15 +133,20 @@ class GameConsumer(AsyncWebsocketConsumer):
 				{
 					'type': 'game_state',
 					'state': state,
-				}
+				},
 			)
+
 		# start the gameloop
 		await self.game.game_loop(broadcast_callback)
 
 	# send Gamestats to clients
 	async def game_state(self, event):
 		state = event['state']
-		await self.send(text_data=json.dumps({
-			'use': 'game_state',
-			'state': json.loads(state),
-		}))
+		await self.send(
+			text_data=json.dumps(
+				{
+					'use': 'game_state',
+					'state': json.loads(state),
+				}
+			)
+		)

@@ -1,4 +1,3 @@
-
 # Create your views here.
 from users.models import Profile
 from .models import Game
@@ -12,42 +11,58 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
+
 # API for game creation
 class CreateGameView(APIView):
-	#For testing CLI comment permission_classes cause canot acces csrf_token
+	# For testing CLI comment permission_classes cause canot acces csrf_token
 	permission_classes = [IsAuthenticated]
 
 	def post(self, request):
 		opponent_username = request.data.get('opponent')
 		user_username = request.data.get('username')
 		if not opponent_username:
-			return Response({"error": "Opponent username is required."}, status=status.HTTP_400_BAD_REQUEST)
+			return Response(
+				{'error': 'Opponent username is required.'},
+				status=status.HTTP_400_BAD_REQUEST,
+			)
 
 		if opponent_username == request.user.username:
-			return Response({"error": "You cannot play against yourself."}, status=status.HTTP_400_BAD_REQUEST)
+			return Response(
+				{'error': 'You cannot play against yourself.'},
+				status=status.HTTP_400_BAD_REQUEST,
+			)
 
 		try:
 			opponent = User.objects.get(username=opponent_username)
 		except User.DoesNotExist:
-			return Response({"error": "Opponent does not exist."}, status=status.HTTP_404_NOT_FOUND)
+			return Response(
+				{'error': 'Opponent does not exist.'}, status=status.HTTP_404_NOT_FOUND
+			)
 
-		if (user_username):
+		if user_username:
 			try:
 				user = User.objects.get(username=user_username)
 			except User.DoesNotExist:
-				return Response({"error": "User does not exist."}, status=status.HTTP_404_NOT_FOUND)
+				return Response(
+					{'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND
+				)
 		else:
 			user_profile = Profile.objects.get(user=request.user)
 
 		opponent_profile = Profile.objects.get(user=opponent)
 		user_profile = Profile.objects.get(user=user)
 
-
 		# Create the game
-		game = Game.objects.create(player1=user_profile.player, player2=opponent_profile.player)
+		game = Game.objects.create(
+			player1=user_profile.player, player2=opponent_profile.player
+		)
 		game.save()
 
-		return Response({"game_id": game.id, "message": "Game created successfully."}, status=status.HTTP_201_CREATED)
+		return Response(
+			{'game_id': game.id, 'message': 'Game created successfully.'},
+			status=status.HTTP_201_CREATED,
+		)
+
 
 class ScoreBoardView(APIView):
 	# For testing CLI comment permission_classes cause canot acces csrf_token
@@ -59,19 +74,26 @@ class ScoreBoardView(APIView):
 		score2 = request.data.get('score2')
 
 		if not game_id:
-			return Response({"error": "game_id score1 and score2 are required"}, status=status.HTTP_400_BAD_REQUEST)
-		
+			return Response(
+				{'error': 'game_id score1 and score2 are required'},
+				status=status.HTTP_400_BAD_REQUEST,
+			)
+
 		try:
 			game = Game.objects.get(id=game_id)
 		except Game.DoesNotExist:
-			return Response({"error": "Game not found."}, status=status.HTTP_404_NOT_FOUND)
-		
+			return Response(
+				{'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND
+			)
+
 		game.score1 = int(score1)
 		game.score2 = int(score2)
 		game.save()
 
-		return Response({"scores": "Game successfully saved score."}, status=status.HTTP_200_OK)
-	
+		return Response(
+			{'scores': 'Game successfully saved score.'}, status=status.HTTP_200_OK
+		)
+
 
 class ControlKeySetting(APIView):
 	# permission_classes = [IsAuthenticated]
@@ -80,7 +102,7 @@ class ControlKeySetting(APIView):
 		game_id = request.data.get('game_id')
 		username = request.data.get('username')
 
-		if (username):
+		if username:
 			user = username
 		else:
 			user = request.user.username
@@ -89,23 +111,31 @@ class ControlKeySetting(APIView):
 		control2 = request.data.get('control2')
 
 		if not game_id or control1 is None or control2 is None:
-			return Response({"error": "game_id, control1, and control2 are required."}, status=status.HTTP_400_BAD_REQUEST)
+			return Response(
+				{'error': 'game_id, control1, and control2 are required.'},
+				status=status.HTTP_400_BAD_REQUEST,
+			)
 
 		try:
 			game = Game.objects.get(id=game_id)
 		except Game.DoesNotExist:
-			return Response({"error": "Game not found."}, status=status.HTTP_404_NOT_FOUND)
+			return Response(
+				{'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND
+			)
 
 		if user == game.player1.profile.user.username:
 			game.player1_control_settings = control1
 		elif user == game.player2.profile.user.username:
 			game.player2_control_settings = control2
 		else:
-			return Response({"error": "You are not a player in this game."}, status=status.HTTP_403_FORBIDDEN)
+			return Response(
+				{'error': 'You are not a player in this game.'},
+				status=status.HTTP_403_FORBIDDEN,
+			)
 
 		game.save()
-		
+
 		return Response(
-			{"message": f"Control settings successfully updated for user {user}."},
-			status=status.HTTP_200_OK
+			{'message': f'Control settings successfully updated for user {user}.'},
+			status=status.HTTP_200_OK,
 		)

@@ -1,0 +1,5 @@
+[tool.ruff]
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "tab"
+docstring-code-format = true
