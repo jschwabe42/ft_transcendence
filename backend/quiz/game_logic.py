@@ -103,8 +103,13 @@ def collect_answers(room_id, question):
 					time_diff = (answer.answered_at - room.question_start).total_seconds()
 					score = max_points - ((max_points - min_points) * (time_diff / room.settings.time_per_question))
 					participant.score += int(score)
+					participant.score_difference = int(score)
+				else:
+					participant.score_difference = 0
 			else:
 				answer.is_disqualified = True
+				participant.score -= 100
+				participant.score_difference = -100
 			answer.save()
 			participant.save()
 		else:
@@ -116,6 +121,7 @@ def collect_answers(room_id, question):
 				is_disqualified=True
 			)
 			participant.score -= 100
+			participant.score_difference = -100
 			participant.save()
 
 def send_question(room_id, question, answers):
@@ -207,6 +213,7 @@ def process_answers(room_id, question):
 		participants_data.append({
 			'username': participant.user.username,
 			'score': participant.score,
+			'score_difference': participant.score_difference,
 		})
 
 	channel_layer = get_channel_layer()
