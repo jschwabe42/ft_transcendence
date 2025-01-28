@@ -64,8 +64,10 @@ export function displayCorrectAnswer(correctAnswer) {
 		const answer = button.getAttribute('data-answer');
 		if (answer === correctAnswer) {
 			button.style.setProperty('background-color', 'green', 'important');
+			button.style.setProperty('border-color', 'green', 'important');
 		} else {
 			button.style.setProperty('background-color', 'red', 'important');
+			button.style.setProperty('border-color', 'red', 'important');
 		}
 	});
 }
