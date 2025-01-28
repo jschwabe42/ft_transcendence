@@ -24,3 +24,9 @@
 	flex-direction: column;
 	justify-content: center;
 }
+
+.answer-option.selected {
+	border: 4px solid #0496ff !important;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+	transform: scale(1.05) !important;
+}

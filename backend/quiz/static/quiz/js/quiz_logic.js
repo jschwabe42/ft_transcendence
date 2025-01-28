@@ -47,6 +47,12 @@ export function displayQuestion(question, answers) {
 			const answer = this.getAttribute('data-answer');
 			const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
 			submitAnswer(currentRoom.room_id, question, answer);
+
+			const previouslySelected = document.querySelector('.answer-option.selected');
+			if (previouslySelected) {
+				previouslySelected.classList.remove('selected');
+			}
+			this.classList.add('selected');
 		});
 		answerOptions.appendChild(button);
 	});
@@ -64,10 +70,12 @@ export function displayCorrectAnswer(correctAnswer) {
 		const answer = button.getAttribute('data-answer');
 		if (answer === correctAnswer) {
 			button.style.setProperty('background-color', 'green', 'important');
-			button.style.setProperty('border-color', 'green', 'important');
+			// button.style.setProperty('border-color', 'green', 'important');
+			button.style.setProperty('border-color', button.classList.contains('selected') ? '#006400' : 'green', 'important'); 
 		} else {
 			button.style.setProperty('background-color', 'red', 'important');
-			button.style.setProperty('border-color', 'red', 'important');
+			// button.style.setProperty('border-color', 'red', 'important');
+			button.style.setProperty('border-color', button.classList.contains('selected') ? '#8B0000' : 'red', 'important');
 		}
 	});
 }
