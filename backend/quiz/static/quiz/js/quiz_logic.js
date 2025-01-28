@@ -96,28 +96,49 @@ export function clearQuestionAndAnswers() {
 
 export function displayUserAnswers(answersData) {
 	const answerOptions = document.getElementById('answer-options');
-	answersData.forEach(data => {
-		const answerButton = [...answerOptions.children].find(button => button.getAttribute('data-answer') === data.answer);
+
+	const groupedAnswers = answersData.reduce((acc, data) => {
+		if (!acc[data.answer]) {
+			acc[data.answer] = [];
+		}
+		acc[data.answer].push(data);
+		return acc;
+	}, {});
+
+	Object.entries(groupedAnswers).forEach(([answer, users]) => {
+		const answerButton = [...answerOptions.children].find(button => button.getAttribute('data-answer') === answer);
+
 		if (answerButton) {
-			let buttonContainer = answerButton.parentNode;
-			if (!buttonContainer.classList.contains('button-container')) {
+			let buttonContainer = answerButton.closest('.button-container');
+			if (!buttonContainer) {
 				buttonContainer = document.createElement('div');
 				buttonContainer.className = 'button-container';
+
 				answerButton.parentNode.insertBefore(buttonContainer, answerButton);
 				buttonContainer.appendChild(answerButton);
 			}
 
-			const userInfo = document.createElement('div');
-			userInfo.className = 'user-info';
-			// Add to below line with css later
-			// <img src="${data.profile_image}" alt="${data.username}'s profile picture" class="profile-picture">
-			userInfo.innerHTML = `
-				<span class="username">${data.username}: +${data.score_difference} points</span>
-			`;
-			buttonContainer.appendChild(userInfo);
+			let userList = buttonContainer.querySelector('.user-list');
+			if (!userList) {
+				userList = document.createElement('div');
+				userList.className = 'user-list';
+				buttonContainer.appendChild(userList);
+			} else {
+				userList.innerHTML = '';
+			}
+
+			users.forEach(user => {
+				const userInfo = document.createElement('div');
+				userInfo.className = 'user-info';
+				userInfo.innerHTML = `
+					<span class="username">${user.username}: +${user.score_difference} points</span>
+				`;
+				userList.appendChild(userInfo);
+			});
 		}
 	});
 }
+
 
 export function displayScore(participantData) {
 	participantData.forEach(data => {
