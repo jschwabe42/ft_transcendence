@@ -5,7 +5,7 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.db.models import F
 from .models import Profile, User
 from game.models import Game
-
+# from .consumers import UserProfileConsumer
 
 def register(request):
 	if request.method == 'POST':
@@ -14,7 +14,7 @@ def register(request):
 			user = form.save()  # Only saves the User instance; Profile creation is handled by the signal
 			username = form.cleaned_data.get('username')
 			messages.success(request, f'Your account has been created! You can now log in!')
-			return redirect('login')
+			return redirect('users:login')
 	else:
 		form = UserRegisterForm()
 	
@@ -75,6 +75,7 @@ def public_profile(request, query_user):
 		friend_requests_sent = Friends_Manager.fetch_sent(origin=user_instance)
 		friend_requests_received = Friends_Manager.fetch_received(target=user_instance)
 	else:
+		# UserProfileConsumer.connect(user_instance.username)#@audit not working (was DisplayOnlineStatus.js)
 		# check for the request user if he is an origin or a target of a request by the user_instance
 		friend_requests_sent = Friends_Manager.fetch_sent(origin=request.user)
 		friend_requests_received = Friends_Manager.fetch_received(target=request.user)
