@@ -31,6 +31,14 @@ export function displayRoom(roomName) {
 			<div class="card-body">
 				<h5 class="card-title">Settings</h5>
 
+				<div class="mb-3 setting" data-setting="category">
+					<label class="form-label">Category:</label>
+					<select id="category-select" class="form-select">
+						<option value="any">Any</option>
+						<option value="9">General Knowledge</option>
+					</select>
+				</div>
+
 				<div class="mb-3 setting" data-setting="difficulty">
 					<label class="form-label">Difficulty:</label>
 					<div class="btn-group" role="group" aria-label="Number of Questions">
