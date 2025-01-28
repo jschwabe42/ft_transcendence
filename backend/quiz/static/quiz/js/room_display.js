@@ -69,7 +69,10 @@ export function displayRoom(roomName) {
 		</div>
 
 		<button id="start-game-button" class="btn btn-primary" style="display: none;">Start Game</button>
-		<div id="countdown" class="countdown" style="display: none;"></div>
+
+		<div class="circle" id="countdown" >
+			<h1></h1>
+		</div>
 
 		<div id="quiz-questions" class="quiz-questions" style="display:none;">
 			<div id="question-container" class="question-container"></div>
@@ -210,16 +213,18 @@ function initRoomWebSocket(room_id) {
 
 		if (socket_data.type === 'countdown_start') {
 			const countdown = document.getElementById('countdown');
-			countdown.innerHTML = socket_data.data.time;
-			countdown.style.display = 'block';
+			const countdownH1 = countdown.querySelector('h1');
+			countdownH1.innerText = socket_data.data.time;
+			countdown.style.visibility = 'visible';
 		}
 		if (socket_data.type === 'countdown_update') {
 			const countdown = document.getElementById('countdown');
-			countdown.innerHTML = socket_data.data.time;
+			const countdownH1 = countdown.querySelector('h1');
+			countdownH1.innerText = socket_data.data.time;
 		}
 		if (socket_data.type === 'countdown_end') {
 			const countdown = document.getElementById('countdown');
-			countdown.style.display = 'none';
+			countdown.style.visibility = 'hidden';
 		}
 
 		if (socket_data.type === 'new_question') {
