@@ -61,9 +61,9 @@ export function displayCorrectAnswer(correctAnswer) {
 		button.disabled = true;
 		const answer = button.getAttribute('data-answer');
 		if (answer === correctAnswer) {
-			button.style.backgroundColor = 'green';
+			button.style.setProperty('background-color', 'green', 'important');
 		} else {
-			button.style.backgroundColor = 'red';
+			button.style.setProperty('background-color', 'red', 'important');
 		}
 	});
 }
