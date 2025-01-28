@@ -103,6 +103,19 @@
 	font-weight: bold;
 }
 
+
+#settings-menu .form-select {
+	font-family: 'Fredoka', sans-serif;
+	color: #1c4f73;
+	border-color: #1c4f73;
+	border-radius: 10px;
+}
+
+#settings-menu .form-select:focus {
+	outline: none !important;
+	box-shadow: 0 0 0 0.1rem rgba(28, 79, 115, 0.5) !important;
+}
+
 /* Below is the animation of the countdown decorator
 * It is a modified version of the following: https://www.youtube.com/watch?v=LSJm-oS827M
 */
