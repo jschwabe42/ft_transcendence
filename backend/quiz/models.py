@@ -61,5 +61,7 @@ class RoomSettings(models.Model):
 	time_after_question = models.PositiveSmallIntegerField(default=20)
 	time_after_game_end = models.PositiveSmallIntegerField(default=20)
 
+	categorie = models.CharField(max_length=60, default='any')
+
 	def __str__(self):
 		return f"Settings for room {self.room.name}"
