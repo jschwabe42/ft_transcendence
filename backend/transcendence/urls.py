@@ -26,7 +26,8 @@ urlpatterns = [
 	path('', include('blog.urls')),
 	path('chat/', include('chat.urls')),
 	path('image_app/', include('image_app.urls')),
-	# path('__debug__/', include(debug_toolbar.urls)),
+	path('quiz/', include('quiz.urls')),
+    # path('__debug__/', include(debug_toolbar.urls)),
 ]
 
 

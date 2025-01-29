@@ -1,0 +1,178 @@
+/* Overwrites the Leave room buttons design */
+.btn-danger {
+	font-family: 'Fredoka', sans-serif !important;
+	color: white !important;
+	font-weight: bold !important;
+	border-radius: 10px !important;
+}
+
+.btn-danger:focus {
+	outline: none !important;
+}
+
+/* Fixes the leave room button to the bottom right */
+#leave-room-button {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	padding: 10px 20px;
+}
+
+/* Sets the participants list to the left side */
+#participants-list {
+	position: fixed;
+	top: 60px;
+	left: 20px;
+	/* width: 200px; */
+	max-width: 35vw;
+	height: calc(100vh - 40px);
+	overflow-y: auto;
+	/* border: 1px solid #ddd; */
+	padding: 10px;
+	border-radius: 5px;
+}
+
+/* Controls the welcome to room header etc */
+.room-header-container {
+	position: absolute;
+	margin-top: 4px;
+	left: 50%;
+	transform: translateX(-50%);
+	max-width: calc(100vw - 240px);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+#room-header {
+	height: 50px;
+	max-height: 50px;
+}
+
+/* Sets the position of the settings button */
+#settings-button {
+	position: fixed;
+	top: 140px;
+	right: 20px;
+	padding: 10px 20px;
+}
+
+/* Sets the settings menu below the settings button */
+#settings-menu {
+	position: fixed;
+	top: 200px;
+	right: 20px;
+	padding:10px 20px;
+}
+
+#settings-menu .btn-outline-primary.active {
+	background-color: #1c4f73 !important;
+	border-color: #1c4f73 !important;
+	color: white !important;
+}
+
+#settings-menu .btn-outline-primary {
+	border-color: #1c4f73 !important;
+	color: #1c4f73 !important;
+}
+
+#settings-menu .btn-outline-primary:hover {
+	background-color: #163d5a  !important;
+	border-color: #163d5a !important;
+	color: white !important;
+}
+
+
+#settings-menu .btn-outline-primary:focus {
+	outline: none !important;
+	box-shadow: 0 0 0 0.1rem rgba(28, 79, 115, 0.5) !important;
+}
+
+#settings-menu .btn-group .btn-outline-primary:first-child {
+	border-top-left-radius: 10px !important;
+	border-bottom-left-radius: 10px !important;
+}
+
+#settings-menu .btn-group .btn-outline-primary:last-child {
+	border-top-right-radius: 10px !important;
+	border-bottom-right-radius: 10px !important;
+}
+
+#settings-menu .card-title {
+	font-weight: bold;
+}
+
+
+#settings-menu .form-select {
+	font-family: 'Fredoka', sans-serif;
+	color: #1c4f73;
+	border-color: #1c4f73;
+	border-radius: 10px;
+}
+
+#settings-menu .form-select:focus {
+	outline: none !important;
+	box-shadow: 0 0 0 0.1rem rgba(28, 79, 115, 0.5) !important;
+}
+
+/* Below is the animation of the countdown decorator
+* It is a modified version of the following: https://www.youtube.com/watch?v=LSJm-oS827M
+*/
+.circle {
+	/* position: relative; */
+	position: fixed;
+	top: -105px;
+	right: -150px;
+	width: 400px;
+	height: 400px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgb(0, 0, 0, 0.5);
+	border-radius: 50%;
+	overflow: hidden;
+	transform: scale(0.18);
+	visibility: hidden;
+}
+
+.circle::before {
+	content: '';
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	position: absolute;
+	/* background: linear-gradient(#ff0082, #00ff7d); */
+	background: linear-gradient(#d506b6, #f8ec0a);
+	animation: animate 4.5s linear infinite;
+}
+
+.circle::after {
+	content: '';
+	position: absolute;
+	inset: 10px;
+	width: calc(100% - 20px);
+	height: calc(100% - 20px);
+	border-radius: 50%;
+	background: #1c4f73;
+}
+
+@keyframes animate {
+	0% {
+		transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(140deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.circle h1 {
+	position: relative;
+	font-size: 160px;
+	z-index: 10;
+	color: white;
+	font-weight: bold;
+}
