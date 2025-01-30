@@ -16,5 +16,10 @@ document.getElementById('quiz-link').addEventListener('click', function(event) {
 });
 
 export function clear_containers() {
+	document.getElementById('home-content').innerHTML = '';
+	document.getElementById('chat-app-content').innerHTML = '';
+	document.getElementById('about-content').innerHTML = '';
 	document.getElementById('quiz-app-content').innerHTML = '';
+	document.getElementById('pong-app-content').innerHTML = '';
+	document.getElementById('user-app-content').innerHTML = '';
 }
