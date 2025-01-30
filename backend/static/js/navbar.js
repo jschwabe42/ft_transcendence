@@ -22,6 +22,7 @@ export function clear_containers() {
 	document.getElementById('quiz-app-content').innerHTML = '';
 	document.getElementById('pong-app-content').innerHTML = '';
 	document.getElementById('user-app-content').innerHTML = '';
+	document.getElementById('error-content').innerHTML = '';
 }
 
 export function home_view() {

@@ -28,6 +28,7 @@ class Router {
 
 		const path = window.location.pathname;
 		const handler = this.routes[path];
+		clear_containers();
 		if (handler) {
 			handler();
 		} else {
@@ -39,7 +40,6 @@ class Router {
 	handleDynamicRoute(path) {
 		const quizPathRegex = /^\/quiz\/([^\/]+)\/?$/;
 		const match = path.match(quizPathRegex);
-		clear_containers();
 		if (match) {
 			const roomName = match[1];
 			displayRoom(roomName);
@@ -49,7 +49,7 @@ class Router {
 	}
 
 	showNotFound() {
-		document.getElementById('quiz-app-content').innerHTML = '<h2>Page not found!</h2>';
+		document.getElementById('error-content').innerHTML = '<h2>Page not found!</h2>';
 	}
 
 	// ! This function is not used. If for some reason we want to use href WITHOUT an event listener (please don't), this
