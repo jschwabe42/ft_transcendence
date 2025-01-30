@@ -403,7 +403,7 @@ function endGame() {
 /**
  * Sends a POST request to the server to leave the room.
  */
-function leaveRoom(room_id) {
+export function leaveRoom(room_id) {
 	removeListeners();
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 	console.log("Calling leave room API");
@@ -423,6 +423,7 @@ function leaveRoom(room_id) {
 				roomSocket.close();
 				roomSocket = null;
 			}
+			localStorage.removeItem('currentRoom');
 		} else {
 			console.error('Error leaving room:', data.error);
 		}
