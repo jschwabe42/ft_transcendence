@@ -12,6 +12,6 @@ urlpatterns = [
 	path('update_room_settings/<int:room_id>/', views.update_room_settings, name='update_room_settings'),
 	path('start_game/<int:room_id>/', views.start_game, name='start_game'),
 	path('submit_answer/<int:room_id>/', views.submit_answer, name='submit_answer'),
-	path('', views.index, name='index'),
-	re_path(r'^.*$', views.index, name='index'),
+	# path('', views.index, name='index'),
+	# re_path(r'^.*$', views.index, name='index'),
 ]

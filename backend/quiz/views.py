@@ -16,9 +16,9 @@ from .trivia import get_trivia_questions
 from .game_logic import game_logic, countdown
 import random
 
-# Create your views here.
-def index (request):
-	return render(request, 'quiz/index.html')
+# # Create your views here.
+# def index (request):
+# 	return render(request, 'quiz/index.html')
 
 @login_required
 def create_room(request):
@@ -315,4 +315,5 @@ def get_room_settings(request, room_id):
 		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
 	except RoomSettings.DoesNotExist:
 		return JsonResponse({'success': False, 'error': 'Room settings do not exist!'})
-	return JsonResponse({'success': False, 'error': 'Internal server error.'})
+	except Exception as e:
+		return JsonResponse({'success': False, 'error': str(e)})

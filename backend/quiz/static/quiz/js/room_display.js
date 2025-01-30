@@ -1,4 +1,4 @@
-import router from './router.js';
+import router from '/static/js/router.js';
 import { submitAnswer, displayQuestion, displayCorrectAnswer, clearQuestionAndAnswers, displayUserAnswers, displayScore } from './quiz_logic.js';
 import { joinRoom } from './room_list.js';
 
@@ -403,7 +403,7 @@ function endGame() {
 /**
  * Sends a POST request to the server to leave the room.
  */
-function leaveRoom(room_id) {
+export function leaveRoom(room_id) {
 	removeListeners();
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 	console.log("Calling leave room API");
@@ -421,7 +421,9 @@ function leaveRoom(room_id) {
 			console.log('Left room successfully');
 			if (roomSocket) {
 				roomSocket.close();
+				roomSocket = null;
 			}
+			localStorage.removeItem('currentRoom');
 		} else {
 			console.error('Error leaving room:', data.error);
 		}
