@@ -1,4 +1,4 @@
-import { loadRoomList } from '/static/quiz/js/room_list.js';
+import { loadRoomList, joinRoom } from '/static/quiz/js/room_list.js';
 import { displayRoom, leaveRoom } from '/static/quiz/js/room_display.js';
 import { clear_containers, home_view } from '/static/js/navbar.js';
 
@@ -6,7 +6,10 @@ class Router {
 	constructor() {
 		this.routes = {};
 		this.currentPath = window.location.pathname;
-		window.addEventListener('popstate', () => this.handleRouteChange());
+		window.addEventListener('popstate', () => {
+			this.beforeRouteChange(window.location.pathname);
+			this.handleRouteChange();
+		});
 	}
 
 	addRoute(path, handler) {
@@ -42,7 +45,12 @@ class Router {
 		const match = path.match(quizPathRegex);
 		if (match) {
 			const roomName = match[1];
-			displayRoom(roomName);
+			const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+			if (currentRoom && currentRoom.room_name === roomName) {
+				displayRoom(roomName);
+			} else {
+				this.navigateTo('/quiz/');
+			}
 		} else {
 			this.showNotFound();
 		}
