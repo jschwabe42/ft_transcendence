@@ -36,7 +36,6 @@ INTERNAL_IPS = [
 
 INSTALLED_APPS = [
 	'quiz.apps.QuizConfig',
-	'image_app.apps.ImageAppConfig',
 	'game.apps.GameConfig',
 	'chat.apps.ChatConfig',
 	'blog.apps.BlogConfig',
