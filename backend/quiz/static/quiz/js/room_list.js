@@ -1,5 +1,7 @@
 import router from '/static/js/router.js';
 
+let roomListSocket = null;
+
 /**
  * The main function of the file, sets the base html and calls the other functions
  */
@@ -93,6 +95,9 @@ function initWebSocket() {
 	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
 	const wsUrl = `${protocol}${window.location.host}/ws/rooms/`;
 	const socket = new WebSocket(wsUrl);
+
+	roomListSocket = socket;
+
 	socket.onopen = function () {
 		console.log('WebSocket connection established');
 	};
@@ -103,6 +108,10 @@ function initWebSocket() {
 		if (socket_data.type === 'update_room_list') {
 			displayRooms(socket_data.data.rooms);
 		}
+	};
+
+	socket.onclose = function () {
+		console.log('Room List WebSocket connection closed');
 	};
 }
 
@@ -184,4 +193,11 @@ export function joinRoom(roomId) {
 		// alert(`An error occurred: ${error}`);
 		throw error;
 	});
+}
+
+export function closeRoomListWebSocket() {
+	if (roomListSocket) {
+		roomListSocket.close();
+		roomListSocket = null;
+	}
 }

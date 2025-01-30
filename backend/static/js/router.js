@@ -1,4 +1,4 @@
-import { loadRoomList, joinRoom } from '/static/quiz/js/room_list.js';
+import { loadRoomList, joinRoom, closeRoomListWebSocket } from '/static/quiz/js/room_list.js';
 import { displayRoom, leaveRoom } from '/static/quiz/js/room_display.js';
 import { clear_containers, home_view } from '/static/js/navbar.js';
 
@@ -83,6 +83,9 @@ class Router {
 			if (newPath !== currentRoomPath) {
 				leaveRoom(currentRoom.room_id);
 			}
+		}
+		if (newPath !== '/quiz/') {
+			closeRoomListWebSocket();
 		}
 	}
 }
