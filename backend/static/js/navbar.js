@@ -23,3 +23,10 @@ export function clear_containers() {
 	document.getElementById('pong-app-content').innerHTML = '';
 	document.getElementById('user-app-content').innerHTML = '';
 }
+
+export function home_view() {
+	const home = document.getElementById('home-content');
+	home.innerHTML = `
+	<h2>Welcome to the Transcendence Webpage</h2>
+	`;
+}

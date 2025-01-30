@@ -1,6 +1,6 @@
 import { loadRoomList } from '/static/quiz/js/room_list.js';
 import { displayRoom, leaveRoom } from '/static/quiz/js/room_display.js';
-import { clear_containers } from '/static/js/navbar.js';
+import { clear_containers, home_view } from '/static/js/navbar.js';
 
 class Router {
 	constructor() {
@@ -89,7 +89,7 @@ router.addRoute('/quiz/', loadRoomList);
 /**
  * The Homepage
  */
-router.addRoute('/', clear_containers);
+router.addRoute('/', home_view);
 
 router.handleRouteChange();
 export default router;
