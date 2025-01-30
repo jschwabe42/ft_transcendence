@@ -315,3 +315,5 @@ def get_room_settings(request, room_id):
 		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
 	except RoomSettings.DoesNotExist:
 		return JsonResponse({'success': False, 'error': 'Room settings do not exist!'})
+	except Exception as e:
+		return JsonResponse({'success': False, 'error': str(e)})
