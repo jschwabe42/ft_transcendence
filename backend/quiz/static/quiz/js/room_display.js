@@ -421,6 +421,7 @@ function leaveRoom(room_id) {
 			console.log('Left room successfully');
 			if (roomSocket) {
 				roomSocket.close();
+				roomSocket = null;
 			}
 		} else {
 			console.error('Error leaving room:', data.error);

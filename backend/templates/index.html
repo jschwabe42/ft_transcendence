@@ -29,14 +29,14 @@
 
 		<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
 			<div class="container">
-				<a class="navbar-brand mr-4" href="/">Transcendence</a>
+				<a class="navbar-brand mr-4" href="/" id="transcendence-link">Transcendence</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
 					aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation"> <span
 						class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarToggle">
 					<div class="navbar-nav mr-auto">
-						<a class="nav-item nav-link" href="">Home</a>
+						<a class="nav-item nav-link" href="/" id="home-link">Home</a>
 						<a class="nav-item nav-link" href="/chat">Chat</a>
 						<a class="nav-item nav-link" href="/about">About</a>
 						<a class="nav-item nav-link" href="/quiz/">Quiz App</a>
@@ -65,6 +65,7 @@
 
 
 	<script type="module" src="{% static 'js/router.js' %}"></script>
+	<!-- <script type="module" src="{% static 'js/navbar.js' %}"></script> -->
 
 </body>
 
