@@ -1,4 +1,4 @@
-import router from './router.js';
+import router from '/static/js/router.js';
 import { submitAnswer, displayQuestion, displayCorrectAnswer, clearQuestionAndAnswers, displayUserAnswers, displayScore } from './quiz_logic.js';
 import { joinRoom } from './room_list.js';
 

@@ -1,4 +1,3 @@
-
 /**
  * Sends a Post request to the server to submit an answer.
  */

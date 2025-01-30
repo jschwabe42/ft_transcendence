@@ -1,4 +1,4 @@
-import router from './router.js';
+import router from '/static/js/router.js';
 
 /**
  * The main function of the file, sets the base html and calls the other functions

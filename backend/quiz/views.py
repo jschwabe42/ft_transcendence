@@ -16,9 +16,9 @@ from .trivia import get_trivia_questions
 from .game_logic import game_logic, countdown
 import random
 
-# Create your views here.
-def index (request):
-	return render(request, 'quiz/index.html')
+# # Create your views here.
+# def index (request):
+# 	return render(request, 'quiz/index.html')
 
 @login_required
 def create_room(request):
