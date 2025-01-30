@@ -20,9 +20,10 @@ class Router {
 		this.handleRouteChange();
 	}
 
+	// This function is called when the URL changes, clears all containers!
 	handleRouteChange() {
 		console.log("Handling route change");
-		console.log(window.location.pathname);  // Log the current pathname
+		console.log(window.location.pathname);
 
 		const path = window.location.pathname;
 		const handler = this.routes[path];
@@ -50,6 +51,7 @@ class Router {
 		document.getElementById('quiz-app-content').innerHTML = '<h2>Page not found!</h2>';
 	}
 
+	// Makes sure hrefs are handled via Router, also adds history so arrow keys work
 	interceptLinks() {
 		document.addEventListener('click', (event) => {
 			const target = event.target.closest('a');
@@ -70,7 +72,6 @@ const router = new Router();
  * The main view of the quiz app
  */
 router.addRoute('/quiz/', loadRoomList);
-// router.addRoute('/quiz', loadRoomList);
 
 router.addRoute('/', clear_containers);
 
