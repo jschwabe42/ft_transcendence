@@ -29,6 +29,7 @@ urlpatterns = [
 	path('blog/', include('blog.urls')),
 	path('chat/', include('chat.urls')),
 	path('quiz/', include('quiz.urls')),
+	path('dashboard/', include('dashboard.urls')),
     # path('__debug__/', include(debug_toolbar.urls)),
 	re_path(r'^.*$', views.index, name='index'),
 ]

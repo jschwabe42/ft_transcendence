@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 	'chat.apps.ChatConfig',
 	'blog.apps.BlogConfig',
 	'users.apps.UsersConfig',
+	'dashboard.apps.DashboardConfig',
 	'channels',
 	'daphne',
 	'rest_framework',
