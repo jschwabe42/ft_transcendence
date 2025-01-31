@@ -1,16 +1,16 @@
 # noqa
 
-from django.contrib.auth import logout
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from .models import Friends_Manager
-from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import F
-from .models import Profile, User
+from django.shortcuts import redirect, render
 from game.models import Game
+
+from .forms import ProfileUpdateForm, UserRegisterForm, UserUpdateForm
+from .models import Friends_Manager, Profile, User
+
 # from .consumers import UserProfileConsumer
 
 
@@ -18,11 +18,8 @@ def register(request):
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():
-			# @audit does this do anything?
-			user = (
-				form.save()
-			)  # Only saves the User instance; Profile creation is handled by the signal
-			username = form.cleaned_data.get('username')
+			# saves the User instance; Profile creation is handled by the signal
+			form.save()
 			messages.success(request, 'Your account has been created! You can now log in!')
 			return redirect('users:login')
 	else:
