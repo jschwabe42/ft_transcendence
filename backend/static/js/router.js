@@ -1,6 +1,7 @@
 import { loadRoomList, joinRoom, closeRoomListWebSocket } from '/static/quiz/js/room_list.js';
 import { displayRoom, leaveRoom } from '/static/quiz/js/room_display.js';
 import { clear_containers, home_view } from '/static/js/navbar.js';
+import { loadDashboard } from '/static/dashboard/js/dashboard.js';
 
 class Router {
 	constructor() {
@@ -101,6 +102,11 @@ router.addRoute('/quiz/', loadRoomList);
  * The Homepage
  */
 router.addRoute('/', home_view);
+
+/**
+ * The Dashboard app view
+ */
+router.addRoute('/dashboard/', loadDashboard);
 
 router.handleRouteChange();
 export default router;
