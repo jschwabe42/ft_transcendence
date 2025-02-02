@@ -16,7 +16,7 @@ function displayProfiles(profiles) {
 	profileList.innerHTML = '';
 	profiles.forEach(profile => {
 		console.log('Profile:', profile);
-		const listItem = document.createElement('li');
+		const listItem = document.createElement('div');
 		listItem.style.cursor = 'pointer';
 
 		const profileContainer = document.createElement('div');
