@@ -11,16 +11,35 @@ export function loadDashboard() {
 
 }
 
-function displayProfiles(profile_names) {
+function displayProfiles(profiles) {
 	const profileList = document.getElementById('profile-list');
 	profileList.innerHTML = '';
-	profile_names.forEach(username => {
+	profiles.forEach(profile => {
+		console.log('Profile:', profile);
 		const listItem = document.createElement('li');
-		listItem.textContent = username;
 		listItem.style.cursor = 'pointer';
-		listItem.addEventListener('click', () => {
-			router.navigateTo(`/dashboard/${username}/`);
-		});
+
+		const profileContainer = document.createElement('div');
+		profileContainer.className = 'profile-container';
+
+		const profileImage = document.createElement('img');
+		profileImage.src = profile.image_url;
+		profileImage.className = 'profile-image';
+		profileImage.alt = `${profile.username}'s profile picture`;
+
+		const profileName = document.createElement('span');
+		profileName.className = 'profile-name';
+		profileName.textContent = profile.username;
+
+		const navigateToProfile = () => {
+			router.navigateTo(`/dashboard/${profile.username}/`);
+		};
+
+		profileContainer.addEventListener('click', navigateToProfile);
+
+		profileContainer.appendChild(profileImage);
+		profileContainer.appendChild(profileName);
+		listItem.appendChild(profileContainer);
 		profileList.appendChild(listItem);
 	});
 }
@@ -30,7 +49,7 @@ function fetchAndLoadProfiles() {
 		.then(response => response.json())
 		.then(data => {
 			if (data.success) {
-				displayProfiles(data.profile_names);
+				displayProfiles(data.profiles);
 			} else {
 				console.error('Failed to fetch profiles');
 			}

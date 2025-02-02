@@ -10,8 +10,14 @@ def profile_list(request):
 	dashboard/api/profile_list is API endpoint.
 	"""
 	profiles = Profile.objects.all()
-	profile_usernames = [profile.user.username for profile in profiles]
+	profile_data = [
+		{
+			'username': profile.user.username,
+			'image_url': profile.image.url,
+		}
+		for profile in profiles
+	]
 	return JsonResponse({
 		'success': True,
-		'profile_names': profile_usernames,
+		'profiles': profile_data,
 	})

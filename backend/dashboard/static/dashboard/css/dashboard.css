@@ -1,0 +1,11 @@
+.profile-container {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.profile-image {
+	width: 500px;
+	height: 500px;
+	margin-right: 10px;
+}

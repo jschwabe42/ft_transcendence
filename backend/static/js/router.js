@@ -32,6 +32,7 @@ class Router {
 		console.log(window.location.pathname);
 
 		const path = window.location.pathname;
+
 		const handler = this.routes[path];
 		clear_containers();
 		if (handler) {
