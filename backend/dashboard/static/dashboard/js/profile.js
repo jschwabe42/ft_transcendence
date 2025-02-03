@@ -8,7 +8,10 @@ export function loadProfile(username) {
 		<h3 id="pv-profile-name"></h3>
 	</div>
 	<div id="pv-profile-content">
-		<div id="pv-quiz-stats"></div>
+		<div id="pv-quiz-stats">
+			<h4>Quiz Stats</h4>
+			<ul id="pv-quiz-stats-list"></ul>
+		</div>
 	</div>
 	`;
 	fetchData(username);
@@ -37,4 +40,14 @@ function displayProfile(profile) {
 	profilePicture.alt = `${profile.username}'s profile picture`;
 	const profileName = document.getElementById('pv-profile-name');
 	profileName.textContent = `${profile.username}'s Profile`;
+
+	const quizStatsList = document.getElementById('pv-quiz-stats-list');
+	quizStatsList.innerHTML = `
+		<li>Games Played: ${profile.quiz_games_played}</li>
+		<li>Games Won: ${profile.quiz_games_won}</li>
+		<li>Total Score: ${profile.quiz_total_score}</li>
+		<li>High Score: ${profile.quiz_high_score}</li>
+		<li>Questions Asked: ${profile.quiz_questions_asked}</li>
+		<li>Correct Answers: ${profile.quiz_correct_answers}</li>
+	`;
 }

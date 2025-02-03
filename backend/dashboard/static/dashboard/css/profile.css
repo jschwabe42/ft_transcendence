@@ -15,3 +15,39 @@
 	font-size: 60px;
 	font-weight: bold;
 }
+
+#pv-profile-content {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+#pv-quiz-stats {
+	display: inline-block;
+	border: 1px solid #1c4f73;
+	padding: 10px;
+	max-width: 48%;
+	margin: left;
+}
+
+#pv-quiz-stats:hover {
+	background-color: #f0f0f0;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border: 1px solid #1c4f73;
+}
+
+#pv-quiz-stats h4 {
+	font-weight: bold;
+	font-size: 24px;
+	margin-bottom: 10px;
+}
+
+#pv-quiz-stats-list {
+	list-style-type: none;
+	padding: 0;
+}
+
+#pv-quiz-stats-list li {
+	margin-bottom: 5px;
+	font-size: 16px;
+}
