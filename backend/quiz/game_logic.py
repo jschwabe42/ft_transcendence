@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.timezone import now
 import random
+from users.models import Profile
 
 def game_logic(room_id):
 	"""
@@ -178,6 +179,25 @@ def end_game(room_id):
 	Ends the game and returns the user to the room view.
 	"""
 	room = get_object_or_404(Room, id=room_id)
+	participants = Participant.objects.filter(room=room)
+
+	winner = None
+	highest_score = -1
+
+	for participant in participants:
+		participant.user.profile.quiz_high_score = max(participant.user.profile.quiz_high_score, participant.score)
+		participant.user.profile.quiz_games_played += 1
+		participant.user.profile.quiz_total_score += participant.score
+		participant.user.profile.save()
+
+		if participant.score > highest_score:
+			highest_score = participant.score
+			winner = participant
+
+	if winner:
+		winner.user.profile.quiz_games_won += 1
+		winner.user.profile.save()
+
 	channel_layer = get_channel_layer()
 	async_to_sync(channel_layer.group_send)(
 		f"room_{room_id}",
@@ -211,6 +231,10 @@ def process_answers(room_id, question):
 				# 'score': participant.score,
 				# Potentially add the is disqualified here to display the users who were disqualified to everyone
 			})
+			participant.user.profile.quiz_questions_asked += 1
+			if answer.answer_given == question['correct_answer']:
+				participant.user.profile.quiz_correct_answers += 1
+			participant.user.profile.save()
 
 		participants_data.append({
 			'username': participant.user.username,
