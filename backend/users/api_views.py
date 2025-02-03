@@ -11,9 +11,7 @@ class CreateOAUTHUserView(APIView):
 	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
 
 	def request_login_oauth(self):
-		"""request login on endpoint https://api.intra.42.fr/oauth/authorize"""
-
-		base_url = 'https://api.intra.42.fr/oauth/authorize'
+		"""request user login on API endpoint"""
 		params = {
 			'client_id': CreateOAUTHUserView.CLIENT_ID,
 			'redirect_uri': CreateOAUTHUserView.OAUTH_CALLBACK,
@@ -22,24 +20,20 @@ class CreateOAUTHUserView(APIView):
 			'scope': 'public',
 		}
 
-		auth_url = f'{base_url}?{"&".join(f"{k}={v}" for k, v in params.items())}'
+		auth_url = f'https://api.intra.42.fr/oauth/authorize?{"&".join(f"{k}={v}" for k, v in params.items())}'
 
 		return django.shortcuts.redirect(auth_url)
 
-	def get(self, request):
-		"""handle the callback from the 42 API: exchange code for bearer token"""
+	def __bearer_token(self, request):
+		"""exchange the code for a users' bearer token"""
 		from transcendence.settings import SECRET_STATE
 
 		code = request.GET.get('code')
 		state = request.GET.get('state')
-
 		if code is None:
 			return HttpResponse('Error: user did not authorize the app')
-
-		if state is None or state != SECRET_STATE:
+		if state != SECRET_STATE:
 			return HttpResponse('Error: state mismatch')
-
-		base_url = 'https://api.intra.42.fr/oauth/token'
 
 		params = {
 			'grant_type': 'authorization_code',
@@ -50,27 +44,32 @@ class CreateOAUTHUserView(APIView):
 			'state': CreateOAUTHUserView.SECRET_STATE,
 		}
 
-		exchange_url = f'{base_url}?{"&".join(f"{k}={v}" for k, v in params.items())}'
+		bearer_token_response = requests.post(
+			f'https://api.intra.42.fr/oauth/token?{"&".join(f"{k}={v}" for k, v in params.items())}'
+		)
+		# Error: could not exchange code for token
+		bearer_token_response.raise_for_status()
+		return bearer_token_response.json()['access_token']
 
-		bearer_token_httpresponse = requests.post(exchange_url)
-		if bearer_token_httpresponse is None:
-			return HttpResponse('Error: could not exchange code for token')
-		# try obtaining the username from token
-		bearer_token = bearer_token_httpresponse.json()['access_token']
-		if bearer_token is None:
+	def login_or_create(username, email):
+		"""handle user management from oauth"""
+
+	def get(self, request):
+		"""handle the callback from the 42 API: obtain user public data"""
+		BEARER_TOKEN = CreateOAUTHUserView.__bearer_token(self, request)
+		if BEARER_TOKEN is None:
 			return HttpResponse('Error: bearer token invalid/not found')
-		headers = {
-			'Content-Type': 'application/x-www-form-urlencoded',
-			'Authorization': f'Bearer {bearer_token}',
-		}
-		url = 'https://api.intra.42.fr/v2/me'
-
-		response = requests.get(url, headers=headers)
-		# to check that the request was successful - token is valid
-		response.raise_for_status()
-		username = response.json()['login']
-		if username is None:
+		response = requests.get(
+			'https://api.intra.42.fr/v2/me',
+			headers={
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Authorization': f'Bearer {BEARER_TOKEN}',
+			},
+		)
+		if not response.ok:
+			return HttpResponse('user did not authorize')
+		username, email = response.json()['login'], response.json()['email']
+		if username is None or email is None:
 			return HttpResponse('Error: could not obtain username from token')
-		print(username, flush=True)
-		# @todo handle user creation from response
+		CreateOAUTHUserView.login_or_create(username, email)
 		return HttpResponse(response, content_type='text/html')
