@@ -4,7 +4,7 @@ export function loadDashboard() {
 	const dashboardAppContent = document.getElementById('dashboard-app-content');
 	dashboardAppContent.innerHTML = `
 		<button id="refresh-button" class="btn btn-primary">Refresh</button>
-		<ul id="profile-list"></ul>
+		<div id="profile-list"></div>
 	`;
 	fetchAndLoadProfiles();
 	addEventListeners();
