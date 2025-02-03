@@ -46,7 +46,7 @@ def account(request):
 			user = mod_pwd_form.save()
 			update_session_auth_hash(request, user)
 			messages.success(request, 'Your account has been updated')
-			return redirect('account')
+			return redirect('users:account')
 
 	else:
 		u_form = UserUpdateForm(instance=request.user)
