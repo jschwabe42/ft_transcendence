@@ -7,9 +7,8 @@ from channels.layers import get_channel_layer
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.timezone import now
-import random
-from users.models import Profile
 from .models import Room, Participant, Answer
+
 
 def game_logic(room_id):
 	"""

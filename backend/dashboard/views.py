@@ -1,11 +1,8 @@
-from django.shortcuts import render
-from users.models import Profile, Friends_Manager
-import json
+from users.models import Profile
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from game.models import Game
-from django.db.models import F
+
 
 def profile_list(request):
 	"""
@@ -32,7 +29,6 @@ def get_profile(request, username):
 	dashboard/api/get_profile/profilename is API endpoint.
 	"""
 	profile = get_object_or_404(Profile, user__username=username)
-
 
 	profile_data = {
 		'username': profile.user.username,

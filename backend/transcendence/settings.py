@@ -160,7 +160,7 @@ STATICFILES_DIRS = [
 	BASE_DIR / 'static',
 	BASE_DIR / 'quiz/static',
 	BASE_DIR / 'dashboard/static',
-	]
+]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
