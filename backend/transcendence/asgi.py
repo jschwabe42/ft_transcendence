@@ -19,12 +19,15 @@ from users import routing as user_status_routing
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'transcendence.settings')
 
 application = ProtocolTypeRouter(
-    {
-        "http" : get_asgi_application() , 
-        "websocket" : AuthMiddlewareStack(
-            URLRouter(
-                chat_routing.websocket_urlpatterns + game_routing.websocket_urlpatterns + quiz_routing.websocket_urlpatterns + user_status_routing.websocket_urlpatterns,
-            )
-        )
-    }
+	{
+		'http': get_asgi_application(),
+		'websocket': AuthMiddlewareStack(
+			URLRouter(
+				chat_routing.websocket_urlpatterns
+				+ game_routing.websocket_urlpatterns
+				+ quiz_routing.websocket_urlpatterns
+				+ user_status_routing.websocket_urlpatterns,
+			)
+		),
+	}
 )

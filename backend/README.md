@@ -9,3 +9,7 @@
 `python manage.py createsuperuser`
 ## change a password
 `python manage.py changepassword` 
+## run pre-commit before committing
+### requires ruff and pre-commit to be installed (pip) - can also be used for format on save if needed, cli `ruff format ./path`, `ruff check ./path` 
+
+`pre-commit run --all-files`

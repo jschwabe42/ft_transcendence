@@ -5,34 +5,54 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	initial = True
 
-    initial = True
+	dependencies = []
 
-    dependencies = [
-    ]
-
-    operations = [
-        migrations.CreateModel(
-            name='Game',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score1', models.IntegerField(default=0)),
-                ('score2', models.IntegerField(default=0)),
-                ('started_at', models.DateTimeField(default=django.utils.timezone.now)),
-                ('played_at', models.DateTimeField(default=django.utils.timezone.now)),
-                ('pending', models.BooleanField(default=True)),
-                ('player1_ready', models.BooleanField(default=False)),
-                ('player2_ready', models.BooleanField(default=False)),
-                ('player1_control_settings', models.CharField(default='up down', max_length=255)),
-                ('player2_control_settings', models.CharField(default='up down', max_length=255)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Player',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('matches_won', models.IntegerField(default=0)),
-                ('matches_lost', models.IntegerField(default=0)),
-            ],
-        ),
-    ]
+	operations = [
+		migrations.CreateModel(
+			name='Game',
+			fields=[
+				(
+					'id',
+					models.BigAutoField(
+						auto_created=True,
+						primary_key=True,
+						serialize=False,
+						verbose_name='ID',
+					),
+				),
+				('score1', models.IntegerField(default=0)),
+				('score2', models.IntegerField(default=0)),
+				('started_at', models.DateTimeField(default=django.utils.timezone.now)),
+				('played_at', models.DateTimeField(default=django.utils.timezone.now)),
+				('pending', models.BooleanField(default=True)),
+				('player1_ready', models.BooleanField(default=False)),
+				('player2_ready', models.BooleanField(default=False)),
+				(
+					'player1_control_settings',
+					models.CharField(default='up down', max_length=255),
+				),
+				(
+					'player2_control_settings',
+					models.CharField(default='up down', max_length=255),
+				),
+			],
+		),
+		migrations.CreateModel(
+			name='Player',
+			fields=[
+				(
+					'id',
+					models.BigAutoField(
+						auto_created=True,
+						primary_key=True,
+						serialize=False,
+						verbose_name='ID',
+					),
+				),
+				('matches_won', models.IntegerField(default=0)),
+				('matches_lost', models.IntegerField(default=0)),
+			],
+		),
+	]
