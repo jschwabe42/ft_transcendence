@@ -3,6 +3,7 @@ import requests
 from django.http import HttpResponse
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
+from .models import OAuthUsers
 
 
 class CreateOAUTHUserView(APIView):
@@ -51,8 +52,16 @@ class CreateOAUTHUserView(APIView):
 		bearer_token_response.raise_for_status()
 		return bearer_token_response.json()['access_token']
 
-	def login_or_create(username, email):
+	def login_or_create(request, username, email):
 		"""handle user management from oauth"""
+		already_exists = OAuthUsers.objects.filter(login=username)
+		if not already_exists.exists():
+			# create the account
+			user = OAuthUsers.create(username, email)
+		else:
+			user = already_exists.first()
+		# log the user into the account
+		user.login(request)
 
 	def get(self, request):
 		"""handle the callback from the 42 API: obtain user public data"""
@@ -67,9 +76,10 @@ class CreateOAUTHUserView(APIView):
 			},
 		)
 		if not response.ok:
-			return HttpResponse('user did not authorize')
+			django.contrib.messages.error(request, 'user did not authorize')
+			return django.shortcuts.redirect('users:login')
 		username, email = response.json()['login'], response.json()['email']
 		if username is None or email is None:
 			return HttpResponse('Error: could not obtain username from token')
-		CreateOAUTHUserView.login_or_create(username, email)
+		CreateOAUTHUserView.login_or_create(request, username, email)
 		return HttpResponse(response, content_type='text/html')

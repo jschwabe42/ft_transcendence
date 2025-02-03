@@ -1,11 +1,13 @@
-from django.db import models
 from django.contrib.auth.models import User
-from PIL import Image
+from django.db import models
 from django.forms import ValidationError
+from game.models import Player
+from PIL import Image
 
 # Create your models here.
 
 
+# @follow-up enable changing display name for oauth
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	player = models.OneToOneField(
@@ -52,6 +54,37 @@ class Profile(models.Model):
 
 	def matches_played(self):
 		return self.player.matches_won + self.player.matches_lost
+
+
+# @todo reject login of oauth user using username + password
+class OAuthUsers(models.Model):
+	instance = models.OneToOneField(User, models.CASCADE)
+	login = models.CharField(max_length=255)
+
+	def create(username, email):
+		"""create a User, Profile and Player for oauth of login"""
+		# @todo
+		this_user = User.objects.create(username=username, email=email)
+		this_user.save()
+		this_player = Player.objects.create(profile=None)
+		this_player.save()
+		this_profile = Profile.objects.create(user=this_user, player=this_player)
+		this_player.profile = this_profile
+		this_player.save()
+		this_profile.save()
+		OAuthUsers.objects.create(instance=this_user, login=username)
+		return this_user
+
+
+class OAuth_Manager:
+	@staticmethod
+	# @todo
+	# def create(username, email):
+	# create a User and connected Model instances - login is done if exists
+
+	def exists(user_instance):
+		"""check if the user uses oauth for login"""
+		return OAuthUsers.objects.filter(instance=user_instance).exists()
 
 
 class Friends(models.Model):
