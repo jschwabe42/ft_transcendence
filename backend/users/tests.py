@@ -5,8 +5,8 @@ from django.core.exceptions import ValidationError
 
 # Create your tests here.
 
-class FriendsManagerTest(TestCase):
 
+class FriendsManagerTest(TestCase):
 	def setUp(self):
 		# Create test users
 		self.user1 = User.objects.create_user(username='user1', password='password1')
@@ -16,17 +16,27 @@ class FriendsManagerTest(TestCase):
 	def test_friends_request(self):
 		# Test sending a friend request to another user
 		Friends_Manager.friends_request(self.user1, 'user2')
-		self.assertTrue(Friends.objects.filter(origin=self.user1, target=self.user2, accepted=False).exists())
+		self.assertTrue(
+			Friends.objects.filter(origin=self.user1, target=self.user2, accepted=False).exists()
+		)
 		# Test sending a friend request to oneself
 		with self.assertRaises(ValidationError):
 			Friends_Manager.friends_request(self.user1, 'user1')
-		self.assertFalse(Friends.objects.filter(origin=self.user1, target=self.user1, accepted=False).exists())
-		self.assertFalse(Friends.objects.filter(origin=self.user1, target=self.user1, accepted=True).exists())
+		self.assertFalse(
+			Friends.objects.filter(origin=self.user1, target=self.user1, accepted=False).exists()
+		)
+		self.assertFalse(
+			Friends.objects.filter(origin=self.user1, target=self.user1, accepted=True).exists()
+		)
 		# Test sending a second friend request
 		with self.assertRaises(ValidationError):
 			Friends_Manager.friends_request(self.user1, 'user2')
-		self.assertTrue(Friends.objects.filter(origin=self.user1, target=self.user2, accepted=False).exists())
-		self.assertFalse(Friends.objects.filter(origin=self.user1, target=self.user2, accepted=True).exists())
+		self.assertTrue(
+			Friends.objects.filter(origin=self.user1, target=self.user2, accepted=False).exists()
+		)
+		self.assertFalse(
+			Friends.objects.filter(origin=self.user1, target=self.user2, accepted=True).exists()
+		)
 		# Test sending a friend request to a non-existent user
 		with self.assertRaises(ValidationError):
 			Friends_Manager.friends_request(self.user1, 'nonexistentuser')
@@ -36,7 +46,9 @@ class FriendsManagerTest(TestCase):
 		Friends_Manager.friends_request(self.user1, 'user2')
 		with self.assertRaises(ValidationError):
 			Friends_Manager.cancel_friends_request(self.user2, 'user1')
-		self.assertTrue(Friends.objects.filter(origin=self.user1, target=self.user2, accepted=False).exists())
+		self.assertTrue(
+			Friends.objects.filter(origin=self.user1, target=self.user2, accepted=False).exists()
+		)
 		Friends_Manager.cancel_friends_request(self.user1, 'user2')
 		with self.assertRaises(ValidationError):
 			Friends_Manager.cancel_friends_request(self.user2, 'nonexistentuser')
@@ -60,17 +72,27 @@ class FriendsManagerTest(TestCase):
 			Friends_Manager.accept_request_as_target(self.user2, 'nonexistentuser')
 		with self.assertRaises(ValueError):
 			Friends_Manager.accept_request_as_target(self.user2, 'user3')
-		self.assertTrue(Friends.objects.filter(origin=self.user1, target=self.user2, accepted=True).exists())
+		self.assertTrue(
+			Friends.objects.filter(origin=self.user1, target=self.user2, accepted=True).exists()
+		)
 
 	def test_remove_friend(self):
 		# Test removing a friend
 		Friends_Manager.friends_request(self.user1, 'user2')
-		self.assertTrue(Friends.objects.filter(origin=self.user1, target=self.user2, accepted=False).exists())
+		self.assertTrue(
+			Friends.objects.filter(origin=self.user1, target=self.user2, accepted=False).exists()
+		)
 		Friends_Manager.accept_request_as_target(self.user2, 'user1')
-		self.assertTrue(Friends.objects.filter(origin=self.user1, target=self.user2, accepted=True).exists())
+		self.assertTrue(
+			Friends.objects.filter(origin=self.user1, target=self.user2, accepted=True).exists()
+		)
 		Friends_Manager.remove_friend(self.user1, 'user2')
-		self.assertFalse(Friends.objects.filter(origin=self.user1, target=self.user2, accepted=True).exists())
-		self.assertFalse(Friends.objects.filter(origin=self.user1, target=self.user2, accepted=False).exists())
+		self.assertFalse(
+			Friends.objects.filter(origin=self.user1, target=self.user2, accepted=True).exists()
+		)
+		self.assertFalse(
+			Friends.objects.filter(origin=self.user1, target=self.user2, accepted=False).exists()
+		)
 		# Test removing a friend by any party
 		Friends_Manager.friends_request(self.user2, 'user1')
 		Friends_Manager.accept_request_as_target(self.user1, 'user2')
@@ -98,5 +120,9 @@ class FriendsManagerTest(TestCase):
 		self.assertTrue(friendship.accepted)
 		# Ensure the friendship is still present after a new request
 		Friends_Manager.friends_request(self.user1, 'user3')
-		self.assertTrue(Friends.objects.filter(origin=self.user1, target=self.user2, accepted=True).exists())
-		self.assertTrue(Friends.objects.filter(origin=self.user1, target=self.user3, accepted=False).exists())
+		self.assertTrue(
+			Friends.objects.filter(origin=self.user1, target=self.user2, accepted=True).exists()
+		)
+		self.assertTrue(
+			Friends.objects.filter(origin=self.user1, target=self.user3, accepted=False).exists()
+		)
