@@ -29,6 +29,7 @@ export function loadRoomList() {
 			<div id="create-room-feedback" class="mt-3"></div>
 		</div>
 	</div>
+	<a href="https://opentdb.com" target="_blank" id="powered-by-opentd">Gratefully using OpenTD</a>
 	`;
 
 	initCreateRoomForm();

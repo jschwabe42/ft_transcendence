@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 	'chat.apps.ChatConfig',
 	'blog.apps.BlogConfig',
 	'users.apps.UsersConfig',
+	'dashboard.apps.DashboardConfig',
 	'channels',
 	'daphne',
 	'rest_framework',
@@ -188,12 +189,15 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
 	BASE_DIR / 'static',
 	BASE_DIR / 'quiz/static',
+	BASE_DIR / 'dashboard/static',
 ]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_ROOT = BASE_DIR / 'media'
+import os
+
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
