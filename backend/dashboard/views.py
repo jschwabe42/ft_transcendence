@@ -33,13 +33,16 @@ def get_profile(request, username):
 	"""
 	profile = get_object_or_404(Profile, user__username=username)
 
-	user_profile = profile  # Assuming `profile` is the `Profile` instance
-	user_instance = profile.user
-
 
 	profile_data = {
 		'username': profile.user.username,
 		'image_url': profile.image.url,
+		'quiz_games_played': profile.quiz_games_played,
+		'quiz_games_won': profile.quiz_games_won,
+		'quiz_total_score': profile.quiz_total_score,
+		'quiz_high_score': profile.quiz_high_score,
+		'quiz_questions_asked': profile.quiz_questions_asked,
+		'quiz_correct_answers': profile.quiz_correct_answers,
 	}
 	return JsonResponse({
 		'success': True,

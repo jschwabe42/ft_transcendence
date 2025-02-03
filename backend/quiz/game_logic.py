@@ -41,8 +41,8 @@ def game_logic(room_id):
 		countdown(5, room_id)
 		clear_question(room_id)
 		delete_answers(room_id)
-	reset_scores(room_id)
 	end_game(room_id)
+	reset_scores(room_id)
 
 
 def countdown(countdown_time, room_id):
@@ -194,7 +194,7 @@ def end_game(room_id):
 			highest_score = participant.score
 			winner = participant
 
-	if winner:
+	if winner and highest_score > 0:
 		winner.user.profile.quiz_games_won += 1
 		winner.user.profile.save()
 
@@ -232,7 +232,8 @@ def process_answers(room_id, question):
 				# Potentially add the is disqualified here to display the users who were disqualified to everyone
 			})
 			participant.user.profile.quiz_questions_asked += 1
-			if answer.answer_given == question['correct_answer']:
+			print(f"Question: {question}", flush=True)
+			if answer.answer_given == room.current_question['correct_answer']:
 				participant.user.profile.quiz_correct_answers += 1
 			participant.user.profile.save()
 
