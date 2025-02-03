@@ -44,4 +44,10 @@ urlpatterns = [
 	),
 	# WIP: oauth with 42 API
 	path('oauth/', CreateOAUTHUserView.request_login_oauth, name='oauth'),
+	path('oauth', CreateOAUTHUserView.request_login_oauth, name='oauth'),
+	path(
+		'oauth/callback',
+		CreateOAUTHUserView.as_view(),
+		name='oauth-callback',
+	),
 ]

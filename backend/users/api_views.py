@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 
 
+# @audit fate TBD!
 def get_bearer_token():
 	"""get the bearer token"""
 	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET
@@ -27,9 +28,10 @@ def get_bearer_token():
 
 class CreateOAUTHUserView(APIView):
 	permission_classes = [AllowAny]
-	REDIRECT_URI = 'http%3A%2F%2Flocalhost%3A8000%2Fusers'
+	OAUTH_CALLBACK = 'http%3A%2F%2Flocalhost%3A8000%2Fusers%2Foauth%2Fcallback'
+	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
 
-	# from transcendence.settings import CLIENT_ID, SECRET_STATE
+	# @audit fate TBD!
 	def authorize_api_user(self):
 		"""authorize the user using a request to the 42 API"""
 		BEARER_TOKEN = get_bearer_token()
@@ -49,19 +51,50 @@ class CreateOAUTHUserView(APIView):
 		return HttpResponse(response, content_type='text/html')
 
 	def request_login_oauth(self):
-		from transcendence.settings import CLIENT_ID, SECRET_STATE
-
 		"""request login on endpoint https://api.intra.42.fr/oauth/authorize"""
 
 		base_url = 'https://api.intra.42.fr/oauth/authorize'
 		params = {
-			'client_id': CLIENT_ID,
-			'redirect_uri': CreateOAUTHUserView.REDIRECT_URI,
+			'client_id': CreateOAUTHUserView.CLIENT_ID,
+			'redirect_uri': CreateOAUTHUserView.OAUTH_CALLBACK,
 			'response_type': 'code',
-			'state': SECRET_STATE,
+			'state': CreateOAUTHUserView.SECRET_STATE,
 			'scope': 'public',
 		}
 
 		auth_url = f'{base_url}?{"&".join(f"{k}={v}" for k, v in params.items())}'
 
 		return django.shortcuts.redirect(auth_url)
+
+	def get(self, request):
+		"""handle the callback from the 42 API: exchange code for token"""
+		from transcendence.settings import SECRET_STATE
+
+		code = request.GET.get('code')
+		state = request.GET.get('state')
+
+		if code is None:
+			return HttpResponse('Error: user did not authorize the app')
+
+		if state is None or state != SECRET_STATE:
+			return HttpResponse('Error: state mismatch')
+
+		base_url = 'https://api.intra.42.fr/oauth/token'
+
+		params = {
+			'grant_type': 'authorization_code',
+			'client_id': CreateOAUTHUserView.CLIENT_ID,
+			'client_secret': CreateOAUTHUserView.REMOTE_OAUTH_SECRET,
+			'code': code,
+			'redirect_uri': CreateOAUTHUserView.OAUTH_CALLBACK,
+			'state': CreateOAUTHUserView.SECRET_STATE,
+		}
+
+		exchange_url = f'{base_url}?{"&".join(f"{k}={v}" for k, v in params.items())}'
+
+		bearer_token_httpresponse = requests.post(exchange_url)
+		if bearer_token_httpresponse is None:
+			return HttpResponse('Error: could not exchange code for token')
+		# @audit @todo verify validity of the token
+		# @todo handle user creation from response
+		return HttpResponse(bearer_token_httpresponse)
