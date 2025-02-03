@@ -1,12 +1,13 @@
-from rest_framework.views import APIView
+import django.shortcuts
+import requests
 from django.http import HttpResponse
 from rest_framework.permissions import AllowAny
-import requests
+from rest_framework.views import APIView
 
 
 def get_bearer_token():
 	"""get the bearer token"""
-	from transcendence.settings import REMOTE_OAUTH_SECRET, CLIENT_ID
+	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET
 
 	url = 'https://api.intra.42.fr/oauth/token'
 
@@ -26,6 +27,7 @@ def get_bearer_token():
 
 class CreateOAUTHUserView(APIView):
 	permission_classes = [AllowAny]
+	REDIRECT_URI = 'http%3A%2F%2Flocalhost%3A8000%2Fusers'
 
 	# from transcendence.settings import CLIENT_ID, SECRET_STATE
 	def authorize_api_user(self):
@@ -45,3 +47,21 @@ class CreateOAUTHUserView(APIView):
 
 		response = requests.get(url, headers=headers)
 		return HttpResponse(response, content_type='text/html')
+
+	def request_login_oauth(self):
+		from transcendence.settings import CLIENT_ID, SECRET_STATE
+
+		"""request login on endpoint https://api.intra.42.fr/oauth/authorize"""
+
+		base_url = 'https://api.intra.42.fr/oauth/authorize'
+		params = {
+			'client_id': CLIENT_ID,
+			'redirect_uri': CreateOAUTHUserView.REDIRECT_URI,
+			'response_type': 'code',
+			'state': SECRET_STATE,
+			'scope': 'public',
+		}
+
+		auth_url = f'{base_url}?{"&".join(f"{k}={v}" for k, v in params.items())}'
+
+		return django.shortcuts.redirect(auth_url)
