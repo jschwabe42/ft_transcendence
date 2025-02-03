@@ -40,6 +40,7 @@ export function displayQuestion(question, answers) {
 	answers.forEach((answer, index) => {
 		const button = document.createElement('button');
 		button.className = 'answer-option btn btn-primary';
+		button.id = 'answers';
 		button.setAttribute('data-answer', answer);
 		button.innerText = answer;
 		button.addEventListener('click', function () {

@@ -12,6 +12,8 @@
 	<link href="{% static 'quiz/css/room_list.css' %}" rel="stylesheet">
 	<link href="{% static 'quiz/css/room_display.css' %}" rel="stylesheet">
 	<link href="{% static 'quiz/css/quiz_game.css' %}" rel="stylesheet">
+	<link href="{% static 'dashboard/css/dashboard.css' %}" rel="stylesheet">
+	<link href="{% static 'dashboard/css/profile.css' %}" rel="stylesheet">
 
 	<!-- The files of the old navbar.html -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -41,6 +43,7 @@
 						<a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
 						<a class="nav-item nav-link" href="/quiz/" id="quiz-link">Quiz App</a>
 						<a class="nav-item nav-link" href="{% url 'game:recent_games' %}">Game</a>
+						<a class="nav-item nav-link" href="/dashboard/" id="dashboard-link">Dashboard</a>
 					</div>
 					<!-- Navbar Right Side -->
 					<div class="navbar-nav">
@@ -70,6 +73,8 @@
 	<div class="container mt-5" id="pong-app-content"></div>
 	<!-- The content of the user app -->
 	<div class="container mt-5" id="user-app-content"></div>
+	<!-- The content of the dashboard app -->
+	<div class="container mt-5" id="dashboard-app-content"></div>
 	<!-- The content of Error pages -->
 	<div class="container mt-5" id="error-content"></div>
 

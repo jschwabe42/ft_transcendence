@@ -18,6 +18,14 @@ class Profile(models.Model):
 	image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 	online = models.BooleanField(default=False)
 
+	# The statistics for the quiz game
+	quiz_games_played = models.IntegerField(default=0)
+	quiz_games_won = models.IntegerField(default=0)
+	quiz_total_score = models.BigIntegerField(default=0)
+	quiz_high_score = models.IntegerField(default=0)
+	quiz_questions_asked = models.IntegerField(default=0)
+	quiz_correct_answers = models.IntegerField(default=0)
+
 	def get_name(self):
 		return self.user.username
 

@@ -15,6 +15,11 @@ document.getElementById('quiz-link').addEventListener('click', function(event) {
 	router.navigateTo('/quiz/');
 });
 
+document.getElementById('dashboard-link').addEventListener('click', function(event) {
+	event.preventDefault();
+	router.navigateTo('/dashboard/');
+});
+
 export function clear_containers() {
 	document.getElementById('home-content').innerHTML = '';
 	document.getElementById('chat-app-content').innerHTML = '';
@@ -23,6 +28,7 @@ export function clear_containers() {
 	document.getElementById('pong-app-content').innerHTML = '';
 	document.getElementById('user-app-content').innerHTML = '';
 	document.getElementById('error-content').innerHTML = '';
+	document.getElementById('dashboard-app-content').innerHTML = '';
 }
 
 export function home_view() {

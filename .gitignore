@@ -2,3 +2,4 @@ secrets/*
 **/__pycache__/*
 db.sqlite3
 **/.DS_Store
+backend/media/profile_pics/*

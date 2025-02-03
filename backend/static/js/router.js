@@ -1,6 +1,8 @@
 import { loadRoomList, joinRoom, closeRoomListWebSocket } from '/static/quiz/js/room_list.js';
 import { displayRoom, leaveRoom } from '/static/quiz/js/room_display.js';
 import { clear_containers, home_view } from '/static/js/navbar.js';
+import { loadDashboard } from '/static/dashboard/js/dashboard.js';
+import { loadProfile } from '/static/dashboard/js/profile.js';
 
 class Router {
 	constructor() {
@@ -30,6 +32,7 @@ class Router {
 		console.log(window.location.pathname);
 
 		const path = window.location.pathname;
+
 		const handler = this.routes[path];
 		clear_containers();
 		if (handler) {
@@ -42,7 +45,9 @@ class Router {
 
 	handleDynamicRoute(path) {
 		const quizPathRegex = /^\/quiz\/([^\/]+)\/?$/;
-		const match = path.match(quizPathRegex);
+		const dashboardPathRegex = /^\/dashboard\/([^\/]+)\/?$/;
+		
+		let match = path.match(quizPathRegex);
 		if (match) {
 			const roomName = match[1];
 			const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
@@ -51,9 +56,16 @@ class Router {
 			} else {
 				this.navigateTo('/quiz/');
 			}
-		} else {
-			this.showNotFound();
+			return;
 		}
+
+		match = path.match(dashboardPathRegex);
+		if (match) {
+			const username = match[1];
+			loadProfile(username);
+			return;
+		}
+		this.showNotFound();
 	}
 
 	showNotFound() {
@@ -101,6 +113,11 @@ router.addRoute('/quiz/', loadRoomList);
  * The Homepage
  */
 router.addRoute('/', home_view);
+
+/**
+ * The Dashboard app view
+ */
+router.addRoute('/dashboard/', loadDashboard);
 
 router.handleRouteChange();
 export default router;
