@@ -67,7 +67,7 @@ class CreateOAUTHUserView(APIView):
 		return django.shortcuts.redirect(auth_url)
 
 	def get(self, request):
-		"""handle the callback from the 42 API: exchange code for token"""
+		"""handle the callback from the 42 API: exchange code for bearer token"""
 		from transcendence.settings import SECRET_STATE
 
 		code = request.GET.get('code')
@@ -95,6 +95,22 @@ class CreateOAUTHUserView(APIView):
 		bearer_token_httpresponse = requests.post(exchange_url)
 		if bearer_token_httpresponse is None:
 			return HttpResponse('Error: could not exchange code for token')
-		# @audit @todo verify validity of the token
+		# try obtaining the username from token
+		bearer_token = bearer_token_httpresponse.json()['access_token']
+		if bearer_token is None:
+			return HttpResponse('Error: bearer token invalid/not found')
+		headers = {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'Authorization': f'Bearer {bearer_token}',
+		}
+		url = 'https://api.intra.42.fr/v2/me'
+
+		response = requests.get(url, headers=headers)
+		# to check that the request was successful - token is valid
+		response.raise_for_status()
+		username = response.json()['login']
+		if username is None:
+			return HttpResponse('Error: could not obtain username from token')
+		print(username, flush=True)
 		# @todo handle user creation from response
-		return HttpResponse(bearer_token_httpresponse)
+		return HttpResponse(response, content_type='text/html')
