@@ -1,0 +1,17 @@
+#pv-profile-picture {
+	width: 150px;
+	height: 150px;
+	margin-right: 10px;
+	border-radius: 50%;
+}
+
+#pv-profile-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+#pv-profile-name {
+	font-size: 60px;
+	font-weight: bold;
+}
