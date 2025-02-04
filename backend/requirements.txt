@@ -9,3 +9,4 @@ daphne
 djangorestframework-jwt
 djangorestframework-simplejwt
 djangorestframework
+requests

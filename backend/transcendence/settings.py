@@ -30,31 +30,32 @@ DEBUG = True
 ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1"]
 
 INTERNAL_IPS = [
-	"127.0.0.1",
+	'127.0.0.1',
 ]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-	'image_app.apps.ImageAppConfig',
+	'quiz.apps.QuizConfig',
 	'game.apps.GameConfig',
 	'chat.apps.ChatConfig',
-    'blog.apps.BlogConfig',
-    'users.apps.UsersConfig',
-    'channels',
-    'daphne',
-    'crispy_forms',
-    'crispy_bootstrap4',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
+	'blog.apps.BlogConfig',
+	'users.apps.UsersConfig',
+	'dashboard.apps.DashboardConfig',
+	'channels',
+	'daphne',
+	'rest_framework',
+	'crispy_forms',
+	'crispy_bootstrap4',
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
     'rest_framework_simplejwt',
-
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -69,14 +70,14 @@ MIDDLEWARE = [
 
 import sys
 
-TESTING = "test" in sys.argv
+TESTING = 'test' in sys.argv
 if not TESTING:
 	INSTALLED_APPS = [
-		*INSTALLED_APPS, 
-		"debug_toolbar",
+		*INSTALLED_APPS,
+		'debug_toolbar',
 	]
 	MIDDLEWARE = [
-		'debug_toolbar.middleware.DebugToolbarMiddleware',# early, but after encoding response content
+		'debug_toolbar.middleware.DebugToolbarMiddleware',  # early, but after encoding response content
 		*MIDDLEWARE,
 	]
 
@@ -159,10 +160,18 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [
+	BASE_DIR / 'static',
+	BASE_DIR / 'quiz/static',
+	BASE_DIR / 'dashboard/static',
+]
 
-MEDIA_ROOT = BASE_DIR / 'media'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+import os
+
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -176,14 +185,9 @@ LOGIN_REDIRECT_URL = 'users:list'
 LOGIN_URL = 'users:login'
 
 
-
 ASGI_APPLICATION = 'transcendence.asgi.application'
 
-CHANNEL_LAYERS = {
-	"default": {
-		"BACKEND": "channels.layers.InMemoryChannelLayer"
-	}
-}
+CHANNEL_LAYERS = {'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}}
 
 # Setting for  REST Framework
 REST_FRAMEWORK = {
