@@ -40,7 +40,7 @@ class Game(models.Model):
 
 class Player(models.Model):
 	profile = models.OneToOneField('users.Profile', on_delete=models.CASCADE, related_name='profile_for_player')
-	created_at = models.DateTimeField("date created")
+	created_at = models.DateTimeField(default=timezone.now)
 	matches_won = models.IntegerField(default=0)
 	matches_lost = models.IntegerField(default=0)
 	def __str__(self):

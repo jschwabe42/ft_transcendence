@@ -51,7 +51,8 @@ class Router {
 	handleDynamicRoute(path) {
 		const quizPathRegex = /^\/quiz\/([^\/]+)\/?$/;
 		const dashboardPathRegex = /^\/dashboard\/([^\/]+)\/?$/;
-		
+		const pongPathRegex = /^\/game\/pong\/([^\/]+)\/?$/;  // Neue Regex für '/game/pong/:game_id'
+	
 		let match = path.match(quizPathRegex);
 		if (match) {
 			const roomName = match[1];
@@ -63,19 +64,26 @@ class Router {
 			}
 			return;
 		}
-
+	
 		match = path.match(dashboardPathRegex);
 		if (match) {
 			const username = match[1];
 			loadProfile(username);
 			return;
 		}
+	
+		// Hier die Prüfung für die neue dynamische Route '/game/pong/:game_id'
+		match = path.match(pongPathRegex);
+		if (match) {
+			const gameId = match[1];
+			// Weiterleitung an die game() Funktion mit dem gameId
+			game({ game_id: gameId });
+			return;
+		}
+	
 		this.showNotFound();
 	}
-
-	showNotFound() {
-		document.getElementById('error-content').innerHTML = '<h2>Page not found!</h2>';
-	}
+	
 
 	// ! This function is not used. If for some reason we want to use href WITHOUT an event listener (please don't), this
 	//! function can be modified to USE navigateTo instead of handleRouteChange and then href would work.
@@ -133,6 +141,10 @@ router.handleRouteChange();
 export default router;
 
 
+
+/**
+ * routs for game (are getting changed)
+ */
 router.addRoute('/game/pong/:game_id', (params) => {
 	console.log("Game ID:", params.game_id);
 	game(params);
@@ -145,4 +157,3 @@ router.addRoute('/game/game-details/:game_id', (params) => {
 
 router.addRoute('/game/page1', page1);
 router.addRoute('/game/page2', page2);
-router.addRoute('/game', game_base);

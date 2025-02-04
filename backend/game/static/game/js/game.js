@@ -1,4 +1,4 @@
-
+import router from '/static/js/router.js';
 import { sendGameScores } from './GameAPI.js';
 
 let gameModel = {};
@@ -53,8 +53,7 @@ export function game(params) {
 							<p id="player2">${model.score2}</p>
 						</div>
 					</div>
-
-					<a id="winner" href="/game/" style="display: none;">Back to Games</a>
+					<button id="winner" class="navigate-button" style="display: none;" data-path="/game/">back to menu</button>
 				</main>
 			`;
 			renderGameData();
@@ -62,7 +61,14 @@ export function game(params) {
 		.catch(error => {
 			console.error("Fehler beim Laden der Daten:", error);
 		});
-	
+	document.getElementById('pong-app-content').addEventListener('click', (event) => {
+		const button = event.target.closest('.navigate-button');
+		if (button && button.dataset.path) {
+			const path = button.dataset.path;
+			console.log("Navigating to:", path);
+			router.navigateTo(path);
+		}
+	});
 }
 
 function renderGameData() {
