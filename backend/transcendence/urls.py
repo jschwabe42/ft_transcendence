@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from debug_toolbar.toolbar import debug_toolbar_urls
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
 	path('', include("users.urls")),
@@ -26,8 +25,6 @@ urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('', include('blog.urls')),
 	path('chat/', include('chat.urls')),
-	path('api/token/test/', TokenObtainPairView.as_view(), name='token_obtain_test'),
-	path('api/token/verify/', TokenRefreshView.as_view(), name='token_verify_test'),
 	path('image_app/', include('image_app.urls')),
 	# path('__debug__/', include(debug_toolbar.urls)),
 ]

@@ -1,6 +1,7 @@
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
 from . import views
+from .jwt_views import CustomTokenObtainPairView, CustomTokenRefreshView
 
 app_name = "users"
 urlpatterns = [
@@ -9,6 +10,9 @@ urlpatterns = [
 	path('account/', views.account, name='account'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
 	path('logout/', views.custom_logout, name='logout'),
+    # JWT Authentication
+    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
 
 	# friendship management: both `user` and `users` prefix 
 	re_path(r'^user(s)?/(?P<query_user>[^/]+)$', views.public_profile, name='public-profile'),
