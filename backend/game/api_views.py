@@ -7,7 +7,7 @@ from rest_framework.response import Response
 # For api
 from rest_framework.views import APIView
 
-from .models import Game
+from .models import Game, Player
 
 User = get_user_model()
 
@@ -33,23 +33,17 @@ class CreateGameView(APIView):
 			)
 
 		try:
-			opponent = User.objects.get(username=opponent_username)
-		except User.DoesNotExist:
+			opponent = Player.objects.get(user__username=opponent_username)
+		except Player.DoesNotExist:
 			return Response({'error': 'Opponent does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
-		if user_username:
-			try:
-				user = User.objects.get(username=user_username)
-			except User.DoesNotExist:
-				return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
-		else:
-			user_profile = User.objects.get(user=request.user)
-
-		opponent_profile = User.objects.get(user=opponent)
-		user_profile = User.objects.get(user=user)
+		try:
+			player = Player.objects.get(user__username=user_username)
+		except Player.DoesNotExist:
+			return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
 		# Create the game
-		game = Game.objects.create(player1=user_profile.player, player2=opponent_profile.player)
+		game = Game.objects.create(player1=player, player2=opponent)
 		game.save()
 
 		return Response(
@@ -111,9 +105,9 @@ class ControlKeySetting(APIView):
 		except Game.DoesNotExist:
 			return Response({'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND)
 
-		if user == User.objects.filter(player=game.player1):
+		if user == game.player1.user:
 			game.player1_control_settings = control1
-		elif user == User.objects.filter(player=game.player2):
+		elif user == game.player2.user:
 			game.player2_control_settings = control2
 		else:
 			return Response(

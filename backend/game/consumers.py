@@ -55,8 +55,8 @@ class GameConsumer(AsyncWebsocketConsumer):
 		game = await sync_to_async(Game.objects.get)(id=game_id)
 		user1_control = game.player1_control_settings
 		user2_control = game.player2_control_settings
-		user1 = await sync_to_async(lambda: game.player1.display_name)()
-		user2 = await sync_to_async(lambda: game.player2.display_name)()
+		user1 = await sync_to_async(lambda: game.player1.user.username)()
+		user2 = await sync_to_async(lambda: game.player2.user.username)()
 
 		if user1 == user:
 			if user1_control == 'w_s':
@@ -96,8 +96,8 @@ class GameConsumer(AsyncWebsocketConsumer):
 	async def save_message(self, user, game_id):
 		game = await sync_to_async(Game.objects.get)(id=game_id)
 		# Use sync_to_async to access related fields in an async context
-		user1 = await sync_to_async(lambda: game.player1.display_name)()
-		user2 = await sync_to_async(lambda: game.player2.display_name)()
+		user1 = await sync_to_async(lambda: game.player1.user.username)()
+		user2 = await sync_to_async(lambda: game.player2.user.username)()
 
 		if not (game.player1_ready and game.player2_ready):
 			if user1 == user:

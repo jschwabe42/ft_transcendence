@@ -37,8 +37,13 @@ class Game(models.Model):
 class Player(models.Model):
 	matches_won = models.IntegerField(default=0)
 	matches_lost = models.IntegerField(default=0)
-	# @follow-up @audit might change to be similar to `Participant` in quiz app
-	display_name = models.CharField(max_length=50, default='')
+	user = models.OneToOneField(
+		'custom_user.CustomUser',
+		on_delete=models.CASCADE,
+		related_name='player_user',
+		null=True,
+		blank=True,
+	)
 
 	# The statistics for the quiz game
 	quiz_games_played = models.IntegerField(default=0)
@@ -49,7 +54,7 @@ class Player(models.Model):
 	quiz_correct_answers = models.IntegerField(default=0)
 
 	def __str__(self):
-		return self.display_name
+		return self.user.username
 
 	def win_to_loss_ratio(self):
 		if self.matches_lost == 0:

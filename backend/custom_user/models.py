@@ -4,16 +4,8 @@ from PIL import Image
 
 
 class CustomUser(AbstractUser):
-	player = models.OneToOneField(
-		'game.Player',
-		on_delete=models.CASCADE,
-		related_name='user_player',
-		null=True,
-		blank=True,
-	)
 	image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 	online = models.BooleanField(default=False)
-	# @follow-up
 	# display_name = models.CharField(max_length=50, default='')
 
 	def __str__(self):
@@ -26,9 +18,9 @@ class CustomUser(AbstractUser):
 		)  # Import Player model here to avoid circular import
 
 		super().save(*args, **kwargs)
-		if not self.player:
-			player = Player.objects.create(display_name=self.username)
-			self.player = player
+		player = Player.objects.filter(user=self).first()
+		if not player:
+			player = Player.objects.create(user=self)
 			self.save()
 		img = Image.open(self.image.path)
 

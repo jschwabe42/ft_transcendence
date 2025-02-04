@@ -16,31 +16,31 @@
 		<div class="profile-header">
 			<div class="media-body">
 				<div class="media">
-					<img class="mx-auto rounded-circle account-img" src="{{ user_profile.image.url }}">
+					<img class="mx-auto rounded-circle account-img" src="{{ query_user.image.url }}">
 				</div>
-				{% if user_profile != request_user and request_user in friends %}
-				<p>Status: {{ user_profile.online|yesno:"Online,Offline" }}</p>
+				{% if query_user != request_user and request_user in friends %}
+				<p>Status: {{ query_user.online|yesno:"Online,Offline" }}</p>
 				{% endif %}
-				<h1>{{ user_profile.username }}</h1>
-				<p class="profile-date">{{ user_profile.date_joined|date:"Y-m-d @ H:i" }}</p>
-				{% if user_profile != request_user %}
-				{% if user_profile in friend_requests_sent %}
-				<a href="{% url 'users:cancel-friend-request' user_profile.username %}" class="list-group">
+				<h1>{{ query_user.username }}</h1>
+				<p class="profile-date">{{ query_user.date_joined|date:"Y-m-d @ H:i" }}</p>
+				{% if query_user != request_user %}
+				{% if query_user in friend_requests_sent %}
+				<a href="{% url 'users:cancel-friend-request' query_user.username %}" class="list-group">
 					<button type="button" class="btn btn-danger">cancel</button>
 				</a>
 				{% elif request_user in friends %}
-				<a href="{% url 'users:remove-friend' user_profile.username %}" class="list-group">
+				<a href="{% url 'users:remove-friend' query_user.username %}" class="list-group">
 					<button type="button" class="btn btn-danger">remove</button>
 				</a>
-				{% elif user_profile in friend_requests_received %}
-				<a href="{% url 'users:deny-friend-request' user_profile.username %}" class="list-group">
+				{% elif query_user in friend_requests_received %}
+				<a href="{% url 'users:deny-friend-request' query_user.username %}" class="list-group">
 					<button type="button" class="btn btn-danger">deny</button>
 				</a>
-				<a href="{% url 'users:accept-friend-request' user_profile.username %}" class="list-group">
+				<a href="{% url 'users:accept-friend-request' query_user.username %}" class="list-group">
 					<button type="button" class="btn btn-success">accept</button>
 				</a>
 				{% else %}
-				<a href="{% url 'users:friend-request' user_profile.username %}" class="list-group">
+				<a href="{% url 'users:friend-request' query_user.username %}" class="list-group">
 					<button type="button" class="btn btn-transparent">friend-request</button>
 				</a>
 				{% endif %}
@@ -80,11 +80,11 @@
 				{% endfor %}
 				{% endif %}
 				{% endif %}
-				{% if user_profile.player.matches_lost != 0 or user_profile.player.matches_lost != 0 %}
+				{% if pong_matches_lost != 0 or pong_matches_won != 0 %}
 				<hr>
 				<div class="profile-stats">
 					<div class="profile-stat">
-						<h4>{{ user_profile.player.win_to_loss_ratio }}</h4>
+						<h4>{{ pong_win_loss_ratio }}</h4>
 					</div>
 				</div>
 				{% endif %}
@@ -94,7 +94,7 @@
 			{% if friends %}
 			<div class="friends-container">
 				<h3>Friends</h3>
-				{% if user_profile != request_user %}
+				{% if query_user != request_user %}
 				{% for friend in friends %}
 				<div class="friend-item">
 					<a href="{% url 'users:public-profile' friend.username %}" class="list-group">

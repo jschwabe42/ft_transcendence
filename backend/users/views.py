@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import F
 from django.shortcuts import redirect, render
-from game.models import Game
+from game.models import Game, Player
 
 from .forms import ProfileUpdateForm, UserRegisterForm, UserUpdateForm
 from .models import Friends_Manager
@@ -18,7 +18,6 @@ def register(request):
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():
-			# saves the User instance; Profile creation is handled by the signal
 			form.save()
 			messages.success(request, 'Your account has been created! You can now log in!')
 			return redirect('users:login')
@@ -38,7 +37,9 @@ def custom_logout(request):
 def account(request):
 	if request.method == 'POST':
 		u_form = UserUpdateForm(request.POST, instance=request.user)
-		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
+		# @follow-up check if the user is allowed to change the password
+		# , and only ask for the password if needed
 		mod_pwd_form = PasswordChangeForm(request.user, request.POST)
 		if u_form.is_valid() and p_form.is_valid() and mod_pwd_form.is_valid():
 			u_form.save()
@@ -65,12 +66,11 @@ def account(request):
 @login_required
 def public_profile(request, query_user):
 	query_user_instance = User.objects.get(username=query_user)
-	games = Game.objects.filter(player1=query_user_instance.player) | Game.objects.filter(
-		player2=query_user_instance.player
+	query_player = Player.objects.get(user=query_user_instance)
+	games = Game.objects.filter(player1=query_player) | Game.objects.filter(player2=query_player)
+	games_won = games.filter(player1=query_player, score1__gt=F('score2')) | games.filter(
+		player2=query_player, score2__gt=F('score1')
 	)
-	games_won = games.filter(
-		player1=query_user_instance.player, score1__gt=F('score2')
-	) | games.filter(player2=query_user_instance.player, score2__gt=F('score1'))
 	games_lost = [game for game in games if game not in games_won]
 	games_won = sorted(games_won, key=lambda game: game.played_at, reverse=True)
 	games_lost = sorted(games_lost, key=lambda game: game.played_at, reverse=True)
@@ -89,7 +89,10 @@ def public_profile(request, query_user):
 		'users/public_profile.html',
 		{
 			'request_user': request.user,
-			'user_profile': query_user_instance,
+			'query_user': query_user_instance,
+			'pong_matches_lost': query_player.matches_lost,
+			'pong_matches_won': query_player.matches_won,
+			'pong_win_loss_ratio': query_player.win_to_loss_ratio(),
 			'games_won': games_won,
 			'games_lost': games_lost,
 			'friends': friends,
@@ -105,35 +108,35 @@ def public_profile(request, query_user):
 def friend_request(request, target_username):
 	"""/user/target_username/friend-request"""
 	Friends_Manager.friends_request(origin=request.user, target_username=target_username)
-	return redirect('/user/' + target_username)
+	return redirect('/users/user/' + target_username)
 
 
 @login_required
 def cancel_friend_request(request, target_username):
 	"""/user/target_username/cancel-friend-request"""
 	Friends_Manager.cancel_friends_request(origin=request.user, target_username=target_username)
-	return redirect('/user/' + request.user.username)
+	return redirect('/users/user/' + request.user.username)
 
 
 @login_required
 def deny_friend_request(request, origin_username):
 	"""/user/origin_username/deny-friend-request"""
 	Friends_Manager.deny_friends_request(target=request.user, origin_username=origin_username)
-	return redirect('/user/' + request.user.username)
+	return redirect('/users/user/' + request.user.username)
 
 
 @login_required
 def accept_friend_request(request, origin_username):
 	"""/user/origin_username/accept-friend-request"""
 	Friends_Manager.accept_request_as_target(target=request.user, origin_username=origin_username)
-	return redirect('/user/' + request.user.username)
+	return redirect('/users/user/' + request.user.username)
 
 
 @login_required
 def remove_friend(request, other_username):
 	"""/user/other_username/remove-friend"""
 	Friends_Manager.remove_friend(remover=request.user, target_username=other_username)
-	return redirect('/user/' + request.user.username)
+	return redirect('/users/user/' + request.user.username)
 
 
 def list(request):
