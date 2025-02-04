@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
-
-# from django.contrib.auth.models import AbstractUser, UnicodeUsernameValidator
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from PIL import Image
 
@@ -8,28 +7,26 @@ from PIL import Image
 class CustomUser(AbstractUser):
 	image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 	online = models.BooleanField(default=False)
-	# display_name = models.CharField(
-	# 	'display_name',
-	# 	max_length=150,
-	# 	unique=True,
-	# 	help_text=('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
-	# 	validators=UnicodeUsernameValidator(),
-	# 	error_messages={
-	# 		'unique': 'A user with that display name already exists.',
-	# 	},
-	# )
+	# only display_name is changeable and public - username can be used as unique identifier
+	display_name = models.CharField(
+		'display_name',
+		max_length=150,
+		unique=True,
+		help_text=('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+		validators=[UnicodeUsernameValidator()],
+		error_messages={
+			'unique': 'A user with that display name already exists.',
+		},
+		blank=True,  # this will be initialized in the signal
+	)
 	oauth = models.BooleanField(default=False)
 
 	def __str__(self):
-		return self.username
+		return self.display_name
 
 	# resize uploaded images
 	def save(self, *args, **kwargs):
 		super().save(*args, **kwargs)
-		player = Player.objects.filter(user=self).first()
-		if not player:
-			player = Player.objects.create(user=self)
-			self.save()
 		img = Image.open(self.image.path)
 
 		if img.height > 300 or img.width > 300:
