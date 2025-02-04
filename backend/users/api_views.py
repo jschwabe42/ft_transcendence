@@ -69,7 +69,8 @@ class CreateOAUTHUserView(APIView):
 		# log the user into the account - this took way longer than it should have
 		print(user.instance)
 		# user = authenticate(request, username=user.instance)
-		login(request, user.instance, backend='django.contrib.auth.backends.ModelBackend')
+		# WIP: this is not working with @login_required
+		login(request, user.instance, backend='django.contrib.auth.backends.RemoteUserBackend')
 		from .views import public_profile
 
 		return public_profile(request, jsonresponse['login'])
