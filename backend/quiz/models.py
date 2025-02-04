@@ -1,7 +1,7 @@
+from custom_user.models import Player
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.timezone import now
-from game.models import Player
 
 User = get_user_model()
 

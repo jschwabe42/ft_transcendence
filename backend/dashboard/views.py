@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
-from game.models import Player
+from custom_user.models import Player
 
 User = get_user_model()
 

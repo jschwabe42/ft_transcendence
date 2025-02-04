@@ -4,10 +4,10 @@ from datetime import timezone
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from custom_user.models import Player
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from game.models import Player
 
 from .game_logic import game_logic
 from .models import Answer, Participant, Room, RoomSettings
