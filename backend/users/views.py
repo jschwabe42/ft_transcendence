@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import F
 from django.shortcuts import redirect, render
-from game.models import Game
+from pong_game.models import Game
 
 from .forms import ProfileUpdateForm, UserRegisterForm, UserUpdateForm
 from .models import Friends_Manager

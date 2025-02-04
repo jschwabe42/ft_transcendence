@@ -15,18 +15,19 @@ Including another URLconf
 	2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from debug_toolbar.toolbar import debug_toolbar_urls
+from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include, re_path
-from django.conf import settings
-from debug_toolbar.toolbar import debug_toolbar_urls
+from django.urls import include, path, re_path
+
 from . import views
 
 urlpatterns = [
 	path('', views.index, name='index'),
 	path('quiz/', views.index, name='quiz'),
 	path('users/', include('users.urls')),
-	path('game/', include('game.urls')),
+	path('game/', include('pong_game.urls')),
 	path('admin/', admin.site.urls),
 	path('blog/', include('blog.urls')),
 	path('chat/', include('chat.urls')),
