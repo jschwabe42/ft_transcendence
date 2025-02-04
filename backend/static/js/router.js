@@ -52,6 +52,7 @@ class Router {
 		const quizPathRegex = /^\/quiz\/([^\/]+)\/?$/;
 		const dashboardPathRegex = /^\/dashboard\/([^\/]+)\/?$/;
 		const pongPathRegex = /^\/game\/pong\/([^\/]+)\/?$/;  // Neue Regex für '/game/pong/:game_id'
+		const pongDetailsPathRegex = /^\/game\/game-details\/([^\/]+)\/?$/;  // Neue Regex für '/game/pong/:game_id'
 	
 		let match = path.match(quizPathRegex);
 		if (match) {
@@ -71,13 +72,17 @@ class Router {
 			loadProfile(username);
 			return;
 		}
-	
-		// Hier die Prüfung für die neue dynamische Route '/game/pong/:game_id'
 		match = path.match(pongPathRegex);
 		if (match) {
 			const gameId = match[1];
-			// Weiterleitung an die game() Funktion mit dem gameId
 			game({ game_id: gameId });
+			return;
+		}
+
+		match = path.match(pongDetailsPathRegex);
+		if (match) {
+			const gameId = match[1];
+			gameDetails({ game_id: gameId });
 			return;
 		}
 	
@@ -146,14 +151,11 @@ export default router;
  * routs for game (are getting changed)
  */
 router.addRoute('/game/pong/:game_id', (params) => {
-	console.log("Game ID:", params.game_id);
 	game(params);
 	});
 
 router.addRoute('/game/game-details/:game_id', (params) => {
-	console.log("Game ID:", params.game_id);
 	gameDetails(params);
 	});
 
-router.addRoute('/game/page1', page1);
 router.addRoute('/game/page2', page2);

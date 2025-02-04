@@ -127,7 +127,7 @@
 				<h3>Wins</h3>
 				{% for game in games_won %}
 				<div class="game-item">
-					<a href="{% url 'game:game_details' game.id %}"
+					<a href="game/game-details/{{game.id}}"
 						class="list-group-item list-group-item-action list-group-item-success" aria-current="true">
 						{{ game.player1 }} vs {{ game.player2 }}
 					</a>
@@ -141,7 +141,7 @@
 				<h3>Losses</h3>
 				{% for game in games_lost %}
 				<div class="game-item">
-					<a href="{% url 'game:game_details' game.id %}"
+					<a href="game/game-details/{{game.id}}"
 						class="list-group-item list-group-item-action list-group-item-danger" aria-current="true">
 						{{ game.player1 }} vs {{ game.player2 }}
 					</a>
