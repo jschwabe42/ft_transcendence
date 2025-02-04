@@ -45,7 +45,6 @@ INSTALLED_APPS = [
 	'dashboard.apps.DashboardConfig',
 	'channels',
 	'daphne',
-	'rest_framework',
 	'crispy_forms',
 	'crispy_bootstrap4',
 	'django.contrib.admin',
@@ -54,8 +53,8 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
-    'rest_framework_simplejwt',
-    'rest_framework',
+	'rest_framework_simplejwt',
+	'rest_framework',
 ]
 
 MIDDLEWARE = [
