@@ -1,14 +1,20 @@
+from urllib.parse import urlencode
+
 import django.shortcuts
 import requests
+from django.contrib.auth import login
+
+# import rest_framework
 from django.http import HttpResponse
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
-from .models import OAuthUsers
+
+from .models import OAuth_Manager, OAuthUsers
 
 
 class CreateOAUTHUserView(APIView):
 	permission_classes = [AllowAny]
-	OAUTH_CALLBACK = 'http%3A%2F%2Flocalhost%3A8000%2Fusers%2Foauth%2Fcallback'
+	OAUTH_CALLBACK = 'http://localhost:8000/users/oauth/callback'
 	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
 
 	def request_login_oauth(self):
@@ -21,7 +27,7 @@ class CreateOAUTHUserView(APIView):
 			'scope': 'public',
 		}
 
-		auth_url = f'https://api.intra.42.fr/oauth/authorize?{"&".join(f"{k}={v}" for k, v in params.items())}'
+		auth_url = f'https://api.intra.42.fr/oauth/authorize?{urlencode(params)}'
 
 		return django.shortcuts.redirect(auth_url)
 
@@ -46,26 +52,33 @@ class CreateOAUTHUserView(APIView):
 		}
 
 		bearer_token_response = requests.post(
-			f'https://api.intra.42.fr/oauth/token?{"&".join(f"{k}={v}" for k, v in params.items())}'
+			f'https://api.intra.42.fr/oauth/token?{urlencode(params)}'
 		)
 		# Error: could not exchange code for token
 		bearer_token_response.raise_for_status()
-		return bearer_token_response.json()['access_token']
+		return bearer_token_response.json()
 
-	def login_or_create(request, username, email):
+	def create_user(request, jsonresponse, BEARER_TOKEN, REFRESH_TOKEN):
 		"""handle user management from oauth"""
-		already_exists = OAuthUsers.objects.filter(login=username)
+		already_exists = OAuthUsers.objects.filter(login=jsonresponse['login'])
 		if not already_exists.exists():
 			# create the account
-			user = OAuthUsers.create(username, email)
-		else:
-			user = already_exists.first()
-		# log the user into the account
-		user.login(request)
+			user = OAuth_Manager.create_user(jsonresponse['login'], jsonresponse['email'])
+		already_exists = OAuthUsers.objects.filter(login=jsonresponse['login'])
+		user = already_exists.first()
+		# log the user into the account - this took way longer than it should have
+		print(user.instance)
+		# user = authenticate(request, username=user.instance)
+		login(request, user.instance, backend='django.contrib.auth.backends.ModelBackend')
+		from .views import public_profile
+
+		return public_profile(request, jsonresponse['login'])
 
 	def get(self, request):
 		"""handle the callback from the 42 API: obtain user public data"""
-		BEARER_TOKEN = CreateOAUTHUserView.__bearer_token(self, request)
+		bearer_token_response = CreateOAUTHUserView.__bearer_token(self, request)
+		BEARER_TOKEN = bearer_token_response.get('access_token')
+		REFRESH_TOKEN = bearer_token_response.get('refresh_token')
 		if BEARER_TOKEN is None:
 			return HttpResponse('Error: bearer token invalid/not found')
 		response = requests.get(
@@ -78,8 +91,8 @@ class CreateOAUTHUserView(APIView):
 		if not response.ok:
 			django.contrib.messages.error(request, 'user did not authorize')
 			return django.shortcuts.redirect('users:login')
-		username, email = response.json()['login'], response.json()['email']
+		jsonresponse = response.json()
+		username, email = jsonresponse['login'], jsonresponse['email']
 		if username is None or email is None:
 			return HttpResponse('Error: could not obtain username from token')
-		CreateOAUTHUserView.login_or_create(request, username, email)
-		return HttpResponse(response, content_type='text/html')
+		return CreateOAUTHUserView.create_user(request, jsonresponse, BEARER_TOKEN, REFRESH_TOKEN)

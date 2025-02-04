@@ -36,10 +36,6 @@ class Profile(models.Model):
 
 	# resize uploaded images
 	def save(self, *args, **kwargs):
-		from game.models import (
-			Player,
-		)  # Import Player model here to avoid circular import
-
 		super().save(*args, **kwargs)
 		if not self.player:
 			player = Player.objects.create(profile=self)
@@ -58,22 +54,8 @@ class Profile(models.Model):
 
 # @todo reject login of oauth user using username + password
 class OAuthUsers(models.Model):
-	instance = models.OneToOneField(User, models.CASCADE)
+	instance = models.OneToOneField(User, on_delete=models.CASCADE)
 	login = models.CharField(max_length=255)
-
-	def create(username, email):
-		"""create a User, Profile and Player for oauth of login"""
-		# @todo
-		this_user = User.objects.create(username=username, email=email)
-		this_user.save()
-		this_player = Player.objects.create(profile=None)
-		this_player.save()
-		this_profile = Profile.objects.create(user=this_user, player=this_player)
-		this_player.profile = this_profile
-		this_player.save()
-		this_profile.save()
-		OAuthUsers.objects.create(instance=this_user, login=username)
-		return this_user
 
 
 class OAuth_Manager:
@@ -81,6 +63,15 @@ class OAuth_Manager:
 	# @todo
 	# def create(username, email):
 	# create a User and connected Model instances - login is done if exists
+	def create_user(username, email):
+		"""create a User, Profile and Player for oauth of login"""
+		# @todo
+		this_user = User.objects.create(username=username, email=email, is_active=True)
+		this_user.save()
+		this_profile = Profile.objects.create(user=this_user)
+		this_profile.save()
+		OAuthUsers.objects.create(instance=this_user, login=username)
+		return this_user
 
 	def exists(user_instance):
 		"""check if the user uses oauth for login"""
