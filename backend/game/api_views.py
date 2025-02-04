@@ -1,13 +1,15 @@
 # Create your views here.
-from users.models import Profile
-from .models import Game
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 # For api
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
+
+from .models import Game
+
+User = get_user_model()
 
 
 # API for game creation
@@ -41,10 +43,10 @@ class CreateGameView(APIView):
 			except User.DoesNotExist:
 				return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 		else:
-			user_profile = Profile.objects.get(user=request.user)
+			user_profile = User.objects.get(user=request.user)
 
-		opponent_profile = Profile.objects.get(user=opponent)
-		user_profile = Profile.objects.get(user=user)
+		opponent_profile = User.objects.get(user=opponent)
+		user_profile = User.objects.get(user=user)
 
 		# Create the game
 		game = Game.objects.create(player1=user_profile.player, player2=opponent_profile.player)
@@ -91,9 +93,9 @@ class ControlKeySetting(APIView):
 		username = request.data.get('username')
 
 		if username:
-			user = username
+			user = User.objects.filter(username=username)
 		else:
-			user = request.user.username
+			user = User.objects.filter(username=request.user.username)
 
 		control1 = request.data.get('control1')
 		control2 = request.data.get('control2')
@@ -109,9 +111,9 @@ class ControlKeySetting(APIView):
 		except Game.DoesNotExist:
 			return Response({'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND)
 
-		if user == game.player1.profile.user.username:
+		if user == User.objects.filter(player=game.player1):
 			game.player1_control_settings = control1
-		elif user == game.player2.profile.user.username:
+		elif user == User.objects.filter(player=game.player2):
 			game.player2_control_settings = control2
 		else:
 			return Response(

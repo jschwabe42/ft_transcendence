@@ -7,7 +7,8 @@ from channels.layers import get_channel_layer
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.timezone import now
-from .models import Room, Participant, Answer
+
+from .models import Answer, Participant, Room
 
 
 def game_logic(room_id):
@@ -172,18 +173,18 @@ def end_game(room_id):
 	highest_score = -1
 
 	for participant in participants:
-		participant.user.profile.quiz_high_score = max(participant.user.profile.quiz_high_score, participant.score)
-		participant.user.profile.quiz_games_played += 1
-		participant.user.profile.quiz_total_score += participant.score
-		participant.user.profile.save()
+		participant.user.player.quiz_high_score = max(participant.user.player.quiz_high_score, participant.score)
+		participant.user.player.quiz_games_played += 1
+		participant.user.player.quiz_total_score += participant.score
+		participant.user.player.save()
 
 		if participant.score > highest_score:
 			highest_score = participant.score
 			winner = participant
 
 	if winner and highest_score > 0:
-		winner.user.profile.quiz_games_won += 1
-		winner.user.profile.save()
+		winner.user.player.quiz_games_won += 1
+		winner.user.player.save()
 
 	channel_layer = get_channel_layer()
 	async_to_sync(channel_layer.group_send)(f'room_{room_id}', {'type': 'end_game', 'data': {}})
@@ -208,18 +209,18 @@ def process_answers(room_id, question):
 		if answer and not answer.is_disqualified:
 			answers_data.append({
 				'username': participant.user.username,
-				'profile_image': participant.user.profile.image.url,
+				'profile_image': participant.user.player.image.url,
 				'answer': answer.answer_given,
 				'score_difference': participant.score_difference,
 				# Potentially add the new score here
 				# 'score': participant.score,
 				# Potentially add the is disqualified here to display the users who were disqualified to everyone
 			})
-			participant.user.profile.quiz_questions_asked += 1
+			participant.user.player.quiz_questions_asked += 1
 			print(f"Question: {question}", flush=True)
 			if answer.answer_given == room.current_question['correct_answer']:
-				participant.user.profile.quiz_correct_answers += 1
-			participant.user.profile.save()
+				participant.user.player.quiz_correct_answers += 1
+			participant.user.player.save()
 
 		participants_data.append(
 			{

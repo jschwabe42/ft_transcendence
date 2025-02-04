@@ -1,12 +1,9 @@
+# for displaying games in admin panel
+from django.contrib import admin
 from django.db import models
 
 # Create your models here.
-
 from django.utils import timezone
-
-# for displaying games in admin panel
-
-from django.contrib import admin
 
 
 # create game when starting a new game
@@ -38,14 +35,21 @@ class Game(models.Model):
 
 
 class Player(models.Model):
-	profile = models.OneToOneField(
-		'users.Profile', on_delete=models.CASCADE, related_name='profile_for_player'
-	)
 	matches_won = models.IntegerField(default=0)
 	matches_lost = models.IntegerField(default=0)
+	# @follow-up @audit might change to be similar to `Participant` in quiz app
+	display_name = models.CharField(max_length=50, default='')
+
+	# The statistics for the quiz game
+	quiz_games_played = models.IntegerField(default=0)
+	quiz_games_won = models.IntegerField(default=0)
+	quiz_total_score = models.BigIntegerField(default=0)
+	quiz_high_score = models.IntegerField(default=0)
+	quiz_questions_asked = models.IntegerField(default=0)
+	quiz_correct_answers = models.IntegerField(default=0)
 
 	def __str__(self):
-		return self.profile.user.username
+		return self.display_name
 
 	def win_to_loss_ratio(self):
 		if self.matches_lost == 0:

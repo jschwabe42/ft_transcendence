@@ -1,5 +1,6 @@
 {%extends "game/game_base.html"%}
 {% block content %}
+<!-- @follow-up obtain user correctly -->
 <div id="game-data" game-id="{{ game_id }}" player1="{{ game.player1.profile.user }}" player2="{{ game.player2.profile.user }}" curr-user="{{ request.user.username }}"></div>
 
 <main role="main" class="container">

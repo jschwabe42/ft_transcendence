@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 	'crispy_bootstrap4',
 	'django.contrib.admin',
 	'django.contrib.auth',
+	'custom_user.apps.CustomUserConfig',
 	'django.contrib.contenttypes',
 	'django.contrib.sessions',
 	'django.contrib.messages',
@@ -180,6 +181,7 @@ LOGIN_REDIRECT_URL = 'users:list'
 
 LOGIN_URL = 'users:login'
 
+AUTH_USER_MODEL = 'custom_user.CustomUser'
 
 ASGI_APPLICATION = 'transcendence.asgi.application'
 

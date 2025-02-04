@@ -1,7 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils import timezone
-from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils import timezone
+
+User = get_user_model()
 
 
 # Create your models here.

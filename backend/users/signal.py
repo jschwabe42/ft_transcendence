@@ -1,18 +1,20 @@
-from django.db.models.signals import post_save
 from django.contrib.auth import get_user_model
-from django.dispatch import receiver
-from django.apps import apps
+
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
+
+# @follow-up is this working?
 
 User = get_user_model()
-Profile = apps.get_model('users', 'Profile')
+# Profile = apps.get_model('users', 'Profile')
 
 
-@receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwargs):
-	if created:
-		Profile.objects.create(user=instance)
+# @receiver(post_save, sender=User)
+# def create_profile(sender, instance, created, **kwargs):
+# 	if created:
+# 		Profile.objects.create(user=instance)
 
 
-@receiver(post_save, sender=User)
-def save_profile(sender, instance, **kwargs):
-	instance.profile.save()
+# @receiver(post_save, sender=User)
+# def save_profile(sender, instance, **kwargs):
+# 	instance.profile.save()
