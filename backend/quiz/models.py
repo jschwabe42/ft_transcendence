@@ -1,9 +1,7 @@
-from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.timezone import now
-from user_management.models import Player
+from user_management.models import CustomUser
 
-User = get_user_model()
 
 class Room(models.Model):
 	id = models.BigAutoField(primary_key=True)
@@ -42,7 +40,7 @@ class Room(models.Model):
 
 
 class Participant(models.Model):
-	player = models.ForeignKey(Player, on_delete=models.CASCADE, default=None)
+	user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=None)
 	room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='participants')
 	joined_at = models.DateTimeField(auto_now_add=True)
 	score = models.IntegerField(default=0)

@@ -29,6 +29,14 @@ class CustomUser(AbstractUser):
 	matches_won = models.IntegerField(default=0)
 	matches_lost = models.IntegerField(default=0)
 
+	# The statistics for the quiz game
+	quiz_games_played = models.IntegerField(default=0)
+	quiz_games_won = models.IntegerField(default=0)
+	quiz_total_score = models.BigIntegerField(default=0)
+	quiz_high_score = models.IntegerField(default=0)
+	quiz_questions_asked = models.IntegerField(default=0)
+	quiz_correct_answers = models.IntegerField(default=0)
+
 	def __str__(self):
 		return self.username
 
@@ -41,13 +49,3 @@ class CustomUser(AbstractUser):
 			output_size = (300, 300)
 			img.thumbnail(output_size)
 			img.save(self.image.path)
-
-
-class Player(models.Model):
-	# The statistics for the quiz game
-	quiz_games_played = models.IntegerField(default=0)
-	quiz_games_won = models.IntegerField(default=0)
-	quiz_total_score = models.BigIntegerField(default=0)
-	quiz_high_score = models.IntegerField(default=0)
-	quiz_questions_asked = models.IntegerField(default=0)
-	quiz_correct_answers = models.IntegerField(default=0)
