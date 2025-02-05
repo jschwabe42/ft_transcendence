@@ -15,7 +15,7 @@ from chat import routing as chat_routing
 from django.core.asgi import get_asgi_application
 from pong_game import routing as pong_routing
 from quiz import routing as quiz_routing
-from users import routing as user_status_routing
+from user_management import routing as user_status_routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'transcendence.settings')
 

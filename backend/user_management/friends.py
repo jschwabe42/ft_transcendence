@@ -1,8 +1,9 @@
-from django.contrib.auth import get_user_model
 from django.db import models
 from django.forms import ValidationError
 
-User = get_user_model()
+from user_management.models import CustomUser
+
+User = CustomUser
 
 
 class Friends(models.Model):

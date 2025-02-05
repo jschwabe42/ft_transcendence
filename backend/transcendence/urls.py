@@ -26,7 +26,7 @@ from . import views
 urlpatterns = [
 	path('', views.index, name='index'),
 	path('quiz/', views.index, name='quiz'),
-	path('users/', include('users.urls')),
+	path('users/', include('user_management.urls')),
 	path('game/', include('pong_game.urls')),
 	path('admin/', admin.site.urls),
 	path('blog/', include('blog.urls')),
