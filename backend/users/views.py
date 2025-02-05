@@ -1,4 +1,3 @@
-from custom_user.models import Player
 from django.contrib import messages
 from django.contrib.auth import get_user_model, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -6,6 +5,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import F
 from django.shortcuts import redirect, render
 from pong_game.models import Game
+from user_management.models import Player
 
 from .forms import ProfileUpdateForm, UserRegisterForm, UserUpdateForm
 from .models import Friends_Manager

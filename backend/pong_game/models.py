@@ -1,10 +1,10 @@
 # for displaying games in admin panel
-from custom_user.models import Player
 from django.contrib import admin
 from django.db import models
 
 # Create your models here.
 from django.utils import timezone
+from user_management.models import Player
 
 
 # create game when starting a new game

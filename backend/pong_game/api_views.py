@@ -1,5 +1,4 @@
 # Create your views here.
-from custom_user.models import Player
 from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -7,6 +6,7 @@ from rest_framework.response import Response
 
 # For api
 from rest_framework.views import APIView
+from user_management.models import Player
 
 from .models import Game
 

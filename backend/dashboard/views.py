@@ -1,8 +1,8 @@
-from custom_user.models import Player
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from user_management.models import Player
 
 User = get_user_model()
 def profile_list(request):
