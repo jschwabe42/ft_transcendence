@@ -89,7 +89,9 @@ def public_profile(request, query_user):
 		friend_requests_sent = Friends_Manager.fetch_sent(origin=request.user)
 		friend_requests_received = Friends_Manager.fetch_received(target=request.user)
 
-	pong_ratio = win_to_loss_ratio(request.user.matches_won, request.user.matches_lost)
+	pong_ratio = win_to_loss_ratio(
+		query_user_instance.matches_won, query_user_instance.matches_lost
+	)
 	return render(
 		request,
 		'users/public_profile.html',
