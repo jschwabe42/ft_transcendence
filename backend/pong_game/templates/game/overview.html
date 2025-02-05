@@ -19,12 +19,12 @@
 					<h2>Pending Games</h2>
 					{% for game in recent_games_list %}
 					{% if game.pending == True %}
-					{% if request.user.username == game.player2.user.username or request.user.username == game.player1.user.username %}
+					{% if request.user.username == game.player2.username or request.user.username == game.player1.username %}
 					<form method="POST">
 						{% csrf_token %}
 						<button class="ChatButtonBackground" type="submit" name="player2_enter_game"
 							value="{{ game.id }}">
-							{{ game.player1.user.username }} vs {{ game.player2.user.username }} ({{ game.score1 }}-{{ game.score2 }})
+							{{ game.player1.username }} vs {{ game.player2.username }} ({{ game.score1 }}-{{ game.score2}})
 						</button>
 					</form>
 

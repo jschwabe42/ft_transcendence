@@ -6,7 +6,6 @@ from rest_framework.response import Response
 
 # For api
 from rest_framework.views import APIView
-from user_management.models import Player
 
 from .models import Game
 
@@ -34,13 +33,13 @@ class CreateGameView(APIView):
 			)
 
 		try:
-			opponent = Player.objects.get(user__username=opponent_username)
-		except Player.DoesNotExist:
+			opponent = User.objects.get(username=opponent_username)
+		except User.DoesNotExist:
 			return Response({'error': 'Opponent does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
 		try:
-			player = Player.objects.get(user__username=user_username)
-		except Player.DoesNotExist:
+			player = User.objects.get(username=user_username)
+		except User.DoesNotExist:
 			return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
 		# Create the game
@@ -106,9 +105,9 @@ class ControlKeySetting(APIView):
 		except Game.DoesNotExist:
 			return Response({'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND)
 
-		if user == game.player1.user:
+		if user == game.player1:
 			game.player1_control_settings = control1
-		elif user == game.player2.user:
+		elif user == game.player2:
 			game.player2_control_settings = control2
 		else:
 			return Response(

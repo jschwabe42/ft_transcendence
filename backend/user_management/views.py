@@ -5,9 +5,9 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import F
 from django.shortcuts import redirect, render
 from pong_game.models import Game
+from pong_game.utils import win_to_loss_ratio
 
 from user_management.friends import Friends_Manager
-from user_management.models import Player
 
 from .forms import ProfileUpdateForm, UserRegisterForm, UserUpdateForm
 
@@ -68,11 +68,12 @@ def account(request):
 @login_required
 def public_profile(request, query_user):
 	query_user_instance = User.objects.get(username=query_user)
-	query_player = Player.objects.get(user=query_user_instance)
-	games = Game.objects.filter(player1=query_player) | Game.objects.filter(player2=query_player)
-	games_won = games.filter(player1=query_player, score1__gt=F('score2')) | games.filter(
-		player2=query_player, score2__gt=F('score1')
+	games = Game.objects.filter(player1=query_user_instance, pending=False) | Game.objects.filter(
+		player2=query_user_instance, pending=False
 	)
+	games_won = games.filter(
+		player1=query_user_instance, score1__gt=F('score2'), pending=False
+	) | games.filter(player2=query_user_instance, score2__gt=F('score1'), pending=False)
 	# something to use the display_name in games (playing as display_name) @follow-up
 	games_lost = [game for game in games if game not in games_won]
 	games_won = sorted(games_won, key=lambda game: game.played_at, reverse=True)
@@ -87,15 +88,17 @@ def public_profile(request, query_user):
 		# check for the request user if he is an origin or a target of a request by the user_instance
 		friend_requests_sent = Friends_Manager.fetch_sent(origin=request.user)
 		friend_requests_received = Friends_Manager.fetch_received(target=request.user)
+
+	pong_ratio = win_to_loss_ratio(request.user.matches_won, request.user.matches_lost)
 	return render(
 		request,
 		'users/public_profile.html',
 		{
 			'request_user': request.user,
-			'query_user': query_user_instance,
-			'pong_matches_lost': query_player.matches_lost,
-			'pong_matches_won': query_player.matches_won,
-			'pong_win_loss_ratio': query_player.win_to_loss_ratio(),
+			'query_user': request.user,
+			'pong_matches_lost': request.user.matches_lost,
+			'pong_matches_won': request.user.matches_won,
+			'pong_win_loss_ratio': pong_ratio,
 			'games_won': games_won,
 			'games_lost': games_lost,
 			'friends': friends,

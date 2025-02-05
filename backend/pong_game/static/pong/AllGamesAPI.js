@@ -5,7 +5,7 @@ document.getElementById("create-game-form").addEventListener("submit", async fun
 	const oppName = document.getElementById("opp_name").value; // get opp name
 	let UserName = document.getElementById('username').getAttribute('data-username'); // get Username(saved in div id = username)
 
-	console.log("username:", username, "OppName:", oppName);
+	console.log("username:", UserName, "OppName:", oppName);
 	const response = await fetch('/game/api/create-game/', {
 		method: 'POST',
 		headers: {

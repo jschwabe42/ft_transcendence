@@ -24,6 +24,11 @@ class CustomUser(AbstractUser):
 	# for storing oauth identity
 	oauth_id: Optional[str] = models.CharField(max_length=150, blank=True, null=True)
 
+	## Game statistics
+	# The statistics for the pong game
+	matches_won = models.IntegerField(default=0)
+	matches_lost = models.IntegerField(default=0)
+
 	def __str__(self):
 		return self.username
 
@@ -39,18 +44,6 @@ class CustomUser(AbstractUser):
 
 
 class Player(models.Model):
-	user = models.OneToOneField(
-		CustomUser,
-		on_delete=models.CASCADE,
-		related_name='player_user',
-		null=True,
-		blank=True,
-	)
-
-	# The statistics for the pong game
-	matches_won = models.IntegerField(default=0)
-	matches_lost = models.IntegerField(default=0)
-
 	# The statistics for the quiz game
 	quiz_games_played = models.IntegerField(default=0)
 	quiz_games_won = models.IntegerField(default=0)
@@ -58,17 +51,3 @@ class Player(models.Model):
 	quiz_high_score = models.IntegerField(default=0)
 	quiz_questions_asked = models.IntegerField(default=0)
 	quiz_correct_answers = models.IntegerField(default=0)
-
-	def display_name(self):
-		"""tournament display name"""
-		return self.user.display_name
-
-	def __str__(self):
-		return self.user.username
-
-	def win_to_loss_ratio(self):
-		if self.matches_lost == 0:
-			return self.matches_won
-		if self.matches_lost == 0:
-			return self.matches_won
-		return round(self.matches_won / self.matches_lost, 2)
