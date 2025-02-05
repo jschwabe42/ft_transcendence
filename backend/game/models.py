@@ -92,3 +92,4 @@ class Tournement(models.Model):
 	winner2 = models.CharField(max_length=255, default="")
 
 	openTournement = models.BooleanField(default=True)
+	playernum = models.IntegerField(default=1)

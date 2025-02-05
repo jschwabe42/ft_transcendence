@@ -268,48 +268,47 @@ class TournementConsumer(AsyncWebsocketConsumer):
 			elif not self.tournement.player3:
 				self.tournement.player3 = username
 				updated_field = "player3"
-
+			self.tournement.playernum += 1
 			self.tournement.save()
-			return updated_field
+			return updated_field, self.tournement.playernum
 
-		updated_field = await sync_to_async(update_tournement)()
+		updated_field, updated_playernum = await sync_to_async(update_tournement)()
 
-		# send message back to js
 		if updated_field:
 			await self.channel_layer.group_send(
 				self.group_name,
 				{
 					"type": "player_joined",
 					"username": username,
-					"field": updated_field
+					"field": updated_field,
+					"playerNum": updated_playernum
 				}
 			)
 
 	async def player_joined(self, event):
+		print("Event received in player_joined:", event)  # Debugging
+		sys.stdout.flush()
 		await self.send(text_data=json.dumps({
 			"use": "join",
 			"username": event["username"],
-			"field": event["field"]
+			"field": event["field"],
+			"playerNum": event["playerNum"]
 		}))
 
 	async def receive(self, text_data):
 		data = json.loads(text_data)
 		action = data.get("use")
 
-		# Tournement Updates
-		tournement_data = {
-			"host": self.tournement.host,
-			"player1": self.tournement.player1,
-			"player2": self.tournement.player2,
-			"player3": self.tournement.player3,
-		}
-		await self.channel_layer.group_send(
-			self.group_name,
-			{
-				"type": "send_tournement_update",
-				"message": json.dumps(tournement_data)
+		if action == "sync":
+			tournement_data = {
+				"use": "sync",
+				"host": self.tournement.host,
+				"player1": self.tournement.player1,
+				"player2": self.tournement.player2,
+				"player3": self.tournement.player3,
+				"playerNum": self.tournement.playernum
 			}
-		)
+			await self.send(text_data=json.dumps(tournement_data))
 
-	async def send_tournement_update(self, event):
-		await self.send(text_data=json.dumps(event["message"]))
+		elif action == "join":
+			pass

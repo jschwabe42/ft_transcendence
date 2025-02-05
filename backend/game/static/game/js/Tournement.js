@@ -15,12 +15,13 @@ export function Tournement(params) {
 			console.log(model);
 			tournementModel = model;
 			document.getElementById('pong-app-content').innerHTML = `
-				<h1>Welcome to Tournement ${params.tournement_id}</h1>
+				<h1 id="header">Welcome to Tournement ${params.tournement_id}</h1>
 
 				<p id="host"><strong>Host	:</strong> ${model.host}</p>
 				<p id="player1"><strong >Player1:</strong> ${model.player1}</p>
 				<p id="player2"><strong>Player2:</strong> ${model.player2}</p>
 				<p id="player3"><strong>Player3:</strong> ${model.player3}</p>
+				<p id="playerNum"><strong></strong> ${model.playernum}</p>
 
 				<button class="navigate-button" data-path="/game/">Go to Menu</button>
 			`;
@@ -52,12 +53,22 @@ function renderTournementData()
 	
 	tournementSocket.onopen = function(e) {
 		console.log('WebSocket opend');
+		tournementSocket.send(JSON.stringify({ "use": "sync" }));
 	};
 	
 	tournementSocket.onmessage = function(e) {
 		const data = JSON.parse(e.data);
-		if (data.use == "join")
+		console.log(data)
+		if (data.use == "join") {
 			document.getElementById(data.field).innerHTML = `<strong>${data.field.replace("player", "Player ")}:</strong> ${data.username}`;
+			document.getElementById("playerNum").innerHTML = data.playerNum
+		}
+		if (data.playerNum == 4) { // und user == host dann create 2 games und redirecte alle richtig ----> coool
+			document.getElementById("header").style.color = "green";
+		}
+		if (data.use === "sync") {
+			updateUIWithTournementData(data);
+		}
 	};
 
 
@@ -72,4 +83,16 @@ function renderTournementData()
 	tournementSocket.onerror = function(e) {
 		console.error('WebSocket error:', error);
 	};
+}
+
+function updateUIWithTournementData(data) {
+	document.getElementById("host").innerHTML = `<strong>Host:</strong> ${data.host}`;
+	document.getElementById("player1").innerHTML = `<strong>Player1:</strong> ${data.player1}`;
+	document.getElementById("player2").innerHTML = `<strong>Player2:</strong> ${data.player2}`;
+	document.getElementById("player3").innerHTML = `<strong>Player3:</strong> ${data.player3}`;
+	document.getElementById("playerNum").innerHTML = data.playerNum;
+	
+	if (data.playerNum === 4) {
+		document.getElementById("header").style.color = "green";
+	}
 }

@@ -78,6 +78,7 @@ def tournement(request):
 			'winner1': tournement.winner1,
 			'winner2': tournement.winner2,
 			'openTournement': tournement.openTournement,
+			'playernum': tournement.playernum,
 			'id': tournement.id,
 		}
 		return JsonResponse(tournement_data)
