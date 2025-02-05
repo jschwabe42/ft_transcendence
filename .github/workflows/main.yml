@@ -42,3 +42,14 @@ jobs:
       - name: Run a multi-line script
         run: |
           docker compose up -d
+      # run python linter and formatter on runner
+      - name: install ruff using pip
+        run: |
+          pip install ruff
+      - name: lint using ruff
+        run: |
+          ruff check .
+      - name: lint using ruff
+        run: |
+          pip install ruff
+          ruff format .
