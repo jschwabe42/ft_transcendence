@@ -97,9 +97,9 @@ def public_profile(request, query_user):
 		'users/public_profile.html',
 		{
 			'request_user': request.user,
-			'query_user': request.user,
-			'pong_matches_lost': request.user.matches_lost,
-			'pong_matches_won': request.user.matches_won,
+			'query_user': query_user_instance,
+			'pong_matches_lost': query_user_instance.matches_lost,
+			'pong_matches_won': query_user_instance.matches_won,
 			'pong_win_loss_ratio': pong_ratio,
 			'games_won': pong_games_won,
 			'games_lost': pong_games_lost,
