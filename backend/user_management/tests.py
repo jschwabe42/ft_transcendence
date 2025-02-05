@@ -1,10 +1,10 @@
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from user_management.friends import Friends, Friends_Manager
+from user_management.models import CustomUser
 
-# Create your tests here.
+User = CustomUser
 
 
 class FriendsManagerTest(TestCase):
