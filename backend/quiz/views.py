@@ -39,7 +39,7 @@ def create_room(request):
 			)
 		room, created = Room.objects.get_or_create(name=room_name)
 		room.update_activity()
-		participant, created = Participant.objects.get_or_create(user=request.user, player=Player.objects.filter(user=request.user).first(),  room=room)
+		participant, created = Participant.objects.get_or_create(player=Player.objects.filter(user=request.user).first(),  room=room)
 		assert created and participant.player is not None and participant.player == Player.objects.filter(user=request.user).first()
 		if created:
 			room.leader = participant
@@ -47,7 +47,7 @@ def create_room(request):
 			room.save()
 		room_list_update()
 		participants = Participant.objects.filter(room=room)
-		participants_data = [{'id': p.user.id, 'username': p.user.username} for p in participants]
+		participants_data = [{'id': p.player.user.id, 'username': p.player.user.username} for p in participants]
 
 		return JsonResponse(
 			{
@@ -99,8 +99,8 @@ def room_member_update(room_id):
 	Uses the websocket to broadcast the updated room members list to all connected clients. (Maybe change this later on to fetch the data inside the consumer)
 	"""
 	room = get_object_or_404(Room, id=room_id)
-	participants = list(room.participants.values_list('user__username', flat=True))
-	leader = room.leader.user.username if room.leader else None
+	participants = list(room.participants.values_list('player__user__username', flat=True))
+	leader = room.leader.player.user.username if room.leader else None
 
 	data = {
 		'room_name': room.name,
@@ -128,11 +128,11 @@ def join_room(request, room_id):
 	try:
 		print(f'Joining room with id: {room_id}', flush=True)
 		room = Room.objects.get(id=room_id)
-		participant, created = Participant.objects.get_or_create(user=request.user, room=room)
+		participant, created = Participant.objects.get_or_create(player=Player.objects.filter(user=request.user).first(),  room=room)
 
 		# Return the room details and participants
 		participants = Participant.objects.filter(room=room)
-		participants_data = [p.user.username for p in participants]
+		participants_data = [p.player.user.username for p in participants]
 		if room.leader is None:
 			room.leader = participant
 			room.save()
@@ -146,7 +146,7 @@ def join_room(request, room_id):
 					'name': room.name,
 					'last_activity': room.last_activity,
 					'is_active': room.is_active,
-					'leader': room.leader.user.username if room.leader else None,
+					'leader': room.leader.player.user.username if room.leader else None,
 					'current_user': request.user.username,
 					'is_ingame': room.is_ingame,
 				},
@@ -165,9 +165,10 @@ def leave_room(request, room_id):
 	"""
 	try:
 		room = Room.objects.get(id=room_id)
-		participant = Participant.objects.filter(user=request.user, room=room).first()
+		player = get_object_or_404(Player, user=request.user)
+		participant = Participant.objects.filter(player=player, room=room).first()
 		if participant:
-			if room.leader == participant:
+			if room.leader.player == participant:
 				remaining_participants = (
 					Participant.objects.filter(room=room)
 					.exclude(id=participant.id)
@@ -237,7 +238,8 @@ def start_game(request, room_id):
 	print(f'Starting game in room: {room_id}', flush=True)
 	try:
 		room = Room.objects.get(id=room_id)
-		if room.leader.user != request.user:
+		player = get_object_or_404(Player, user=request.user)
+		if room.leader.player != player:
 			return JsonResponse({'success': False, 'error': 'You are not the leader of this room!'})
 		room.is_ingame = True
 		questions = get_trivia_questions(room.settings)
@@ -277,7 +279,8 @@ def submit_answer(request, room_id):
 	try:
 		if request.method == 'POST':
 			room = get_object_or_404(Room, id=room_id)
-			participant = get_object_or_404(Participant, user=request.user, room=room)
+			player = get_object_or_404(Player, user=request.user)
+			participant = Participant.objects.filter(player=player, room=room).first()
 
 			# print(f"Room: {room.name}, Participant: {participant.user.username}", flush=True)
 			# print(f"Request body: {request.body}", flush=True)

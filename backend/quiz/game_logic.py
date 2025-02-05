@@ -208,8 +208,8 @@ def process_answers(room_id, question):
 		).first()
 		if answer and not answer.is_disqualified:
 			answers_data.append({
-				'username': participant.user.username,
-				'profile_image': participant.user.image.url,
+				'username': participant.player.user.username,
+				'profile_image': participant.player.user.image.url,
 				'answer': answer.answer_given,
 				'score_difference': participant.score_difference,
 				# Potentially add the new score here
@@ -224,7 +224,7 @@ def process_answers(room_id, question):
 
 		participants_data.append(
 			{
-				'username': participant.user.username,
+				'username': participant.player.user.username,
 				'score': participant.score,
 				'score_difference': participant.score_difference,
 			}
