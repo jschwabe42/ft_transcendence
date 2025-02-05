@@ -1,7 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import PongGame
 
-from .models import Game
-
-admin.site.register(Game)
+admin.site.register(PongGame)

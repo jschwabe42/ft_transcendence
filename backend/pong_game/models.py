@@ -9,7 +9,7 @@ from user_management.models import CustomUser
 
 # create game when starting a new game
 # update game when finishing a game/goals are scored
-class Game(models.Model):
+class PongGame(models.Model):
 	player1 = models.ForeignKey(
 		CustomUser, related_name='games_as_player1', on_delete=models.CASCADE
 	)

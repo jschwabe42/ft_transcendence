@@ -3,11 +3,9 @@ from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
-# For api
 from rest_framework.views import APIView
 
-from .models import Game
+from .models import PongGame
 
 User = get_user_model()
 
@@ -43,7 +41,7 @@ class CreateGameView(APIView):
 			return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
 		# Create the game
-		game = Game.objects.create(player1=player, player2=opponent)
+		game = PongGame.objects.create(player1=player, player2=opponent)
 		game.save()
 
 		return Response(
@@ -68,8 +66,8 @@ class ScoreBoardView(APIView):
 			)
 
 		try:
-			game = Game.objects.get(id=game_id)
-		except Game.DoesNotExist:
+			game = PongGame.objects.get(id=game_id)
+		except PongGame.DoesNotExist:
 			return Response({'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 		game.score1 = int(score1)
@@ -101,8 +99,8 @@ class ControlKeySetting(APIView):
 			)
 
 		try:
-			game = Game.objects.get(id=game_id)
-		except Game.DoesNotExist:
+			game = PongGame.objects.get(id=game_id)
+		except PongGame.DoesNotExist:
 			return Response({'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 		if user == game.player1:

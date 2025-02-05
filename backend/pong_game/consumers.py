@@ -5,8 +5,8 @@ from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.utils import timezone
 
-from .models import Game
-from .pong import PongGame
+from .models import PongGame
+from .pong import PongInstance
 
 games = {}
 
@@ -18,7 +18,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 
 		# Stelle sicher, dass ein zentrales Spiel verwendet wird
 		if self.game_id not in games:
-			games[self.game_id] = PongGame('player1', 'player2')
+			games[self.game_id] = PongInstance('player1', 'player2')
 		self.game = games[self.game_id]
 
 		# Gruppe hinzufügen
@@ -52,7 +52,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 			await self.KeyboardInterrupt(user, game_id, key)
 
 	async def KeyboardInterrupt(self, user, game_id, key):
-		game = await sync_to_async(Game.objects.get)(id=game_id)
+		game = await sync_to_async(PongGame.objects.get)(id=game_id)
 		user1_control = game.player1_control_settings
 		user2_control = game.player2_control_settings
 		user1 = await sync_to_async(lambda: game.player1.username)()
@@ -94,7 +94,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 		)
 
 	async def save_message(self, user, game_id):
-		game = await sync_to_async(Game.objects.get)(id=game_id)
+		game = await sync_to_async(PongGame.objects.get)(id=game_id)
 		# Use sync_to_async to access related fields in an async context
 		user1 = await sync_to_async(lambda: game.player1.username)()
 		user2 = await sync_to_async(lambda: game.player2.username)()
@@ -114,7 +114,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 			json_state = json.loads(state)
 			winner = json_state['winner']
 			if winner['player1'] or winner['player2']:
-				game = await sync_to_async(Game.objects.get)(id=self.game_id)
+				game = await sync_to_async(PongGame.objects.get)(id=self.game_id)
 				game.pending = False
 				game.played_at = timezone.now()
 				player1 = await sync_to_async(lambda: game.player1)()
