@@ -8,6 +8,7 @@ import { game_base} from '/static/game/js/game_base_socket.js';
 import { page1, page2 } from '/static/game/js/pages.js';
 import { game } from '/static/game/js/game.js';
 import { gameDetails } from '/static/game/js/gameDetails.js';
+import { Tournement } from '/static/game/js/Tournement.js';
 
 class Router {
 	constructor() {
@@ -52,7 +53,8 @@ class Router {
 		const quizPathRegex = /^\/quiz\/([^\/]+)\/?$/;
 		const dashboardPathRegex = /^\/dashboard\/([^\/]+)\/?$/;
 		const pongPathRegex = /^\/game\/pong\/([^\/]+)\/?$/;  // Neue Regex für '/game/pong/:game_id'
-		const pongDetailsPathRegex = /^\/game\/game-details\/([^\/]+)\/?$/;  // Neue Regex für '/game/pong/:game_id'
+		const pongDetailsPathRegex = /^\/game\/game-details\/([^\/]+)\/?$/;
+		const tournementPathRegex = /^\/game\/tournement\/([^\/]+)\/?$/;
 	
 		let match = path.match(quizPathRegex);
 		if (match) {
@@ -83,6 +85,13 @@ class Router {
 		if (match) {
 			const gameId = match[1];
 			gameDetails({ game_id: gameId });
+			return;
+		}
+
+		match = path.match(tournementPathRegex);
+		if (match) {
+			const tournementId = match[1];
+			Tournement({ tournement_id: tournementId });
 			return;
 		}
 	
@@ -131,6 +140,7 @@ router.addRoute('/quiz/', loadRoomList);
  * The main view of the quiz app
  */
 router.addRoute('/game/', game_base);
+router.addRoute('/game/page2', page2);
 
 /**
  * The Homepage
@@ -144,18 +154,3 @@ router.addRoute('/dashboard/', loadDashboard);
 
 router.handleRouteChange();
 export default router;
-
-
-
-/**
- * routs for game (are getting changed)
- */
-router.addRoute('/game/pong/:game_id', (params) => {
-	game(params);
-	});
-
-router.addRoute('/game/game-details/:game_id', (params) => {
-	gameDetails(params);
-	});
-
-router.addRoute('/game/page2', page2);

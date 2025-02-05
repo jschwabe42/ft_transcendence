@@ -79,3 +79,16 @@ class Dashboard(models.Model):
 	def get_instance(cls):
 		instance, created = cls.objects.get_or_create(pk=1)
 		return instance
+	
+class Tournement(models.Model):
+	host = models.CharField(max_length=255, default="")
+	player1 = models.CharField(max_length=255, default="")
+	player2 = models.CharField(max_length=255, default="")
+	player3 = models.CharField(max_length=255, default="")
+
+	created_at = models.DateTimeField(default=timezone.now)
+
+	winner1 = models.CharField(max_length=255, default="")
+	winner2 = models.CharField(max_length=255, default="")
+
+	openTournement = models.BooleanField(default=True)

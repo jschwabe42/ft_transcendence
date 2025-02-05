@@ -1,5 +1,5 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
-from .models import Game
+from .models import Game, Tournement
 from users.models import Profile
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -183,6 +183,8 @@ class BasePageConsumer(AsyncWebsocketConsumer):
 
 		if use == "create_game":
 			await self.send_game_created(data['player1'], data['player2'], data['game_id'])
+		if (use == "create_tournement"):
+			await self.send_tournement_created(data['host'], data['tournement_id'])
 
 	async def send_game_created(self, player1, player2, game_id):
 		response = {
@@ -191,7 +193,6 @@ class BasePageConsumer(AsyncWebsocketConsumer):
 			"player2": player2,
 			"game_id": game_id
 		}
-
 		await self.channel_layer.group_send(
 			self.group_name,
 			{
@@ -199,5 +200,116 @@ class BasePageConsumer(AsyncWebsocketConsumer):
 				'message': response
 			}
 		)
+	
+	async def send_tournement_created(self, host, tournement_id):
+		sys.stdout.flush()
+		response = {
+			"message": "create_tournement",
+			"host": host,
+			"tournement_id": tournement_id
+		}
+		await self.channel_layer.group_send(
+			self.group_name,
+			{
+				'type': 'create_tournement',
+				'message': response
+			}
+		)
+
+	async def create_tournement(self, event):
+		await self.send(text_data=json.dumps(event['message']))
+	
 	async def game_created(self, event):
 		await self.send(text_data=json.dumps(event['message']))
+
+
+
+
+
+
+
+
+
+
+class TournementConsumer(AsyncWebsocketConsumer):
+	async def connect(self):
+		self.tournement_id = self.scope['url_route']['kwargs']['tournement_id']
+		self.group_name = f"tournement_{self.tournement_id}"
+		self.tournement = await sync_to_async(Tournement.objects.get)(id=self.tournement_id)
+		self.group_name = f"tournement_{self.tournement_id}"
+		self.user = self.scope.get("user").username
+
+		# check if user is already in the tournement
+		if self.user not in [self.tournement.host, self.tournement.player1, self.tournement.player2, self.tournement.player3]:
+			await self.add_user_to_tournement(self.user)
+
+		await self.channel_layer.group_add(self.group_name, self.channel_name)
+		await self.accept()
+
+		print(f"WebSocket connected: {self.tournement_id}")
+
+	async def disconnect(self, close_code):
+		await self.channel_layer.group_discard(
+			self.group_name,
+			self.channel_name
+		)
+		print(f"WebSocket disconnected: {self.tournement_id}")
+
+
+	async def add_user_to_tournement(self, username):
+		def update_tournement():
+			updated_field = None
+			if not self.tournement.player1:
+				self.tournement.player1 = username
+				updated_field = "player1"
+			elif not self.tournement.player2:
+				self.tournement.player2 = username
+				updated_field = "player2"
+			elif not self.tournement.player3:
+				self.tournement.player3 = username
+				updated_field = "player3"
+
+			self.tournement.save()
+			return updated_field
+
+		updated_field = await sync_to_async(update_tournement)()
+
+		# send message back to js
+		if updated_field:
+			await self.channel_layer.group_send(
+				self.group_name,
+				{
+					"type": "player_joined",
+					"username": username,
+					"field": updated_field
+				}
+			)
+
+	async def player_joined(self, event):
+		await self.send(text_data=json.dumps({
+			"use": "join",
+			"username": event["username"],
+			"field": event["field"]
+		}))
+
+	async def receive(self, text_data):
+		data = json.loads(text_data)
+		action = data.get("use")
+
+		# Tournement Updates
+		tournement_data = {
+			"host": self.tournement.host,
+			"player1": self.tournement.player1,
+			"player2": self.tournement.player2,
+			"player3": self.tournement.player3,
+		}
+		await self.channel_layer.group_send(
+			self.group_name,
+			{
+				"type": "send_tournement_update",
+				"message": json.dumps(tournement_data)
+			}
+		)
+
+	async def send_tournement_update(self, event):
+		await self.send(text_data=json.dumps(event["message"]))

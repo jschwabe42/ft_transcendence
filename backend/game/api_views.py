@@ -1,7 +1,7 @@
 
 # Create your views here.
 from users.models import Profile
-from .models import Game, Dashboard
+from .models import Game, Dashboard, Tournement
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 import sys
@@ -119,3 +119,19 @@ class ControllKeySetting(APIView):
 			{"message": f"Control settings successfully updated for user {user}."},
 			status=status.HTTP_200_OK
 		)
+	
+
+class CreateTournement(APIView):
+	# permission_classes = [IsAuthenticated]
+
+	def post(self, request):
+		username = request.data.get('username')
+
+		try:
+			host = User.objects.get(username=username)
+		except User.DoesNotExist:
+			return Response({"error": "user does not exist."}, status=status.HTTP_404_NOT_FOUND)
+
+		tournement = Tournement.objects.create(host=username)
+		tournement.save()
+		return Response({"tournement_id": tournement.id, "message": "Tournement created successfully."}, status=status.HTTP_201_CREATED)

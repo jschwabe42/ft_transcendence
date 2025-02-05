@@ -1,5 +1,6 @@
 import router from '/static/js/router.js';
 import { CreateGameForm } from './CreateGame.js';
+import { CreateTournement } from './CreateTournement.js';
 
 export function game_base() {
 	const socket = new WebSocket("ws://localhost:8000/ws/game/");
@@ -40,19 +41,31 @@ export function game_base() {
 				<h2>Pending Games</h2>
 				<div id="pendingGamesContainer">${pendingGames || '<p>No pending games.</p>'}</div>
 
+				<h2>Open Tournements</h2>
+				<div id="pendingTournementsContainer"></div>
+
 				<h3>Play new Game</h3>
 				<form id="create-game-form">
 					<input id="opp_name" type="text" name="opp_name" placeholder="Enter opponent's Username" />
 					<button class="add_user" type="submit">Play Game +</button>
 				</form>
+
+				<h3>Create Tournement</h3>
+				<form id="create-tournement-form">
+					<button class="add_user" type="submit">Create Tournement</button>
+				</form>
+
 				<button class="navigate-button" data-path="/game/page2">Go to Page 2</button>
-				<button class="navigate-button" data-path="/game/page1">Go to Page 1</button>
-				<button class="navigate-button" data-path="/game/game-details/1">Game Details</button>
 			`;
 
 			document.getElementById("create-game-form").addEventListener("submit", function(event) {
 				event.preventDefault();
 				CreateGameForm(event, socket);
+			});
+
+			document.getElementById("create-tournement-form").addEventListener("submit", function(event) {
+				event.preventDefault();
+				CreateTournement(event, socket);
 			});
 		})
 		.catch(error => console.error("Fehler beim Laden der Daten:", error));
@@ -63,9 +76,6 @@ export function game_base() {
 		console.log("received data", event.data);
 		const message = JSON.parse(event.data);
 		if (message.message === "game_created") {
-			console.log(message.game_id);
-			console.log(message.player1);
-			console.log(message.player2);
 			if (userName == message.player1 || userName == message.player2)
 			{
 				const newGameHTML = `
@@ -73,10 +83,23 @@ export function game_base() {
 						${message.player1} vs ${message.player2} (pending)
 					</button>
 				`;
-
 				const pendingGamesContainer = document.getElementById('pendingGamesContainer');
 				pendingGamesContainer.insertAdjacentHTML('afterbegin', newGameHTML);
 			}
+		}
+		if (message.message === "create_tournement")
+		{
+			const newGameHTML = `
+					<button class="ChatButtonBackground navigate-button" data-path="/game/tournement/${message.tournement_id}">
+						Join Open Tournement id=${message.tournement_id}
+					</button>
+				`;
+			const pendingGamesContainer = document.getElementById('pendingTournementsContainer');
+			pendingGamesContainer.insertAdjacentHTML('afterbegin', newGameHTML);
+			let path = "/game/tournement/" + message.tournement_id;
+			
+			if (message.host == userName)
+				router.navigateTo(path)
 		}
 	};
 

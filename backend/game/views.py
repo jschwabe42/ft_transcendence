@@ -4,17 +4,12 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from users.models import Profile
-from .models import Game, Dashboard, Player
+from .models import Game, Dashboard, Player, Tournement
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.http import JsonResponse
 
-
-from django.middleware.csrf import get_token
 import sys
-
-# def game(request):
-# 	return render(request, "game/index.html")
 
 def game_data(request):
 	try:
@@ -68,16 +63,23 @@ def ingame(request):
 		return JsonResponse({'error': 'Game not found'}, status=404)
 
 
-# def game_details(request, game_id):
-# 	game = get_object_or_404(Game, pk=game_id)
-# 	return render(request, "game/game_details.html", {"game": game})
-
-# def players(request):
-# 	return render(request, "game/players.html", {"players_list": Player.objects.order_by("-created_at")[:10]})
-
-# def player_details_by_id(request, player_id):
-# 	player = get_object_or_404(Player, pk=player_id)
-# 	return render(request, "game/player_details.html", {"player": player})
-
-# def dashboard(request):
-# 	return render(request, "game/dashboard.html", {"dashboard": Dashboard.get_instance()})
+def tournement(request):
+	tournement_id = request.GET.get('tournement_id')
+	if not tournement_id:
+		return JsonResponse({'error': 'Tournement ID is required'}, status=400)
+	try:
+		tournement = Tournement.objects.get(id=tournement_id)
+		tournement_data = {
+			'host': tournement.host,
+			'player1': tournement.player1,
+			'player2': tournement.player2,
+			'player3': tournement.player3,
+			'created_at': tournement.created_at.isoformat() if tournement.created_at else None,
+			'winner1': tournement.winner1,
+			'winner2': tournement.winner2,
+			'openTournement': tournement.openTournement,
+			'id': tournement.id,
+		}
+		return JsonResponse(tournement_data)
+	except Tournement.DoesNotExist:
+		return JsonResponse({'error': 'Tournement not found'}, status=404)
