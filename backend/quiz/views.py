@@ -39,6 +39,7 @@ def create_room(request):
 		room, created = Room.objects.get_or_create(name=room_name)
 		room.update_activity()
 		participant, created = Participant.objects.get_or_create(user=request.user, room=room)
+		assert created and participant.user is not None
 		if created:
 			room.leader = participant
 			room.settings = RoomSettings.objects.create(room=room)
@@ -165,7 +166,7 @@ def leave_room(request, room_id):
 		room = Room.objects.get(id=room_id)
 		participant = Participant.objects.filter(user=request.user, room=room).first()
 		if participant:
-			if room.leader == participant:
+			if room.leader.user is None or room.leader.user == participant:
 				remaining_participants = (
 					Participant.objects.filter(room=room)
 					.exclude(id=participant.id)
@@ -275,7 +276,7 @@ def submit_answer(request, room_id):
 	try:
 		if request.method == 'POST':
 			room = get_object_or_404(Room, id=room_id)
-			participant = get_object_or_404(Participant, user=request.user, room=room)
+			participant = Participant.objects.filter(user=request.user, room=room).first()
 
 			# print(f"Room: {room.name}, Participant: {participant.user.username}", flush=True)
 			# print(f"Request body: {request.body}", flush=True)

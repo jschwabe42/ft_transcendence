@@ -1,0 +1,41 @@
+{% extends "pong/game_base.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Players</title>
+    <link rel="stylesheet" href="{% static 'users/styles.css' %}">
+</head>
+<!-- @note ordering? -->
+
+
+<body>
+    <div class="mx-auto" style="width: fit-content; margin-bottom: 30px; display: flex; flex-wrap: wrap;">
+        <h2>Players of pong</h2>
+    </div>
+    <div class="players-container">
+        {% if players_list %}
+        <ul class="list-group">
+            {% for player_user in players_list %}
+            <li class="list-group-item" style="text-align: center;">
+                <a href="{% url 'users:public-profile' player_user.username %}" class="mx-auto btn btn-primary">
+                    {{ player_user }}
+                </a>
+                <!-- @note alignment should not be a single column, preferably using multiple cards per row -->
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    </ul>
+    {% else %}
+    <p>No players have been created yet.</p>
+    {% endif %}
+</body>
+
+{% endblock %}
+
+</html>
