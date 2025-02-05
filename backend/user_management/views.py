@@ -68,16 +68,16 @@ def account(request):
 @login_required
 def public_profile(request, query_user):
 	query_user_instance = User.objects.get(username=query_user)
-	pongs_finished = PongGame.objects.filter(
+	pong_games_finished = PongGame.objects.filter(
 		player1=query_user_instance, pending=False
 	) | PongGame.objects.filter(player2=query_user_instance, pending=False)
-	games_won = pongs_finished.filter(
-		player1=query_user_instance, score1__gt=F('score2'), pending=False
-	) | pongs_finished.filter(player2=query_user_instance, score2__gt=F('score1'), pending=False)
+	pong_games_won = pong_games_finished.filter(
+		player1=query_user_instance, score1__gt=F('score2')
+	) | pong_games_finished.filter(player2=query_user_instance, score2__gt=F('score1'))
 	# something to use the display_name in games (playing as display_name) @follow-up
-	games_lost = [game for game in pongs_finished if game not in games_won]
-	games_won = sorted(games_won, key=lambda game: game.played_at, reverse=True)
-	games_lost = sorted(games_lost, key=lambda game: game.played_at, reverse=True)
+	pong_games_lost = [game for game in pong_games_finished if game not in pong_games_won]
+	pong_games_won = sorted(pong_games_won, key=lambda game: game.played_at, reverse=True)
+	pong_games_lost = sorted(pong_games_lost, key=lambda game: game.played_at, reverse=True)
 	friends = Friends_Manager.fetch_friends_public(user_instance=query_user_instance)
 	if request.user == query_user_instance:
 		# privately manage own user profile
@@ -89,7 +89,9 @@ def public_profile(request, query_user):
 		friend_requests_sent = Friends_Manager.fetch_sent(origin=request.user)
 		friend_requests_received = Friends_Manager.fetch_received(target=request.user)
 
-	pong_ratio = win_to_loss_ratio(request.user.matches_won, request.user.matches_lost)
+	pong_ratio = win_to_loss_ratio(
+		query_user_instance.matches_won, query_user_instance.matches_lost
+	)
 	return render(
 		request,
 		'users/public_profile.html',
@@ -99,8 +101,8 @@ def public_profile(request, query_user):
 			'pong_matches_lost': request.user.matches_lost,
 			'pong_matches_won': request.user.matches_won,
 			'pong_win_loss_ratio': pong_ratio,
-			'games_won': games_won,
-			'games_lost': games_lost,
+			'games_won': pong_games_won,
+			'games_lost': pong_games_lost,
 			'friends': friends,
 			'friend_requests_sent': friend_requests_sent,
 			'friend_requests_received': friend_requests_received,
