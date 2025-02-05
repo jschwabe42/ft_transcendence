@@ -29,7 +29,6 @@ urlpatterns = [
 	path('users/', include('user_management.urls')),
 	path('game/', include('pong_game.urls')),
 	path('admin/', admin.site.urls),
-	path('blog/', include('blog.urls')),
 	path('chat/', include('chat.urls')),
 	path('quiz/', include('quiz.urls')),
 	path('dashboard/', include('dashboard.urls')),
