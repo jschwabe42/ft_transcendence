@@ -322,5 +322,9 @@ class TournementConsumer(AsyncWebsocketConsumer):
 			}
 			await self.send(text_data=json.dumps(tournement_data))
 
+		if action == "createGames":
+			print("\n\n\nCreated Games\n\n\n")
+			sys.stdout.flush()
+
 		elif action == "join":
 			pass

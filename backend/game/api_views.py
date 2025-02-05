@@ -12,11 +12,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+import sys
 
 # API for game creation
 class CreateGameView(APIView):
 	#For testing CLI comment permission_classes cause canot acces csrf_token
 	permission_classes = [IsAuthenticated]
+
+	print("\nAPI CreateGameView\n")
+	sys.stdout.flush()
 
 	def post(self, request):
 		opponent_username = request.data.get('opponent')
@@ -48,14 +52,6 @@ class CreateGameView(APIView):
 		game = Game.objects.create(player1=user_profile.player, player2=opponent_profile.player)
 		game.save()
 
-		# channel_layer = get_channel_layer()
-		# channel_layer.group_send(
-		# 	'base_page_group',
-		# 	{
-		# 		'type': 'send_game_created',
-		# 		'game_id': game.id,
-		# 	}
-		# )
 		return Response({"game_id": game.id, "message": "Game created successfully."}, status=status.HTTP_201_CREATED)
 
 class ScoreBoardView(APIView):

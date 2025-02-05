@@ -1,13 +1,11 @@
 import router from '/static/js/router.js';
+import { CreateTournementGames } from './CreateTournementGames.js';
 
-let tournementModel = {}
 
 export function Tournement(params) {
+	let tournementModel = {}
 	console.log("Tournement: ID", params.tournement_id);
-	// const userName = document.getElementById('username').getAttribute('data-username');
-
-
-
+	const tournementSocket = new WebSocket('ws://' + window.location.host + '/tournement/' + params.tournement_id + '/');
 
 	fetch(`/game/api/tournement/?tournement_id=${params.tournement_id}`)
 		.then(response => response.json())
@@ -23,9 +21,18 @@ export function Tournement(params) {
 				<p id="player3"><strong>Player3:</strong> ${model.player3}</p>
 				<p id="playerNum"><strong></strong> ${model.playernum}</p>
 
+				<form id="create-tournement-games" style="display: none;" >
+					<button class="add_user" type="submit">Play Tournement Games +</button>
+				</form>
+
 				<button class="navigate-button" data-path="/game/">Go to Menu</button>
 			`;
-			renderTournementData();
+			renderTournementData(tournementSocket, tournementModel);
+			document.getElementById("create-tournement-games").addEventListener("submit", function(event) {
+				event.preventDefault();
+				CreateTournementGames(event, tournementSocket, tournementModel)
+				// console.log(event, tournementSocket, "button Pressed");
+			});
 		})
 		.catch(error => {
 			console.error("Fehler beim Laden der Daten:", error);
@@ -44,11 +51,9 @@ export function Tournement(params) {
 
 
 
-function renderTournementData()
+function renderTournementData(tournementSocket, tournementModel)
 {
-	const tournement_id = tournementModel.id;
-	console.log(tournement_id)
-	const tournementSocket = new WebSocket('ws://' + window.location.host + '/tournement/' + tournement_id + '/');
+	const user = document.getElementById('username').getAttribute('data-username');
 
 	
 	tournementSocket.onopen = function(e) {
@@ -58,16 +63,21 @@ function renderTournementData()
 	
 	tournementSocket.onmessage = function(e) {
 		const data = JSON.parse(e.data);
-		console.log(data)
 		if (data.use == "join") {
+			tournementModel[data.field] = data.username
 			document.getElementById(data.field).innerHTML = `<strong>${data.field.replace("player", "Player ")}:</strong> ${data.username}`;
 			document.getElementById("playerNum").innerHTML = data.playerNum
 		}
-		if (data.playerNum == 4) { // und user == host dann create 2 games und redirecte alle richtig ----> coool
+		if (data.playerNum == 4 && user == tournementModel.host) {
 			document.getElementById("header").style.color = "green";
+			document.getElementById("create-tournement-games").style.display = "block";
 		}
 		if (data.use === "sync") {
 			updateUIWithTournementData(data);
+		}
+		if (data.use == "createGames")
+		{
+			console("test")
 		}
 	};
 
