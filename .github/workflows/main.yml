@@ -49,7 +49,6 @@ jobs:
       - name: lint using ruff
         run: |
           ruff check .
-      - name: lint using ruff
+      - name: format using ruff
         run: |
-          pip install ruff
           ruff format .
