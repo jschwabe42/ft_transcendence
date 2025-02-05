@@ -166,7 +166,7 @@ def leave_room(request, room_id):
 		room = Room.objects.get(id=room_id)
 		participant = Participant.objects.filter(user=request.user, room=room).first()
 		if participant:
-			if room.leader.user == participant:
+			if room.leader.user is None or room.leader.user == participant:
 				remaining_participants = (
 					Participant.objects.filter(room=room)
 					.exclude(id=participant.id)
