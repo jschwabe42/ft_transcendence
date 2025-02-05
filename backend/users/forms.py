@@ -17,6 +17,8 @@ class UserRegisterForm(UserCreationForm):
 		elif (
 			User.objects.filter(username=new_username).exists()
 			| User.objects.filter(display_name=new_username).exists()
+			# @follow-up remote auth reserves for oauth_id
+			# | User.objects.filter(oauth_id=new_username).exists()
 		):
 			self.add_error('username', 'A user with that username already exists.')
 		return cleaned_data
@@ -31,7 +33,7 @@ class UserUpdateForm(forms.ModelForm):
 
 	class Meta:
 		model = User
-		fields = ['display_name', 'email']
+		fields = ['username', 'display_name', 'email']
 
 
 class ProfileUpdateForm(forms.ModelForm):

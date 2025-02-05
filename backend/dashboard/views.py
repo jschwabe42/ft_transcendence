@@ -1,12 +1,10 @@
+from custom_user.models import Player
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
-from custom_user.models import Player
-
 User = get_user_model()
-
 def profile_list(request):
 	"""
 	Api call that returns all profiles.
@@ -25,7 +23,6 @@ def profile_list(request):
 		'profiles': profile_data,
 	})
 
-# @follow-up use display_name instead of username?
 @login_required
 def get_profile(request, username):
 	"""

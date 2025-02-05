@@ -40,7 +40,7 @@ def account(request):
 		u_form = UserUpdateForm(request.POST, instance=request.user)
 		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
 		# @follow-up check if the user is allowed to change the password
-		# , and only ask for the password if needed
+		# , and only ask for the password if needed (@todo extract to a separate view!)
 		mod_pwd_form = PasswordChangeForm(request.user, request.POST)
 		if u_form.is_valid() and p_form.is_valid() and mod_pwd_form.is_valid():
 			u_form.save()
@@ -72,6 +72,7 @@ def public_profile(request, query_user):
 	games_won = games.filter(player1=query_player, score1__gt=F('score2')) | games.filter(
 		player2=query_player, score2__gt=F('score1')
 	)
+	# something to use the display_name in games (playing as display_name) @follow-up
 	games_lost = [game for game in games if game not in games_won]
 	games_won = sorted(games_won, key=lambda game: game.played_at, reverse=True)
 	games_lost = sorted(games_lost, key=lambda game: game.played_at, reverse=True)

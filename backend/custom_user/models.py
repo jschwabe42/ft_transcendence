@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
@@ -7,7 +9,7 @@ from PIL import Image
 class CustomUser(AbstractUser):
 	image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 	online = models.BooleanField(default=False)
-	# only display_name is changeable and public - username can be used as unique identifier
+	# display_name is used for tournaments @follow-up
 	display_name = models.CharField(
 		'display_name',
 		max_length=150,
@@ -19,10 +21,11 @@ class CustomUser(AbstractUser):
 		},
 		blank=True,  # this will be initialized in the signal
 	)
-	oauth = models.BooleanField(default=False)
+	# for storing oauth identity
+	oauth_id: Optional[str] = models.CharField(max_length=150, blank=True, null=True)
 
 	def __str__(self):
-		return self.display_name
+		return self.username
 
 	# resize uploaded images
 	def save(self, *args, **kwargs):
@@ -36,8 +39,6 @@ class CustomUser(AbstractUser):
 
 
 class Player(models.Model):
-	matches_won = models.IntegerField(default=0)
-	matches_lost = models.IntegerField(default=0)
 	user = models.OneToOneField(
 		'custom_user.CustomUser',
 		on_delete=models.CASCADE,
@@ -46,6 +47,10 @@ class Player(models.Model):
 		blank=True,
 	)
 
+	# The statistics for the pong game
+	matches_won = models.IntegerField(default=0)
+	matches_lost = models.IntegerField(default=0)
+
 	# The statistics for the quiz game
 	quiz_games_played = models.IntegerField(default=0)
 	quiz_games_won = models.IntegerField(default=0)
@@ -53,6 +58,10 @@ class Player(models.Model):
 	quiz_high_score = models.IntegerField(default=0)
 	quiz_questions_asked = models.IntegerField(default=0)
 	quiz_correct_answers = models.IntegerField(default=0)
+
+	def display_name(self):
+		"""tournament display name"""
+		return self.user.display_name
 
 	def __str__(self):
 		return self.user.username
