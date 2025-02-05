@@ -1,4 +1,4 @@
-{%extends "game/game_base.html"%}
+{%extends "pong/game_base.html"%}
 {% block content %}
 <main role="main" class="container">
 	<div class="row">
@@ -9,7 +9,7 @@
 					<h2>Recent Games</h2>
 					{% for game in recent_games_list %}
 					{% if game.pending == False %}
-					<a href="{% url 'game:game_details' game.id %}" class="ChatButtonBackground">
+					<a href="{% url 'pong:game_details' game.id %}" class="ChatButtonBackground">
 						{{ game.player1 }} vs {{ game.player2 }} ({{ game.score1 }}-{{ game.score2 }})
 					</a>
 					{% endif %}

@@ -1,4 +1,4 @@
-{%extends "game/game_base.html"%}
+{%extends "pong/game_base.html"%}
 {% block content %}
 <div id="game-data" game-id="{{ game_id }}" player1="{{ game.player1 }}" player2="{{ game.player2 }}"
 	curr-user="{{ request.user.username }}"></div>
@@ -50,6 +50,6 @@
 			<p id="player2">0</p>
 		</div>
 	</div>
-	<a id="winner" href="{% url 'game:recent_games' %}" , style="display: none;">Back to Games</a>
+	<a id="winner" href="{% url 'pong:recent_games' %}" , style="display: none;">Back to Games</a>
 </main>
 {% endblock content %}

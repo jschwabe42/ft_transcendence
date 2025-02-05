@@ -6,7 +6,7 @@ document.getElementById("create-game-form").addEventListener("submit", async fun
 	let UserName = document.getElementById('username').getAttribute('data-username'); // get Username(saved in div id = username)
 
 	console.log("username:", UserName, "OppName:", oppName);
-	const response = await fetch('/game/api/create-game/', {
+	const response = await fetch('/pong/api/create-game/', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ document.getElementById("create-game-form").addEventListener("submit", async fun
 	});;
 	const data = await response.json();
 	if (response.ok) {
-		window.location.href = '/game/new/' + data.game_id + '/'; // redirect to game
+		window.location.href = '/pong/new/' + data.game_id + '/'; // redirect to game
 	} else {
 		console.error('Request failed with status:', response.status);
 		const errorText = await response.text();

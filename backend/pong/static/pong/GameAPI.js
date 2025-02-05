@@ -1,11 +1,11 @@
 
-document.getElementById("up_down").addEventListener("click", async function(event) {
+document.getElementById("up_down").addEventListener("click", async function (event) {
 	console.log("Access API");
-	event.preventDefault(); 
+	event.preventDefault();
 	const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 	try {
-		const response = await fetch('/game/api/get-gameControl/', {
+		const response = await fetch('/pong/api/get-gameControl/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -29,13 +29,13 @@ document.getElementById("up_down").addEventListener("click", async function(even
 	}
 });
 
-document.getElementById("ws").addEventListener("click", async function(event) {
+document.getElementById("ws").addEventListener("click", async function (event) {
 	console.log("Access API");
-	event.preventDefault(); 
+	event.preventDefault();
 	const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 	try {
-		const response = await fetch('/game/api/get-gameControl/', {
+		const response = await fetch('/pong/api/get-gameControl/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ async function sendGameScores(score1, score2) {
 	console.log("Access API Scores");
 	const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 	try {
-		const response = await fetch('/game/api/get-score/', {
+		const response = await fetch('/pong/api/get-score/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
