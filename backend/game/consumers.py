@@ -131,12 +131,24 @@ class GameConsumer(AsyncWebsocketConsumer):
 				game.played_at = timezone.now()
 				player1 = await sync_to_async(lambda: game.player1)()
 				player2 = await sync_to_async(lambda: game.player2)()
+
+				profile1 = await sync_to_async(lambda: player1.profile)()
+				profile2 = await sync_to_async(lambda: player2.profile)()
+
+
 				if (winner['player1']):
 					player1.matches_won += 1
 					player2.matches_lost += 1
+					profile1.pong_games_won += 1
+					profile2.pong_games_lost += 1
 				if (winner['player2']):
 					player2.matches_won += 1
 					player1.matches_lost += 1
+					profile2.pong_games_won += 1
+					profile1.pong_games_lost += 1
+				
+				await sync_to_async(profile1.save)()
+				await sync_to_async(profile2.save)()
 				await sync_to_async(player1.save)()
 				await sync_to_async(player2.save)()
 				await sync_to_async(game.save)()

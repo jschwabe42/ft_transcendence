@@ -26,6 +26,10 @@ class Profile(models.Model):
 	quiz_questions_asked = models.IntegerField(default=0)
 	quiz_correct_answers = models.IntegerField(default=0)
 
+	# Pong Statistics
+	pong_games_won = models.IntegerField(default=0)
+	pong_games_lost = models.IntegerField(default=0)
+
 	def get_name(self):
 		return self.user.username
 
