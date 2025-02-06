@@ -8,7 +8,7 @@ export function CreateGameForm(event, socket) {
 	if (oppName) {
 		console.log("Opponent Name:", oppName, "User Name:", userName);
 
-		fetch('/game/api/create-game/', {
+		fetch('/pong/api/create-game/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

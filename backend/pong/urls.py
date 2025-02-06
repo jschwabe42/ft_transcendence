@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from .api_views import CreateGameView, ScoreBoardView, ControllKeySetting, CreateTournement
 
-app_name = 'game'
+app_name = 'pong'
 urlpatterns = [
 	# path("players/", views.players, name="players"),
 	# path("players/<int:player_id>/", views.player_details_by_id, name="player_details_by_id"),

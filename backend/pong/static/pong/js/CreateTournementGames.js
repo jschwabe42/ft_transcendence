@@ -40,7 +40,7 @@ export function CreateTournementGames(event, socket, model, tour_id) {
 
 function CreateGamesAPI(player1, player2, tour_id) {
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-	return fetch('/game/api/create-game/', {
+	return fetch('/pong/api/create-game/', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

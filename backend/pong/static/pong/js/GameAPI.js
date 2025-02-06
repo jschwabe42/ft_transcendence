@@ -71,7 +71,7 @@ export async function sendGameScores(score1, score2, game_id) {
 	// let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 	let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 	try {
-		const response = await fetch('/game/api/get-score/', {
+		const response = await fetch('/pong/api/get-score/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ let gameModel = {};
 export function game(params) {
 	console.log("Game ID:", params.game_id);
 
-	fetch(`/game/api/ingame/?game_id=${params.game_id}`)
+	fetch(`/pong/api/ingame/?game_id=${params.game_id}`)
 		.then(response => response.json())
 		.then(model => {
 			console.log(model);
@@ -53,7 +53,7 @@ export function game(params) {
 							<p id="player2">${model.score2}</p>
 						</div>
 					</div>
-					<button id="winner" class="navigate-button" style="display: none;" data-path="/game/">back to menu</button>
+					<button id="winner" class="navigate-button" style="display: none;" data-path="/pong/">back to menu</button>
 				</main>
 			`;
 			renderGameData();
@@ -307,7 +307,7 @@ function renderGameData() {
 		let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 		try {
-			const response = await fetch('/game/api/get-gameControl/', {
+			const response = await fetch('/pong/api/get-gameControl/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -337,7 +337,7 @@ function renderGameData() {
 		let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 		try {
-			const response = await fetch('/game/api/get-gameControl/', {
+			const response = await fetch('/pong/api/get-gameControl/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

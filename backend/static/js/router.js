@@ -4,7 +4,7 @@ import { clear_containers, home_view } from '/static/js/navbar.js';
 import { loadDashboard } from '/static/dashboard/js/dashboard.js';
 import { loadProfile } from '/static/dashboard/js/profile.js';
 
-import { game_base} from '/static/pong/js/game_base_socket.js';
+import { game_base } from '/static/pong/js/game_base_socket.js';
 import { page1, page2 } from '/static/pong/js/pages.js';
 import { game } from '/static/pong/js/game.js';
 import { gameDetails } from '/static/pong/js/gameDetails.js';
@@ -52,10 +52,10 @@ class Router {
 	handleDynamicRoute(path) {
 		const quizPathRegex = /^\/quiz\/([^\/]+)\/?$/;
 		const dashboardPathRegex = /^\/dashboard\/([^\/]+)\/?$/;
-		const pongPathRegex = /^\/game\/pong\/([^\/]+)\/?$/;  // Neue Regex für '/game/pong/:game_id'
-		const pongDetailsPathRegex = /^\/game\/game-details\/([^\/]+)\/?$/;
-		const tournementPathRegex = /^\/game\/tournement\/([^\/]+)\/?$/;
-	
+		const pongPathRegex = /^\/pong\/([^\/]+)\/?$/;  // Neue Regex für '/pong/:game_id'
+		const pongDetailsPathRegex = /^\/pong\/game-details\/([^\/]+)\/?$/;
+		const tournementPathRegex = /^\/pong\/tournement\/([^\/]+)\/?$/;
+
 		let match = path.match(quizPathRegex);
 		if (match) {
 			const roomName = match[1];
@@ -67,7 +67,7 @@ class Router {
 			}
 			return;
 		}
-	
+
 		match = path.match(dashboardPathRegex);
 		if (match) {
 			const username = match[1];
@@ -94,10 +94,10 @@ class Router {
 			Tournement({ tournement_id: tournementId });
 			return;
 		}
-	
+
 		this.showNotFound();
 	}
-	
+
 
 	// ! This function is not used. If for some reason we want to use href WITHOUT an event listener (please don't), this
 	//! function can be modified to USE navigateTo instead of handleRouteChange and then href would work.
@@ -139,8 +139,8 @@ router.addRoute('/quiz/', loadRoomList);
 /**
  * The main view of the quiz app
  */
-router.addRoute('/game/', game_base);
-router.addRoute('/game/page2', page2);
+router.addRoute('/pong/', game_base);
+router.addRoute('/pong/page2', page2);
 
 /**
  * The Homepage

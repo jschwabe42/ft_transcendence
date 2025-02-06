@@ -29,6 +29,6 @@ export function page2() {
 	console.log("Test Page2");
 	document.getElementById('pong-app-content').innerHTML = `
 		<h1>Willkommen auf Seite 2</h1>
-		<a href="/game/page1" data-link>Gehe zu Seite 1</a>
+		<a href="/pong/page1" data-link>Gehe zu Seite 1</a>
 	`;
 }

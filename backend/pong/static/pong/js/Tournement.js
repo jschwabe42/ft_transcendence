@@ -7,7 +7,7 @@ export function Tournement(params) {
 	console.log("Tournement: ID", params.tournement_id);
 	const tournementSocket = new WebSocket('ws://' + window.location.host + '/tournement/' + params.tournement_id + '/');
 
-	fetch(`/game/api/tournement/?tournement_id=${params.tournement_id}`)
+	fetch(`/pong/api/tournement/?tournement_id=${params.tournement_id}`)
 		.then(response => response.json())
 		.then(model => {
 			console.log(model);
@@ -25,7 +25,7 @@ export function Tournement(params) {
 					<button class="add_user" type="submit">Play Tournement Games +</button>
 				</form>
 
-				<button class="navigate-button" data-path="/game/">Go to Menu</button>
+				<button class="navigate-button" data-path="/pong/">Go to Menu</button>
 			`;
 			renderTournementData(tournementSocket, tournementModel, params.tournement_id);
 			document.getElementById("create-tournement-games").addEventListener("submit", function(event) {
@@ -84,11 +84,11 @@ function renderTournementData(tournementSocket, tournementModel)
 			}));
 			// redirect Users to Games
 			if (user == gameDetails[0].player1 || user == gameDetails[0].player2) {
-				let path = '/game/pong/' + gameDetails[0].gameid
+				let path = '/pong/' + gameDetails[0].gameid
 				router.navigateTo(path)
 			}
 			if (user == gameDetails[1].player1 || user == gameDetails[1].player2) {
-				let path = '/game/pong/' + gameDetails[1].gameid
+				let path = '/pong/' + gameDetails[1].gameid
 				router.navigateTo(path)
 			}
 		}

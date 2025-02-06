@@ -1,7 +1,7 @@
 export function gameDetails(params) {
 	console.log("Game ID:", params.game_id);
 
-	fetch(`/game/api/ingame/?game_id=${params.game_id}`)
+	fetch(`/pong/api/ingame/?game_id=${params.game_id}`)
 	.then(response => {
 		if (!response.ok) {
 			throw new Error(`HTTP error! Status: ${response.status}`);

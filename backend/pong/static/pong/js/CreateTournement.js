@@ -7,7 +7,7 @@ export function CreateTournement(event, socket) {
 
 	console.log("Create Tournemet")
 
-	fetch('/game/api/create-tournement/', {
+	fetch('/pong/api/create-tournement/', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
