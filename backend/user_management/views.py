@@ -22,7 +22,6 @@ def register(request):
 	Registers a new user.
 	API Endpoint: /users/api/register/
 	"""
-	print(f"Hello World", flush=True)
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		email = request.POST.get('email')
@@ -35,9 +34,8 @@ def register(request):
 			return JsonResponse({'success': False, 'message': 'Username already taken.'})
 		if User.objects.filter(email=email).exists():
 			return JsonResponse({'success': False, 'message': 'An Account with this email already exists.'})
-		print(f"Creating user with username: {username}, email: {email}, password: {password1}", flush=True)
-		# user = User.objects.create_user(username=username, email=email, password=password1)
-		# user.save()
+		user = User.objects.create_user(username=username, email=email, password=password1, display_name=username)
+		user.save()
 		return JsonResponse({'success': True, 'message': 'Account created successfully.'})
 	else:
 		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
