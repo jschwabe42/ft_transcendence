@@ -141,7 +141,13 @@ function upload_image(event) {
 
 function change_password(event) {
 	document.getElementById('change-password').addEventListener('click', () => {
-		document.getElementById('password-fields').style.display = 'block';
+		const style = document.getElementById('password-fields').style.display;
+		if (style === 'none') {
+			document.getElementById('password-fields').style.display = 'block';
+		}
+		else {
+			document.getElementById('password-fields').style.display = 'none';
+		}
 	});
 
 	document.getElementById('update-password').addEventListener('click', () => {
