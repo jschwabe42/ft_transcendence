@@ -66,7 +66,13 @@ export function display_account() {
 
 function get_account_details() {
 	fetch('/users/api/get_account_details/')
-		.then(response => response.json())
+		.then(response => {
+			if (response.redirected) {
+				router.navigateTo('/login/');
+				return;
+			}
+			return response.json();
+		})
 		.then(data => {
 			document.getElementById('account-username-head').textContent = `${data.username}'s profile`;
 			document.getElementById('account-email-head').textContent = data.email;
@@ -153,7 +159,13 @@ function update_profile(originalData, password) {
 			'X-CSRFToken': csrfToken,
 		},
 	})
-		.then(response => response.json())
+		.then(response => {
+			if (response.redirected) {
+				router.navigateTo('/login/');
+				return;
+			}
+			return response.json();
+		})
 		.then(data => {
 			if (data.success) {
 				alert(data.message);
@@ -217,7 +229,13 @@ function change_password(event) {
 					new_password: new_password,
 				}),
 			})
-			.then(response => response.json())
+			.then(response => {
+				if (response.redirected) {
+					router.navigateTo('/login/');
+					return;
+				}
+				return response.json();
+			})
 			.then(data => {
 				if (data.success) {
 					alert(data.message);

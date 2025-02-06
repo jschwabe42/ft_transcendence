@@ -174,7 +174,13 @@ export function joinRoom(roomId) {
 		body: `room_id=${roomId}`
 	})
 
-	.then(response => response.json())
+	.then(response => {
+		if (response.redirected) {
+			router.navigateTo('/login/');
+			return;
+		}
+		return response.json();
+	})
 	.then(data => {
 		if (data.success) {
 			const room_name = data.room.name;

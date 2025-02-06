@@ -21,6 +21,7 @@ import json
 from user_management.friends import Friends_Manager
 
 from .forms import ProfileUpdateForm, UserUpdateForm
+from transcendence.decorators import login_required_redirect
 
 # from .consumers import UserProfileConsumer
 
@@ -89,7 +90,7 @@ def logout_view(request):
 	else:
 		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
-@login_required
+@login_required_redirect
 def get_account_details(request):
 	"""
 	Get the account details of the logged in user.
@@ -109,7 +110,7 @@ def get_account_details(request):
 	else:
 		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
-@login_required
+@login_required_redirect
 def update_profile(request):
 	"""
 	Inputs new profile data.
@@ -173,7 +174,7 @@ def validate_data(username, display_name, email, current_user=None):
 				return JsonResponse({'success': False, 'message': 'Display name already taken.'})
 	return None
 
-@login_required
+@login_required_redirect
 def change_password(request):
 	"""
 	Change the password of the logged in user.
@@ -194,7 +195,7 @@ def change_password(request):
 		return JsonResponse({'success': True, 'message': 'Password changed successfully.'})
 	return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
-@login_required
+@login_required_redirect
 def public_profile(request, query_user):
 	query_user_instance = User.objects.get(username=query_user)
 	pong_games_finished = PongGame.objects.filter(
@@ -241,35 +242,35 @@ def public_profile(request, query_user):
 
 # @follow-up some way of displaying errors to the user (without template?, e.g. HttpResponses)
 # (we are returning raw errors that are meant for development)
-@login_required
+@login_required_redirect
 def friend_request(request, target_username):
 	"""/user/target_username/friend-request"""
 	Friends_Manager.friends_request(origin=request.user, target_username=target_username)
 	return redirect('/users/user/' + target_username)
 
 
-@login_required
+@login_required_redirect
 def cancel_friend_request(request, target_username):
 	"""/user/target_username/cancel-friend-request"""
 	Friends_Manager.cancel_friends_request(origin=request.user, target_username=target_username)
 	return redirect('/users/user/' + request.user.username)
 
 
-@login_required
+@login_required_redirect
 def deny_friend_request(request, origin_username):
 	"""/user/origin_username/deny-friend-request"""
 	Friends_Manager.deny_friends_request(target=request.user, origin_username=origin_username)
 	return redirect('/users/user/' + request.user.username)
 
 
-@login_required
+@login_required_redirect
 def accept_friend_request(request, origin_username):
 	"""/user/origin_username/accept-friend-request"""
 	Friends_Manager.accept_request_as_target(target=request.user, origin_username=origin_username)
 	return redirect('/users/user/' + request.user.username)
 
 
-@login_required
+@login_required_redirect
 def remove_friend(request, other_username):
 	"""/user/other_username/remove-friend"""
 	Friends_Manager.remove_friend(remover=request.user, target_username=other_username)
