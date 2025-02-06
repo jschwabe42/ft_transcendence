@@ -1,21 +1,13 @@
-import logging
-from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth.decorators import login_required
-
 # Create your views here.
-from users.models import Profile
-from .models import Game, Dashboard, Player, Tournement
-from django.contrib.auth.models import User
-from django.http import HttpResponse
+from .models import Game, Tournement
 from django.http import JsonResponse
 
-import sys
 
 def game_data(request):
 	try:
-		games = Game.objects.order_by("-played_at")[:10]
+		games = Game.objects.order_by('-played_at')[:10]
 		data = []
-		
+
 		for game in games:
 			game_data = {
 				'player1': str(game.player1),  # Convert to string if it's a ForeignKey
@@ -32,11 +24,12 @@ def game_data(request):
 				'game_id': game.id,
 			}
 			data.append(game_data)
-		
+
 		return JsonResponse(data, safe=False)
-		
+
 	except Game.DoesNotExist:
 		return JsonResponse({'error': 'No Games Found'}, status=404)
+
 
 def ingame(request):
 	game_id = request.GET.get('game_id')
