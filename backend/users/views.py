@@ -6,22 +6,37 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import F
 from django.shortcuts import redirect, render
+from django.http import HttpResponse, JsonResponse
 from game.models import Game
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .forms import ProfileUpdateForm, UserRegisterForm, UserUpdateForm
 from .models import Friends_Manager, Profile, User
-
+from .auth_helpers import jwt_login
+from .decorators import hybrid_login_required
 # from .consumers import UserProfileConsumer
 
+
+@hybrid_login_required
+def test_hybrid_auth(request):
+    return JsonResponse({
+        'message': 'hybrid_login_required is working!',
+        'user': {
+            'username': request.user.username,
+            'email': request.user.email,
+        }
+    })
 
 def register(request):
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():
 			# saves the User instance; Profile creation is handled by the signal
-			form.save()
+			user = form.save()
 			messages.success(request, 'Your account has been created! You can now log in!')
-			return redirect('users:login')
+			return jwt_login(request, user)
 	else:
 		form = UserRegisterForm()
 
@@ -31,8 +46,42 @@ def register(request):
 # costum Logout, couse Idk I am stupid to get the normal working
 def custom_logout(request):
 	logout(request)  # Logs out the user
+	# Delete the JWT tokens from the cookies
+	response = redirect('users:login')
+	response.delete_cookie('refresh_token')
+	response.delete_cookie('access_token')
+
 	return render(request, 'users/logout.html')  # Redirects the user to the login page
 
+from django.contrib.auth.views import LoginView
+
+# Custom LoginView to return JWT token
+class CustomLoginView(LoginView):
+    def form_valid(self, form):
+        # Perform the default login behavior (creates session)
+        response = super().form_valid(form)
+        
+        # Add JWT tokens to the response
+        user = form.get_user()
+        refresh = RefreshToken.for_user(user)
+        
+        # Set JWT tokens in cookies
+        response.set_cookie(
+            key='refresh_token',
+            value=str(refresh),
+            httponly=True,
+            secure=False,
+            samesite='Lax'
+        )
+        response.set_cookie(
+            key='access_token',
+            value=str(refresh.access_token),
+            # httponly=True,
+            secure=False,
+            samesite='Lax'
+        )
+        
+        return response
 
 @login_required
 def account(request):

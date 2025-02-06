@@ -2,22 +2,24 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, re_path
 
 from . import views
-from .jwt_views import CustomTokenObtainPairView, CustomTokenRefreshView
+from .views import CustomLoginView, test_hybrid_auth
 
 app_name = 'users'
 urlpatterns = [
 	path('', views.list, name='list'),
 	path('register/', views.register, name='register'),
 	path('account/', views.account, name='account'),
+    path('test-hybrid/', test_hybrid_auth, name='test_hybrid'),
 	path(
 		'login/',
-		auth_views.LoginView.as_view(template_name='users/login.html'),
+		CustomLoginView.as_view(
+			template_name='users/login.html',
+			redirect_authenticated_user=True  # Optional but recommended
+		),
 		name='login',
 	),
+
 	path('logout/', views.custom_logout, name='logout'),
-    # JWT Authentication
-    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
 
 	# friendship management: both `user` and `users` prefix 
 	re_path(r'^user(s)?/(?P<query_user>[^/]+)$', views.public_profile, name='public-profile'),

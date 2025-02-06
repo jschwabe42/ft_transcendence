@@ -26,6 +26,9 @@ SECRET_KEY = 'django-insecure-_0@qbs8*u@@s(#=4@e8yol-y4spd)%ymko!-ja^#fs=jofyf!)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# Cookie settings
+SESSION_COOKIE_SECURE = False  # Allow session cookies over HTTP
+CSRF_COOKIE_SECURE = False     # Allow CSRF cookies over HTTP
 
 ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1"]
 
@@ -58,13 +61,14 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-	'django.middleware.security.SecurityMiddleware',
-	'django.contrib.sessions.middleware.SessionMiddleware',
-	'django.middleware.common.CommonMiddleware',
-	'django.middleware.csrf.CsrfViewMiddleware',
-	'django.contrib.auth.middleware.AuthenticationMiddleware',
-	'django.contrib.messages.middleware.MessageMiddleware',
-	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Required for request.user
+    'users.middleware.JWTAuthMiddleware',  # Your custom middleware
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 import sys
