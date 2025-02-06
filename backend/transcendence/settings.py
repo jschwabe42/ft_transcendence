@@ -38,7 +38,6 @@ INSTALLED_APPS = [
 	'quiz.apps.QuizConfig',
 	'game.apps.GameConfig',
 	'chat.apps.ChatConfig',
-	'blog.apps.BlogConfig',
 	'users.apps.UsersConfig',
 	'dashboard.apps.DashboardConfig',
 	'channels',
