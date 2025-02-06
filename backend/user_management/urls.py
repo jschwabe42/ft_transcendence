@@ -1,4 +1,3 @@
-from django.contrib.auth import views as auth_views
 from django.urls import path, re_path
 
 from . import views
@@ -6,14 +5,10 @@ from . import views
 app_name = 'users'
 urlpatterns = [
 	path('', views.list, name='list'),
-	path('register/', views.register, name='register'),
+	path('api/register/', views.register, name='register'),
 	path('account/', views.account, name='account'),
-	path(
-		'login/',
-		auth_views.LoginView.as_view(template_name='users/login.html'),
-		name='login',
-	),
-	path('logout/', views.custom_logout, name='logout'),
+	path('api/login/', views.login_view, name='login'),
+	path('api/logout/', views.logout_view, name='logout'),
 	# friendship management: both `user` and `users` prefix
 	re_path(r'^user(s)?/(?P<query_user>[^/]+)$', views.public_profile, name='public-profile'),
 	re_path(

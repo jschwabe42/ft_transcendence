@@ -20,6 +20,21 @@ document.getElementById('dashboard-link').addEventListener('click', function(eve
 	router.navigateTo('/dashboard/');
 });
 
+document.getElementById('register-link').addEventListener('click', function(event) {
+	event.preventDefault();
+	router.navigateTo('/register/');
+});
+
+document.getElementById('login-link').addEventListener('click', function(event) {
+	event.preventDefault();
+	router.navigateTo('/login/');
+});
+
+document.getElementById('logout-link').addEventListener('click', function(event) {
+	event.preventDefault();
+	router.navigateTo('/logout/');
+});
+
 export function clear_containers() {
 	document.getElementById('home-content').innerHTML = '';
 	document.getElementById('chat-app-content').innerHTML = '';

@@ -1,15 +1,23 @@
 from django.contrib import messages
-from django.contrib.auth import get_user_model, logout, update_session_auth_hash
+from django.contrib.auth import (
+	authenticate,
+	get_user_model,
+	login,
+	logout,
+	update_session_auth_hash,
+)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import F
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
 from django.shortcuts import redirect, render
 from pong.models import PongGame
 from pong.utils import win_to_loss_ratio
 
 from user_management.friends import Friends_Manager
 
-from .forms import ProfileUpdateForm, UserRegisterForm, UserUpdateForm
+from .forms import ProfileUpdateForm, UserUpdateForm
 
 # from .consumers import UserProfileConsumer
 
@@ -17,22 +25,71 @@ User = get_user_model()
 
 
 def register(request):
+	"""
+	Registers a new user.
+	API Endpoint: /users/api/register/
+	"""
 	if request.method == 'POST':
-		form = UserRegisterForm(request.POST)
-		if form.is_valid():
-			form.save()
-			messages.success(request, 'Your account has been created! You can now log in!')
-			return redirect('users:login')
+		username = request.POST.get('username')
+		email = request.POST.get('email')
+		password1 = request.POST.get('password1')
+		password2 = request.POST.get('password2')
+
+		if password1 != password2:
+			return JsonResponse({'success': False, 'message': 'Passwords do not match.'})
+		if (
+			User.objects.filter(username=username).exists()
+			or User.objects.filter(display_name=username).exists()
+		):
+			return JsonResponse({'success': False, 'message': 'Username already taken.'})
+		if User.objects.filter(email=email).exists():
+			return JsonResponse(
+				{'success': False, 'message': 'An Account with this email already exists.'}
+			)
+		user = User.objects.create_user(
+			username=username, email=email, password=password1, display_name=username
+		)
+		user.save()
+		return JsonResponse({'success': True, 'message': 'Account created successfully.'})
 	else:
-		form = UserRegisterForm()
-
-	return render(request, 'users/register.html', {'form': form})
+		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 
-# costum Logout, couse Idk I am stupid to get the normal working
-def custom_logout(request):
-	logout(request)  # Logs out the user
-	return render(request, 'users/logout.html')  # Redirects the user to the login page
+def login_view(request):
+	"""
+	Login a user.
+	API Endpoint: /users/api/login/
+	"""
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+
+		user = authenticate(request, username=username, password=password)
+		if user is not None:
+			login(request, user)
+			new_csrf_token = get_token(request)
+			return JsonResponse(
+				{'success': True, 'message': 'Login successful.', 'csrf_token': new_csrf_token}
+			)
+		else:
+			return JsonResponse({'success': False, 'message': 'Invalid username or password!'})
+	else:
+		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
+
+def logout_view(request):
+	"""
+	Logout a user.
+	API Endpoint: /users/api/logout/
+	"""
+	if request.method == 'POST':
+		logout(request)
+		new_csrf_token = get_token(request)
+		return JsonResponse(
+			{'success': True, 'message': 'Logout successful.', 'csrf_token': new_csrf_token}
+		)
+	else:
+		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 
 @login_required
