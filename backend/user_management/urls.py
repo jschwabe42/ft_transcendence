@@ -6,9 +6,10 @@ app_name = 'users'
 urlpatterns = [
 	path('', views.list, name='list'),
 	path('api/register/', views.register, name='register'),
-	path('account/', views.account, name='account'),
 	path('api/login/', views.login_view, name='login'),
 	path('api/logout/', views.logout_view, name='logout'),
+	path('api/get_account_details/', views.get_account_details, name='get-account-details'),
+	path('account/', views.account, name='account'),
 	# friendship management: both `user` and `users` prefix
 	re_path(r'^user(s)?/(?P<query_user>[^/]+)$', views.public_profile, name='public-profile'),
 	re_path(

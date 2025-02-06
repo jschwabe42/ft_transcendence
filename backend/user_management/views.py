@@ -121,6 +121,26 @@ def account(request):
 
 	return render(request, 'users/account.html', context)
 
+@login_required
+def get_account_details(request):
+	"""
+	Get the account details of the logged in user.
+	API Endpoint: /users/api/get_account_details/
+	"""
+	if request.method == 'GET':
+		user = request.user
+		return JsonResponse(
+			{
+				'success': True,
+				'username': user.username,
+				'email': user.email,
+				'display_name': user.display_name,
+				'image_url': user.image.url,
+			}
+		)
+	else:
+		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
 
 @login_required
 def public_profile(request, query_user):
