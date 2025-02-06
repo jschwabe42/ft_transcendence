@@ -36,10 +36,8 @@ INTERNAL_IPS = [
 
 INSTALLED_APPS = [
 	'quiz.apps.QuizConfig',
-	'game.apps.GameConfig',
+	'pong.apps.PongConfig',
 	'chat.apps.ChatConfig',
-	'blog.apps.BlogConfig',
-	'users.apps.UsersConfig',
 	'dashboard.apps.DashboardConfig',
 	'channels',
 	'daphne',
@@ -48,6 +46,7 @@ INSTALLED_APPS = [
 	'crispy_bootstrap4',
 	'django.contrib.admin',
 	'django.contrib.auth',
+	'user_management.apps.UserManagementConfig',
 	'django.contrib.contenttypes',
 	'django.contrib.sessions',
 	'django.contrib.messages',
@@ -176,10 +175,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'users:list'
+LOGIN_REDIRECT_URL = '/dashboard/'
 
-LOGIN_URL = 'users:login'
+LOGIN_URL = '/login/'
 
+AUTH_USER_MODEL = 'user_management.CustomUser'
 
 ASGI_APPLICATION = 'transcendence.asgi.application'
 

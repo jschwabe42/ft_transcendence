@@ -3,12 +3,15 @@ import { displayRoom, leaveRoom } from '/static/quiz/js/room_display.js';
 import { clear_containers, home_view } from '/static/js/navbar.js';
 import { loadDashboard } from '/static/dashboard/js/dashboard.js';
 import { loadProfile } from '/static/dashboard/js/profile.js';
+import { register_user } from '/static/users/js/register.js';
+import { login_user } from '/static/users/js/login.js';
+import { logout_user } from '/static/users/js/logout.js';
 
-import { game_base} from '/static/game/js/game_base_socket.js';
-import { page1, page2 } from '/static/game/js/pages.js';
-import { game } from '/static/game/js/game.js';
-import { gameDetails } from '/static/game/js/gameDetails.js';
-import { Tournement } from '/static/game/js/Tournement.js';
+import { game_base } from '/static/pong/js/game_base_socket.js';
+import { page1, page2 } from '/static/pong/js/pages.js';
+import { game } from '/static/pong/js/game.js';
+import { gameDetails } from '/static/pong/js/gameDetails.js';
+import { Tournement } from '/static/pong/js/Tournement.js';
 
 class Router {
 	constructor() {
@@ -52,10 +55,10 @@ class Router {
 	handleDynamicRoute(path) {
 		const quizPathRegex = /^\/quiz\/([^\/]+)\/?$/;
 		const dashboardPathRegex = /^\/dashboard\/([^\/]+)\/?$/;
-		const pongPathRegex = /^\/game\/pong\/([^\/]+)\/?$/;  // Neue Regex für '/game/pong/:game_id'
-		const pongDetailsPathRegex = /^\/game\/game-details\/([^\/]+)\/?$/;
-		const tournementPathRegex = /^\/game\/tournement\/([^\/]+)\/?$/;
-	
+		const pongPathRegex = /^\/pong\/([^\/]+)\/?$/;  // Neue Regex für '/pong/:game_id'
+		const pongDetailsPathRegex = /^\/pong\/game-details\/([^\/]+)\/?$/;
+		const tournementPathRegex = /^\/pong\/tournement\/([^\/]+)\/?$/;
+
 		let match = path.match(quizPathRegex);
 		if (match) {
 			const roomName = match[1];
@@ -67,7 +70,7 @@ class Router {
 			}
 			return;
 		}
-	
+
 		match = path.match(dashboardPathRegex);
 		if (match) {
 			const username = match[1];
@@ -94,10 +97,10 @@ class Router {
 			Tournement({ tournement_id: tournementId });
 			return;
 		}
-	
+
 		this.showNotFound();
 	}
-	
+
 
 	// ! This function is not used. If for some reason we want to use href WITHOUT an event listener (please don't), this
 	//! function can be modified to USE navigateTo instead of handleRouteChange and then href would work.
@@ -117,10 +120,13 @@ class Router {
 
 	beforeRouteChange(newPath) {
 		const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+		console.log("Current room: ", currentRoom);
 		if (currentRoom) {
 			const currentRoomPath = `/quiz/${currentRoom.room_name}/`;
 			if (newPath !== currentRoomPath) {
 				leaveRoom(currentRoom.room_id);
+				// ! Theoretically wrong, however during testing it is possible to leave a room without removing the local storage
+				localStorage.removeItem('currentRoom');
 			}
 		}
 		if (newPath !== '/quiz/') {
@@ -139,8 +145,8 @@ router.addRoute('/quiz/', loadRoomList);
 /**
  * The main view of the quiz app
  */
-router.addRoute('/game/', game_base);
-router.addRoute('/game/page2', page2);
+router.addRoute('/pong/', game_base);
+router.addRoute('/pong/page2', page2);
 
 /**
  * The Homepage
@@ -151,6 +157,21 @@ router.addRoute('/', home_view);
  * The Dashboard app view
  */
 router.addRoute('/dashboard/', loadDashboard);
+
+/**
+ * The register user view
+ */
+router.addRoute('/register/', register_user);
+
+/**
+ * The login user view
+ */
+router.addRoute('/login/', login_user);
+
+/**
+ * THe logout user view
+ */
+router.addRoute('/logout/', logout_user);
 
 router.handleRouteChange();
 export default router;
