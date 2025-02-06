@@ -10,7 +10,7 @@ from django.http import JsonResponse
 
 from user_management.friends import Friends_Manager
 
-from .forms import ProfileUpdateForm, UserRegisterForm, UserUpdateForm
+from .forms import ProfileUpdateForm, UserUpdateForm
 
 # from .consumers import UserProfileConsumer
 
