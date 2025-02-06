@@ -27,6 +27,10 @@ export function display_account() {
 			<p>Email: <span id="email"></span> <i class="bi bi-pencil-square" id="edit-email"></i></p>
 			<p>Display Name: <span id="display_name"></span> <i class="bi bi-pencil-square" id="edit-display_name"></i></p>
 			<button id="update-profile-data" class="btn btn-primary">Update Profile Data</button>
+			<div id="password-input-container" styke="display: none;">
+				<input type="password" id="profile-password-input" class="form-control" placeholder="Enter your password">
+				<button id="submit-profile-update" class="btn btn-primary">Submit</button>
+			</div>
 		</div>
 		<div id="profile-password">
 			<button id="change-password" class="btn btn-primary">Change Password</button>
@@ -73,7 +77,25 @@ function get_account_details() {
 			});
 
 			document.getElementById('update-profile-data').addEventListener('click', () => {
-				update_profile(data);
+				const passwordInputContainer = document.getElementById('password-input-container');
+				const style = passwordInputContainer.style.display;
+				if (style === 'none') {
+					passwordInputContainer.style.display = 'block';
+				}
+				else {
+					passwordInputContainer.style.display = 'none';
+				}
+			});
+
+			document.getElementById('submit-profile-update').addEventListener('click', () => {
+				const password = document.getElementById('profile-password-input').value;
+				if (!password) {
+					alert('Password is required.');
+					return;
+				}
+				update_profile(data, password);
+				const passwordInputContainer = document.getElementById('password-input-container');
+				passwordInputContainer.style.display = 'none';
 			});
 		});
 }
@@ -83,7 +105,7 @@ function edit_field(field, value) {
 	span.innerHTML = `<input type="text" id="edit-text-${field}" value="${value}" class="form-control">`;
 }
 
-function update_profile(originalData) {
+function update_profile(originalData, password) {
 	const username = document.getElementById('edit-text-username') ? document.getElementById('edit-text-username').value : originalData.username;
 	const email = document.getElementById('edit-text-email') ? document.getElementById('edit-text-email').value : originalData.email;
 	const display_name = document.getElementById('edit-text-display_name') ? document.getElementById('edit-text-display_name').value : originalData.display_name;
@@ -93,7 +115,6 @@ function update_profile(originalData) {
 		alert('No changes detected.');
 		return;
 	}
-	const password = prompt('Please enter your password to update your profile data:');
 	if (!password) {
 		alert('Password is required to update profile data.');
 		return;
