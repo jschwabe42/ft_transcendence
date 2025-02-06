@@ -1,4 +1,5 @@
 import router from '/static/js/router.js';
+import { update_navbar } from '/static/js/navbar.js';
 
 /**
  * Login a user
@@ -84,6 +85,7 @@ function add_login_form_listener() {
 			if (data.csrf_token) {
 				document.querySelector('meta[name="csrf-token"]').content = data.csrf_token;
 			}
+			update_navbar();
 			router.navigateTo('/dashboard/');
 		} else {
 			for (const [field, errors] of Object.entries(data.errors)) {

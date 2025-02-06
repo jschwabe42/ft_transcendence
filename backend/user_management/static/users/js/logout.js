@@ -1,4 +1,5 @@
 import router from '/static/js/router.js';
+import { update_navbar } from '/static/js/navbar.js';
 
 /**
  * Logout a user
@@ -49,6 +50,7 @@ async function logout_at_server() {
 		if (data.csrf_token) {
 			document.querySelector('meta[name="csrf-token"]').content = data.csrf_token;
 		}
+		update_navbar();
 	} else {
 		messageContainer.innerHTML = '<p>' + data.message + '</p>';
 	}

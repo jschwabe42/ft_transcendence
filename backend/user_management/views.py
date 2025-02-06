@@ -195,6 +195,13 @@ def change_password(request):
 		return JsonResponse({'success': True, 'message': 'Password changed successfully.'})
 	return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+def check_authentication(request):
+	"""
+	Check if the user is authenticated.
+	API Endpoint: /users/api/check_authentication/
+	"""
+	return JsonResponse({'is_authenticated': request.user.is_authenticated})
+
 @login_required_redirect
 def public_profile(request, query_user):
 	query_user_instance = User.objects.get(username=query_user)
