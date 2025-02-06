@@ -22,14 +22,14 @@ def profile_list(request):
 		'profiles': profile_data,
 	})
 
-@login_required
 def get_profile(request, username):
 	"""
 	Api call that returns a specific profile.
 	dashboard/api/get_profile/profilename is API endpoint.
 	"""
+	print(f"Username: {username}", flush=True)
 	user = get_object_or_404(CustomUser, username=username)
-
+	print(f"User: {user}", flush=True)
 	profile_data = {
 		'username': user.username,
 		'image_url': user.image.url,
