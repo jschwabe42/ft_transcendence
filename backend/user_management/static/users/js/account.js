@@ -9,19 +9,33 @@ export function display_account() {
 
 	userAppContent.innerHTML = `
 	<div id="account-head-container">
-		<img id="account-image" src="" alt="Your Profile Picture">
-		<input type="file" id="image-upload" style="display: none;">
-		<h3 id="account-username-head"></h3>
-		<p id="account-email-head"></p>
+		<div id="account-image-container">
+			<img id="account-image" src="" alt="Your Profile Picture">
+			<i class="bi bi-pen-fill edit-icon"></i>
+			<input type="file" id="image-upload" style="display: none;">
+		</div>
+		<div id="account-head-info">
+			<h3 id="account-username-head"></h3>
+			<p id="account-email-head"></p>
+		</div>
 	</div>
 
 	<div class="profile-info">
 		<h3>Profile Info</h3>
 		<div id="profile-details">
-			<p>Username: <span id="username"></span> <i class="bi bi-pencil" id="edit-username"></i></p>
-			<p>Email: <span id="email"></span> <i class="bi bi-pencil" id="edit-email"></i></p>
-			<p>Display Name: <span id="display_name"></span> <i class="bi bi-pencil" id="edit-display_name"></i></p>
+			<p>Username: <span id="username"></span> <i class="bi bi-pencil-square" id="edit-username"></i></p>
+			<p>Email: <span id="email"></span> <i class="bi bi-pencil-square" id="edit-email"></i></p>
+			<p>Display Name: <span id="display_name"></span> <i class="bi bi-pencil-square" id="edit-display_name"></i></p>
 			<button id="update-profile-data" class="btn btn-primary">Update Profile Data</button>
+		</div>
+		<div id="profile-password">
+			<button id="change-password" class="btn btn-primary">Change Password</button>
+			<div id="password-fields" style="display: none;">
+				<input type="password" id="current-password" class="form-control" placeholder="Current Password">
+				<input type="password" id="new-password" class="form-control" placeholder="New Password">
+				<input type="password" id="repeat-password" class="form-control" placeholder="Repeat New Password">
+				<button id="update-password" class="btn btn-primary">Save</button>
+			</div>
 		</div>
 	</div>
 	`;
@@ -32,13 +46,15 @@ export function display_account() {
 		document.getElementById('image-upload').click();
 	});
 	document.getElementById('image-upload').addEventListener('change', upload_image);
+
+	change_password();
 }
 
 function get_account_details() {
 	fetch('/users/api/get_account_details/')
 		.then(response => response.json())
 		.then(data => {
-			document.getElementById('account-username-head').textContent = data.display_name;
+			document.getElementById('account-username-head').textContent = `${data.username}'s profile`;
 			document.getElementById('account-email-head').textContent = data.email;
 			document.getElementById('account-image').src = data.image_url;
 
@@ -121,4 +137,52 @@ function upload_image(event) {
 		};
 		reader.readAsDataURL(file);
 	}
+}
+
+function change_password(event) {
+	document.getElementById('change-password').addEventListener('click', () => {
+		document.getElementById('password-fields').style.display = 'block';
+	});
+
+	document.getElementById('update-password').addEventListener('click', () => {
+		const current_password = document.getElementById('current-password').value;
+		const new_password = document.getElementById('new-password').value;
+		const repeat_password = document.getElementById('repeat-password').value;
+
+
+		if(!current_password || !new_password || !repeat_password) {
+			alert('All fields are required.');
+			return;
+		}
+		if (new_password !== repeat_password) {
+			alert('New password and repeat password do not match.');
+			return;
+		}
+			const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+		
+			fetch('/users/api/change_password/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Requested-With': 'XMLHttpRequest',
+					'X-CSRFToken': csrfToken,
+				},
+				body: JSON.stringify({
+					current_password: current_password,
+					new_password: new_password,
+				}),
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					alert(data.message);
+					document.getElementById('password-fields').style.display = 'none';
+					document.getElementById('current-password').value = '';
+					document.getElementById('new-password').value = '';
+					document.getElementById('repeat-password').value = '';
+				} else {
+					alert(data.message)
+				}
+			});
+	});
 }

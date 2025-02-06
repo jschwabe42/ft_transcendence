@@ -17,7 +17,7 @@ from pong.utils import win_to_loss_ratio
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 import re
-
+import json
 from user_management.friends import Friends_Manager
 
 from .forms import ProfileUpdateForm, UserUpdateForm
@@ -43,6 +43,7 @@ def register(request):
 		validation_response = validate_data(username, None, email)
 		if validation_response:
 			return validation_response
+		# If not done automatically, ensure passwords are checked for lenght etc
 		user = User.objects.create_user(
 			username=username, email=email, password=password1, display_name=username
 		)
@@ -171,6 +172,27 @@ def validate_data(username, display_name, email, current_user=None):
 			if User.objects.filter(display_name=display_name).exists():
 				return JsonResponse({'success': False, 'message': 'Display name already taken.'})
 	return None
+
+@login_required
+def change_password(request):
+	"""
+	Change the password of the logged in user.
+	"""
+	if request.method == 'POST':
+		data = json.loads(request.body)
+		current_password = data.get('current_password')
+		new_password = data.get('new_password')
+
+		user = request.user
+
+		if not user.check_password(current_password):
+			return JsonResponse({'success': False, 'message': 'Invalid current password.'})
+		# If not done automatically, ensure passwords are checked for lenght etc
+		user.set_password(new_password)
+		user.save()
+		update_session_auth_hash(request, user)
+		return JsonResponse({'success': True, 'message': 'Password changed successfully.'})
+	return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 @login_required
 def public_profile(request, query_user):
