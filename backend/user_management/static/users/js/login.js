@@ -76,12 +76,14 @@ function add_login_form_listener() {
 		});
 
 		const data = await response.json();
-		console.log('Response:', data);
 		const messageContainer = document.getElementById('message-container');
 		messageContainer.innerHTML = '';
 		if (data.success) {
 			messageContainer.innerHTML = '<p>' + data.message + '</p>';
 			form.reset();
+			if (data.csrf_token) {
+				document.querySelector('meta[name="csrf-token"]').value = data.csrf_token;
+			}
 			router.navigateTo('/dashboard/');
 		} else {
 			for (const [field, errors] of Object.entries(data.errors)) {

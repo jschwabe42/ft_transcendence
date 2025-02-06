@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import get_user_model, logout, update_session_auth_hash
+from django.contrib.auth import get_user_model, logout, update_session_auth_hash, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import F
@@ -7,6 +7,8 @@ from django.shortcuts import redirect, render
 from pong.models import PongGame
 from pong.utils import win_to_loss_ratio
 from django.http import JsonResponse
+from django.contrib.sessions.models import Session
+from django.middleware.csrf import get_token
 
 from user_management.friends import Friends_Manager
 
@@ -40,6 +42,24 @@ def register(request):
 	else:
 		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+def login_view(request):
+	"""
+	Login a user.
+	API Endpoint: /users/api/login/
+	"""
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+
+		user = authenticate(request, username=username, password=password)
+		if user is not None:
+			login(request, user)
+			new_csrf_token = get_token(request)
+			return (JsonResponse({'success': True, 'message': 'Login successful.', 'csrf_token': new_csrf_token}))
+		else:
+			return JsonResponse({'success': False, 'message': 'Invalid username or password!'})
+	else:
+		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 # costum Logout, couse Idk I am stupid to get the normal working
 def custom_logout(request):
