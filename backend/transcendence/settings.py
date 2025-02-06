@@ -65,8 +65,8 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Required for request.user
-    'users.middleware.JWTAuthMiddleware',  # Your custom middleware
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'users.middleware.JWTAuthMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]

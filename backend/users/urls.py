@@ -14,7 +14,7 @@ urlpatterns = [
 		'login/',
 		CustomLoginView.as_view(
 			template_name='users/login.html',
-			redirect_authenticated_user=True  # Optional but recommended
+			redirect_authenticated_user=True
 		),
 		name='login',
 	),

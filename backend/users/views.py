@@ -6,10 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import F
 from django.shortcuts import redirect, render
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from game.models import Game
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .forms import ProfileUpdateForm, UserRegisterForm, UserUpdateForm
@@ -76,7 +74,7 @@ class CustomLoginView(LoginView):
         response.set_cookie(
             key='access_token',
             value=str(refresh.access_token),
-            # httponly=True,
+            httponly=True,
             secure=False,
             samesite='Lax'
         )
