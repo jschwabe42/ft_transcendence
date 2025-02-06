@@ -1,0 +1,41 @@
+#register-headline {
+	color: #1c4f73;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+#id_password2,
+#id_password1,
+#id_email,
+#id_username {
+	color:#1c4f73 !important;
+	border: 1px solid #1c4f73 !important;
+	border-radius: 10px !important;
+	width: 300px;
+}
+
+#id_password2,
+#id_password1,
+#id_email,
+#id_username:focus {
+	outline: none !important;
+	box-shadow: none !important;
+	border-color: #1c4f73 !important;
+}
+
+
+#login-link-container {
+	font-size: 16px;
+}
+
+#sign-in-link {
+	color: #7ab5e0;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+#sign-in-link:hover {
+	color: #163d5a;
+	text-decoration: underline;
+	cursor: pointer;
+}

@@ -9,7 +9,7 @@ export function register_user() {
 	userAppContent.innerHTML = `
 	<form id="register-form" class="form">
 		<fieldset class="form-group">
-			<legend class="border-bottom mb-4">Join Today</legend>
+			<legend class="border-bottom mb-4" id="register-headline">Join Today</legend>
 			<div class="form-group">
 				<label for="id_username">Username:</label>
 				<input type="text" name="username" id="id_username" class="form-control">
@@ -35,8 +35,8 @@ export function register_user() {
 		</fieldset>
 		<div id="message-container"></div>
 		<div class="border-top pt-3">
-			<small class="text-muted">
-				Already have an account? <span class="ml-2 sign-in-link">Sign In</span>
+			<small class="text-muted"  id="login-link-container">
+				Already have an account? <span class="ml-2 sign-in-link" id="sign-in-link">Sign In</span>
 			</small>
 		</div>
 	`;
