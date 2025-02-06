@@ -1,0 +1,10 @@
+#account-head-container {
+	display: flex;
+	flex-direction: row;
+}
+
+#account-image {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+}

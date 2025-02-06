@@ -10,21 +10,115 @@ export function display_account() {
 	userAppContent.innerHTML = `
 	<div id="account-head-container">
 		<img id="account-image" src="" alt="Your Profile Picture">
+		<input type="file" id="image-upload" style="display: none;">
 		<h3 id="account-username-head"></h3>
 		<p id="account-email-head"></p>
+	</div>
+
+	<div class="profile-info">
+		<h3>Profile Info</h3>
+		<div id="profile-details">
+			<p>Username: <span id="username"></span> <i class="bi bi-pencil" id="edit-username"></i></p>
+			<p>Email: <span id="email"></span> <i class="bi bi-pencil" id="edit-email"></i></p>
+			<p>Display Name: <span id="display_name"></span> <i class="bi bi-pencil" id="edit-display_name"></i></p>
+			<button id="update-profile-data" class="btn btn-primary">Update Profile Data</button>
+		</div>
 	</div>
 	`;
 
 	get_account_details();
+
+	document.getElementById('account-image').addEventListener('click', () => {
+		document.getElementById('image-upload').click();
+	});
+	document.getElementById('image-upload').addEventListener('change', upload_image);
 }
 
 function get_account_details() {
 	fetch('/users/api/get_account_details/')
 		.then(response => response.json())
 		.then(data => {
-			console.log(data.username);
-			console.log(data.email);
-			console.log(data.display_name);
-			console.log(data.image_url);
+			document.getElementById('account-username-head').textContent = data.display_name;
+			document.getElementById('account-email-head').textContent = data.email;
+			document.getElementById('account-image').src = data.image_url;
+
+			document.getElementById('username').textContent = data.username;
+			document.getElementById('email').textContent = data.email;
+			document.getElementById('display_name').textContent = data.display_name;
+
+			document.getElementById('edit-username').addEventListener('click', () => {
+				edit_field('username', data.username);
+			});
+			document.getElementById('edit-email').addEventListener('click', () => {
+				edit_field('email', data.username);
+			});
+			document.getElementById('edit-display_name').addEventListener('click', () => {
+				edit_field('display_name', data.username);
+			});
+
+			document.getElementById('update-profile-data').addEventListener('click', () => {
+				update_profile(data);
+			});
 		});
+}
+
+function edit_field(field, value) {
+	const span = document.getElementById(field);
+	span.innerHTML = `<input type="text" id="edit-text-${field}" value="${value}" class="form-control">`;
+}
+
+function update_profile(originalData) {
+	const username = document.getElementById('edit-text-username') ? document.getElementById('edit-text-username').value : originalData.username;
+	const email = document.getElementById('edit-text-email') ? document.getElementById('edit-text-email').value : originalData.email;
+	const display_name = document.getElementById('edit-text-display_name') ? document.getElementById('edit-text-display_name').value : originalData.display_name;
+	const image = document.getElementById('image-upload').files[0];
+
+	if (username === originalData.username && email === originalData.email && display_name === originalData.display_name && !image) {
+		alert('No changes detected.');
+		return;
+	}
+	const password = prompt('Please enter your password to update your profile data:');
+	if (!password) {
+		alert('Password is required to update profile data.');
+		return;
+	}
+
+	const formData = new FormData();
+	formData.append('username', username);
+	formData.append('email', email);
+	formData.append('display_name', display_name);
+	formData.append('password', password);
+	if (image) {
+		formData.append('image', image);
+	}
+
+	const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+	fetch('/users/api/update_profile/', {
+		method: 'POST',
+		body: formData,
+		headers: {
+			'X-Requested-With': 'XMLHttpRequest',
+			'X-CSRFToken': csrfToken,
+		},
+	})
+		.then(response => response.json())
+		.then(data => {
+			if (data.success) {
+				alert(data.message);
+				get_account_details();
+			} else {
+				alert(data.message);
+			}
+	});
+}
+
+function upload_image(event) {
+	const file = event.target.files[0];
+	if (file) {
+		const reader = new FileReader();
+		reader.onload = function (e) {
+			document.getElementById('account-image').src = e.target.result;
+		};
+		reader.readAsDataURL(file);
+	}
 }

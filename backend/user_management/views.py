@@ -91,36 +91,6 @@ def logout_view(request):
 	else:
 		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
-
-@login_required
-def account(request):
-	if request.method == 'POST':
-		u_form = UserUpdateForm(request.POST, instance=request.user)
-		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
-		# @follow-up check if the user is allowed to change the password
-		# , and only ask for the password if needed (@todo extract to a separate view!)
-		mod_pwd_form = PasswordChangeForm(request.user, request.POST)
-		if u_form.is_valid() and p_form.is_valid() and mod_pwd_form.is_valid():
-			u_form.save()
-			p_form.save()
-			user = mod_pwd_form.save()
-			update_session_auth_hash(request, user)
-			messages.success(request, 'Your account has been updated')
-			return redirect('users:account')
-
-	else:
-		u_form = UserUpdateForm(instance=request.user)
-		p_form = ProfileUpdateForm(instance=request.user)
-		mod_pwd_form = PasswordChangeForm(request.user)
-
-	context = {
-		'u_form': u_form,
-		'p_form': p_form,
-		'mod_pwd_form': mod_pwd_form,
-	}
-
-	return render(request, 'users/account.html', context)
-
 @login_required
 def get_account_details(request):
 	"""
@@ -140,6 +110,34 @@ def get_account_details(request):
 		)
 	else:
 		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
+@login_required
+def update_profile(request):
+	"""
+	Inputs new profile data.
+	API Endpoint: /users/api/update_profile/
+	"""
+	if request.method == 'POST':
+		user = request.user
+		username = request.POST.get('username')
+		email = request.POST.get('email')
+		display_name = request.POST.get('display_name')
+		password = request.POST.get('password')
+		image = request.FILES.get('image')
+
+		if not authenticate(username=user.username, password=password):
+			return JsonResponse({'success': False, 'message': 'Invalid password.'})
+		if username:
+			user.username = username
+		if email:
+			user.email = email
+		if display_name:
+			user.display_name = display_name
+		if image:
+			user.image = image
+		user.save()
+		return JsonResponse({'success': True, 'message': 'Profile updated successfully.'})
+	return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 
 @login_required
