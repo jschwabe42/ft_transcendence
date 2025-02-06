@@ -93,10 +93,13 @@ class Router {
 
 	beforeRouteChange(newPath) {
 		const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+		console.log("Current room: ", currentRoom);
 		if (currentRoom) {
 			const currentRoomPath = `/quiz/${currentRoom.room_name}/`;
 			if (newPath !== currentRoomPath) {
 				leaveRoom(currentRoom.room_id);
+				// ! Theoretically wrong, however during testing it is possible to leave a room without removing the local storage
+				localStorage.removeItem('currentRoom');
 			}
 		}
 		if (newPath !== '/quiz/') {
