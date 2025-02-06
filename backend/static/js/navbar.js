@@ -25,6 +25,11 @@ document.getElementById('register-link').addEventListener('click', function(even
 	router.navigateTo('/register/');
 });
 
+document.getElementById('login-link').addEventListener('click', function(event) {
+	event.preventDefault();
+	router.navigateTo('/login/');
+});
+
 export function clear_containers() {
 	document.getElementById('home-content').innerHTML = '';
 	document.getElementById('chat-app-content').innerHTML = '';
