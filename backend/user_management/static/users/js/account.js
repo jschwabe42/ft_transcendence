@@ -21,11 +21,20 @@ export function display_account() {
 	</div>
 
 	<div class="profile-info">
-		<h3>Profile Info</h3>
+		<h3 id="profile-info-head">Profile Info:</h3>
 		<div id="profile-details">
-			<p>Username: <span id="username"></span> <i class="bi bi-pencil-square" id="edit-username"></i></p>
-			<p>Email: <span id="email"></span> <i class="bi bi-pencil-square" id="edit-email"></i></p>
-			<p>Display Name: <span id="display_name"></span> <i class="bi bi-pencil-square" id="edit-display_name"></i></p>
+			<p class="profile-field">
+				<span class="profile-field-label">Username:</span>
+				<span id="username"></span> <i class="bi bi-pencil-square" id="edit-username"></i>
+			</p>
+			<p class="profile-field">
+				<span class="profile-field-label">Email:</span>
+				<span id="email"></span> <i class="bi bi-pencil-square" id="edit-email"></i>
+			</p>
+			<p class="profile-field">
+				<span class="profile-field-label">Display Name:</span>
+				<span id="display_name"></span> <i class="bi bi-pencil-square" id="edit-display_name"></i>
+			</p>
 			<button id="update-profile-data" class="btn btn-primary">Update Profile Data</button>
 			<div id="password-input-container" styke="display: none;">
 				<input type="password" id="profile-password-input" class="form-control" placeholder="Enter your password">
@@ -70,10 +79,10 @@ function get_account_details() {
 				edit_field('username', data.username);
 			});
 			document.getElementById('edit-email').addEventListener('click', () => {
-				edit_field('email', data.username);
+				edit_field('email', data.email);
 			});
 			document.getElementById('edit-display_name').addEventListener('click', () => {
-				edit_field('display_name', data.username);
+				edit_field('display_name', data.display_name);
 			});
 
 			document.getElementById('update-profile-data').addEventListener('click', () => {
