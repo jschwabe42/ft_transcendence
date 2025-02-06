@@ -12,7 +12,7 @@ from django.core.asgi import get_asgi_application
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from chat import routing as chat_routing
-from game import routing as game_routing
+from pong import routing as game_routing
 from quiz import routing as quiz_routing
 from users import routing as user_status_routing
 

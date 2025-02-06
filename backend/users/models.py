@@ -9,7 +9,7 @@ from django.forms import ValidationError
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	player = models.OneToOneField(
-		'game.Player',
+		'pong.Player',
 		on_delete=models.CASCADE,
 		related_name='profile_player',
 		null=True,
@@ -38,7 +38,7 @@ class Profile(models.Model):
 
 	# resize uploaded images
 	def save(self, *args, **kwargs):
-		from game.models import (
+		from pong.models import (
 			Player,
 		)  # Import Player model here to avoid circular import
 

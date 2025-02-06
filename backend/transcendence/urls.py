@@ -26,7 +26,7 @@ urlpatterns = [
 	path('', views.index, name='index'),
 	path('quiz/', views.index, name='quiz'),
 	path('users/', include('users.urls')),
-	path('game/', include('game.urls')),
+	path('pong/', include('pong.urls')),
 	path('admin/', admin.site.urls),
 	path('chat/', include('chat.urls')),
 	path('quiz/', include('quiz.urls')),

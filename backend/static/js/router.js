@@ -4,11 +4,11 @@ import { clear_containers, home_view } from '/static/js/navbar.js';
 import { loadDashboard } from '/static/dashboard/js/dashboard.js';
 import { loadProfile } from '/static/dashboard/js/profile.js';
 
-import { game_base} from '/static/game/js/game_base_socket.js';
-import { page1, page2 } from '/static/game/js/pages.js';
-import { game } from '/static/game/js/game.js';
-import { gameDetails } from '/static/game/js/gameDetails.js';
-import { Tournement } from '/static/game/js/Tournement.js';
+import { game_base} from '/static/pong/js/game_base_socket.js';
+import { page1, page2 } from '/static/pong/js/pages.js';
+import { game } from '/static/pong/js/game.js';
+import { gameDetails } from '/static/pong/js/gameDetails.js';
+import { Tournement } from '/static/pong/js/Tournement.js';
 
 class Router {
 	constructor() {
