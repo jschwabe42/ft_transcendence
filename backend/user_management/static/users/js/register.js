@@ -36,14 +36,14 @@ export function register_user() {
 		<div id="message-container"></div>
 		<div class="border-top pt-3">
 			<small class="text-muted">
-				Already have an account? <a class="ml-2" id="sign-in-link">Sign In</a>
+				Already have an account? <span class="ml-2 sign-in-link">Sign In</span>
 			</small>
 		</div>
 	`;
 
 	add_register_form_listener();
 
-	document.querySelector('#sign-in-link').addEventListener('click', function () {
+	document.querySelector('.sign-in-link').addEventListener('click', function () {
 		router.navigateTo('/login/');
 	});
 }
@@ -99,8 +99,6 @@ function add_register_form_listener() {
 			return;
 		}
 		const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-		console.log('Form data:', formData);
-		console.log('Sending to server!')
 		const response = await fetch('/users/api/register/', {
 			method: 'POST',
 			body: formData,
