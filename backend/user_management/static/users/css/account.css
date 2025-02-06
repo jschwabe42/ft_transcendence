@@ -64,6 +64,10 @@
 	align-content: center;
 }
 
+#last-profile-field {
+	margin-bottom: 20px;
+}
+
 #edit-text-username {
 	width: 300px;
 }
@@ -114,4 +118,16 @@
 #profile-password-input {
 	width: 300px;
 	margin-right: 5px;
+}
+
+/* The button */
+#change-password {
+	margin-bottom: 10px;
+}
+
+#current-password,
+#new-password,
+#repeat-password {
+	width: 300px;
+	margin-bottom: 5px;
 }

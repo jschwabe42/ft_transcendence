@@ -32,7 +32,7 @@ export function display_account() {
 				<span class="profile-field-label">Email:</span>
 				<span id="email"></span> <i class="bi bi-pencil-square" id="edit-email"></i>
 			</p>
-			<p class="profile-field">
+			<p class="profile-field" id="last-profile-field">
 				<span class="profile-field-label">Display Name:</span>
 				<span id="display_name"></span> <i class="bi bi-pencil-square" id="edit-display_name"></i>
 			</p>
