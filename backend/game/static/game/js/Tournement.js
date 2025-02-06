@@ -27,7 +27,7 @@ export function Tournement(params) {
 
 				<button class="navigate-button" data-path="/game/">Go to Menu</button>
 			`;
-			renderTournementData(tournementSocket, tournementModel);
+			renderTournementData(tournementSocket, tournementModel, params.tournement_id);
 			document.getElementById("create-tournement-games").addEventListener("submit", function(event) {
 				event.preventDefault();
 				CreateTournementGames(event, tournementSocket, tournementModel)
@@ -75,9 +75,22 @@ function renderTournementData(tournementSocket, tournementModel)
 		if (data.use === "sync") {
 			updateUIWithTournementData(data);
 		}
-		if (data.use == "createGames")
-		{
-			console("test")
+		console.log("HelloWorld")
+		if (data.use === "createGames" && data.data?.games) {
+			const gameDetails = data.data.games.map((game, index) => ({
+				gameid: game[0].gameid,
+				player1: game[1].player1,
+				player2: game[2].player2
+			}));
+			// redirect Users to Games
+			if (user == gameDetails[0].player1 || user == gameDetails[0].player2) {
+				let path = '/game/pong/' + gameDetails[0].gameid
+				router.navigateTo(path)
+			}
+			if (user == gameDetails[1].player1 || user == gameDetails[1].player2) {
+				let path = '/game/pong/' + gameDetails[1].gameid
+				router.navigateTo(path)
+			}
 		}
 	};
 

@@ -30,6 +30,7 @@ class Game(models.Model):
 	player1_control_settings = models.CharField(max_length=255, default='up down')
 	player2_control_settings = models.CharField(max_length=255, default='up down')
 	# obtain from each player the User object and display its username
+	tournement_id = models.IntegerField(default=0)
 	@admin.display(
 		boolean=True,
 		ordering="played_at",

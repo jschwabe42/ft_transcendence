@@ -298,7 +298,7 @@ class TournementConsumer(AsyncWebsocketConsumer):
 			)
 
 	async def player_joined(self, event):
-		print("Event received in player_joined:", event)  # Debugging
+		print("Event received in player_joined:", event)
 		sys.stdout.flush()
 		await self.send(text_data=json.dumps({
 			"use": "join",
@@ -322,9 +322,24 @@ class TournementConsumer(AsyncWebsocketConsumer):
 			}
 			await self.send(text_data=json.dumps(tournement_data))
 
-		if action == "createGames":
-			print("\n\n\nCreated Games\n\n\n")
+		elif action == "createGames":
+			response_data = {
+				"use": "createGames",
+				"status": "success",
+				"message": "Games created successfully",
+				"data": data
+			}
+
+			await self.channel_layer.group_send(
+				self.group_name,
+				{
+					"type": "broadcast_create_games",
+					"response": response_data
+				}
+			)
+			print("\n\n\nCreated Games and sent to all clients\n\n\n")
 			sys.stdout.flush()
 
-		elif action == "join":
-			pass
+	async def broadcast_create_games(self, event):
+		await self.send(text_data=json.dumps(event["response"]))
+

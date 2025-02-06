@@ -1,11 +1,14 @@
-export function CreateTournementGames(event, socket, model) {
+export function CreateTournementGames(event, socket, model, tour_id) {
 	event.preventDefault();
+
+	console.log("girugudhgicniouhisuzhioehsiojoixdjzoij dzv iojgiovzjoonbondojgiojhnfioxhiomxbmxio")
+	console.log(tour_id)
 
 	if (model.host && model.player1 && model.player2 && model.player3) {
 
 		Promise.all([
-			CreateGamesAPI(model.host, model.player1),
-			CreateGamesAPI(model.player2, model.player3)
+			CreateGamesAPI(model.host, model.player1, tour_id),
+			CreateGamesAPI(model.player2, model.player3, tour_id)
 		])
 		.then(([gameid1, gameid2]) => {
 			const games1 = [
@@ -35,7 +38,7 @@ export function CreateTournementGames(event, socket, model) {
 	}
 }
 
-function CreateGamesAPI(player1, player2) {
+function CreateGamesAPI(player1, player2, tour_id) {
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 	return fetch('/game/api/create-game/', {
 		method: 'POST',
@@ -43,7 +46,7 @@ function CreateGamesAPI(player1, player2) {
 			'Content-Type': 'application/json',
 			'X-CSRFToken': csrfToken,
 		},
-		body: JSON.stringify({ opponent: player2, username: player1 }),
+		body: JSON.stringify({ opponent: player2, username: player1, tournement: tour_id }),
 	})
 	.then(response => response.json())
 	.then(data => {

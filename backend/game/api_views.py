@@ -47,9 +47,10 @@ class CreateGameView(APIView):
 		opponent_profile = Profile.objects.get(user=opponent)
 		user_profile = Profile.objects.get(user=user)
 
+		tournementId = request.data.get('tournement', 0)
 
+		game = Game.objects.create(player1=user_profile.player, player2=opponent_profile.player, tournement_id=tournementId)
 		# Create the game
-		game = Game.objects.create(player1=user_profile.player, player2=opponent_profile.player)
 		game.save()
 
 		return Response({"game_id": game.id, "message": "Game created successfully."}, status=status.HTTP_201_CREATED)
