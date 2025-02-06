@@ -35,6 +35,11 @@ document.getElementById('logout-link').addEventListener('click', function(event)
 	router.navigateTo('/logout/');
 });
 
+document.getElementById('account-link').addEventListener('click', function(event) {
+	event.preventDefault();
+	router.navigateTo('/account/');
+});
+
 export function clear_containers() {
 	document.getElementById('home-content').innerHTML = '';
 	document.getElementById('chat-app-content').innerHTML = '';
