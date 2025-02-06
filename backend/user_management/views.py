@@ -67,9 +67,12 @@ def logout_view(request):
 	Logout a user.
 	API Endpoint: /users/api/logout/
 	"""
-	logout(request)
-	return JsonResponse({'success': True, 'message': 'Logout successful.'})
-
+	if request.method == 'POST':
+		logout(request)
+		new_csrf_token = get_token(request)
+		return JsonResponse({'success': True, 'message': 'Logout successful.', 'csrf_token': new_csrf_token})
+	else:
+		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 @login_required
 def account(request):
