@@ -14,6 +14,9 @@ from django.middleware.csrf import get_token
 from django.shortcuts import redirect, render
 from pong.models import PongGame
 from pong.utils import win_to_loss_ratio
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+import re
 
 from user_management.friends import Friends_Manager
 
@@ -37,15 +40,9 @@ def register(request):
 
 		if password1 != password2:
 			return JsonResponse({'success': False, 'message': 'Passwords do not match.'})
-		if (
-			User.objects.filter(username=username).exists()
-			or User.objects.filter(display_name=username).exists()
-		):
-			return JsonResponse({'success': False, 'message': 'Username already taken.'})
-		if User.objects.filter(email=email).exists():
-			return JsonResponse(
-				{'success': False, 'message': 'An Account with this email already exists.'}
-			)
+		validation_response = validate_data(username, None, email)
+		if validation_response:
+			return validation_response
 		user = User.objects.create_user(
 			username=username, email=email, password=password1, display_name=username
 		)
@@ -125,6 +122,10 @@ def update_profile(request):
 		password = request.POST.get('password')
 		image = request.FILES.get('image')
 
+		validation_response = validate_data(username, display_name, email)
+		if validation_response:
+			return validation_response
+
 		if not authenticate(username=user.username, password=password):
 			return JsonResponse({'success': False, 'message': 'Invalid password.'})
 		if username:
@@ -139,6 +140,25 @@ def update_profile(request):
 		return JsonResponse({'success': True, 'message': 'Profile updated successfully.'})
 	return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+def validate_data(username, display_name, email):
+	if email:
+		try:
+			validate_email(email)
+		except ValidationError:
+			return JsonResponse({'success': False, 'message': 'Invalid email address.'})
+		if User.objects.filter(email=email).exists():
+			return JsonResponse({'success': False, 'message': 'An Account with this email already exists.'})
+	if username:
+		if len(username.strip()) == 0 or not re.match(r'^\w+$', username):
+			return JsonResponse({'success': False, 'message': 'Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'})
+		if User.objects.filter(username=username).exists():
+			return JsonResponse({'success': False, 'message': 'Username already taken.'})
+	if display_name:
+		if len(display_name.strip()) == 0 or not re.match(r'^\w+$', display_name):
+			return JsonResponse({'success': False, 'message': 'Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'})
+		if User.objects.filter(display_name=display_name).exists():
+			return JsonResponse({'success': False, 'message': 'Display name already taken.'})
+	return None
 
 @login_required
 def public_profile(request, query_user):
