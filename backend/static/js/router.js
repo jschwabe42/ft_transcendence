@@ -3,6 +3,9 @@ import { displayRoom, leaveRoom } from '/static/quiz/js/room_display.js';
 import { clear_containers, home_view } from '/static/js/navbar.js';
 import { loadDashboard } from '/static/dashboard/js/dashboard.js';
 import { loadProfile } from '/static/dashboard/js/profile.js';
+import { register_user } from '/static/users/js/register.js';
+import { login_user } from '/static/users/js/login.js';
+import { logout_user } from '/static/users/js/logout.js';
 
 import { game_base } from '/static/pong/js/game_base_socket.js';
 import { page1, page2 } from '/static/pong/js/pages.js';
@@ -117,10 +120,13 @@ class Router {
 
 	beforeRouteChange(newPath) {
 		const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+		console.log("Current room: ", currentRoom);
 		if (currentRoom) {
 			const currentRoomPath = `/quiz/${currentRoom.room_name}/`;
 			if (newPath !== currentRoomPath) {
 				leaveRoom(currentRoom.room_id);
+				// ! Theoretically wrong, however during testing it is possible to leave a room without removing the local storage
+				localStorage.removeItem('currentRoom');
 			}
 		}
 		if (newPath !== '/quiz/') {
@@ -151,6 +157,21 @@ router.addRoute('/', home_view);
  * The Dashboard app view
  */
 router.addRoute('/dashboard/', loadDashboard);
+
+/**
+ * The register user view
+ */
+router.addRoute('/register/', register_user);
+
+/**
+ * The login user view
+ */
+router.addRoute('/login/', login_user);
+
+/**
+ * THe logout user view
+ */
+router.addRoute('/logout/', logout_user);
 
 router.handleRouteChange();
 export default router;
