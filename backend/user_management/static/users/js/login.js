@@ -82,7 +82,7 @@ function add_login_form_listener() {
 			messageContainer.innerHTML = '<p>' + data.message + '</p>';
 			form.reset();
 			if (data.csrf_token) {
-				document.querySelector('meta[name="csrf-token"]').value = data.csrf_token;
+				document.querySelector('meta[name="csrf-token"]').content = data.csrf_token;
 			}
 			router.navigateTo('/dashboard/');
 		} else {
