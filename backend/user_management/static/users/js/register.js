@@ -36,12 +36,16 @@ export function register_user() {
 		<div id="message-container"></div>
 		<div class="border-top pt-3">
 			<small class="text-muted">
-				Already have an account? <a class="ml-2">Sign In</a>
+				Already have an account? <a class="ml-2" id="sign-in-link">Sign In</a>
 			</small>
 		</div>
 	`;
 
 	add_register_form_listener();
+
+	document.querySelector('#sign-in-link').addEventListener('click', function () {
+		router.navigateTo('/login/');
+	});
 }
 
 function add_register_form_listener() {
@@ -112,6 +116,7 @@ function add_register_form_listener() {
 		if (data.success) {
 			messageContainer.innerHTML = '<p>' + data.message + '</p>';
 			form.reset();
+			router.navigateTo('/login/');
 		} else {
 			for (const [field, errors] of Object.entries(data.errors)) {
 				const errorList = document.createElement('ul');
