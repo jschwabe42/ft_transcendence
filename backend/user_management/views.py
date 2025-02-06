@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth import (
 	authenticate,
 	get_user_model,
@@ -6,8 +5,6 @@ from django.contrib.auth import (
 	logout,
 	update_session_auth_hash,
 )
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import F
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
@@ -20,7 +17,6 @@ import re
 import json
 from user_management.friends import Friends_Manager
 
-from .forms import ProfileUpdateForm, UserUpdateForm
 from transcendence.decorators import login_required_redirect
 
 # from .consumers import UserProfileConsumer
@@ -90,6 +86,7 @@ def logout_view(request):
 	else:
 		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+
 @login_required_redirect
 def get_account_details(request):
 	"""
@@ -109,6 +106,7 @@ def get_account_details(request):
 		)
 	else:
 		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
 
 @login_required_redirect
 def update_profile(request):
@@ -142,6 +140,7 @@ def update_profile(request):
 		return JsonResponse({'success': True, 'message': 'Profile updated successfully.'})
 	return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+
 def validate_data(username, display_name, email, current_user=None):
 	if email:
 		try:
@@ -150,13 +149,22 @@ def validate_data(username, display_name, email, current_user=None):
 			return JsonResponse({'success': False, 'message': 'Invalid email address.'})
 		if current_user:
 			if User.objects.filter(email=email).exclude(id=current_user.id).exists():
-				return JsonResponse({'success': False, 'message': 'An Account with this email already exists.'})
+				return JsonResponse(
+					{'success': False, 'message': 'An Account with this email already exists.'}
+				)
 		else:
 			if User.objects.filter(email=email).exists():
-				return JsonResponse({'success': False, 'message': 'An Account with this email already exists.'})
+				return JsonResponse(
+					{'success': False, 'message': 'An Account with this email already exists.'}
+				)
 	if username:
 		if len(username.strip()) == 0 or not re.match(r'^\w+$', username):
-			return JsonResponse({'success': False, 'message': 'Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'})
+			return JsonResponse(
+				{
+					'success': False,
+					'message': 'Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.',
+				}
+			)
 		if current_user:
 			if User.objects.filter(username=username).exclude(id=current_user.id).exists():
 				return JsonResponse({'success': False, 'message': 'Username already taken.'})
@@ -165,7 +173,12 @@ def validate_data(username, display_name, email, current_user=None):
 				return JsonResponse({'success': False, 'message': 'Username already taken.'})
 	if display_name:
 		if len(display_name.strip()) == 0 or not re.match(r'^\w+$', display_name):
-			return JsonResponse({'success': False, 'message': 'Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'})
+			return JsonResponse(
+				{
+					'success': False,
+					'message': 'Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.',
+				}
+			)
 		if current_user:
 			if User.objects.filter(display_name=display_name).exclude(id=current_user.id).exists():
 				return JsonResponse({'success': False, 'message': 'Display name already taken.'})
@@ -173,6 +186,7 @@ def validate_data(username, display_name, email, current_user=None):
 			if User.objects.filter(display_name=display_name).exists():
 				return JsonResponse({'success': False, 'message': 'Display name already taken.'})
 	return None
+
 
 @login_required_redirect
 def change_password(request):
@@ -195,12 +209,14 @@ def change_password(request):
 		return JsonResponse({'success': True, 'message': 'Password changed successfully.'})
 	return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+
 def check_authentication(request):
 	"""
 	Check if the user is authenticated.
 	API Endpoint: /users/api/check_authentication/
 	"""
 	return JsonResponse({'is_authenticated': request.user.is_authenticated})
+
 
 @login_required_redirect
 def public_profile(request, query_user):
