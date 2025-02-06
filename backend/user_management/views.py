@@ -6,6 +6,7 @@ from django.db.models import F
 from django.shortcuts import redirect, render
 from pong.models import PongGame
 from pong.utils import win_to_loss_ratio
+from django.http import JsonResponse
 
 from user_management.friends import Friends_Manager
 
@@ -17,16 +18,29 @@ User = get_user_model()
 
 
 def register(request):
+	"""
+	Registers a new user.
+	API Endpoint: /users/api/register/
+	"""
+	print(f"Hello World", flush=True)
 	if request.method == 'POST':
-		form = UserRegisterForm(request.POST)
-		if form.is_valid():
-			form.save()
-			messages.success(request, 'Your account has been created! You can now log in!')
-			return redirect('users:login')
-	else:
-		form = UserRegisterForm()
+		username = request.POST.get('username')
+		email = request.POST.get('email')
+		password1 = request.POST.get('password1')
+		password2 = request.POST.get('password2')
 
-	return render(request, 'users/register.html', {'form': form})
+		if password1 != password2:
+			return JsonResponse({'success': False, 'message': 'Passwords do not match.'})
+		if User.objects.filter(username=username).exists() or User.objects.filter(display_name=username).exists():
+			return JsonResponse({'success': False, 'message': 'Username already taken.'})
+		if User.objects.filter(email=email).exists():
+			return JsonResponse({'success': False, 'message': 'An Account with this email already exists.'})
+		print(f"Creating user with username: {username}, email: {email}, password: {password1}", flush=True)
+		# user = User.objects.create_user(username=username, email=email, password=password1)
+		# user.save()
+		return JsonResponse({'success': True, 'message': 'Account created successfully.'})
+	else:
+		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 
 # costum Logout, couse Idk I am stupid to get the normal working

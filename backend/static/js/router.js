@@ -3,6 +3,7 @@ import { displayRoom, leaveRoom } from '/static/quiz/js/room_display.js';
 import { clear_containers, home_view } from '/static/js/navbar.js';
 import { loadDashboard } from '/static/dashboard/js/dashboard.js';
 import { loadProfile } from '/static/dashboard/js/profile.js';
+import { register_user} from '/static/users/js/register.js';
 
 class Router {
 	constructor() {
@@ -118,6 +119,11 @@ router.addRoute('/', home_view);
  * The Dashboard app view
  */
 router.addRoute('/dashboard/', loadDashboard);
+
+/**
+ * The register user view
+ */
+router.addRoute('/register/', register_user);
 
 router.handleRouteChange();
 export default router;
