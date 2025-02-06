@@ -61,10 +61,14 @@ def login_view(request):
 	else:
 		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
-# costum Logout, couse Idk I am stupid to get the normal working
-def custom_logout(request):
-	logout(request)  # Logs out the user
-	return render(request, 'users/logout.html')  # Redirects the user to the login page
+
+def logout_view(request):
+	"""
+	Logout a user.
+	API Endpoint: /users/api/logout/
+	"""
+	logout(request)
+	return JsonResponse({'success': True, 'message': 'Logout successful.'})
 
 
 @login_required

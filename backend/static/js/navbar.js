@@ -30,6 +30,11 @@ document.getElementById('login-link').addEventListener('click', function(event) 
 	router.navigateTo('/login/');
 });
 
+document.getElementById('logout-link').addEventListener('click', function(event) {
+	event.preventDefault();
+	router.navigateTo('/logout/');
+});
+
 export function clear_containers() {
 	document.getElementById('home-content').innerHTML = '';
 	document.getElementById('chat-app-content').innerHTML = '';

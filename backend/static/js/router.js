@@ -5,6 +5,7 @@ import { loadDashboard } from '/static/dashboard/js/dashboard.js';
 import { loadProfile } from '/static/dashboard/js/profile.js';
 import { register_user } from '/static/users/js/register.js';
 import { login_user } from '/static/users/js/login.js';
+import { logout_user } from '/static/users/js/logout.js';
 
 class Router {
 	constructor() {
@@ -130,6 +131,11 @@ router.addRoute('/register/', register_user);
  * The login user view
  */
 router.addRoute('/login/', login_user);
+
+/**
+ * THe logout user view
+ */
+router.addRoute('/logout/', logout_user);
 
 router.handleRouteChange();
 export default router;
