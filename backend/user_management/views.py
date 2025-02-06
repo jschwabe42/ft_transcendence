@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth import (
 	authenticate,
 	get_user_model,
@@ -6,18 +5,19 @@ from django.contrib.auth import (
 	logout,
 	update_session_auth_hash,
 )
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import F
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.shortcuts import redirect, render
 from pong.models import PongGame
 from pong.utils import win_to_loss_ratio
-
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+import re
+import json
 from user_management.friends import Friends_Manager
 
-from .forms import ProfileUpdateForm, UserUpdateForm
+from transcendence.decorators import login_required_redirect
 
 # from .consumers import UserProfileConsumer
 
@@ -37,15 +37,10 @@ def register(request):
 
 		if password1 != password2:
 			return JsonResponse({'success': False, 'message': 'Passwords do not match.'})
-		if (
-			User.objects.filter(username=username).exists()
-			or User.objects.filter(display_name=username).exists()
-		):
-			return JsonResponse({'success': False, 'message': 'Username already taken.'})
-		if User.objects.filter(email=email).exists():
-			return JsonResponse(
-				{'success': False, 'message': 'An Account with this email already exists.'}
-			)
+		validation_response = validate_data(username, None, email)
+		if validation_response:
+			return validation_response
+		# If not done automatically, ensure passwords are checked for lenght etc
 		user = User.objects.create_user(
 			username=username, email=email, password=password1, display_name=username
 		)
@@ -92,37 +87,138 @@ def logout_view(request):
 		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 
-@login_required
-def account(request):
-	if request.method == 'POST':
-		u_form = UserUpdateForm(request.POST, instance=request.user)
-		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
-		# @follow-up check if the user is allowed to change the password
-		# , and only ask for the password if needed (@todo extract to a separate view!)
-		mod_pwd_form = PasswordChangeForm(request.user, request.POST)
-		if u_form.is_valid() and p_form.is_valid() and mod_pwd_form.is_valid():
-			u_form.save()
-			p_form.save()
-			user = mod_pwd_form.save()
-			update_session_auth_hash(request, user)
-			messages.success(request, 'Your account has been updated')
-			return redirect('users:account')
-
+@login_required_redirect
+def get_account_details(request):
+	"""
+	Get the account details of the logged in user.
+	API Endpoint: /users/api/get_account_details/
+	"""
+	if request.method == 'GET':
+		user = request.user
+		return JsonResponse(
+			{
+				'success': True,
+				'username': user.username,
+				'email': user.email,
+				'display_name': user.display_name,
+				'image_url': user.image.url,
+			}
+		)
 	else:
-		u_form = UserUpdateForm(instance=request.user)
-		p_form = ProfileUpdateForm(instance=request.user)
-		mod_pwd_form = PasswordChangeForm(request.user)
-
-	context = {
-		'u_form': u_form,
-		'p_form': p_form,
-		'mod_pwd_form': mod_pwd_form,
-	}
-
-	return render(request, 'users/account.html', context)
+		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 
-@login_required
+@login_required_redirect
+def update_profile(request):
+	"""
+	Inputs new profile data.
+	API Endpoint: /users/api/update_profile/
+	"""
+	if request.method == 'POST':
+		user = request.user
+		username = request.POST.get('username')
+		email = request.POST.get('email')
+		display_name = request.POST.get('display_name')
+		password = request.POST.get('password')
+		image = request.FILES.get('image')
+
+		validation_response = validate_data(username, display_name, email, user)
+		if validation_response:
+			return validation_response
+
+		if not authenticate(username=user.username, password=password):
+			return JsonResponse({'success': False, 'message': 'Invalid password.'})
+		if username:
+			user.username = username
+		if email:
+			user.email = email
+		if display_name:
+			user.display_name = display_name
+		if image:
+			user.image = image
+		user.save()
+		return JsonResponse({'success': True, 'message': 'Profile updated successfully.'})
+	return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
+
+def validate_data(username, display_name, email, current_user=None):
+	if email:
+		try:
+			validate_email(email)
+		except ValidationError:
+			return JsonResponse({'success': False, 'message': 'Invalid email address.'})
+		if current_user:
+			if User.objects.filter(email=email).exclude(id=current_user.id).exists():
+				return JsonResponse(
+					{'success': False, 'message': 'An Account with this email already exists.'}
+				)
+		else:
+			if User.objects.filter(email=email).exists():
+				return JsonResponse(
+					{'success': False, 'message': 'An Account with this email already exists.'}
+				)
+	if username:
+		if len(username.strip()) == 0 or not re.match(r'^\w+$', username):
+			return JsonResponse(
+				{
+					'success': False,
+					'message': 'Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.',
+				}
+			)
+		if current_user:
+			if User.objects.filter(username=username).exclude(id=current_user.id).exists():
+				return JsonResponse({'success': False, 'message': 'Username already taken.'})
+		else:
+			if User.objects.filter(username=username).exists():
+				return JsonResponse({'success': False, 'message': 'Username already taken.'})
+	if display_name:
+		if len(display_name.strip()) == 0 or not re.match(r'^\w+$', display_name):
+			return JsonResponse(
+				{
+					'success': False,
+					'message': 'Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.',
+				}
+			)
+		if current_user:
+			if User.objects.filter(display_name=display_name).exclude(id=current_user.id).exists():
+				return JsonResponse({'success': False, 'message': 'Display name already taken.'})
+		else:
+			if User.objects.filter(display_name=display_name).exists():
+				return JsonResponse({'success': False, 'message': 'Display name already taken.'})
+	return None
+
+
+@login_required_redirect
+def change_password(request):
+	"""
+	Change the password of the logged in user.
+	"""
+	if request.method == 'POST':
+		data = json.loads(request.body)
+		current_password = data.get('current_password')
+		new_password = data.get('new_password')
+
+		user = request.user
+
+		if not user.check_password(current_password):
+			return JsonResponse({'success': False, 'message': 'Invalid current password.'})
+		# If not done automatically, ensure passwords are checked for lenght etc
+		user.set_password(new_password)
+		user.save()
+		update_session_auth_hash(request, user)
+		return JsonResponse({'success': True, 'message': 'Password changed successfully.'})
+	return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
+
+def check_authentication(request):
+	"""
+	Check if the user is authenticated.
+	API Endpoint: /users/api/check_authentication/
+	"""
+	return JsonResponse({'is_authenticated': request.user.is_authenticated})
+
+
+@login_required_redirect
 def public_profile(request, query_user):
 	query_user_instance = User.objects.get(username=query_user)
 	pong_games_finished = PongGame.objects.filter(
@@ -169,35 +265,35 @@ def public_profile(request, query_user):
 
 # @follow-up some way of displaying errors to the user (without template?, e.g. HttpResponses)
 # (we are returning raw errors that are meant for development)
-@login_required
+@login_required_redirect
 def friend_request(request, target_username):
 	"""/user/target_username/friend-request"""
 	Friends_Manager.friends_request(origin=request.user, target_username=target_username)
 	return redirect('/users/user/' + target_username)
 
 
-@login_required
+@login_required_redirect
 def cancel_friend_request(request, target_username):
 	"""/user/target_username/cancel-friend-request"""
 	Friends_Manager.cancel_friends_request(origin=request.user, target_username=target_username)
 	return redirect('/users/user/' + request.user.username)
 
 
-@login_required
+@login_required_redirect
 def deny_friend_request(request, origin_username):
 	"""/user/origin_username/deny-friend-request"""
 	Friends_Manager.deny_friends_request(target=request.user, origin_username=origin_username)
 	return redirect('/users/user/' + request.user.username)
 
 
-@login_required
+@login_required_redirect
 def accept_friend_request(request, origin_username):
 	"""/user/origin_username/accept-friend-request"""
 	Friends_Manager.accept_request_as_target(target=request.user, origin_username=origin_username)
 	return redirect('/users/user/' + request.user.username)
 
 
-@login_required
+@login_required_redirect
 def remove_friend(request, other_username):
 	"""/user/other_username/remove-friend"""
 	Friends_Manager.remove_friend(remover=request.user, target_username=other_username)

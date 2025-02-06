@@ -6,6 +6,7 @@ import { loadProfile } from '/static/dashboard/js/profile.js';
 import { register_user } from '/static/users/js/register.js';
 import { login_user } from '/static/users/js/login.js';
 import { logout_user } from '/static/users/js/logout.js';
+import { display_account } from '/static/users/js/account.js';
 
 import { game_base } from '/static/pong/js/game_base_socket.js';
 import { page1, page2 } from '/static/pong/js/pages.js';
@@ -172,6 +173,11 @@ router.addRoute('/login/', login_user);
  * THe logout user view
  */
 router.addRoute('/logout/', logout_user);
+
+/**
+ * The account view
+ */
+router.addRoute('/account/', display_account);
 
 router.handleRouteChange();
 export default router;
