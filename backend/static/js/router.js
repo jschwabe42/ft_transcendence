@@ -12,7 +12,7 @@ import { game_base } from '/static/pong/js/game_base_socket.js';
 import { page1, page2 } from '/static/pong/js/pages.js';
 import { game } from '/static/pong/js/game.js';
 import { gameDetails } from '/static/pong/js/gameDetails.js';
-import { Tournement } from '/static/pong/js/Tournement.js';
+import { Tournament } from '/static/pong/js/Tournament.js';
 
 class Router {
 	constructor() {
@@ -58,7 +58,7 @@ class Router {
 		const dashboardPathRegex = /^\/dashboard\/([^\/]+)\/?$/;
 		const pongPathRegex = /^\/pong\/([^\/]+)\/?$/;  // Neue Regex für '/pong/:game_id'
 		const pongDetailsPathRegex = /^\/pong\/game-details\/([^\/]+)\/?$/;
-		const tournementPathRegex = /^\/pong\/tournement\/([^\/]+)\/?$/;
+		const tournamentPathRegex = /^\/pong\/tournament\/([^\/]+)\/?$/;
 
 		let match = path.match(quizPathRegex);
 		if (match) {
@@ -92,10 +92,10 @@ class Router {
 			return;
 		}
 
-		match = path.match(tournementPathRegex);
+		match = path.match(tournamentPathRegex);
 		if (match) {
-			const tournementId = match[1];
-			Tournement({ tournement_id: tournementId });
+			const tournamentId = match[1];
+			Tournament({ tournament_id: tournamentId });
 			return;
 		}
 

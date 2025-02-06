@@ -1,6 +1,8 @@
 # Create your views here.
-from .models import PongGame as Game, Tournement
 from django.http import JsonResponse
+
+from .models import PongGame as Game
+from .models import Tournament
 
 
 def game_data(request):
@@ -56,24 +58,24 @@ def ingame(request):
 		return JsonResponse({'error': 'Game not found'}, status=404)
 
 
-def tournement(request):
-	tournement_id = request.GET.get('tournement_id')
-	if not tournement_id:
-		return JsonResponse({'error': 'Tournement ID is required'}, status=400)
+def tournament(request):
+	tournament_id = request.GET.get('tournament_id')
+	if not tournament_id:
+		return JsonResponse({'error': 'Tournament ID is required'}, status=400)
 	try:
-		tournement = Tournement.objects.get(id=tournement_id)
-		tournement_data = {
-			'host': tournement.host,
-			'player1': tournement.player1,
-			'player2': tournement.player2,
-			'player3': tournement.player3,
-			'created_at': tournement.created_at.isoformat() if tournement.created_at else None,
-			'winner1': tournement.winner1,
-			'winner2': tournement.winner2,
-			'openTournement': tournement.openTournement,
-			'playernum': tournement.playernum,
-			'id': tournement.id,
+		tournament = Tournament.objects.get(id=tournament_id)
+		tournament_data = {
+			'host': tournament.host,
+			'player1': tournament.player1,
+			'player2': tournament.player2,
+			'player3': tournament.player3,
+			'created_at': tournament.created_at.isoformat() if tournament.created_at else None,
+			'winner1': tournament.winner1,
+			'winner2': tournament.winner2,
+			'openTournament': tournament.openTournament,
+			'playernum': tournament.playernum,
+			'id': tournament.id,
 		}
-		return JsonResponse(tournement_data)
-	except Tournement.DoesNotExist:
-		return JsonResponse({'error': 'Tournement not found'}, status=404)
+		return JsonResponse(tournament_data)
+	except Tournament.DoesNotExist:
+		return JsonResponse({'error': 'Tournament not found'}, status=404)

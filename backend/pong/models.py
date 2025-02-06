@@ -1,6 +1,6 @@
+from django.contrib import admin
 from django.db import models
 from django.utils import timezone
-from django.contrib import admin
 from user_management.models import CustomUser
 
 
@@ -26,7 +26,7 @@ class PongGame(models.Model):
 	player1_control_settings = models.CharField(max_length=255, default='up down')
 	player2_control_settings = models.CharField(max_length=255, default='up down')
 	# obtain from each player the User object and display its username
-	tournement_id = models.IntegerField(default=0)
+	tournament_id = models.IntegerField(default=0)
 
 	@admin.display(
 		boolean=True,
@@ -37,7 +37,7 @@ class PongGame(models.Model):
 		return f'{self.player1} vs {self.player2} ({self.score1}-{self.score2})'
 
 
-class Tournement(models.Model):
+class Tournament(models.Model):
 	host = models.CharField(max_length=255, default='')
 	player1 = models.CharField(max_length=255, default='')
 	player2 = models.CharField(max_length=255, default='')
@@ -48,5 +48,5 @@ class Tournement(models.Model):
 	winner1 = models.CharField(max_length=255, default='')
 	winner2 = models.CharField(max_length=255, default='')
 
-	openTournement = models.BooleanField(default=True)
+	openTournament = models.BooleanField(default=True)
 	playernum = models.IntegerField(default=1)

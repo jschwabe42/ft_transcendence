@@ -1,12 +1,12 @@
-from .models import PongGame, Tournement
 import sys
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from .models import PongGame, Tournament
 
 User = get_user_model()
 
@@ -43,7 +43,7 @@ class CreateGameView(APIView):
 			return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
 		# @audit not used
-		request.data.get('tournement', 0)
+		request.data.get('tournament', 0)
 
 		# Create the game
 		game = PongGame.objects.create(player1=player, player2=opponent)
@@ -125,7 +125,7 @@ class ControllKeySetting(APIView):
 		)
 
 
-class CreateTournement(APIView):
+class CreateTournament(APIView):
 	# permission_classes = [IsAuthenticated]
 
 	def post(self, request):
@@ -136,9 +136,9 @@ class CreateTournement(APIView):
 		except User.DoesNotExist:
 			return Response({'error': 'user does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
-		tournement = Tournement.objects.create(host=username)
-		tournement.save()
+		tournament = Tournament.objects.create(host=username)
+		tournament.save()
 		return Response(
-			{'tournement_id': tournement.id, 'message': 'Tournement created successfully.'},
+			{'tournament_id': tournament.id, 'message': 'Tournament created successfully.'},
 			status=status.HTTP_201_CREATED,
 		)
