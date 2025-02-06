@@ -112,7 +112,12 @@ function get_account_details() {
 
 function edit_field(field, value) {
 	const span = document.getElementById(field);
-	span.innerHTML = `<input type="text" id="edit-text-${field}" value="${value}" class="form-control">`;
+	const isEditing = span.querySelector('input') !== null;
+	if (isEditing) {
+		span.innerHTML = value;
+	} else {
+		span.innerHTML = `<input type="text" id="edit-text-${field}" value="${value}" class="form-control">`;
+	}
 }
 
 function update_profile(originalData, password) {
@@ -152,6 +157,9 @@ function update_profile(originalData, password) {
 		.then(data => {
 			if (data.success) {
 				alert(data.message);
+				edit_field('username', originalData.username);
+				edit_field('email', originalData.email);
+				edit_field('display_name', originalData.display_name);
 				get_account_details();
 			} else {
 				alert(data.message);

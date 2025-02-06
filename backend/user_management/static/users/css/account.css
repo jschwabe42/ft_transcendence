@@ -68,16 +68,17 @@
 	margin-bottom: 20px;
 }
 
+#edit-text-display_name,
+#edit-text-email,
 #edit-text-username {
 	width: 300px;
+	margin-right: 5px;
 }
 
-#edit-text-email {
-	width: 300px;
-}
-
-#edit-text-display_name {
-	width: 300px;
+#username,
+#email,
+#display_name {
+	margin-right: 5px;
 }
 
 .form-control {
@@ -130,4 +131,8 @@
 #repeat-password {
 	width: 300px;
 	margin-bottom: 5px;
+}
+
+.bi bi-pencil-square {
+	color: #1c4f73;
 }
