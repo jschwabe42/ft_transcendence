@@ -1,0 +1,138 @@
+#account-head-container {
+	display: flex;
+	align-items: center;
+}
+
+#account-image-container {
+	position: relative;
+	width: 150px;
+	height: 150px;
+	margin-right: 20px;
+}
+
+#account-image {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	transition: opacity 0.3s ease;
+}
+
+.edit-icon {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 2em;
+	color: #1c4f73;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+#account-image-container:hover #account-image {
+	opacity: 0.3;
+}
+
+#account-image-container:hover .edit-icon {
+	opacity: 1;
+}
+
+#account-head-info {
+	display: flex;
+	flex-direction: column;
+}
+
+#account-username-head {
+	font-size: 3em;
+	color: #1c4f73;
+	font-weight: bold;
+}
+
+#account-email-head {
+	font-size: 1.2em;
+	color: gray;
+}
+
+.profile-field {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.profile-field-label {
+	margin-right: 4px;
+	height: 40px;
+	align-content: center;
+}
+
+#last-profile-field {
+	margin-bottom: 20px;
+}
+
+#edit-text-display_name,
+#edit-text-email,
+#edit-text-username {
+	width: 300px;
+	margin-right: 5px;
+}
+
+#username,
+#email,
+#display_name {
+	margin-right: 5px;
+}
+
+.form-control {
+	color:#1c4f73 !important;
+	border: 1px solid #1c4f73 !important;
+	border-radius: 10px !important;
+}
+
+.form-control:focus {
+	outline: none !important;
+	box-shadow: none !important;
+	border-color: #1c4f73 !important;
+}
+
+#profile-info-head {
+	color: #1c4f73;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+.account-head-divider {
+	border-bottom: 1px solid #1c4f73;
+	margin-bottom: 20px;
+}
+
+#password-input-container {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+/* The button */
+#update-profile-data {
+	margin-bottom: 10px;
+}
+
+/* The box to import the password */
+#profile-password-input {
+	width: 300px;
+	margin-right: 5px;
+}
+
+/* The button */
+#change-password {
+	margin-bottom: 10px;
+}
+
+#current-password,
+#new-password,
+#repeat-password {
+	width: 300px;
+	margin-bottom: 5px;
+}
+
+.bi bi-pencil-square {
+	color: #1c4f73;
+}

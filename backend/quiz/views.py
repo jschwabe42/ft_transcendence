@@ -4,20 +4,19 @@ from datetime import timezone
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
 from .game_logic import game_logic
 from .models import Answer, Participant, Room, RoomSettings
 from .trivia import get_trivia_questions
-
+from transcendence.decorators import login_required_redirect
 # # Create your views here.
 # def index (request):
 # 	return render(request, 'quiz/index.html')
 
 
-@login_required
+@login_required_redirect
 def create_room(request):
 	"""
 	Create a new room with the given name.
@@ -118,7 +117,7 @@ def room_member_update(room_id):
 	)
 
 
-@login_required
+@login_required_redirect
 def join_room(request, room_id):
 	"""
 	Join the room with the given room_id.
@@ -156,7 +155,7 @@ def join_room(request, room_id):
 		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
 
 
-@login_required
+@login_required_redirect
 def leave_room(request, room_id):
 	"""
 	Leave the room with the given room_id.
@@ -193,7 +192,7 @@ def leave_room(request, room_id):
 		return JsonResponse({'success': False, 'error': 'You are not a part of this room!'})
 
 
-@login_required
+@login_required_redirect
 def update_room_settings(request, room_id):
 	"""
 	Update the room settings for the room with the given room_id.
@@ -227,7 +226,7 @@ def update_room_settings(request, room_id):
 	return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
 
-@login_required
+@login_required_redirect
 def start_game(request, room_id):
 	"""
 	Start the game in the room with the given room_id.
@@ -267,7 +266,7 @@ def start_game(request, room_id):
 		return JsonResponse({'success': False, 'error': 'Room does not exist!'})
 
 
-@login_required
+@login_required_redirect
 def submit_answer(request, room_id):
 	"""
 	Collects an answer from the user and saves it in the database.
@@ -313,7 +312,7 @@ def submit_answer(request, room_id):
 		return JsonResponse({'success': False, 'error': 'You are not a part of this room!'})
 
 
-@login_required
+@login_required_redirect
 def get_room_settings(request, room_id):
 	"""
 	Returns the room settings for the room with the given room_id.

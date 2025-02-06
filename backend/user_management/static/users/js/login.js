@@ -1,4 +1,5 @@
 import router from '/static/js/router.js';
+import { update_navbar } from '/static/js/navbar.js';
 
 /**
  * Login a user
@@ -9,7 +10,7 @@ export function login_user() {
 	userAppContent.innerHTML = `
 	<form id="login-form" class="form">
 		<fieldset class="form-group">
-			<legend class="border-bottom mb-4">Login</legend>
+			<legend class="border-bottom mb-4" id="login-headline">Login</legend>
 			<div class="form-group">
 				<label for="id_username">Username:</label>
 				<input type="text" name="username" id="id_username" class="form-control">
@@ -26,8 +27,8 @@ export function login_user() {
 		</fieldset>
 		<div id="message-container"></div>
 		<div class="border-top pt-3">
-			<small class="text-muted">
-				Want to create an Account? <span class="ml-2 register-link" id="register-link">Register</span>
+			<small class="text-muted" id="register-link-container">
+				Want to create an Account? <span class="ml-2 register-link" id="account-register-link">Register</span>
 			</small>
 		</div>
 	`;
@@ -84,6 +85,7 @@ function add_login_form_listener() {
 			if (data.csrf_token) {
 				document.querySelector('meta[name="csrf-token"]').content = data.csrf_token;
 			}
+			update_navbar();
 			router.navigateTo('/dashboard/');
 		} else {
 			for (const [field, errors] of Object.entries(data.errors)) {
