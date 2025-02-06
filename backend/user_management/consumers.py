@@ -1,7 +1,8 @@
 import json
 import sys
-from channels.generic.websocket import AsyncWebsocketConsumer
+
 from asgiref.sync import sync_to_async
+from channels.generic.websocket import AsyncWebsocketConsumer
 
 
 class OnlineStatusConsumer(AsyncWebsocketConsumer):
@@ -22,19 +23,19 @@ class OnlineStatusConsumer(AsyncWebsocketConsumer):
 	@sync_to_async
 	def keep_alive(self):
 		# update last interaction
-		user_profile = self.scope['user'].profile
-		user_profile.online = True
-		user_profile.save()
-		print(f'{user_profile.user.username} is kept alive')
+		user = self.scope['user']
+		user.online = True
+		user.save()
+		print(f'{user.username} is kept alive')
 		sys.stdout.flush()
 
 	@sync_to_async
 	def kill(self):
 		# update last interaction
-		user_profile = self.scope['user'].profile
-		user_profile.online = False
-		user_profile.save()
-		print(f'{user_profile.user.username} was disconnected')
+		user = self.scope['user']
+		user.online = False
+		user.save()
+		print(f'{user.username} was disconnected')
 
 
 # @audit not working

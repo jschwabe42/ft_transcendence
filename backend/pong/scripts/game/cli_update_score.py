@@ -1,4 +1,5 @@
-import argparse
+from argparse import ArgumentParser
+
 import requests
 
 
@@ -33,13 +34,11 @@ def update_score(api_url, csrfToken, score1, score2, game_id):
 
 
 def main():
-	parser = argparse.ArgumentParser(
-		description='CLI tool to create a game using the CreateGame API.'
-	)
+	parser = ArgumentParser(description='CLI tool to create a game using the CreateGame API.')
 	parser.add_argument(
 		'--url',
 		required=True,
-		help='The API endpoint URL (e.g., http://localhost:8000/game/api/get-score/).',
+		help='The API endpoint URL (e.g., http://localhost:8000/pong/api/get-score/).',
 	)
 	parser.add_argument('--token', required=True, help='Your API authentication token.')
 	parser.add_argument('--score_player1', required=True, help='score of player1')
@@ -54,7 +53,7 @@ def main():
 if __name__ == '__main__':
 	main()
 
-# python3 cli_update_score.py --url http://localhost:8000/game/api/get-score/ \
+# python3 cli_update_score.py --url http://localhost:8000/pong/api/get-score/ \
 #                           --token your_token \
 #                           --score_player1 5 \
 #                           --score_player2 8 \

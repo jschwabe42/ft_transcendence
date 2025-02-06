@@ -1,5 +1,5 @@
 # Create your views here.
-from .models import Game, Tournement
+from .models import PongGame as Game, Tournement
 from django.http import JsonResponse
 
 

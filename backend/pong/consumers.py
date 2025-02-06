@@ -1,11 +1,12 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
-from .models import Game, Tournement
+from .models import PongGame, Tournement
 import json
 from asgiref.sync import sync_to_async
-from .pong import PongGame
+from .pong import PongInstance
 import asyncio
 from django.utils import timezone
 import sys
+
 
 games = {}
 
@@ -17,7 +18,7 @@ class GameConsumer(AsyncWebsocketConsumer):
 
 		# Stelle sicher, dass ein zentrales Spiel verwendet wird
 		if self.game_id not in games:
-			games[self.game_id] = PongGame('player1', 'player2')
+			games[self.game_id] = PongInstance('player1', 'player2')
 		self.game = games[self.game_id]
 
 		# Gruppe hinzufügen
@@ -51,11 +52,11 @@ class GameConsumer(AsyncWebsocketConsumer):
 			await self.KeyboardInterrupt(user, game_id, key)
 
 	async def KeyboardInterrupt(self, user, game_id, key):
-		game = await sync_to_async(Game.objects.get)(id=game_id)
+		game = await sync_to_async(PongGame.objects.get)(id=game_id)
 		user1_control = game.player1_control_settings
 		user2_control = game.player2_control_settings
-		user1 = await sync_to_async(lambda: game.player1.profile.user.username)()
-		user2 = await sync_to_async(lambda: game.player2.profile.user.username)()
+		user1 = await sync_to_async(lambda: game.player1.username)()
+		user2 = await sync_to_async(lambda: game.player2.username)()
 
 		if user1 == user:
 			if user1_control == 'w_s':
@@ -93,10 +94,10 @@ class GameConsumer(AsyncWebsocketConsumer):
 		)
 
 	async def save_message(self, user, game_id):
-		game = await sync_to_async(Game.objects.get)(id=game_id)
+		game = await sync_to_async(PongGame.objects.get)(id=game_id)
 		# Use sync_to_async to access related fields in an async context
-		user1 = await sync_to_async(lambda: game.player1.profile.user.username)()
-		user2 = await sync_to_async(lambda: game.player2.profile.user.username)()
+		user1 = await sync_to_async(lambda: game.player1.username)()
+		user2 = await sync_to_async(lambda: game.player2.username)()
 
 		if not (game.player1_ready and game.player2_ready):
 			if user1 == user:
@@ -113,32 +114,20 @@ class GameConsumer(AsyncWebsocketConsumer):
 			json_state = json.loads(state)
 			winner = json_state['winner']
 			if winner['player1'] or winner['player2']:
-				game = await sync_to_async(Game.objects.get)(id=self.game_id)
+				game = await sync_to_async(PongGame.objects.get)(id=self.game_id)
 				game.pending = False
 				game.played_at = timezone.now()
 				player1 = await sync_to_async(lambda: game.player1)()
 				player2 = await sync_to_async(lambda: game.player2)()
-
-				profile1 = await sync_to_async(lambda: player1.profile)()
-				profile2 = await sync_to_async(lambda: player2.profile)()
-
 				if winner['player1']:
 					player1.matches_won += 1
 					player2.matches_lost += 1
-					profile1.pong_games_won += 1
-					profile2.pong_games_lost += 1
 				if winner['player2']:
 					player2.matches_won += 1
 					player1.matches_lost += 1
-					profile2.pong_games_won += 1
-					profile1.pong_games_lost += 1
-
-				await sync_to_async(profile1.save)()
-				await sync_to_async(profile2.save)()
 				await sync_to_async(player1.save)()
 				await sync_to_async(player2.save)()
 				await sync_to_async(game.save)()
-			###
 
 			await self.channel_layer.group_send(
 				self.room_group_name,

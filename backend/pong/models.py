@@ -1,21 +1,18 @@
-import datetime
 from django.db import models
-
-# Create your models here.
-
-from django.forms import ValidationError
 from django.utils import timezone
-
-# for displaying games in admin panel
-
 from django.contrib import admin
+from user_management.models import CustomUser
 
 
 # create game when starting a new game
 # update game when finishing a game/goals are scored
-class Game(models.Model):
-	player1 = models.ForeignKey('Player', related_name='games_as_player1', on_delete=models.CASCADE)
-	player2 = models.ForeignKey('Player', related_name='games_as_player2', on_delete=models.CASCADE)
+class PongGame(models.Model):
+	player1 = models.ForeignKey(
+		CustomUser, related_name='games_as_player1', on_delete=models.CASCADE
+	)
+	player2 = models.ForeignKey(
+		CustomUser, related_name='games_as_player2', on_delete=models.CASCADE
+	)
 	score1 = models.IntegerField(default=0)
 	score2 = models.IntegerField(default=0)
 	# calculate duration of game from start to finish
@@ -38,55 +35,6 @@ class Game(models.Model):
 	)
 	def __str__(self):
 		return f'{self.player1} vs {self.player2} ({self.score1}-{self.score2})'
-
-
-class Player(models.Model):
-	profile = models.OneToOneField(
-		'users.Profile', on_delete=models.CASCADE, related_name='profile_for_player'
-	)
-	created_at = models.DateTimeField(default=timezone.now)
-	matches_won = models.IntegerField(default=0)
-	matches_lost = models.IntegerField(default=0)
-
-	def __str__(self):
-		return self.profile.get_name()
-
-	@admin.display(
-		boolean=True,
-		ordering='created_at',
-		description='Created recently?',
-	)
-	def was_created_recently(self):
-		now = timezone.now()
-		return now - datetime.timedelta(days=1) <= self.created_at <= now
-
-	def matches_played(self):
-		return self.matches_won + self.matches_lost
-
-
-class Dashboard(models.Model):
-	games_played = models.IntegerField(default=0)
-	active_players = models.IntegerField(default=0)
-	leaderboard = models.TextField()
-
-	def __str__(self):
-		return f'Dashboard: {self.games_played} games, {self.active_players} active players'
-
-	def update_with_game(self, game):
-		self.games_played += 1
-		players = Player.objects.all().order_by('-matches_won')
-		self.leaderboard = '\n'.join([f'{player.name}: {player.matches_won}' for player in players])
-		self.save()
-
-	def save(self, *args, **kwargs):
-		if not self.pk and Dashboard.objects.exists():
-			raise ValidationError('There is already one Dashboard instance')
-		return super(Dashboard, self).save(*args, **kwargs)
-
-	@classmethod
-	def get_instance(cls):
-		instance, created = cls.objects.get_or_create(pk=1)
-		return instance
 
 
 class Tournement(models.Model):

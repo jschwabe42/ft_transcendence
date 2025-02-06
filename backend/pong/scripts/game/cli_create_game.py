@@ -1,4 +1,5 @@
-import argparse
+from argparse import ArgumentParser
+
 import requests
 
 
@@ -25,13 +26,11 @@ def create_game(api_url, csrfToken, username, opponent):
 
 
 def main():
-	parser = argparse.ArgumentParser(
-		description='CLI tool to create a game using the CreateGame API.'
-	)
+	parser = ArgumentParser(description='CLI tool to create a game using the CreateGame API.')
 	parser.add_argument(
 		'--url',
 		required=True,
-		help='The API endpoint URL (e.g., http://localhost:8000/game/api/create-game/).',
+		help='The API endpoint URL (e.g., http://localhost:8000/pong/api/create-game/).',
 	)
 	parser.add_argument('--token', required=True, help='Your API authentication token.')
 	parser.add_argument('--username', required=True, help='Your username.')
@@ -45,7 +44,7 @@ def main():
 if __name__ == '__main__':
 	main()
 
-# python3 pong_start.py --url http://localhost:8000/game/api/create-game/ \
+# python3 pong_start.py --url http://localhost:8000/pong/api/create-game/ \
 #                           --token your_token \
 #                           --username Jsanger \
 #                           --opponent NewUser
