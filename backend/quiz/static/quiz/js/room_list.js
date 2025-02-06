@@ -64,7 +64,13 @@ function initCreateRoomForm() {
 		},
 		body: `room_name=${encodeURIComponent(roomName)}`
 	})
-	.then(response => response.json())
+	.then(response => {
+		if (response.redirected) {
+			router.navigateTo('/login/');
+			return;
+		}
+		return response.json();
+	})
 	.then(data => {
 		if (data.success) {
 			feedbackDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
