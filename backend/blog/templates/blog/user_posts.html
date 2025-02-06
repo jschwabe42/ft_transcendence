@@ -1,4 +1,4 @@
-{%extends "blog/base.html"%}
+{%extends "base.html"%}
 {% block content %}
 <h1 class="mb-3">Posted by {{ view.kwarks.username }} ({{ page_obj.paginator.count }})</h1>
 {% for post in posts%}
