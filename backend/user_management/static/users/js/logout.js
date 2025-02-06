@@ -12,13 +12,13 @@ export function logout_user() {
 	<div id="message-container"></div>
 
 	<div class="border-top pt-3">
-		<small class="text-muted">
-			Want to create an Account? <span class="ml-2 register-link" id="register-link">Register</span>
+		<small class="text-muted" id="register-link-container">
+			Want to create an Account? <span class="ml-2 register-link" id="account-register-link">Register</span>
 		</small>
 	</div>
 	<div class="border-top pt-3">
-		<small class="text-muted">
-			Already have an account? <span class="ml-2 sign-in-link">Sign In</span>
+		<small class="text-muted" id="login-link-container">
+			Already have an account? <span class="ml-2 sign-in-link" id="sign-in-link">Sign In</span>
 		</small>
 	</div>
 	`;
