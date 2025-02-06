@@ -19,6 +19,7 @@ export function display_account() {
 			<p id="account-email-head"></p>
 		</div>
 	</div>
+	<hr class="account-head-divider">
 
 	<div class="profile-info">
 		<h3 id="profile-info-head">Profile Info:</h3>
@@ -36,7 +37,7 @@ export function display_account() {
 				<span id="display_name"></span> <i class="bi bi-pencil-square" id="edit-display_name"></i>
 			</p>
 			<button id="update-profile-data" class="btn btn-primary">Update Profile Data</button>
-			<div id="password-input-container" styke="display: none;">
+			<div id="password-input-container" style="visibility: hidden;">
 				<input type="password" id="profile-password-input" class="form-control" placeholder="Enter your password">
 				<button id="submit-profile-update" class="btn btn-primary">Submit</button>
 			</div>
@@ -87,12 +88,12 @@ function get_account_details() {
 
 			document.getElementById('update-profile-data').addEventListener('click', () => {
 				const passwordInputContainer = document.getElementById('password-input-container');
-				const style = passwordInputContainer.style.display;
-				if (style === 'none') {
-					passwordInputContainer.style.display = 'block';
+				const style = passwordInputContainer.style.visibility;
+				if (style === 'hidden') {
+					passwordInputContainer.style.visibility = 'visible';
 				}
 				else {
-					passwordInputContainer.style.display = 'none';
+					passwordInputContainer.style.visibility = 'hidden';
 				}
 			});
 

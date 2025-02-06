@@ -93,3 +93,25 @@
 	font-size: 2em;
 	font-weight: bold;
 }
+
+.account-head-divider {
+	border-bottom: 1px solid #1c4f73;
+	margin-bottom: 20px;
+}
+
+#password-input-container {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+/* The button */
+#update-profile-data {
+	margin-bottom: 10px;
+}
+
+/* The box to import the password */
+#profile-password-input {
+	width: 300px;
+	margin-right: 5px;
+}
