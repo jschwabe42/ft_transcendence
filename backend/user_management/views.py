@@ -1,14 +1,19 @@
 from django.contrib import messages
-from django.contrib.auth import get_user_model, logout, update_session_auth_hash, authenticate, login
+from django.contrib.auth import (
+	authenticate,
+	get_user_model,
+	login,
+	logout,
+	update_session_auth_hash,
+)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import F
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
 from django.shortcuts import redirect, render
 from pong.models import PongGame
 from pong.utils import win_to_loss_ratio
-from django.http import JsonResponse
-from django.contrib.sessions.models import Session
-from django.middleware.csrf import get_token
 
 from user_management.friends import Friends_Manager
 
@@ -32,15 +37,23 @@ def register(request):
 
 		if password1 != password2:
 			return JsonResponse({'success': False, 'message': 'Passwords do not match.'})
-		if User.objects.filter(username=username).exists() or User.objects.filter(display_name=username).exists():
+		if (
+			User.objects.filter(username=username).exists()
+			or User.objects.filter(display_name=username).exists()
+		):
 			return JsonResponse({'success': False, 'message': 'Username already taken.'})
 		if User.objects.filter(email=email).exists():
-			return JsonResponse({'success': False, 'message': 'An Account with this email already exists.'})
-		user = User.objects.create_user(username=username, email=email, password=password1, display_name=username)
+			return JsonResponse(
+				{'success': False, 'message': 'An Account with this email already exists.'}
+			)
+		user = User.objects.create_user(
+			username=username, email=email, password=password1, display_name=username
+		)
 		user.save()
 		return JsonResponse({'success': True, 'message': 'Account created successfully.'})
 	else:
 		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
 
 def login_view(request):
 	"""
@@ -55,7 +68,9 @@ def login_view(request):
 		if user is not None:
 			login(request, user)
 			new_csrf_token = get_token(request)
-			return (JsonResponse({'success': True, 'message': 'Login successful.', 'csrf_token': new_csrf_token}))
+			return JsonResponse(
+				{'success': True, 'message': 'Login successful.', 'csrf_token': new_csrf_token}
+			)
 		else:
 			return JsonResponse({'success': False, 'message': 'Invalid username or password!'})
 	else:
@@ -70,9 +85,12 @@ def logout_view(request):
 	if request.method == 'POST':
 		logout(request)
 		new_csrf_token = get_token(request)
-		return JsonResponse({'success': True, 'message': 'Logout successful.', 'csrf_token': new_csrf_token})
+		return JsonResponse(
+			{'success': True, 'message': 'Logout successful.', 'csrf_token': new_csrf_token}
+		)
 	else:
 		return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
 
 @login_required
 def account(request):
