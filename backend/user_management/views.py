@@ -122,7 +122,7 @@ def update_profile(request):
 		password = request.POST.get('password')
 		image = request.FILES.get('image')
 
-		validation_response = validate_data(username, display_name, email)
+		validation_response = validate_data(username, display_name, email, user)
 		if validation_response:
 			return validation_response
 
@@ -140,24 +140,36 @@ def update_profile(request):
 		return JsonResponse({'success': True, 'message': 'Profile updated successfully.'})
 	return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
-def validate_data(username, display_name, email):
+def validate_data(username, display_name, email, current_user=None):
 	if email:
 		try:
 			validate_email(email)
 		except ValidationError:
 			return JsonResponse({'success': False, 'message': 'Invalid email address.'})
-		if User.objects.filter(email=email).exists():
-			return JsonResponse({'success': False, 'message': 'An Account with this email already exists.'})
+		if current_user:
+			if User.objects.filter(email=email).exclude(id=current_user.id).exists():
+				return JsonResponse({'success': False, 'message': 'An Account with this email already exists.'})
+		else:
+			if User.objects.filter(email=email).exists():
+				return JsonResponse({'success': False, 'message': 'An Account with this email already exists.'})
 	if username:
 		if len(username.strip()) == 0 or not re.match(r'^\w+$', username):
 			return JsonResponse({'success': False, 'message': 'Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'})
-		if User.objects.filter(username=username).exists():
-			return JsonResponse({'success': False, 'message': 'Username already taken.'})
+		if current_user:
+			if User.objects.filter(username=username).exclude(id=current_user.id).exists():
+				return JsonResponse({'success': False, 'message': 'Username already taken.'})
+		else:
+			if User.objects.filter(username=username).exists():
+				return JsonResponse({'success': False, 'message': 'Username already taken.'})
 	if display_name:
 		if len(display_name.strip()) == 0 or not re.match(r'^\w+$', display_name):
 			return JsonResponse({'success': False, 'message': 'Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'})
-		if User.objects.filter(display_name=display_name).exists():
-			return JsonResponse({'success': False, 'message': 'Display name already taken.'})
+		if current_user:
+			if User.objects.filter(display_name=display_name).exclude(id=current_user.id).exists():
+				return JsonResponse({'success': False, 'message': 'Display name already taken.'})
+		else:
+			if User.objects.filter(display_name=display_name).exists():
+				return JsonResponse({'success': False, 'message': 'Display name already taken.'})
 	return None
 
 @login_required
