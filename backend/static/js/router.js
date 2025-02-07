@@ -9,7 +9,6 @@ import { logout_user } from '/static/users/js/logout.js';
 import { display_account } from '/static/users/js/account.js';
 
 import { game_base } from '/static/pong/js/game_base_socket.js';
-import { page1, page2 } from '/static/pong/js/pages.js';
 import { game } from '/static/pong/js/game.js';
 import { gameDetails } from '/static/pong/js/gameDetails.js';
 import { Tournament } from '/static/pong/js/Tournament.js';
