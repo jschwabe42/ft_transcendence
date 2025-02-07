@@ -1,24 +1,20 @@
-import sys
-
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import PongGame, Tournament
-from django.utils import timezone
 
 User = get_user_model()
 
 
-# API for game creation
 class CreateGameView(APIView):
+	"""API for game creation: `/pong/api/create-game/`"""
+
 	# For testing CLI comment permission_classes cause canot acces csrf_token
 	permission_classes = [IsAuthenticated]
-
-	print('\nAPI CreateGameView\n')
-	sys.stdout.flush()
 
 	def post(self, request):
 		opponent_username = request.data.get('opponent')
@@ -45,8 +41,6 @@ class CreateGameView(APIView):
 
 		tournament_id = request.data.get('tournament', 0)
 
-		print(tournament_id)
-		sys.stdout.flush()
 		# Create the game
 		game = PongGame.objects.create(
 			player1=player, player2=opponent, tournament_id=tournament_id
@@ -60,6 +54,8 @@ class CreateGameView(APIView):
 
 
 class ScoreBoardView(APIView):
+	"""API Endpoint: `/pong/api/get-score/`"""
+
 	# For testing CLI comment permission_classes cause canot acces csrf_token
 	# permission_classes = [IsAuthenticated]
 
@@ -103,7 +99,7 @@ class ScoreBoardView(APIView):
 		return Response({'scores': 'Game successfully saved score.'}, status=status.HTTP_200_OK)
 
 
-class ControllKeySetting(APIView):
+class ControlKeySetting(APIView):
 	# permission_classes = [IsAuthenticated]
 
 	def post(self, request):
@@ -147,6 +143,8 @@ class ControllKeySetting(APIView):
 
 
 class CreateTournament(APIView):
+	"""API Endpoint: `/pong/api/create-tournament/`"""
+
 	# permission_classes = [IsAuthenticated]
 
 	def post(self, request):
