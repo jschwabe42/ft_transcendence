@@ -30,6 +30,9 @@ export function login_user() {
 			<small class="text-muted" id="register-link-container">
 				Want to create an Account? <span class="ml-2 register-link" id="account-register-link">Register</span>
 			</small>
+			<small class="text-muted" id="oauth-link-container">
+				Sign in using 42? <span class="ml-2 oauth-link" id="account-register-link">authenticate</span>
+			</small>
 		</div>
 	`;
 
@@ -37,6 +40,9 @@ export function login_user() {
 
 	document.querySelector('.register-link').addEventListener('click', function () {
 		router.navigateTo('/register/');
+	});
+	document.querySelector('.oauth-link').addEventListener('click', function () {
+		router.navigateTo('/users/oauth/');
 	});
 }
 
