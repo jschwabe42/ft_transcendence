@@ -43,12 +43,14 @@ class CreateGameView(APIView):
 		except User.DoesNotExist:
 			return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
-		tournament_id =  request.data.get('tournament', 0)
+		tournament_id = request.data.get('tournament', 0)
 
 		print(tournament_id)
 		sys.stdout.flush()
 		# Create the game
-		game = PongGame.objects.create(player1=player, player2=opponent, tournament_id=tournament_id)
+		game = PongGame.objects.create(
+			player1=player, player2=opponent, tournament_id=tournament_id
+		)
 		game.save()
 
 		return Response(
@@ -80,17 +82,17 @@ class ScoreBoardView(APIView):
 		game.score1 = int(score1)
 		game.score2 = int(score2)
 
-		if (game.score1 == 10 or game.score2 == 10):
+		if game.score1 == 10 or game.score2 == 10:
 			game.pending = False
 			game.played_at = timezone.now()
 			if game.tournament_id != 0:
-				if (game.score1 == 10):
+				if game.score1 == 10:
 					winner = game.player1.get_username()
 				else:
 					winner = game.player2.get_username()
 				tournament_id = game.tournament_id
 				tournament = Tournament.objects.get(id=tournament_id)
-				if tournament.winner1 == "":
+				if tournament.winner1 == '':
 					tournament.winner1 = winner
 				else:
 					tournament.winner2 = winner

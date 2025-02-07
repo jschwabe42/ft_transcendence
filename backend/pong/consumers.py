@@ -4,7 +4,6 @@ import sys
 
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.utils import timezone
 
 from .models import PongGame, Tournament
 from .pong import PongInstance

@@ -53,7 +53,7 @@ def ingame(request):
 			'player1_control_settings': game.player1_control_settings,
 			'player2_control_settings': game.player2_control_settings,
 			'game_id': game.id,
-			'tournament_id': game.tournament_id
+			'tournament_id': game.tournament_id,
 		}
 		return JsonResponse(game_data)
 	except Game.DoesNotExist:
