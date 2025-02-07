@@ -1,4 +1,4 @@
-export function CreateTournamentGames(event, socket, model, tour_id) {
+export function CreateTournamentPongGames(event, socket, model, tour_id) {
 	event.preventDefault();
 
 	if (model.host && model.player1 && model.player2 && model.player3) {
@@ -31,7 +31,7 @@ export function CreateTournamentGames(event, socket, model, tour_id) {
 				console.error('Error creating games:', error);
 			});
 	} else {
-		console.log("CreateTournamentGames: Error - not 4 users there");
+		console.log("CreateTournamentPongGames: Error - not 4 users there");
 	}
 }
 

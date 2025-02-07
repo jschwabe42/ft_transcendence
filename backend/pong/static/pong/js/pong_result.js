@@ -1,4 +1,4 @@
-export function gameDetails(params) {
+export function PongResult(params) {
 	console.log("Game ID:", params.game_id);
 
 	fetch(`/pong/api/ingame/?game_id=${params.game_id}`)

@@ -2,7 +2,7 @@ import router from '/static/js/router.js';
 
 let gameModel = {};
 
-export function game(params) {
+export function DisplayPong(params) {
 	console.log("Game ID:", params.game_id);
 
 	fetch(`/pong/api/ingame/?game_id=${params.game_id}`)

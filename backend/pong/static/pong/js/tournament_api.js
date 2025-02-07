@@ -1,5 +1,3 @@
-
-
 export function CreateTournament(event, socket) {
 	event.preventDefault();
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');

@@ -1,8 +1,8 @@
 import router from '/static/js/router.js';
-import { CreateGameForm } from './CreateGame.js';
-import { CreateTournament } from './CreateTournament.js';
+import { CreateGameForm } from './pong_api.js';
+import { CreateTournament } from './tournament_api.js';
 
-export function game_base() {
+export function PongOverview() {
 	const socket = new WebSocket("ws://localhost:8000/ws/pong/");
 	const userName = document.getElementById('username').getAttribute('data-username');
 

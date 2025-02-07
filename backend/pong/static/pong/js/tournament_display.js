@@ -1,8 +1,8 @@
 import router from '/static/js/router.js';
-import { CreateTournamentGames } from './CreateTournamentGames.js';
+import { CreateTournamentPongGames } from './CreateTournamentPongGames.js';
 
 
-export function Tournament(params) {
+export function DisplayTournament(params) {
 	let tournamentModel = {}
 	let tournament_id = params.tournament_id
 	console.log(params.tournament_id)
@@ -35,7 +35,7 @@ export function Tournament(params) {
 			renderTournamentData(tournamentSocket, tournamentModel);
 			document.getElementById("create-tournament-games").addEventListener("submit", function (event) {
 				event.preventDefault();
-				CreateTournamentGames(event, tournamentSocket, tournamentModel, tournament_id)
+				CreateTournamentPongGames(event, tournamentSocket, tournamentModel, tournament_id)
 				document.getElementById("create-tournament-games").style.display = "none";
 			});
 		})
@@ -123,7 +123,6 @@ function updateUIWithTournamentData(data) {
 		document.getElementById("winner1").innerText = data.winner1;
 		if (data.winner2 && data.winner2 != "")
 			document.getElementById("winner2").innerText = data.winner2;
-		
 		if (data.playerNum === 4) {
 			document.getElementById("header").style.color = "green";
 	}

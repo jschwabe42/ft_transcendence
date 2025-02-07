@@ -8,10 +8,10 @@ import { login_user } from '/static/users/js/login.js';
 import { logout_user } from '/static/users/js/logout.js';
 import { display_account } from '/static/users/js/account.js';
 
-import { game_base } from '/static/pong/js/game_base_socket.js';
-import { game } from '/static/pong/js/game.js';
-import { gameDetails } from '/static/pong/js/gameDetails.js';
-import { Tournament } from '/static/pong/js/Tournament.js';
+import { PongOverview } from '/static/pong/js/overview.js';
+import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
+import { PongResult } from '/static/pong/js/pong_result.js';
+import { DisplayTournament } from '/static/pong/js/tournament_display.js';
 
 class Router {
 	constructor() {
@@ -80,21 +80,21 @@ class Router {
 		match = path.match(pongPathRegex);
 		if (match) {
 			const gameId = match[1];
-			game({ game_id: gameId });
+			DisplayPong({ game_id: gameId });
 			return;
 		}
 
 		match = path.match(pongDetailsPathRegex);
 		if (match) {
 			const gameId = match[1];
-			gameDetails({ game_id: gameId });
+			PongResult({ game_id: gameId });
 			return;
 		}
 
 		match = path.match(tournamentPathRegex);
 		if (match) {
 			const tournamentId = match[1];
-			Tournament({ tournament_id: tournamentId });
+			DisplayTournament({ tournament_id: tournamentId });
 			return;
 		}
 
@@ -143,10 +143,9 @@ const router = new Router();
 router.addRoute('/quiz/', loadRoomList);
 
 /**
- * The main view of the quiz app
+ * The main view of the pong app
  */
-router.addRoute('/pong/', game_base);
-router.addRoute('/pong/page2', page2);
+router.addRoute('/pong/', PongOverview);
 
 /**
  * The Homepage
