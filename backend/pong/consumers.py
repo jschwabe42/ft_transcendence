@@ -277,8 +277,12 @@ class TournamentConsumer(AsyncWebsocketConsumer):
 				'player2': self.tournament.player2,
 				'player3': self.tournament.player3,
 				'playerNum': self.tournament.playernum,
+				'winner1': self.tournament.winner1,
+				'winner2': self.tournament.winner2,
 			}
-			await self.send(text_data=json.dumps(tournament_data))
+			await self.channel_layer.group_send(
+				self.group_name, {'type': 'broadcast_create_games', 'response': tournament_data}
+			)
 
 		elif action == 'createGames':
 			response_data = {

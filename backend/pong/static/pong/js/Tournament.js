@@ -23,6 +23,9 @@ export function Tournament(params) {
 				<p id="player3"><strong>Player3:</strong> ${model.player3}</p>
 				<p id="playerNum"><strong></strong> ${model.playernum}</p>
 
+				<h1 id='winner1'></h1>
+				<h1 id='winner2'></h1>
+
 				<form id="create-tournament-games" style="display: none;" >
 					<button class="add_user" type="submit">Play Tournament Games +</button>
 				</form>
@@ -33,7 +36,7 @@ export function Tournament(params) {
 			document.getElementById("create-tournament-games").addEventListener("submit", function (event) {
 				event.preventDefault();
 				CreateTournamentGames(event, tournamentSocket, tournamentModel, tournament_id)
-				console.log(tournament_id, "button Pressed");
+				document.getElementById("create-tournament-games").style.display = "none";
 			});
 		})
 		.catch(error => {
@@ -69,11 +72,12 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 			document.getElementById(data.field).innerHTML = `<strong>${data.field.replace("player", "Player ")}:</strong> ${data.username}`;
 			document.getElementById("playerNum").innerHTML = data.playerNum
 		}
-		if (data.playerNum == 4 && user == tournamentModel.host) {
+		if (data.playerNum == 4 && user == tournamentModel.host && data.winner1 == "" && data.winner2 == "") {
 			document.getElementById("header").style.color = "green";
 			document.getElementById("create-tournament-games").style.display = "block";
 		}
 		if (data.use === "sync") {
+			console.log(data)
 			updateUIWithTournamentData(data);
 		}
 		if (data.use === "createGames" && data.data?.games) {
@@ -97,10 +101,10 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 
 	tournamentSocket.onclose = function (e) {
 		console.error('WebSocket geschlossen:', e);
-		setTimeout(() => {
-			console.log("Reconnecting WebSocket...");
-			renderTournamentData();
-		}, 3000);
+		// setTimeout(() => {
+		// 	console.log("Reconnecting WebSocket...");
+		// 	renderTournamentData();
+		// }, 3000);
 	};
 
 	tournamentSocket.onerror = function (e) {
@@ -115,7 +119,12 @@ function updateUIWithTournamentData(data) {
 	document.getElementById("player3").innerHTML = `<strong>Player3:</strong> ${data.player3}`;
 	document.getElementById("playerNum").innerHTML = data.playerNum;
 
-	if (data.playerNum === 4) {
-		document.getElementById("header").style.color = "green";
+	if (data.winner1 && data.winner1 != "")
+		document.getElementById("winner1").innerText = data.winner1;
+		if (data.winner2 && data.winner2 != "")
+			document.getElementById("winner2").innerText = data.winner2;
+		
+		if (data.playerNum === 4) {
+			document.getElementById("header").style.color = "green";
 	}
 }
