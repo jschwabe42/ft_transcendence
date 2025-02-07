@@ -1,5 +1,5 @@
 import router from '/static/js/router.js';
-import { CreateTournamentPongGames } from './CreateTournamentPongGames.js';
+import { CreateTournamentPongGames } from './tournament_api.js';
 
 
 export function DisplayTournament(params) {
