@@ -30,7 +30,8 @@ export function game_base() {
 				.filter(game => game.pending)
 				.map(game => `
 					<button class="ChatButtonBackground navigate-button" data-path="/pong/${game.game_id}">
-						${game.player1} vs ${game.player2} (pending)
+						${game.player1} vs ${game.player2} 
+						(${game.tournament_id !== 0 ? 'pending Tournament game' : 'pending'})
 					</button>
 				`).join('');
 

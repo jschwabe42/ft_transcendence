@@ -116,8 +116,6 @@ class GameConsumer(AsyncWebsocketConsumer):
 			winner = json_state['winner']
 			if winner['player1'] or winner['player2']:
 				game = await sync_to_async(PongGame.objects.get)(id=self.game_id)
-				game.pending = False
-				game.played_at = timezone.now()
 				player1 = await sync_to_async(lambda: game.player1)()
 				player2 = await sync_to_async(lambda: game.player2)()
 				if winner['player1']:
@@ -128,7 +126,6 @@ class GameConsumer(AsyncWebsocketConsumer):
 					player1.matches_lost += 1
 				await sync_to_async(player1.save)()
 				await sync_to_async(player2.save)()
-				await sync_to_async(game.save)()
 
 			await self.channel_layer.group_send(
 				self.room_group_name,

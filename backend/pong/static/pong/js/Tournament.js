@@ -4,6 +4,8 @@ import { CreateTournamentGames } from './CreateTournamentGames.js';
 
 export function Tournament(params) {
 	let tournamentModel = {}
+	let tournament_id = params.tournament_id
+	console.log(params.tournament_id)
 	console.log("Tournament: ID", params.tournament_id);
 	const tournamentSocket = new WebSocket('ws://' + window.location.host + '/tournament/' + params.tournament_id + '/');
 
@@ -27,11 +29,11 @@ export function Tournament(params) {
 
 				<button class="navigate-button" data-path="/pong/">Go to Menu</button>
 			`;
-			renderTournamentData(tournamentSocket, tournamentModel, params.tournament_id);
+			renderTournamentData(tournamentSocket, tournamentModel);
 			document.getElementById("create-tournament-games").addEventListener("submit", function (event) {
 				event.preventDefault();
-				CreateTournamentGames(event, tournamentSocket, tournamentModel)
-				// console.log(event, tournamentSocket, "button Pressed");
+				CreateTournamentGames(event, tournamentSocket, tournamentModel, tournament_id)
+				console.log(tournament_id, "button Pressed");
 			});
 		})
 		.catch(error => {
@@ -74,7 +76,6 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 		if (data.use === "sync") {
 			updateUIWithTournamentData(data);
 		}
-		console.log("HelloWorld")
 		if (data.use === "createGames" && data.data?.games) {
 			const gameDetails = data.data.games.map((game, index) => ({
 				gameid: game[0].gameid,

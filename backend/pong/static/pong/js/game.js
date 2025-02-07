@@ -53,7 +53,10 @@ export function game(params) {
 							<p id="player2">${model.score2}</p>
 						</div>
 					</div>
-					<button id="winner" class="navigate-button" style="display: none;" data-path="/pong/">back to menu</button>
+					<button id="winner" class="navigate-button" style="display: none;" 
+						data-path="${model.tournament_id === 0 ? '/pong/' : '/pong/tournament/' + model.tournament_id}">
+						back to menu
+					</button>
 				</main>
 			`;
 			renderGameData();

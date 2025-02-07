@@ -1,9 +1,6 @@
 export function CreateTournamentGames(event, socket, model, tour_id) {
 	event.preventDefault();
 
-	console.log("girugudhgicniouhisuzhioehsiojoixdjzoij dzv iojgiovzjoonbondojgiojhnfioxhiomxbmxio")
-	console.log(tour_id)
-
 	if (model.host && model.player1 && model.player2 && model.player3) {
 
 		Promise.all([
