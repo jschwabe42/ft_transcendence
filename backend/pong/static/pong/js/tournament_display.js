@@ -1,7 +1,6 @@
 import router from '/static/js/router.js';
 import { CreateTournamentPongGames } from './tournament_api.js';
 
-
 export function DisplayTournament(params) {
 	let tournamentModel = {}
 	let tournament_id = params.tournament_id
@@ -54,11 +53,8 @@ export function DisplayTournament(params) {
 	});
 }
 
-
-
 function renderTournamentData(tournamentSocket, tournamentModel) {
 	const user = document.getElementById('username').getAttribute('data-username');
-
 
 	tournamentSocket.onopen = function (e) {
 		console.log('WebSocket opend');
@@ -98,13 +94,8 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 		}
 	};
 
-
 	tournamentSocket.onclose = function (e) {
 		console.error('WebSocket geschlossen:', e);
-		// setTimeout(() => {
-		// 	console.log("Reconnecting WebSocket...");
-		// 	renderTournamentData();
-		// }, 3000);
 	};
 
 	tournamentSocket.onerror = function (e) {
@@ -119,11 +110,11 @@ function updateUIWithTournamentData(data) {
 	document.getElementById("player3").innerHTML = `<strong>Player3:</strong> ${data.player3}`;
 	document.getElementById("playerNum").innerHTML = data.playerNum;
 
-	if (data.winner1 && data.winner1 != "")
+	if (data.winner1 && data.winner1 != "") {
 		document.getElementById("winner1").innerText = data.winner1;
 		if (data.winner2 && data.winner2 != "")
 			document.getElementById("winner2").innerText = data.winner2;
-		if (data.playerNum === 4) {
+		if (data.playerNum === 4)
 			document.getElementById("header").style.color = "green";
 	}
 }

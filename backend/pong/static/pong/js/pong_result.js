@@ -2,22 +2,22 @@ export function PongResult(params) {
 	console.log("Game ID:", params.game_id);
 
 	fetch(`/pong/api/ingame/?game_id=${params.game_id}`)
-	.then(response => {
-		if (!response.ok) {
-			throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-		return response.json();
-	})
-	.then(model => {
-		console.log("API Response:", model);
+		.then(response => {
+			if (!response.ok) {
+				throw new Error(`HTTP error! Status: ${response.status}`);
+			}
+			return response.json();
+		})
+		.then(model => {
+			console.log("API Response:", model);
 
-		const contentElement = document.getElementById('pong-app-content');
-		if (!contentElement) {
-			console.error("Element mit ID 'pong-app-content' nicht gefunden.");
-			return;
-		}
+			const contentElement = document.getElementById('pong-app-content');
+			if (!contentElement) {
+				console.error("Element mit ID 'pong-app-content' nicht gefunden.");
+				return;
+			}
 
-		contentElement.innerHTML = `
+			contentElement.innerHTML = `
 			<div class="profile-container" style="text-align: center;">
 				<h1>${model.score1} - ${model.score2}</h1>
 				<p class="profile-date" style="text-align: center;">
@@ -41,8 +41,8 @@ export function PongResult(params) {
 				</div>
 			</div>
 		`;
-	})
-	.catch(error => {
-		console.error("Fehler beim Laden der Daten:", error);
-	});
+		})
+		.catch(error => {
+			console.error("Fehler beim Laden der Daten:", error);
+		});
 }

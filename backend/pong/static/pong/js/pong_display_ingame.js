@@ -74,8 +74,6 @@ export function DisplayPong(params) {
 }
 
 function renderGameData() {
-	// upDownControl(gameModel.game_id);
-	// wsControl(gameModel.game_id);
 	const user = document.getElementById('username').getAttribute('data-username');
 	let game_is_running = false;
 
@@ -85,11 +83,11 @@ function renderGameData() {
 
 	const gameSocket = new WebSocket('ws://' + window.location.host + '/pong/' + game_id + '/');
 
-	gameSocket.onclose = function(e) {
+	gameSocket.onclose = function (e) {
 		console.error('WebSocket geschlossen', e);
 	};
-	
-	gameSocket.onopen = function(e) {
+
+	gameSocket.onopen = function (e) {
 		console.log('WebSocket opend');
 	};
 
@@ -109,23 +107,23 @@ function renderGameData() {
 		if (game_is_running == false) {
 			const ready1 = document.querySelector('#ready_player_one');
 			const ready2 = document.querySelector('#ready_player_two');
-	
+
 			if (player == player1) {
 				ready1.style.display = 'block';
 			}
 			if (player == player2)
 				ready2.style.display = 'block';
-	
+
 			if (ready1.style.display == 'block' && ready2.style.display == 'block') {
-				let  is_ready_id = document.querySelector('#is_ready_id');
+				let is_ready_id = document.querySelector('#is_ready_id');
 				is_ready_id.style.color = "green";
 			}
 		}
 	}
 
-	gameSocket.onmessage = function(e) {
+	gameSocket.onmessage = function (e) {
 		const data = JSON.parse(e.data);
-		if (data.use == "ready_button") 
+		if (data.use == "ready_button")
 			ready_button(data.user)
 		if (data.use == "KeyboardEvent") {
 			keyboardPressed(data.user, data.key)
@@ -228,7 +226,7 @@ function renderGameData() {
 				document.getElementById("player2").style.backgroundColor = "green";
 				console.log("Player2 Won");
 			}
-			
+
 
 
 		renderGame();
@@ -242,7 +240,7 @@ function renderGameData() {
 		drawBall();
 	}
 
-	function drawRackets () {
+	function drawRackets() {
 		ctx.fillStyle = "black";
 		ctx.fillRect(rightpong.x, rightpong.y, rightpong.width, rightpong.height);
 		ctx.fillRect(leftpong.x, leftpong.y, leftpong.width, leftpong.height);
@@ -331,9 +329,9 @@ function renderGameData() {
 		}
 	});
 
-	document.getElementById("ws").addEventListener("click", async function(event) {
+	document.getElementById("ws").addEventListener("click", async function (event) {
 		console.log("Access API");
-		event.preventDefault(); 
+		event.preventDefault();
 		let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 		try {
@@ -361,7 +359,7 @@ function renderGameData() {
 		}
 	});
 
-	document.getElementById("up_down").addEventListener("click", async function(event) {
+	document.getElementById("up_down").addEventListener("click", async function (event) {
 		console.log("Access API");
 		event.preventDefault();
 		let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
