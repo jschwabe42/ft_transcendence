@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 12:41+0000\n"
+"POT-Creation-Date: 2025-02-08 15:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,27 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/index.html:47 templates/index.html:56
+#: templates/index.html:50 templates/index.html:59
 msgid "Transcendence"
 msgstr "Transcendence"
 
-#: templates/index.html:63
+#: templates/index.html:66
 msgid "Home"
 msgstr "Nur Nachhause"
 
-#: templates/index.html:64
+#: templates/index.html:67
 msgid "Chat"
 msgstr "Besprechungszimmer"
 
-#: templates/index.html:66
+#: templates/index.html:69
 msgid "Quiz"
 msgstr "Rätsel"
 
-#: templates/index.html:67
+#: templates/index.html:70
 msgid "Pong"
 msgstr "Ping"
 
-#: templates/index.html:68
+#: templates/index.html:71
 msgid "Dashboard"
 msgstr "Übersicht"
 
