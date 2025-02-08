@@ -3,6 +3,8 @@ import router from '/static/js/router.js';
 document.addEventListener('DOMContentLoaded', function() {
 	update_navbar();
 
+	setup_language();
+
 	document.getElementById('home-link').addEventListener('click', function(event) {
 		event.preventDefault();
 		router.navigateTo('/');
@@ -96,5 +98,66 @@ export function update_navbar() {
 				router.navigateTo('/login/');
 			});
 		}
+	});
+}
+
+function setup_language() {
+	const languages = [
+		{code: 'en', name: 'English', flag: '/media/flags/en.svg'},
+		{code: 'sv', name: 'Svenska', flag: '/media/flags/sv.svg'},
+		{code: 'de', name: 'Deutsch', flag: '/media/flags/de.svg'},
+	];
+
+	const currentLanguageCode = document.documentElement.lang || 'en';
+	const currentLanguage = languages.find(language => language.code === currentLanguageCode);
+
+	const currentLanguageFlag = document.getElementById('current-language-flag');
+	currentLanguageFlag.src = currentLanguage.flag;
+	currentLanguageFlag.alt = currentLanguage.code;
+	document.getElementById('current-language-name').textContent = currentLanguage.name;
+
+	const languageOptions = document.getElementById('language-options');
+	languages.forEach(language => {
+		if (language.code !== currentLanguageCode) {
+			const li = document.createElement('li');
+			const a = document.createElement('a');
+			a.className = 'dropdown-item language-option';
+			a.href = '';
+			a.dataset.lang = language.code;
+			a.innerHTML = `<img src="${language.flag}" alt="${language.code}" width="20" height="20"> ${language.name}`;
+			li.appendChild(a);
+			languageOptions.appendChild(li);
+		}
+	});
+
+	document.querySelectorAll('.language-option').forEach(option => {
+		option.addEventListener('click', function(event) {
+			event.preventDefault();
+			const selectedLanguage = option.getAttribute('data-lang');
+			const formData = new FormData();
+			formData.append('language', selectedLanguage);
+			formData.append('next', window.location.pathname);
+			const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+			formData.append('csrfmiddlewaretoken', csrfToken);
+
+			console.log('Setting language to', selectedLanguage);
+
+			fetch('/i18n/setlang/', {
+				method: 'POST',
+				credentials: 'same-origin',
+				body: formData,
+			})
+			.then(response => {
+				if (response.ok) {
+					console.log('Language set successfully');
+					window.location.reload();
+				} else {
+					console.error('Failed to set language');
+				}
+			})
+			.catch(error => {
+				console.error('Failed to set language:', error);
+			});
+		});
 	});
 }

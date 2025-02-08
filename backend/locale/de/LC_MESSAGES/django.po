@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 12:25+0000\n"
+"POT-Creation-Date: 2025-02-08 12:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/index.html:47 templates/index.html:56
+msgid "Transcendence"
+msgstr "Transcendence"
+
+#: templates/index.html:63
+msgid "Home"
+msgstr "Nur Nachhause"
+
+#: templates/index.html:64
+msgid "Chat"
+msgstr "Besprechungszimmer"
+
+#: templates/index.html:66
+msgid "Quiz"
+msgstr "Rätsel"
+
+#: templates/index.html:67
+msgid "Pong"
+msgstr "Ping"
+
+#: templates/index.html:68
+msgid "Dashboard"
+msgstr "Übersicht"
+
 #: transcendence/settings.py:191
 msgid "English"
 msgstr "Englisch"

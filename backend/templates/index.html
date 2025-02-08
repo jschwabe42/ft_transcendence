@@ -1,7 +1,7 @@
 {% load static %}
 {% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ request.LANGUAGE_CODE }}">
 
 <head>
 	<meta charset="utf-8">
@@ -10,6 +10,9 @@
 	<!-- The bootstrap toolkit -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 	<!-- The CSS files of the quiz app.-->
 	<link href="{% static 'quiz/css/room_list.css' %}" rel="stylesheet">
@@ -44,7 +47,7 @@
 
 
 	<meta name="csrf-token" content="{{ csrf_token }}">
-	<title>{% trans Transcendence %}</title>
+	<title>{% trans "Transcendence" %}</title>
 </head>
 
 <body>
@@ -53,23 +56,33 @@
 
 		<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
 			<div class="container">
-				<a class="navbar-brand mr-4" href="/" id="transcendence-link">Transcendence</a>
+				<a class="navbar-brand mr-4" href="/" id="transcendence-link">{% trans "Transcendence" %}</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
 					aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation"> <span
 						class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarToggle">
 					<div class="navbar-nav mr-auto">
-						<a class="nav-item nav-link" href="/" id="home-link">{% trans Home %}</a>
-						<a class="nav-item nav-link" href="{% url 'chat' %}">{% trans Chat %}</a>
+						<a class="nav-item nav-link" href="/" id="home-link">{% trans "Home" %}</a>
+						<a class="nav-item nav-link" href="{% url 'chat' %}">{% trans "Chat" %}</a>
 						<!-- @follow-up implement about page -->
-						<a class="nav-item nav-link" href="/quiz/" id="quiz-link">{% trans Quiz %}</a>
-						<a class="nav-item nav-link" href="/pong/">{% trans Pong %}</a>
-						<a class="nav-item nav-link" href="/dashboard/" id="dashboard-link">{% trans Dashboard %}</a>
+						<a class="nav-item nav-link" href="/quiz/" id="quiz-link">{% trans "Quiz" %}</a>
+						<a class="nav-item nav-link" href="/pong/">{% trans "Pong" %}</a>
+						<a class="nav-item nav-link" href="/dashboard/" id="dashboard-link">{% trans "Dashboard" %}</a>
 					</div>
 					<!-- Navbar Right Side -->
-					<div class="navbar-nav" id="navbar-right">
+					<div class="navbar-nav" id="navbar-right"></div>
+					<!-- Language Switch -->
+					<div class="navbar-nav" id="navbar-language-right">
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+								<img src="/media/flags/en.svg" alt="English" height="20" id="current-language-flag"> <span id="current-language-name">English</span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="languageDropdown" id="language-options"></ul>
+						</div>
+
 					</div>
+
 				</div>
 			</div>
 		</nav>
@@ -86,8 +99,7 @@
 	<!-- The content of the Pong app -->
 	 <!-- THIS IS REDUNDANT. REPLACE WITH THE ONE ABOVE -->
 	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-	<!-- AS FAR IS I KNOW THIS IS ALSO UNNEEDED! -->
-	<div id="username" data-username="{{ user.username }}"></div>
+
 	<div class="container mt-5" id="pong-app-content"></div>
 	<!-- The content of the user app -->
 	<div class="container mt-5" id="user-app-content"></div>
