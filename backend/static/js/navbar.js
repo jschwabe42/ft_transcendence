@@ -114,7 +114,6 @@ function setup_language() {
 	const currentLanguageFlag = document.getElementById('current-language-flag');
 	currentLanguageFlag.src = currentLanguage.flag;
 	currentLanguageFlag.alt = currentLanguage.code;
-	document.getElementById('current-language-name').textContent = currentLanguage.name;
 
 	const languageOptions = document.getElementById('language-options');
 	languages.forEach(language => {
@@ -124,7 +123,7 @@ function setup_language() {
 			a.className = 'dropdown-item language-option';
 			a.href = '';
 			a.dataset.lang = language.code;
-			a.innerHTML = `<img src="${language.flag}" alt="${language.code}" width="20" height="20"> ${language.name}`;
+			a.innerHTML = `<img src="${language.flag}" alt="${language.code}" height="30"> ${language.name}`;
 			li.appendChild(a);
 			languageOptions.appendChild(li);
 		}
