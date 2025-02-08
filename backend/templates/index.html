@@ -31,12 +31,10 @@
 	<script type="module" src="{% static 'js/navbar.js' %}"></script>
 	<script type="module" src="{% static 'js/router.js' %}"></script>
 
-	<script type="module" src="{% static 'pong/js/game.js' %}"></script>
-	<script type="module" src="{% static 'pong/js/game_base_socket.js' %}"></script>
-	<script type="module" src="{% static 'pong/js/pages.js' %}"></script>
-	<script type="module" src="{% static 'pong/js/gameDetails.js' %}"></script>
-	<script type="module" src="{% static 'pong/js/Tournament.js' %}"></script>
-	
+	<script type="module" src="{% static 'pong/js/pong_display_ingame.js' %}"></script>
+	<script type="module" src="{% static 'pong/js/overview.js' %}"></script>
+	<script type="module" src="{% static 'pong/js/pong_result.js' %}"></script>
+	<script type="module" src="{% static 'pong/js/tournament_display.js' %}"></script>
 
 
 
@@ -61,7 +59,7 @@
 						<a class="nav-item nav-link" href="{% url 'chat' %}">Chat</a>
 						<!-- @follow-up implement about page -->
 						<a class="nav-item nav-link" href="/quiz/" id="quiz-link">Quiz App</a>
-						<a class="nav-item nav-link" href="/pong/">Game</a>
+						<a class="nav-item nav-link" href="/pong/">Pong</a>
 						<a class="nav-item nav-link" href="/dashboard/" id="dashboard-link">Dashboard</a>
 					</div>
 					<!-- Navbar Right Side -->

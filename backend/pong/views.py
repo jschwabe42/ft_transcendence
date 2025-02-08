@@ -1,13 +1,11 @@
-# Create your views here.
 from django.http import JsonResponse
 
-from .models import PongGame as Game
-from .models import Tournament
+from .models import PongGame, Tournament
 
 
 def game_data(request):
 	try:
-		games = Game.objects.order_by('-played_at')[:10]
+		games = PongGame.objects.order_by('-played_at')[:10]
 		data = []
 
 		for game in games:
@@ -30,7 +28,7 @@ def game_data(request):
 
 		return JsonResponse(data, safe=False)
 
-	except Game.DoesNotExist:
+	except PongGame.DoesNotExist:
 		return JsonResponse({'error': 'No Games Found'}, status=404)
 
 
@@ -39,7 +37,7 @@ def ingame(request):
 	if not game_id:
 		return JsonResponse({'error': 'Game ID is required'}, status=400)
 	try:
-		game = Game.objects.get(id=game_id)
+		game = PongGame.objects.get(id=game_id)
 		game_data = {
 			'player1': str(game.player1),
 			'player2': str(game.player2),
@@ -56,7 +54,7 @@ def ingame(request):
 			'tournament_id': game.tournament_id,
 		}
 		return JsonResponse(game_data)
-	except Game.DoesNotExist:
+	except PongGame.DoesNotExist:
 		return JsonResponse({'error': 'Game not found'}, status=404)
 
 
