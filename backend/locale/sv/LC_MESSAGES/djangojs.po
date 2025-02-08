@@ -19,4 +19,4 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 #: static/js/navbar.js:64
 msgid "Welcome to the Transcendence Webpage"
-msgstr ""
+msgstr "Välkommen till vår Transcendence-webbsida"
