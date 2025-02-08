@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 15:37+0000\n"
+"POT-Creation-Date: 2025-02-08 17:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,27 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/index.html:50 templates/index.html:59
+#: templates/index.html:55 templates/index.html:64
 msgid "Transcendence"
 msgstr "Transcendence"
 
-#: templates/index.html:66
+#: templates/index.html:71
 msgid "Home"
 msgstr "Hem"
 
-#: templates/index.html:67
+#: templates/index.html:72
 msgid "Chat"
 msgstr "Chatt"
 
-#: templates/index.html:69
+#: templates/index.html:74
 msgid "Quiz"
 msgstr "Frågesport"
 
-#: templates/index.html:70
+#: templates/index.html:75
 msgid "Pong"
 msgstr "Pong"
 
-#: templates/index.html:71
+#: templates/index.html:76
 msgid "Dashboard"
 msgstr "Översikt"
 
@@ -53,3 +53,69 @@ msgstr "Svenska"
 #: transcendence/settings.py:193
 msgid "German"
 msgstr "Tyska"
+
+#: user_management/views.py:41
+msgid "Passwords do not match."
+msgstr "Lösenorden stämmer inte överens."
+
+#: user_management/views.py:50
+msgid "Account created successfully."
+msgstr "Konto har skapats framgångsrikt."
+
+#: user_management/views.py:52 user_management/views.py:74
+#: user_management/views.py:89 user_management/views.py:110
+#: user_management/views.py:143 user_management/views.py:212
+msgid "Invalid request method."
+msgstr "Ogiltig metod för begäran."
+
+#: user_management/views.py:69
+msgid "Login successful."
+msgstr "Inloggningen lyckades."
+
+#: user_management/views.py:72
+msgid "Invalid username or password!"
+msgstr "Ogiltigt användarnamn eller lösenord!"
+
+#: user_management/views.py:86
+msgid "Logout successful."
+msgstr "Utloggningen lyckades."
+
+#: user_management/views.py:132
+msgid "Invalid password."
+msgstr "Ogiltigt lösenord."
+
+#: user_management/views.py:142
+msgid "Profile updated successfully."
+msgstr "Profilen uppdaterades framgångsrikt."
+
+#: user_management/views.py:151
+msgid "Invalid email address."
+msgstr "Ogiltig e-postadress."
+
+#: user_management/views.py:155 user_management/views.py:160
+msgid "An Account with this email already exists."
+msgstr "Ett konto med den här e-postadressen finns redan."
+
+#: user_management/views.py:167
+msgid "Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace."
+msgstr "Ogiltigt användarnamn. Användarnamnet får endast innehålla bokstäver, siffror och understreck och får inte vara tomt eller innehålla enbart blanksteg."
+
+#: user_management/views.py:172 user_management/views.py:175
+msgid "Username already taken."
+msgstr "Användarnamn redan taget."
+
+#: user_management/views.py:181
+msgid "Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace."
+msgstr "Ogiltigt visningsnamn. Visningsnamnet får endast innehålla bokstäver, siffror och understreck och får inte vara tomt eller innehålla enbart blanksteg."
+
+#: user_management/views.py:186 user_management/views.py:189
+msgid "Display name already taken."
+msgstr "Visningsnamnet är redan upptaget."
+
+#: user_management/views.py:206
+msgid "Invalid current password."
+msgstr "Ogiltigt aktuellt lösenord."
+
+#: user_management/views.py:211
+msgid "Password changed successfully."
+msgstr "Lösenordet har ändrats framgångsrikt."
