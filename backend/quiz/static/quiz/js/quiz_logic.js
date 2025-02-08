@@ -56,7 +56,7 @@ export function displayQuestion(question, answers) {
 		});
 		answerOptions.appendChild(button);
 	});
-	quizQuestionContainer.style.display = 'block';
+	// quizQuestionContainer.style.display = 'block';
 }
 
 /**

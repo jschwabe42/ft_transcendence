@@ -62,7 +62,7 @@ msgstr "Richtige Antworten:"
 #: quiz/static/quiz/js/quiz_logic.js:134 quiz/static/quiz/js/quiz_logic.js:149
 #: quiz/static/quiz/js/quiz_logic.js:153
 msgid "points"
-msgstr "punkte"
+msgstr "Punkte"
 
 #: quiz/static/quiz/js/room_display.js:14
 #: quiz/static/quiz/js/room_display.js:395
