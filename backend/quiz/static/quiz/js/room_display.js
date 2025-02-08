@@ -11,13 +11,13 @@ export function displayRoom(roomName) {
 	const quizAppContent = document.getElementById('quiz-app-content');
 	quizAppContent.innerHTML = `
 		<div class="room-header-container">
-			<h2 id="room-header">Welcome to ${roomName}</h2>
-			<p id="room-description">You have successfully joined the room!<br>Here you can start participating in the quiz.</p>
-			<button id="start-game-button" class="btn btn-primary" style="display: none;">Start Game</button>
+			<h2 id="room-header">${gettext("Welcome to")} ${roomName}</h2>
+			<p id="room-description">${gettext("You have successfully joined the room!")}<br>${gettext("Here you can start participating in the quiz.")}</p>
+			<button id="start-game-button" class="btn btn-primary" style="display: none;">${gettext("Start Game")}</button>
 			<div id="answer-options" class="answer-options"></div>
 		</div>
 		<ul id="participants-list"></ul>
-		<button id="leave-room-button" class="btn btn-danger" title="Leave Room">
+		<button id="leave-room-button" class="btn btn-danger" title="${gettext("Leave Room")}">
 			<i class="bi bi-door-open-fill" aria-hidden="true"></i>
 			<span class="sr-only">Leave Room</span>
 		</button>
@@ -29,7 +29,7 @@ export function displayRoom(roomName) {
 
 		<div id="settings-menu" class="card" style="display: none;">
 			<div class="card-body">
-				<h5 class="card-title">Settings</h5>
+				<h5 class="card-title">${gettext("Settings")}</h5>
 
 				<div class="mb-3 setting" data-setting="category">
 					<label class="form-label">Category:</label>
@@ -198,7 +198,7 @@ function updateParticipantsList(participants, leader) {
 	const participantsList = document.getElementById('participants-list');
 	participantsList.innerHTML = '';
 	const headerP = document.createElement('p');
-	headerP.innerText = 'Participants:';
+	headerP.innerText = `${gettext("Participants:")}`;
 	participantsList.appendChild(headerP);
 	participants.forEach(participant => {
 		const li = document.createElement('li');
@@ -342,8 +342,8 @@ function showPopupMessage(message) {
  * Sets a different header, hides the buttons.
  */
 function startGame() {
-	document.getElementById('room-header').innerText = 'Quiz in Progress';
-	document.getElementById('room-description').innerText = 'The quiz has started! Good luck!';
+	document.getElementById('room-header').innerText = `${gettext("Quiz in Progress")}`;
+	document.getElementById('room-description').innerText = `${gettext("The quiz has started! Good luck!")}`;
 	document.getElementById('settings-button').style.display = 'none';
 	document.getElementById('start-game-button').style.display = 'none';
 	document.getElementById('settings-menu').style.display = 'none';
@@ -392,8 +392,8 @@ function fetchSettings(roomId) {
 function endGame() {
 	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
 	currentRoom.is_ingame = false;
-	document.getElementById('room-header').innerText = `Welcome to ${currentRoom.room_name}`;
-	document.getElementById('room-description').innerText = 'The quiz has ended!';
+	document.getElementById('room-header').innerText = `${gettext("Welcome to")} ${currentRoom.room_name}`;
+	document.getElementById('room-description').innerText = `${gettext("The quiz has ended!")}`;
 	if (currentRoom.leader === currentRoom.current_user) {
 		document.getElementById('settings-button').style.display = 'block';
 		document.getElementById('start-game-button').style.display = 'block';

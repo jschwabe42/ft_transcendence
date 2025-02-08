@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 16:26+0000\n"
+"POT-Creation-Date: 2025-02-08 17:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,6 +58,106 @@ msgstr "Gestellte Fragen:"
 #: dashboard/static/dashboard/js/profile.js:51
 msgid "Correct Answers:"
 msgstr "Richtige Antworten:"
+
+#: quiz/static/quiz/js/quiz_logic.js:134 quiz/static/quiz/js/quiz_logic.js:149
+#: quiz/static/quiz/js/quiz_logic.js:153
+msgid "points"
+msgstr "punkte"
+
+#: quiz/static/quiz/js/room_display.js:14
+#: quiz/static/quiz/js/room_display.js:395
+msgid "Welcome to"
+msgstr "Willkommen in"
+
+#: quiz/static/quiz/js/room_display.js:15
+msgid "You have successfully joined the room!"
+msgstr "Du bist dem Raum beigetreten!"
+
+#: quiz/static/quiz/js/room_display.js:15
+msgid "Here you can start participating in the quiz."
+msgstr ""
+"Hier kannst du am Quiz teilnehmen. (Die Fragen im Quiz sind auf Englisch!)"
+
+#: quiz/static/quiz/js/room_display.js:16
+msgid "Start Game"
+msgstr "Spiel starten"
+
+#: quiz/static/quiz/js/room_display.js:20
+msgid "Leave Room"
+msgstr "Raum verlassen"
+
+#: quiz/static/quiz/js/room_display.js:32
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: quiz/static/quiz/js/room_display.js:201
+msgid "Participants:"
+msgstr "Mitspieler:"
+
+#: quiz/static/quiz/js/room_display.js:345
+msgid "Quiz in Progress"
+msgstr "Quiz läuft"
+
+#: quiz/static/quiz/js/room_display.js:346
+msgid "The quiz has started! Good luck!"
+msgstr "Das Quiz is gestartet! Viel Glück!"
+
+#: quiz/static/quiz/js/room_display.js:396
+msgid "The quiz has ended!"
+msgstr "Das Quiz ist beendet!"
+
+#: quiz/static/quiz/js/room_list.js:17
+msgid "Create a new room"
+msgstr "Erstelle einen neuen Raum"
+
+#: quiz/static/quiz/js/room_list.js:18
+msgid "Create Room"
+msgstr "Raum erstellen"
+
+#: quiz/static/quiz/js/room_list.js:22
+msgid "Room Name"
+msgstr "Raumname"
+
+#: quiz/static/quiz/js/room_list.js:23
+msgid "Enter room name"
+msgstr "Gib den Raumnamen ein"
+
+#: quiz/static/quiz/js/room_list.js:25
+msgid "Submit"
+msgstr "Erstellen"
+
+#: quiz/static/quiz/js/room_list.js:32
+msgid "Gratefully using OpenTD"
+msgstr "Das Quiz benutzt OpenTD"
+
+#: quiz/static/quiz/js/room_list.js:85
+msgid "An error occurred:"
+msgstr "Ein Fehler ist aufgetreten:"
+
+#: quiz/static/quiz/js/room_list.js:95
+msgid "Loading rooms..."
+msgstr "Räume werden geladen..."
+
+#: quiz/static/quiz/js/room_list.js:138
+msgid "Error loading rooms. Please try again later."
+msgstr "Fehler beim laden der Räume. Versuche es später nocheinmal"
+
+#: quiz/static/quiz/js/room_list.js:148
+msgid "No rooms available. Create a new room to get started."
+msgstr ""
+"Keine Räume verfügbar. Erstelle einen neuen Raum um ein Quiz zu starten."
+
+#: quiz/static/quiz/js/room_list.js:154
+msgid "Last activity:"
+msgstr "Letzte Aktivität:"
+
+#: quiz/static/quiz/js/room_list.js:156
+msgid "Join"
+msgstr "Beitreten"
+
+#: quiz/static/quiz/js/room_list.js:159
+msgid "Available Rooms"
+msgstr "Verfügbare Räume"
 
 #: static/js/navbar.js:64
 msgid "Welcome to the Transcendence Webpage"

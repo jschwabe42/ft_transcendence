@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 16:26+0000\n"
+"POT-Creation-Date: 2025-02-08 17:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,6 +58,105 @@ msgstr "Frågor som ställts:"
 #: dashboard/static/dashboard/js/profile.js:51
 msgid "Correct Answers:"
 msgstr "Korrekta svar:"
+
+#: quiz/static/quiz/js/quiz_logic.js:134 quiz/static/quiz/js/quiz_logic.js:149
+#: quiz/static/quiz/js/quiz_logic.js:153
+msgid "points"
+msgstr "poäng"
+
+#: quiz/static/quiz/js/room_display.js:14
+#: quiz/static/quiz/js/room_display.js:395
+msgid "Welcome to"
+msgstr "Välkommen till"
+
+#: quiz/static/quiz/js/room_display.js:15
+msgid "You have successfully joined the room!"
+msgstr "Du har anslutit dig till rummet!"
+
+#: quiz/static/quiz/js/room_display.js:15
+msgid "Here you can start participating in the quiz."
+msgstr ""
+"Här kan du börja delta i frågesporten. (Varning: Frågesporten är på engelska)"
+
+#: quiz/static/quiz/js/room_display.js:16
+msgid "Start Game"
+msgstr "Starta spelet"
+
+#: quiz/static/quiz/js/room_display.js:20
+msgid "Leave Room"
+msgstr "Lämna rummet"
+
+#: quiz/static/quiz/js/room_display.js:32
+msgid "Settings"
+msgstr "Inställningar"
+
+#: quiz/static/quiz/js/room_display.js:201
+msgid "Participants:"
+msgstr "Deltagare:"
+
+#: quiz/static/quiz/js/room_display.js:345
+msgid "Quiz in Progress"
+msgstr "Frågesport pågår"
+
+#: quiz/static/quiz/js/room_display.js:346
+msgid "The quiz has started! Good luck!"
+msgstr "Frågesporten har börjat! Lycka till!"
+
+#: quiz/static/quiz/js/room_display.js:396
+msgid "The quiz has ended!"
+msgstr "Frågesporten är avslutad!"
+
+#: quiz/static/quiz/js/room_list.js:17
+msgid "Create a new room"
+msgstr "Skapa ett nytt rum"
+
+#: quiz/static/quiz/js/room_list.js:18
+msgid "Create Room"
+msgstr "Skapa rum"
+
+#: quiz/static/quiz/js/room_list.js:22
+msgid "Room Name"
+msgstr "Rummets namn"
+
+#: quiz/static/quiz/js/room_list.js:23
+msgid "Enter room name"
+msgstr "Ange nytt rumsnamn"
+
+#: quiz/static/quiz/js/room_list.js:25
+msgid "Submit"
+msgstr "Skapa"
+
+#: quiz/static/quiz/js/room_list.js:32
+msgid "Gratefully using OpenTD"
+msgstr "Använder OpenTD med tacksamhet"
+
+#: quiz/static/quiz/js/room_list.js:85
+msgid "An error occurred:"
+msgstr "Ett fel har inträffat:"
+
+#: quiz/static/quiz/js/room_list.js:95
+msgid "Loading rooms..."
+msgstr "Lastning av rum..."
+
+#: quiz/static/quiz/js/room_list.js:138
+msgid "Error loading rooms. Please try again later."
+msgstr "Fel vid laddning av rum. Vänligen försök igen senare."
+
+#: quiz/static/quiz/js/room_list.js:148
+msgid "No rooms available. Create a new room to get started."
+msgstr "Inga rum tillgängliga. Skapa ett nytt rum för att komma igång."
+
+#: quiz/static/quiz/js/room_list.js:154
+msgid "Last activity:"
+msgstr "Senaste aktivitet:"
+
+#: quiz/static/quiz/js/room_list.js:156
+msgid "Join"
+msgstr "Sammanfoga rum"
+
+#: quiz/static/quiz/js/room_list.js:159
+msgid "Available Rooms"
+msgstr "Tillgängliga rum"
 
 #: static/js/navbar.js:64
 msgid "Welcome to the Transcendence Webpage"
