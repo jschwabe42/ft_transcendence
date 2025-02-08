@@ -3,7 +3,7 @@ import router from '/static/js/router.js';
 export function loadDashboard() {
 	const dashboardAppContent = document.getElementById('dashboard-app-content');
 	dashboardAppContent.innerHTML = `
-		<button id="refresh-button" class="btn btn-primary">Refresh</button>
+		<button id="refresh-button" class="btn btn-primary">${gettext("Refresh")}</button>
 		<div id="profile-list"></div>
 	`;
 	fetchAndLoadProfiles();
@@ -25,7 +25,7 @@ function displayProfiles(profiles) {
 		const profileImage = document.createElement('img');
 		profileImage.src = profile.image_url;
 		profileImage.className = 'profile-image';
-		profileImage.alt = `${profile.username}'s profile picture`;
+		profileImage.alt = `${profile.username}${gettext("'s profile picture")}`;
 
 		const profileName = document.createElement('span');
 		profileName.className = 'profile-name';
