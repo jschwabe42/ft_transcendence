@@ -8,6 +8,11 @@ import { login_user } from '/static/users/js/login.js';
 import { logout_user } from '/static/users/js/logout.js';
 import { display_account } from '/static/users/js/account.js';
 
+import { PongOverview } from '/static/pong/js/overview.js';
+import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
+import { PongResult } from '/static/pong/js/pong_result.js';
+import { DisplayTournament } from '/static/pong/js/tournament_display.js';
+
 class Router {
 	constructor() {
 		this.routes = {};
@@ -50,7 +55,10 @@ class Router {
 	handleDynamicRoute(path) {
 		const quizPathRegex = /^\/quiz\/([^\/]+)\/?$/;
 		const dashboardPathRegex = /^\/dashboard\/([^\/]+)\/?$/;
-		
+		const pongPathRegex = /^\/pong\/([^\/]+)\/?$/;  // Neue Regex für '/pong/:game_id'
+		const pongDetailsPathRegex = /^\/pong\/game-details\/([^\/]+)\/?$/;
+		const tournamentPathRegex = /^\/pong\/tournament\/([^\/]+)\/?$/;
+
 		let match = path.match(quizPathRegex);
 		if (match) {
 			const roomName = match[1];
@@ -69,12 +77,30 @@ class Router {
 			loadProfile(username);
 			return;
 		}
+		match = path.match(pongPathRegex);
+		if (match) {
+			const gameId = match[1];
+			DisplayPong({ game_id: gameId });
+			return;
+		}
+
+		match = path.match(pongDetailsPathRegex);
+		if (match) {
+			const gameId = match[1];
+			PongResult({ game_id: gameId });
+			return;
+		}
+
+		match = path.match(tournamentPathRegex);
+		if (match) {
+			const tournamentId = match[1];
+			DisplayTournament({ tournament_id: tournamentId });
+			return;
+		}
+
 		this.showNotFound();
 	}
 
-	showNotFound() {
-		document.getElementById('error-content').innerHTML = '<h2>Page not found!</h2>';
-	}
 
 	// ! This function is not used. If for some reason we want to use href WITHOUT an event listener (please don't), this
 	//! function can be modified to USE navigateTo instead of handleRouteChange and then href would work.
@@ -115,6 +141,11 @@ const router = new Router();
  * The main view of the quiz app
  */
 router.addRoute('/quiz/', loadRoomList);
+
+/**
+ * The main view of the pong app
+ */
+router.addRoute('/pong/', PongOverview);
 
 /**
  * The Homepage

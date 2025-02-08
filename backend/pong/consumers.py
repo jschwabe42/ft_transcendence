@@ -1,11 +1,11 @@
 import asyncio
 import json
+import sys
 
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.utils import timezone
 
-from .models import PongGame
+from .models import PongGame, Tournament
 from .pong import PongInstance
 
 games = {}
@@ -115,8 +115,6 @@ class GameConsumer(AsyncWebsocketConsumer):
 			winner = json_state['winner']
 			if winner['player1'] or winner['player2']:
 				game = await sync_to_async(PongGame.objects.get)(id=self.game_id)
-				game.pending = False
-				game.played_at = timezone.now()
 				player1 = await sync_to_async(lambda: game.player1)()
 				player2 = await sync_to_async(lambda: game.player2)()
 				if winner['player1']:
@@ -127,7 +125,6 @@ class GameConsumer(AsyncWebsocketConsumer):
 					player1.matches_lost += 1
 				await sync_to_async(player1.save)()
 				await sync_to_async(player2.save)()
-				await sync_to_async(game.save)()
 
 			await self.channel_layer.group_send(
 				self.room_group_name,
@@ -151,3 +148,154 @@ class GameConsumer(AsyncWebsocketConsumer):
 				}
 			)
 		)
+
+
+# New Socket connection for creating games
+class BasePageConsumer(AsyncWebsocketConsumer):
+	async def connect(self):
+		self.group_name = 'base_page_group'
+
+		await self.channel_layer.group_add(self.group_name, self.channel_name)
+		await self.accept()
+
+	async def disconnect(self, close_code):
+		await self.channel_layer.group_discard(self.group_name, self.channel_name)
+
+	async def receive(self, text_data):
+		data = json.loads(text_data)
+		use = data['message']
+
+		if use == 'create_game':
+			await self.send_game_created(data['player1'], data['player2'], data['game_id'])
+		if use == 'create_tournament':
+			await self.send_tournament_created(data['host'], data['tournament_id'])
+
+	async def send_game_created(self, player1, player2, game_id):
+		response = {
+			'message': 'game_created',
+			'player1': player1,
+			'player2': player2,
+			'game_id': game_id,
+		}
+		await self.channel_layer.group_send(
+			self.group_name, {'type': 'game_created', 'message': response}
+		)
+
+	async def send_tournament_created(self, host, tournament_id):
+		sys.stdout.flush()
+		response = {'message': 'create_tournament', 'host': host, 'tournament_id': tournament_id}
+		await self.channel_layer.group_send(
+			self.group_name, {'type': 'create_tournament', 'message': response}
+		)
+
+	async def create_tournament(self, event):
+		await self.send(text_data=json.dumps(event['message']))
+
+	async def game_created(self, event):
+		await self.send(text_data=json.dumps(event['message']))
+
+
+class TournamentConsumer(AsyncWebsocketConsumer):
+	async def connect(self):
+		self.tournament_id = self.scope['url_route']['kwargs']['tournament_id']
+		self.group_name = f'tournament_{self.tournament_id}'
+		self.tournament = await sync_to_async(Tournament.objects.get)(id=self.tournament_id)
+		self.group_name = f'tournament_{self.tournament_id}'
+		self.user = self.scope.get('user').username
+
+		# check if user is already in the tournament
+		if self.user not in [
+			self.tournament.host,
+			self.tournament.player1,
+			self.tournament.player2,
+			self.tournament.player3,
+		]:
+			await self.add_user_to_tournament(self.user)
+
+		await self.channel_layer.group_add(self.group_name, self.channel_name)
+		await self.accept()
+
+		print(f'WebSocket connected: {self.tournament_id}')
+
+	async def disconnect(self, close_code):
+		await self.channel_layer.group_discard(self.group_name, self.channel_name)
+		print(f'WebSocket disconnected: {self.tournament_id}')
+
+	async def add_user_to_tournament(self, username):
+		def update_tournament():
+			updated_field = None
+			if not self.tournament.player1:
+				self.tournament.player1 = username
+				updated_field = 'player1'
+			elif not self.tournament.player2:
+				self.tournament.player2 = username
+				updated_field = 'player2'
+			elif not self.tournament.player3:
+				self.tournament.player3 = username
+				updated_field = 'player3'
+			self.tournament.playernum += 1
+			self.tournament.save()
+			return updated_field, self.tournament.playernum
+
+		updated_field, updated_playernum = await sync_to_async(update_tournament)()
+
+		if updated_field:
+			await self.channel_layer.group_send(
+				self.group_name,
+				{
+					'type': 'player_joined',
+					'username': username,
+					'field': updated_field,
+					'playerNum': updated_playernum,
+				},
+			)
+
+	async def player_joined(self, event):
+		print('Event received in player_joined:', event)
+		sys.stdout.flush()
+		await self.send(
+			text_data=json.dumps(
+				{
+					'use': 'join',
+					'username': event['username'],
+					'field': event['field'],
+					'playerNum': event['playerNum'],
+				}
+			)
+		)
+
+	async def receive(self, text_data):
+		data = json.loads(text_data)
+		action = data.get('use')
+
+		if action == 'sync':
+			tournament_data = {
+				'use': 'sync',
+				'host': self.tournament.host,
+				'player1': self.tournament.player1,
+				'player2': self.tournament.player2,
+				'player3': self.tournament.player3,
+				'playerNum': self.tournament.playernum,
+				'winner1': self.tournament.winner1,
+				'winner2': self.tournament.winner2,
+			}
+			await self.channel_layer.group_send(
+				self.group_name, {'type': 'broadcast_create_games', 'response': tournament_data}
+			)
+
+		elif action == 'createGames':
+			response_data = {
+				'use': 'createGames',
+				'status': 'success',
+				'message': 'Games created successfully',
+				'data': data,
+			}
+
+			await self.channel_layer.group_send(
+				self.group_name, {'type': 'broadcast_create_games', 'response': response_data}
+			)
+			print('\n\n\nCreated Games and sent to all clients\n\n\n')
+			sys.stdout.flush()
+
+	async def broadcast_create_games(self, event):
+		await self.send(text_data=json.dumps(event['response']))

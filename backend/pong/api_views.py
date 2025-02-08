@@ -1,17 +1,18 @@
-# Create your views here.
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import PongGame
+from .models import PongGame, Tournament
 
 User = get_user_model()
 
 
-# API for game creation
 class CreateGameView(APIView):
+	"""API for game creation: `/pong/api/create-game/`"""
+
 	# For testing CLI comment permission_classes cause canot acces csrf_token
 	permission_classes = [IsAuthenticated]
 
@@ -20,14 +21,12 @@ class CreateGameView(APIView):
 		user_username = request.data.get('username')
 		if not opponent_username:
 			return Response(
-				{'error': 'Opponent username is required.'},
-				status=status.HTTP_400_BAD_REQUEST,
+				{'error': 'Opponent username is required.'}, status=status.HTTP_400_BAD_REQUEST
 			)
 
 		if opponent_username == request.user.username:
 			return Response(
-				{'error': 'You cannot play against yourself.'},
-				status=status.HTTP_400_BAD_REQUEST,
+				{'error': 'You cannot play against yourself.'}, status=status.HTTP_400_BAD_REQUEST
 			)
 
 		try:
@@ -40,8 +39,12 @@ class CreateGameView(APIView):
 		except User.DoesNotExist:
 			return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
+		tournament_id = request.data.get('tournament', 0)
+
 		# Create the game
-		game = PongGame.objects.create(player1=player, player2=opponent)
+		game = PongGame.objects.create(
+			player1=player, player2=opponent, tournament_id=tournament_id
+		)
 		game.save()
 
 		return Response(
@@ -51,8 +54,10 @@ class CreateGameView(APIView):
 
 
 class ScoreBoardView(APIView):
+	"""API Endpoint: `/pong/api/get-score/`"""
+
 	# For testing CLI comment permission_classes cause canot acces csrf_token
-	permission_classes = [IsAuthenticated]
+	# permission_classes = [IsAuthenticated]
 
 	def post(self, request):
 		game_id = request.data.get('game_id')
@@ -72,6 +77,23 @@ class ScoreBoardView(APIView):
 
 		game.score1 = int(score1)
 		game.score2 = int(score2)
+
+		if game.score1 == 10 or game.score2 == 10:
+			game.pending = False
+			game.played_at = timezone.now()
+			if game.tournament_id != 0:
+				if game.score1 == 10:
+					winner = game.player1.get_username()
+				else:
+					winner = game.player2.get_username()
+				tournament_id = game.tournament_id
+				tournament = Tournament.objects.get(id=tournament_id)
+				if tournament.winner1 == '':
+					tournament.winner1 = winner
+				else:
+					tournament.winner2 = winner
+				tournament.save()
+
 		game.save()
 
 		return Response({'scores': 'Game successfully saved score.'}, status=status.HTTP_200_OK)
@@ -109,8 +131,7 @@ class ControlKeySetting(APIView):
 			game.player2_control_settings = control2
 		else:
 			return Response(
-				{'error': 'You are not a player in this game.'},
-				status=status.HTTP_403_FORBIDDEN,
+				{'error': 'You are not a player in this game.'}, status=status.HTTP_403_FORBIDDEN
 			)
 
 		game.save()
@@ -118,4 +139,25 @@ class ControlKeySetting(APIView):
 		return Response(
 			{'message': f'Control settings successfully updated for user {user}.'},
 			status=status.HTTP_200_OK,
+		)
+
+
+class CreateTournament(APIView):
+	"""API Endpoint: `/pong/api/create-tournament/`"""
+
+	# permission_classes = [IsAuthenticated]
+
+	def post(self, request):
+		username = request.data.get('username')
+
+		try:
+			User.objects.get(username=username)
+		except User.DoesNotExist:
+			return Response({'error': 'user does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+
+		tournament = Tournament.objects.create(host=username)
+		tournament.save()
+		return Response(
+			{'tournament_id': tournament.id, 'message': 'Tournament created successfully.'},
+			status=status.HTTP_201_CREATED,
 		)

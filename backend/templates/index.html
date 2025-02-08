@@ -15,6 +15,8 @@
 	<link href="{% static 'quiz/css/quiz_game.css' %}" rel="stylesheet">
 	<link href="{% static 'dashboard/css/dashboard.css' %}" rel="stylesheet">
 	<link href="{% static 'dashboard/css/profile.css' %}" rel="stylesheet">
+	<link rel="stylesheet" href="/static/chat/chat.css">
+	<link rel="stylesheet" href="/static/pong/css/game.css">
 
 	<!-- CSS files of the users -->
 	<link href="{% static 'users/css/account.css' %}" rel="stylesheet">
@@ -28,6 +30,12 @@
 	<link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
 	<script type="module" src="{% static 'js/navbar.js' %}"></script>
 	<script type="module" src="{% static 'js/router.js' %}"></script>
+
+	<script type="module" src="{% static 'pong/js/pong_display_ingame.js' %}"></script>
+	<script type="module" src="{% static 'pong/js/overview.js' %}"></script>
+	<script type="module" src="{% static 'pong/js/pong_result.js' %}"></script>
+	<script type="module" src="{% static 'pong/js/tournament_display.js' %}"></script>
+
 
 
 	<meta name="csrf-token" content="{{ csrf_token }}">
@@ -51,7 +59,7 @@
 						<a class="nav-item nav-link" href="{% url 'chat' %}">Chat</a>
 						<!-- @follow-up implement about page -->
 						<a class="nav-item nav-link" href="/quiz/" id="quiz-link">Quiz App</a>
-						<a class="nav-item nav-link" href="{% url 'pong:recent_games' %}">Pong</a>
+						<a class="nav-item nav-link" href="/pong/">Pong</a>
 						<a class="nav-item nav-link" href="/dashboard/" id="dashboard-link">Dashboard</a>
 					</div>
 					<!-- Navbar Right Side -->
@@ -71,6 +79,8 @@
 	<!-- The content of the quiz app -->
 	<div class="container mt-5" id="quiz-app-content"></div>
 	<!-- The content of the Pong app -->
+	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+	<div id="username" data-username="{{ user.username }}"></div>
 	<div class="container mt-5" id="pong-app-content"></div>
 	<!-- The content of the user app -->
 	<div class="container mt-5" id="user-app-content"></div>

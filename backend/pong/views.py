@@ -1,38 +1,81 @@
-import sys
+from django.http import JsonResponse
 
-from django.contrib.auth.decorators import login_required
-from django.middleware.csrf import get_token
-from django.shortcuts import get_object_or_404, redirect, render
-
-# Create your views here.
-from .models import PongGame
+from .models import PongGame, Tournament
 
 
-# show recent games for now
-@login_required
-def recent_games(request):
-	csrf_token_view(request)
-	if request.method == 'POST':
-		if 'player2_enter_game' in request.POST:
-			game_id = request.POST.get('player2_enter_game')
-			return redirect('pong:new_game', game_id=game_id)
+def game_data(request):
+	try:
+		games = PongGame.objects.order_by('-played_at')[:10]
+		data = []
 
-	last_games = PongGame.objects.order_by('-played_at')[:10]
-	return render(request, 'pong/overview.html', {'recent_games_list': last_games})
+		for game in games:
+			game_data = {
+				'player1': str(game.player1),  # Convert to string if it's a ForeignKey
+				'player2': str(game.player2),
+				'score1': game.score1,
+				'score2': game.score2,
+				'started_at': game.started_at.isoformat() if game.started_at else None,
+				'played_at': game.played_at.isoformat() if game.played_at else None,
+				'pending': game.pending,
+				'player1_ready': game.player1_ready,
+				'player2_ready': game.player2_ready,
+				'player1_control_settings': game.player1_control_settings,
+				'player2_control_settings': game.player2_control_settings,
+				'game_id': game.id,
+				'tournament_id': game.tournament_id,
+			}
+			data.append(game_data)
+
+		return JsonResponse(data, safe=False)
+
+	except PongGame.DoesNotExist:
+		return JsonResponse({'error': 'No Games Found'}, status=404)
 
 
-def start_game(request, game_id):
-	game = get_object_or_404(PongGame, id=game_id)
-	return render(request, 'pong/start_game.html', {'game': game, 'game_id': game_id})
+def ingame(request):
+	game_id = request.GET.get('game_id')
+	if not game_id:
+		return JsonResponse({'error': 'Game ID is required'}, status=400)
+	try:
+		game = PongGame.objects.get(id=game_id)
+		game_data = {
+			'player1': str(game.player1),
+			'player2': str(game.player2),
+			'score1': game.score1,
+			'score2': game.score2,
+			'started_at': game.started_at.isoformat() if game.started_at else None,
+			'played_at': game.played_at.isoformat() if game.played_at else None,
+			'pending': game.pending,
+			'player1_ready': game.player1_ready,
+			'player2_ready': game.player2_ready,
+			'player1_control_settings': game.player1_control_settings,
+			'player2_control_settings': game.player2_control_settings,
+			'game_id': game.id,
+			'tournament_id': game.tournament_id,
+		}
+		return JsonResponse(game_data)
+	except PongGame.DoesNotExist:
+		return JsonResponse({'error': 'Game not found'}, status=404)
 
 
-def game_details(request, game_id):
-	game = get_object_or_404(PongGame, pk=game_id)
-	return render(request, 'pong/game_details.html', {'game': game})
-
-
-def csrf_token_view(request):
-	csrf_token = get_token(request)
-	print('Token:')
-	print(csrf_token)
-	sys.stdout.flush()
+def tournament(request):
+	tournament_id = request.GET.get('tournament_id')
+	if not tournament_id:
+		return JsonResponse({'error': 'Tournament ID is required'}, status=400)
+	try:
+		tournament = Tournament.objects.get(id=tournament_id)
+		tournament_data = {
+			'host': tournament.host,
+			'player1': tournament.player1,
+			'player2': tournament.player2,
+			'player3': tournament.player3,
+			'created_at': tournament.created_at.isoformat() if tournament.created_at else None,
+			'winner1': tournament.winner1,
+			'winner2': tournament.winner2,
+			'openTournament': tournament.openTournament,
+			'playernum': tournament.playernum,
+			'id': tournament.id,
+		}
+		return JsonResponse(tournament_data)
+	except Tournament.DoesNotExist:
+		return JsonResponse({'error': 'Tournament not found'}, status=404)
