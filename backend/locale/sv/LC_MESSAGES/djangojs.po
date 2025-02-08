@@ -75,8 +75,7 @@ msgstr "Du har anslutit dig till rummet!"
 
 #: quiz/static/quiz/js/room_display.js:15
 msgid "Here you can start participating in the quiz."
-msgstr ""
-"Här kan du börja delta i frågesporten. (Varning: Frågesporten är på engelska)"
+msgstr "Här kan du börja delta i frågesporten. (Varning: Frågesporten är på engelska)"
 
 #: quiz/static/quiz/js/room_display.js:16
 msgid "Start Game"
@@ -181,59 +180,55 @@ msgid "Register"
 msgstr "Registrera"
 
 #: user_management/static/users/js/account.js:13
-#, fuzzy
-#| msgid "'s profile picture"
 msgid "Your Profile Picture"
-msgstr "'s profilbild"
+msgstr "Din profilbild"
 
 #: user_management/static/users/js/account.js:25
-#, fuzzy
-#| msgid "'s Profile"
 msgid "Profile Info:"
-msgstr "'s Profil"
+msgstr "Profilinfomation:"
 
 #: user_management/static/users/js/account.js:28
 #: user_management/static/users/js/login.js:15
 #: user_management/static/users/js/register.js:14
 msgid "Username:"
-msgstr ""
+msgstr "Användarnamn:"
 
 #: user_management/static/users/js/account.js:32
 #: user_management/static/users/js/register.js:20
 msgid "Email:"
-msgstr ""
+msgstr "E-Post:"
 
 #: user_management/static/users/js/account.js:36
 msgid "Display Name:"
-msgstr ""
+msgstr "Visa namn:"
 
 #: user_management/static/users/js/account.js:39
 msgid "Update Profile Data"
-msgstr ""
+msgstr "Uppdatera profildata"
 
 #: user_management/static/users/js/account.js:41
 msgid "Enter your password"
-msgstr ""
+msgstr "Ange lösenord"
 
 #: user_management/static/users/js/account.js:46
 msgid "Change Password"
-msgstr ""
+msgstr "Ändra lösenord"
 
 #: user_management/static/users/js/account.js:48
 msgid "Current Password"
-msgstr ""
+msgstr "Aktuellt lösenord"
 
 #: user_management/static/users/js/account.js:49
 msgid "New Password"
-msgstr ""
+msgstr "Nytt lösenord"
 
 #: user_management/static/users/js/account.js:50
 msgid "Repeat New Password"
-msgstr ""
+msgstr "Upprepa nytt lösenord"
 
 #: user_management/static/users/js/account.js:51
 msgid "Save"
-msgstr ""
+msgstr "Spara"
 
 #: user_management/static/users/js/account.js:77
 #, fuzzy
@@ -243,85 +238,85 @@ msgstr "'s Profil"
 
 #: user_management/static/users/js/account.js:109
 msgid "Password is required."
-msgstr ""
+msgstr "Lösenord krävs"
 
 #: user_management/static/users/js/account.js:136
 msgid "No changes detected."
-msgstr ""
+msgstr "Inga förändringar upptäckta."
 
 #: user_management/static/users/js/account.js:140
 msgid "Password is required to update profile data."
-msgstr ""
+msgstr "Lösenord krävs för att uppdatera profildata."
 
 #: user_management/static/users/js/account.js:211
 msgid "All fields are required."
-msgstr ""
+msgstr "Alla fält måste fyllas i."
 
 #: user_management/static/users/js/account.js:215
 msgid "New password and repeat password do not match."
-msgstr ""
+msgstr "Det nya lösenordet och det upprepade lösenordet stämmer inte överens."
 
 #: user_management/static/users/js/login.js:21
 #: user_management/static/users/js/register.js:25
 msgid "Password:"
-msgstr ""
+msgstr "Lösenord:"
 
 #: user_management/static/users/js/login.js:26
 #: user_management/static/users/js/logout.js:22
 #: user_management/static/users/js/register.js:39
 msgid "Sign In"
-msgstr ""
+msgstr "Logga in"
 
 #: user_management/static/users/js/login.js:31
 #: user_management/static/users/js/logout.js:17
 msgid "Want to create an Account?"
-msgstr ""
+msgstr "Vill du skapa ett konto?"
 
 #: user_management/static/users/js/login.js:55
 msgid "Username is required"
-msgstr ""
+msgstr "Användarnamn krävs"
 
 #: user_management/static/users/js/login.js:61
 msgid "Password is required"
-msgstr ""
+msgstr "Lösenord krävs"
 
 #: user_management/static/users/js/logout.js:22
 #: user_management/static/users/js/register.js:39
 msgid "Already have an account?"
-msgstr ""
+msgstr "Har du redan ett konto?"
 
 #: user_management/static/users/js/register.js:12
 msgid "Join Today"
-msgstr ""
+msgstr "Bli medlem på vår webbplats idag"
 
 #: user_management/static/users/js/register.js:30
 msgid "Confirm Password:"
-msgstr ""
+msgstr "Bekräfta lösenord:"
 
 #: user_management/static/users/js/register.js:34
 msgid "Sign Up"
-msgstr ""
+msgstr "Registrera dig"
 
 #: user_management/static/users/js/register.js:70
 msgid "Username is required!"
-msgstr ""
+msgstr "Användarnamn krävs!"
 
 #: user_management/static/users/js/register.js:76
 msgid "Email is required!"
-msgstr ""
+msgstr "E-post krävs!"
 
 #: user_management/static/users/js/register.js:80
 msgid "Invalid email address!"
-msgstr ""
+msgstr "Ogiltig e-postadress!"
 
 #: user_management/static/users/js/register.js:86
 msgid "Password is required!"
-msgstr ""
+msgstr "Lösenord krävs!"
 
 #: user_management/static/users/js/register.js:92
 msgid "Password confirmation is required!"
-msgstr ""
+msgstr "Bekräftelse av lösenord krävs!"
 
 #: user_management/static/users/js/register.js:96
 msgid "Passwords do not match!"
-msgstr ""
+msgstr "Lösenorden stämmer inte överens!"

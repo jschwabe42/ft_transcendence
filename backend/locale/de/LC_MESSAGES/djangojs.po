@@ -75,8 +75,7 @@ msgstr "Du bist dem Raum beigetreten!"
 
 #: quiz/static/quiz/js/room_display.js:15
 msgid "Here you can start participating in the quiz."
-msgstr ""
-"Hier kannst du am Quiz teilnehmen. (Die Fragen im Quiz sind auf Englisch!)"
+msgstr "Hier kannst du am Quiz teilnehmen. (Die Fragen im Quiz sind auf Englisch!)"
 
 #: quiz/static/quiz/js/room_display.js:16
 msgid "Start Game"
@@ -145,8 +144,7 @@ msgstr "Fehler beim laden der Räume. Versuche es später nocheinmal"
 
 #: quiz/static/quiz/js/room_list.js:148
 msgid "No rooms available. Create a new room to get started."
-msgstr ""
-"Keine Räume verfügbar. Erstelle einen neuen Raum um ein Quiz zu starten."
+msgstr "Keine Räume verfügbar. Erstelle einen neuen Raum um ein Quiz zu starten."
 
 #: quiz/static/quiz/js/room_list.js:154
 msgid "Last activity:"
@@ -182,59 +180,55 @@ msgid "Register"
 msgstr "Registrieren"
 
 #: user_management/static/users/js/account.js:13
-#, fuzzy
-#| msgid "'s profile picture"
 msgid "Your Profile Picture"
-msgstr "s Profilbild"
+msgstr "Dein Profilbild"
 
 #: user_management/static/users/js/account.js:25
-#, fuzzy
-#| msgid "'s Profile"
 msgid "Profile Info:"
-msgstr "s Profil"
+msgstr "Profil Infos:"
 
 #: user_management/static/users/js/account.js:28
 #: user_management/static/users/js/login.js:15
 #: user_management/static/users/js/register.js:14
 msgid "Username:"
-msgstr ""
+msgstr "Benutzername:"
 
 #: user_management/static/users/js/account.js:32
 #: user_management/static/users/js/register.js:20
 msgid "Email:"
-msgstr ""
+msgstr "E-Mail:"
 
 #: user_management/static/users/js/account.js:36
 msgid "Display Name:"
-msgstr ""
+msgstr "Anzeigename:"
 
 #: user_management/static/users/js/account.js:39
 msgid "Update Profile Data"
-msgstr ""
+msgstr "Profildaten aktualisieren"
 
 #: user_management/static/users/js/account.js:41
 msgid "Enter your password"
-msgstr ""
+msgstr "Bitte gib dein Passwort ein"
 
 #: user_management/static/users/js/account.js:46
 msgid "Change Password"
-msgstr ""
+msgstr "Passwort ändern"
 
 #: user_management/static/users/js/account.js:48
 msgid "Current Password"
-msgstr ""
+msgstr "Aktuelles Passwort"
 
 #: user_management/static/users/js/account.js:49
 msgid "New Password"
-msgstr ""
+msgstr "Neues Passwort"
 
 #: user_management/static/users/js/account.js:50
 msgid "Repeat New Password"
-msgstr ""
+msgstr "Neues Passwort wiederholen"
 
 #: user_management/static/users/js/account.js:51
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: user_management/static/users/js/account.js:77
 #, fuzzy
@@ -244,85 +238,85 @@ msgstr "s Profil"
 
 #: user_management/static/users/js/account.js:109
 msgid "Password is required."
-msgstr ""
+msgstr "Passwort ist erforderlich."
 
 #: user_management/static/users/js/account.js:136
 msgid "No changes detected."
-msgstr ""
+msgstr "Keine Änderungen gefunden."
 
 #: user_management/static/users/js/account.js:140
 msgid "Password is required to update profile data."
-msgstr ""
+msgstr "Das Passwort ist notwendig um die Profildaten zu ändern."
 
 #: user_management/static/users/js/account.js:211
 msgid "All fields are required."
-msgstr ""
+msgstr "Alle Felder müssen ausgefüllt sein."
 
 #: user_management/static/users/js/account.js:215
 msgid "New password and repeat password do not match."
-msgstr ""
+msgstr "Neues Passwort und Passwortwiederholung stimmen nicht überein."
 
 #: user_management/static/users/js/login.js:21
 #: user_management/static/users/js/register.js:25
 msgid "Password:"
-msgstr ""
+msgstr "Passwort:"
 
 #: user_management/static/users/js/login.js:26
 #: user_management/static/users/js/logout.js:22
 #: user_management/static/users/js/register.js:39
 msgid "Sign In"
-msgstr ""
+msgstr "Anmelden"
 
 #: user_management/static/users/js/login.js:31
 #: user_management/static/users/js/logout.js:17
 msgid "Want to create an Account?"
-msgstr ""
+msgstr "Willst du ein Benutzerkonto erstellen?"
 
 #: user_management/static/users/js/login.js:55
 msgid "Username is required"
-msgstr ""
+msgstr "Benutzername ist notwendig"
 
 #: user_management/static/users/js/login.js:61
 msgid "Password is required"
-msgstr ""
+msgstr "Passwort ist notwendig"
 
 #: user_management/static/users/js/logout.js:22
 #: user_management/static/users/js/register.js:39
 msgid "Already have an account?"
-msgstr ""
+msgstr "Hast du schon ein Benutzerkonto?"
 
 #: user_management/static/users/js/register.js:12
 msgid "Join Today"
-msgstr ""
+msgstr "Heute beitreten"
 
 #: user_management/static/users/js/register.js:30
 msgid "Confirm Password:"
-msgstr ""
+msgstr "Password bestätigen:"
 
 #: user_management/static/users/js/register.js:34
 msgid "Sign Up"
-msgstr ""
+msgstr "Anmelden:"
 
 #: user_management/static/users/js/register.js:70
 msgid "Username is required!"
-msgstr ""
+msgstr "Benutzername is notwendig!"
 
 #: user_management/static/users/js/register.js:76
 msgid "Email is required!"
-msgstr ""
+msgstr "E-Mail ist notwendig!"
 
 #: user_management/static/users/js/register.js:80
 msgid "Invalid email address!"
-msgstr ""
+msgstr "Ungültige E-Mail Addresse!"
 
 #: user_management/static/users/js/register.js:86
 msgid "Password is required!"
-msgstr ""
+msgstr "Passwort ist notwendig!"
 
 #: user_management/static/users/js/register.js:92
 msgid "Password confirmation is required!"
-msgstr ""
+msgstr "Passwortwiederholung ist notwendig!"
 
 #: user_management/static/users/js/register.js:96
 msgid "Passwords do not match!"
-msgstr ""
+msgstr "Passwörter stimmen nicht überein!"
