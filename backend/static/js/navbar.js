@@ -72,8 +72,8 @@ export function update_navbar() {
 		const navbars = document.getElementById('navbar-right');
 		if (data.is_authenticated) {
 			navbars.innerHTML = `
-			<a class="nav-item nav-link" href="/account/" id="account-link">Account</a>
-			<a class="nav-item nav-link" href="/logout/" id="logout-link">Logout</a>
+			<a class="nav-item nav-link" href="/account/" id="account-link">${gettext("Account")}</a>
+			<a class="nav-item nav-link" href="/logout/" id="logout-link">${gettext("Logout")}</a>
 			`;
 			document.getElementById('account-link').addEventListener('click', function(event) {
 				event.preventDefault();
@@ -85,8 +85,8 @@ export function update_navbar() {
 			});
 		} else {
 			navbars.innerHTML = `
-			<a class="nav-item nav-link" href="/login/" id="login-link">Login</a>
-			<a class="nav-item nav-link" href="/register/" id="register-link">Register</a>
+			<a class="nav-item nav-link" href="/login/" id="login-link">${gettext("Login")}</a>
+			<a class="nav-item nav-link" href="/register/" id="register-link">${gettext("Register")}</a>
 			`;
 			document.getElementById('register-link').addEventListener('click', function(event) {
 				event.preventDefault();

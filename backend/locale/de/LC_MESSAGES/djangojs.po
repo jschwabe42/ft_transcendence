@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 16:02+0000\n"
+"POT-Creation-Date: 2025-02-08 16:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: static/js/navbar.js:64
 msgid "Welcome to the Transcendence Webpage"
 msgstr "Willkommen auf unserer Transcendence-Webseite"
+
+#: static/js/navbar.js:75
+msgid "Account"
+msgstr "Benutzerkonto"
+
+#: static/js/navbar.js:76
+msgid "Logout"
+msgstr "Abmelden"
+
+#: static/js/navbar.js:88
+msgid "Login"
+msgstr "Anmelden"
+
+#: static/js/navbar.js:89
+msgid "Register"
+msgstr "Registrieren"
