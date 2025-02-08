@@ -10,7 +10,7 @@ export function display_account() {
 	userAppContent.innerHTML = `
 	<div id="account-head-container">
 		<div id="account-image-container">
-			<img id="account-image" src="" alt="Your Profile Picture">
+			<img id="account-image" src="" alt="${gettext("Your Profile Picture")}">
 			<i class="bi bi-pen-fill edit-icon"></i>
 			<input type="file" id="image-upload" style="display: none;">
 		</div>
@@ -22,33 +22,33 @@ export function display_account() {
 	<hr class="account-head-divider">
 
 	<div class="profile-info">
-		<h3 id="profile-info-head">Profile Info:</h3>
+		<h3 id="profile-info-head">${gettext("Profile Info:")}</h3>
 		<div id="profile-details">
 			<p class="profile-field">
-				<span class="profile-field-label">Username:</span>
+				<span class="profile-field-label">${gettext("Username:")}</span>
 				<span id="username"></span> <i class="bi bi-pencil-square" id="edit-username"></i>
 			</p>
 			<p class="profile-field">
-				<span class="profile-field-label">Email:</span>
+				<span class="profile-field-label">${gettext("Email:")}</span>
 				<span id="email"></span> <i class="bi bi-pencil-square" id="edit-email"></i>
 			</p>
 			<p class="profile-field" id="last-profile-field">
-				<span class="profile-field-label">Display Name:</span>
+				<span class="profile-field-label">${gettext("Display Name:")}</span>
 				<span id="display_name"></span> <i class="bi bi-pencil-square" id="edit-display_name"></i>
 			</p>
-			<button id="update-profile-data" class="btn btn-primary">Update Profile Data</button>
+			<button id="update-profile-data" class="btn btn-primary">${gettext("Update Profile Data")}</button>
 			<div id="password-input-container" style="visibility: hidden;">
-				<input type="password" id="profile-password-input" class="form-control" placeholder="Enter your password">
-				<button id="submit-profile-update" class="btn btn-primary">Submit</button>
+				<input type="password" id="profile-password-input" class="form-control" placeholder="${gettext("Enter your password")}">
+				<button id="submit-profile-update" class="btn btn-primary">${gettext("Submit")}</button>
 			</div>
 		</div>
 		<div id="profile-password">
-			<button id="change-password" class="btn btn-primary">Change Password</button>
+			<button id="change-password" class="btn btn-primary">${gettext("Change Password")}</button>
 			<div id="password-fields" style="display: none;">
-				<input type="password" id="current-password" class="form-control" placeholder="Current Password">
-				<input type="password" id="new-password" class="form-control" placeholder="New Password">
-				<input type="password" id="repeat-password" class="form-control" placeholder="Repeat New Password">
-				<button id="update-password" class="btn btn-primary">Save</button>
+				<input type="password" id="current-password" class="form-control" placeholder="${gettext("Current Password")}">
+				<input type="password" id="new-password" class="form-control" placeholder="${gettext("New Password")}">
+				<input type="password" id="repeat-password" class="form-control" placeholder="${gettext("Repeat New Password")}">
+				<button id="update-password" class="btn btn-primary">${gettext("Save")}</button>
 			</div>
 		</div>
 	</div>
@@ -74,7 +74,7 @@ function get_account_details() {
 			return response.json();
 		})
 		.then(data => {
-			document.getElementById('account-username-head').textContent = `${data.username}'s profile`;
+			document.getElementById('account-username-head').textContent = `${data.username}${gettext("'s profile")}`;
 			document.getElementById('account-email-head').textContent = data.email;
 			document.getElementById('account-image').src = data.image_url;
 
@@ -106,7 +106,7 @@ function get_account_details() {
 			document.getElementById('submit-profile-update').addEventListener('click', () => {
 				const password = document.getElementById('profile-password-input').value;
 				if (!password) {
-					alert('Password is required.');
+					alert(`${gettext("Password is required.")}`);
 					return;
 				}
 				update_profile(data, password);
@@ -133,11 +133,11 @@ function update_profile(originalData, password) {
 	const image = document.getElementById('image-upload').files[0];
 
 	if (username === originalData.username && email === originalData.email && display_name === originalData.display_name && !image) {
-		alert('No changes detected.');
+		alert(`${gettext("No changes detected.")}`);
 		return;
 	}
 	if (!password) {
-		alert('Password is required to update profile data.');
+		alert(`${gettext("Password is required to update profile data.")}`);
 		return;
 	}
 
@@ -208,11 +208,11 @@ function change_password(event) {
 
 
 		if(!current_password || !new_password || !repeat_password) {
-			alert('All fields are required.');
+			alert(`${gettext("All fields are required.")}`);
 			return;
 		}
 		if (new_password !== repeat_password) {
-			alert('New password and repeat password do not match.');
+			alert(`${gettext("New password and repeat password do not match.")}`);
 			return;
 		}
 			const csrfToken = document.querySelector('meta[name="csrf-token"]').content;

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 17:01+0000\n"
+"POT-Creation-Date: 2025-02-08 17:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -123,6 +123,7 @@ msgid "Enter room name"
 msgstr "Ange nytt rumsnamn"
 
 #: quiz/static/quiz/js/room_list.js:25
+#: user_management/static/users/js/account.js:42
 msgid "Submit"
 msgstr "Skapa"
 
@@ -166,14 +167,161 @@ msgstr "Välkommen till vår Transcendence-webbsida"
 msgid "Account"
 msgstr "Användarkonto"
 
-#: static/js/navbar.js:76
+#: static/js/navbar.js:76 user_management/static/users/js/logout.js:12
 msgid "Logout"
 msgstr "Logga ut"
 
-#: static/js/navbar.js:88
+#: static/js/navbar.js:88 user_management/static/users/js/login.js:13
 msgid "Login"
 msgstr "Logga in"
 
-#: static/js/navbar.js:89
+#: static/js/navbar.js:89 user_management/static/users/js/login.js:31
+#: user_management/static/users/js/logout.js:17
 msgid "Register"
 msgstr "Registrera"
+
+#: user_management/static/users/js/account.js:13
+#, fuzzy
+#| msgid "'s profile picture"
+msgid "Your Profile Picture"
+msgstr "'s profilbild"
+
+#: user_management/static/users/js/account.js:25
+#, fuzzy
+#| msgid "'s Profile"
+msgid "Profile Info:"
+msgstr "'s Profil"
+
+#: user_management/static/users/js/account.js:28
+#: user_management/static/users/js/login.js:15
+#: user_management/static/users/js/register.js:14
+msgid "Username:"
+msgstr ""
+
+#: user_management/static/users/js/account.js:32
+#: user_management/static/users/js/register.js:20
+msgid "Email:"
+msgstr ""
+
+#: user_management/static/users/js/account.js:36
+msgid "Display Name:"
+msgstr ""
+
+#: user_management/static/users/js/account.js:39
+msgid "Update Profile Data"
+msgstr ""
+
+#: user_management/static/users/js/account.js:41
+msgid "Enter your password"
+msgstr ""
+
+#: user_management/static/users/js/account.js:46
+msgid "Change Password"
+msgstr ""
+
+#: user_management/static/users/js/account.js:48
+msgid "Current Password"
+msgstr ""
+
+#: user_management/static/users/js/account.js:49
+msgid "New Password"
+msgstr ""
+
+#: user_management/static/users/js/account.js:50
+msgid "Repeat New Password"
+msgstr ""
+
+#: user_management/static/users/js/account.js:51
+msgid "Save"
+msgstr ""
+
+#: user_management/static/users/js/account.js:77
+#, fuzzy
+#| msgid "'s Profile"
+msgid "'s profile"
+msgstr "'s Profil"
+
+#: user_management/static/users/js/account.js:109
+msgid "Password is required."
+msgstr ""
+
+#: user_management/static/users/js/account.js:136
+msgid "No changes detected."
+msgstr ""
+
+#: user_management/static/users/js/account.js:140
+msgid "Password is required to update profile data."
+msgstr ""
+
+#: user_management/static/users/js/account.js:211
+msgid "All fields are required."
+msgstr ""
+
+#: user_management/static/users/js/account.js:215
+msgid "New password and repeat password do not match."
+msgstr ""
+
+#: user_management/static/users/js/login.js:21
+#: user_management/static/users/js/register.js:25
+msgid "Password:"
+msgstr ""
+
+#: user_management/static/users/js/login.js:26
+#: user_management/static/users/js/logout.js:22
+#: user_management/static/users/js/register.js:39
+msgid "Sign In"
+msgstr ""
+
+#: user_management/static/users/js/login.js:31
+#: user_management/static/users/js/logout.js:17
+msgid "Want to create an Account?"
+msgstr ""
+
+#: user_management/static/users/js/login.js:55
+msgid "Username is required"
+msgstr ""
+
+#: user_management/static/users/js/login.js:61
+msgid "Password is required"
+msgstr ""
+
+#: user_management/static/users/js/logout.js:22
+#: user_management/static/users/js/register.js:39
+msgid "Already have an account?"
+msgstr ""
+
+#: user_management/static/users/js/register.js:12
+msgid "Join Today"
+msgstr ""
+
+#: user_management/static/users/js/register.js:30
+msgid "Confirm Password:"
+msgstr ""
+
+#: user_management/static/users/js/register.js:34
+msgid "Sign Up"
+msgstr ""
+
+#: user_management/static/users/js/register.js:70
+msgid "Username is required!"
+msgstr ""
+
+#: user_management/static/users/js/register.js:76
+msgid "Email is required!"
+msgstr ""
+
+#: user_management/static/users/js/register.js:80
+msgid "Invalid email address!"
+msgstr ""
+
+#: user_management/static/users/js/register.js:86
+msgid "Password is required!"
+msgstr ""
+
+#: user_management/static/users/js/register.js:92
+msgid "Password confirmation is required!"
+msgstr ""
+
+#: user_management/static/users/js/register.js:96
+msgid "Passwords do not match!"
+msgstr ""
