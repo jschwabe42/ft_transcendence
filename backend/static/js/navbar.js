@@ -61,7 +61,7 @@ export function clear_containers() {
 export function home_view() {
 	const home = document.getElementById('home-content');
 	home.innerHTML = `
-	<h2>Welcome to the Transcendence Webpage</h2>
+	<h2>${gettext("Welcome to the Transcendence Webpage")}</h2>
 	`;
 }
 

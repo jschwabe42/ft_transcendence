@@ -24,23 +24,23 @@ msgstr "Transcendence"
 
 #: templates/index.html:66
 msgid "Home"
-msgstr "Nur Nachhause"
+msgstr "Startseite"
 
 #: templates/index.html:67
 msgid "Chat"
-msgstr "Besprechungszimmer"
+msgstr "Chat"
 
 #: templates/index.html:69
 msgid "Quiz"
-msgstr "Rätsel"
+msgstr "Quiz"
 
 #: templates/index.html:70
 msgid "Pong"
-msgstr "Ping"
+msgstr "Pong"
 
 #: templates/index.html:71
 msgid "Dashboard"
-msgstr "Übersicht"
+msgstr "Benutzerübersicht"
 
 #: transcendence/settings.py:191
 msgid "English"

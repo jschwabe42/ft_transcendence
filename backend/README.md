@@ -23,3 +23,4 @@ requires ruff and pre-commit, ruff extension for format on save
 ### Do the translations:
 - `django-admin makemessages --all` <br> Creates or updates the .po files for all languages. msgid is the english text and the msgstr contains the translation for that language
 - `django-admin compilemessages` <br> Compiles all the .po files into .mo files which then can be interpreted by the browser
+- `django-admin makemessages -d djangojs --all` To create the javascript .po files.
