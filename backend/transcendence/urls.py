@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path
+from django.views.i18n import JavaScriptCatalog
 
 from . import views
 
@@ -32,8 +33,9 @@ urlpatterns = [
 	path('chat/', include('chat.urls')),
 	path('quiz/', include('quiz.urls')),
 	path('dashboard/', include('dashboard.urls')),
+	path('i18n/', include('django.conf.urls.i18n')),
+	path('jsi18n/', JavaScriptCatalog.as_view(), name='js_catalog'),
 ]
-
 
 if not settings.TESTING:
 	urlpatterns = [

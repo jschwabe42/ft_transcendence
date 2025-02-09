@@ -10,25 +10,25 @@ export function login_user() {
 	userAppContent.innerHTML = `
 	<form id="login-form" class="form">
 		<fieldset class="form-group">
-			<legend class="border-bottom mb-4" id="login-headline">Login</legend>
+			<legend class="border-bottom mb-4" id="login-headline">${gettext("Login")}</legend>
 			<div class="form-group">
-				<label for="id_username">Username:</label>
+				<label for="id_username">${gettext("Username:")}</label>
 				<input type="text" name="username" id="id_username" class="form-control">
 				<div id="username-errors" class="text-danger"></div>
 			</div>
 
 			<div class="form-group">
-				<label for="id_password">Password:</label>
+				<label for="id_password">${gettext("Password:")}</label>
 				<input type="password" name="password" id="id_password" class="form-control">
 				<div id="password-errors" class="text-danger"></div>
 			</div>
 
-			<button class="btn btn-outline-info" type="submit">Sign In</button>
+			<button class="btn btn-outline-info" type="submit">${gettext("Sign In")}</button>
 		</fieldset>
 		<div id="message-container"></div>
 		<div class="border-top pt-3">
 			<small class="text-muted" id="register-link-container">
-				Want to create an Account? <span class="ml-2 register-link" id="account-register-link">Register</span>
+				${gettext("Want to create an Account?")} <span class="ml-2 register-link" id="account-register-link">${gettext("Register")}</span>
 			</small>
 		</div>
 	`;
@@ -52,13 +52,13 @@ function add_login_form_listener() {
 		let valid = true;
 
 		if (!formData.get('username')) {
-			document.getElementById('username-errors').innerHTML = 'Username is required';
+			document.getElementById('username-errors').innerHTML = `${gettext("Username is required")}`;
 			document.getElementById('id_username').classList.add('is-invalid');
 			valid = false;
 		}
 
 		if (!formData.get('password')) {
-			document.getElementById('password-errors').innerHTML = 'Password is required';
+			document.getElementById('password-errors').innerHTML = `${gettext("Password is required")}`;
 			document.getElementById('id_password').classList.add('is-invalid');
 			valid = false;
 		}

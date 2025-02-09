@@ -9,34 +9,34 @@ export function register_user() {
 	userAppContent.innerHTML = `
 	<form id="register-form" class="form">
 		<fieldset class="form-group">
-			<legend class="border-bottom mb-4" id="register-headline">Join Today</legend>
+			<legend class="border-bottom mb-4" id="register-headline">${gettext("Join Today")}</legend>
 			<div class="form-group">
-				<label for="id_username">Username:</label>
+				<label for="id_username">${gettext("Username:")}</label>
 				<input type="text" name="username" id="id_username" class="form-control">
 				<div id="username-errors" class="text-danger"></div>
 			</div>
 
 			<div class="form-group">
-				<label for="id_email">Email:</label>
+				<label for="id_email">${gettext("Email:")}</label>
 				<input type="email" name="email" id="id_email" class="form-control">
 				<div id="email-errors" class="text-danger"></div>
 			</div>
 			<div class="form-group">
-				<label for="id_password1">Password:</label>
+				<label for="id_password1">${gettext("Password:")}</label>
 				<input type="password" name="password1" id="id_password1" class="form-control">
 				<div id="password1-errors" class="text-danger"></div>
 			</div>
 			<div class="form-group">
-				<label for="id_password2">Confirm Password:</label>
+				<label for="id_password2">${gettext("Confirm Password:")}</label>
 				<input type="password" name="password2" id="id_password2" class="form-control">
 				<div id="password2-errors" class="text-danger"></div>
 			</div>
-			<button class="btn btn-outline-info" type="submit">Sign Up</button>
+			<button class="btn btn-outline-info" type="submit">${gettext("Sign Up")}</button>
 		</fieldset>
 		<div id="message-container"></div>
 		<div class="border-top pt-3">
 			<small class="text-muted"  id="login-link-container">
-				Already have an account? <span class="ml-2 sign-in-link" id="sign-in-link">Sign In</span>
+				${gettext("Already have an account?")} <span class="ml-2 sign-in-link" id="sign-in-link">${gettext("Sign In")}</span>
 			</small>
 		</div>
 	`;
@@ -67,33 +67,33 @@ function add_register_form_listener() {
 		if (!username) {
 			valid = false;
 			document.getElementById('id_username').classList.add('is-invalid');
-			document.getElementById('username-errors').innerHTML = 'Username is required!';
+			document.getElementById('username-errors').innerHTML = `${gettext("Username is required!")}`;
 		}
 
 		if (!email) {
 			valid = false;
 			document.getElementById('id_email').classList.add('is-invalid');
-			document.getElementById('email-errors').innerHTML = 'Email is required!';
+			document.getElementById('email-errors').innerHTML = `${gettext("Email is required!")}`;
 		} else if (!validateEmail(email)) {
 			valid = false;
 			document.getElementById('id_email').classList.add('is-invalid');
-			document.getElementById('email-errors').innerHTML = 'Invalid email address!';
+			document.getElementById('email-errors').innerHTML = `${gettext("Invalid email address!")}`;
 		}
 
 		if (!password1) {
 			valid = false;
 			document.getElementById('id_password1').classList.add('is-invalid');
-			document.getElementById('password1-errors').innerHTML = 'Password is required!';
+			document.getElementById('password1-errors').innerHTML = `${gettext("Password is required!")}`;
 		}
 
 		if (!password2) {
 			valid = false;
 			document.getElementById('id_password2').classList.add('is-invalid');
-			document.getElementById('password2-errors').innerHTML = 'Password confirmation is required!';
+			document.getElementById('password2-errors').innerHTML = `${gettext("Password confirmation is required!")}`;
 		} else if (password1 !== password2) {
 			valid = false;
 			document.getElementById('id_password2').classList.add('is-invalid');
-			document.getElementById('password2-errors').innerHTML = 'Passwords do not match!';
+			document.getElementById('password2-errors').innerHTML = `${gettext("Passwords do not match!")}`;
 		}
 		if (!valid) {
 			return;

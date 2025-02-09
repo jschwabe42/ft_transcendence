@@ -9,17 +9,17 @@ export function logout_user() {
 
 	logout_at_server();
 	userAppContent.innerHTML = `
-	<h2 id="logout-header">Logout</h2>
+	<h2 id="logout-header">${gettext("Logout")}</h2>
 	<div id="message-container"></div>
 
 	<div class="border-top pt-3">
 		<small class="text-muted" id="register-link-container">
-			Want to create an Account? <span class="ml-2 register-link" id="account-register-link">Register</span>
+			${gettext("Want to create an Account?")} <span class="ml-2 register-link" id="account-register-link">${gettext("Register")}</span>
 		</small>
 	</div>
 	<div class="border-top pt-3">
 		<small class="text-muted" id="login-link-container">
-			Already have an account? <span class="ml-2 sign-in-link" id="sign-in-link">Sign In</span>
+			${gettext("Already have an account?")} <span class="ml-2 sign-in-link" id="sign-in-link">${gettext("Sign In")}</span>
 		</small>
 	</div>
 	`;
