@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 
 from . import views
-from .api_views import CreateOAUTHUserView
+from .api_views import OauthView
 
 app_name = 'users'
 urlpatterns = [
@@ -40,11 +40,11 @@ urlpatterns = [
 		name='remove-friend',
 	),
 	# WIP: oauth with 42 API
-	path('oauth/', CreateOAUTHUserView.request_login_oauth, name='oauth'),
-	path('oauth', CreateOAUTHUserView.request_login_oauth, name='oauth'),
+	path('oauth/', OauthView.request_login_oauth, name='oauth'),
+	path('oauth', OauthView.request_login_oauth, name='oauth'),
 	path(
 		'oauth/callback',
-		CreateOAUTHUserView.as_view(),
+		OauthView.as_view(),
 		name='oauth-callback',
 	),
 ]

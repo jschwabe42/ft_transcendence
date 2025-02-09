@@ -12,7 +12,7 @@ from rest_framework.views import APIView
 from user_management.models import CustomUser
 
 
-class CreateOAUTHUserView(APIView):
+class OauthView(APIView):
 	permission_classes = [AllowAny]
 	OAUTH_CALLBACK = 'http://localhost:8000/users/oauth/callback'
 	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
@@ -20,10 +20,10 @@ class CreateOAUTHUserView(APIView):
 	def request_login_oauth(self):
 		"""request user login on API endpoint"""
 		params = {
-			'client_id': CreateOAUTHUserView.CLIENT_ID,
-			'redirect_uri': CreateOAUTHUserView.OAUTH_CALLBACK,
+			'client_id': OauthView.CLIENT_ID,
+			'redirect_uri': OauthView.OAUTH_CALLBACK,
 			'response_type': 'code',
-			'state': CreateOAUTHUserView.SECRET_STATE,
+			'state': OauthView.SECRET_STATE,
 			'scope': 'public',
 		}
 
@@ -44,11 +44,11 @@ class CreateOAUTHUserView(APIView):
 
 		params = {
 			'grant_type': 'authorization_code',
-			'client_id': CreateOAUTHUserView.CLIENT_ID,
-			'client_secret': CreateOAUTHUserView.REMOTE_OAUTH_SECRET,
+			'client_id': OauthView.CLIENT_ID,
+			'client_secret': OauthView.REMOTE_OAUTH_SECRET,
 			'code': code,
-			'redirect_uri': CreateOAUTHUserView.OAUTH_CALLBACK,
-			'state': CreateOAUTHUserView.SECRET_STATE,
+			'redirect_uri': OauthView.OAUTH_CALLBACK,
+			'state': OauthView.SECRET_STATE,
 		}
 
 		bearer_token_response = requests.post(
@@ -58,7 +58,7 @@ class CreateOAUTHUserView(APIView):
 		bearer_token_response.raise_for_status()
 		return bearer_token_response.json()
 
-	def create_user(request, jsonresponse, BEARER_TOKEN, REFRESH_TOKEN):
+	def __create_user(request, jsonresponse, BEARER_TOKEN, REFRESH_TOKEN):
 		"""handle user management from oauth"""
 		user_instance = CustomUser.objects.filter(oauth_id=jsonresponse['login'])
 		if not user_instance.exists():
@@ -81,7 +81,7 @@ class CreateOAUTHUserView(APIView):
 
 	def get(self, request):
 		"""handle the callback from the 42 API: obtain user public data"""
-		bearer_token_response = CreateOAUTHUserView.__bearer_token(self, request)
+		bearer_token_response = OauthView.__bearer_token(self, request)
 		BEARER_TOKEN = bearer_token_response.get('access_token')
 		REFRESH_TOKEN = bearer_token_response.get('refresh_token')
 		if BEARER_TOKEN is None:
@@ -100,4 +100,4 @@ class CreateOAUTHUserView(APIView):
 		username, email = jsonresponse['login'], jsonresponse['email']
 		if username is None or email is None:
 			return HttpResponse('Error: could not obtain username from token')
-		return CreateOAUTHUserView.create_user(request, jsonresponse, BEARER_TOKEN, REFRESH_TOKEN)
+		return OauthView.__create_user(request, jsonresponse, BEARER_TOKEN, REFRESH_TOKEN)
