@@ -1,7 +1,6 @@
 #!/bin/sh
 
-# multiple languages support
-django-admin makemessages --all
+# multiple languages support: compile *.po to *.mo
 django-admin compilemessages
 
 python manage.py makemigrations
