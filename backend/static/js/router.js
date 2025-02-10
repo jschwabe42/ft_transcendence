@@ -29,6 +29,11 @@ class Router {
 		this.routes[path] = handler;
 	}
 
+	showNotFound() {
+		clear_containers();
+		document.getElementById('error-content').innerHTML = `<H2>Page Not found<\h2>`;
+	}
+
 	// ! ALWAYS use this function to navigate to a new page, it ensures that the router is used and cleanup is done correctly!
 	navigateTo(path) {
 		this.beforeRouteChange(path);
@@ -102,8 +107,10 @@ class Router {
 
 		match = path.match(usersApiPathRegex);
 		if (match) {
-			UsersApiHandler(match);
-			return;
+			try {
+				UsersApiHandler(match);
+				return;
+			} catch (error) { }
 		}
 
 		this.showNotFound();

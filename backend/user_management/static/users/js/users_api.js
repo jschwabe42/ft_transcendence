@@ -31,4 +31,5 @@ export function UsersApiHandler(match) {
 				return;
 		}
 	}
+	throw new Error(`Invalid path: ${path}`);
 }
