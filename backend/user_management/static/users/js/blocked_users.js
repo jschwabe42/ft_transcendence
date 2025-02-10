@@ -27,3 +27,17 @@ export function blockUser(username) {
 			console.log(data);
 		});
 }
+
+export function unblockUser(username) {
+	fetch(`/users/api/unblock/${username}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': getCookie('csrftoken')
+		},
+	})
+		.then(response => response.json())
+		.then(data => {
+			console.log(data);
+		});
+}

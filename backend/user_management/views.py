@@ -41,6 +41,19 @@ def block_user(request, username):
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
 
+def unblock_user(request, username):
+	"""
+	Unblock a user.
+	API Endpoint: /users/api/unblock/
+	"""
+
+	try:
+		Block_Manager.unblock_user(origin=request.user, target_username=username)
+		return JsonResponse({'success': True, 'message': _('User unblocked successfully.')})
+	except ValidationError:
+		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
+
+
 def blocked_users(request):
 	"""
 	Shows for the request user, their blocked users.

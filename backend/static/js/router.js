@@ -12,7 +12,7 @@ import { PongOverview } from '/static/pong/js/overview.js';
 import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
 import { PongResult } from '/static/pong/js/pong_result.js';
 import { DisplayTournament } from '/static/pong/js/tournament_display.js';
-import { fetchBlockedRelationships, fetchBlockedRelationshipsUser, blockUser } from '/static/users/js/blocked_users.js';
+import { fetchBlockedRelationships, fetchBlockedRelationshipsUser, blockUser, unblockUser } from '/static/users/js/blocked_users.js';
 
 class Router {
 	constructor() {
@@ -110,7 +110,7 @@ class Router {
 		match = path.match(unblockedUsersPathRegex);
 		if (match) {
 			const username = match[1];
-			fetchBlockedRelationshipsUser();
+			unblockUser(username);
 			return;
 		}
 

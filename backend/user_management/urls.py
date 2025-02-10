@@ -7,6 +7,7 @@ urlpatterns = [
 	path('api/blocked/', views.blocks, name='blocked'),
 	path('api/blocked-users/', views.blocked_users, name='blocked_users'),
 	path('api/block/<str:username>/', views.block_user, name='block_user'),
+	path('api/unblock/<str:username>/', views.unblock_user, name='unblock_user'),
 	path('api/register/', views.register, name='register'),
 	path('api/login/', views.login_view, name='login'),
 	path('api/logout/', views.logout_view, name='logout'),
