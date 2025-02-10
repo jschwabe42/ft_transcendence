@@ -1,5 +1,6 @@
 import router from '/static/js/router.js';
-import { CreateTournamentPongGames } from './tournament_api.js';
+import { CreateTournamentGames } from './tournament_api.js';
+import { CreateFinalGame } from './tournament_api.js';
 
 export function DisplayTournament(params) {
 	let tournamentModel = {}
@@ -24,9 +25,14 @@ export function DisplayTournament(params) {
 
 				<h1 id='winner1'></h1>
 				<h1 id='winner2'></h1>
+				<h1 id='finalWinner'></h1>
 
 				<form id="create-tournament-games" style="display: none;" >
 					<button class="add_user" type="submit">Play Tournament Games +</button>
+				</form>
+
+				<form id="create-final" style="display: none;" >
+					<button class="add_user" type="submit">Start Final Game</button>
 				</form>
 
 				<button class="navigate-button" data-path="/pong/">Go to Menu</button>
@@ -34,8 +40,15 @@ export function DisplayTournament(params) {
 			renderTournamentData(tournamentSocket, tournamentModel);
 			document.getElementById("create-tournament-games").addEventListener("submit", function (event) {
 				event.preventDefault();
-				CreateTournamentPongGames(event, tournamentSocket, tournamentModel, tournament_id)
+				CreateTournamentGames(event, tournamentSocket, tournamentModel, tournament_id)
 				document.getElementById("create-tournament-games").style.display = "none";
+			});
+			document.getElementById("create-final").addEventListener("submit", function (event) {
+				event.preventDefault();
+				let error = 'test'
+				error = CreateFinalGame(event, tournamentSocket, tournamentModel, tournament_id)
+				if (error == "error")
+					document.getElementById("create-final").style.display = "none";
 			});
 		})
 		.catch(error => {
@@ -74,7 +87,7 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 		}
 		if (data.use === "sync") {
 			console.log(data)
-			updateUIWithTournamentData(data);
+			updateUIWithTournamentData(data, tournamentModel);
 		}
 		if (data.use === "createGames" && data.data?.games) {
 			const gameDetails = data.data.games.map((game, index) => ({
@@ -92,6 +105,14 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 				router.navigateTo(path)
 			}
 		}
+		if (data.use == 'createFinal')
+		{
+			console.log(data.player1, data.player2)
+			if (user == data.player1 || user == data.player2) {
+				let path = '/pong/' + data.game_id
+				router.navigateTo(path)
+			}
+		}
 	};
 
 	tournamentSocket.onclose = function (e) {
@@ -103,18 +124,35 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 	};
 }
 
-function updateUIWithTournamentData(data) {
+function updateUIWithTournamentData(data, tournamentModel) {
+	const user = document.getElementById('username').getAttribute('data-username');
 	document.getElementById("host").innerHTML = `<strong>Host:</strong> ${data.host}`;
 	document.getElementById("player1").innerHTML = `<strong>Player1:</strong> ${data.player1}`;
 	document.getElementById("player2").innerHTML = `<strong>Player2:</strong> ${data.player2}`;
 	document.getElementById("player3").innerHTML = `<strong>Player3:</strong> ${data.player3}`;
 	document.getElementById("playerNum").innerHTML = data.playerNum;
+	document.getElementById("winner1").innerText = data.winner1;
+	document.getElementById("winner2").innerText = data.winner2;
+	document.getElementById("finalWinner").innerText = data.finalWinner
 
-	if (data.winner1 && data.winner1 != "") {
-		document.getElementById("winner1").innerText = data.winner1;
+
+	if (data.finalWinner && data.finalWinner != "") {
+		console.log(data.finalWinner)
+		document.getElementById("finalWinner").innerText = data.finalWinner
+	}
+	else
+	{
+		if (data.winner1 && data.winner1 != "")
+			document.getElementById("winner1").innerText = data.winner1;
+			tournamentModel.winner1 = data.winner1;
 		if (data.winner2 && data.winner2 != "")
 			document.getElementById("winner2").innerText = data.winner2;
+			tournamentModel.winner2 = data.winner2;
+		if (data.winner1 && data.winner1 != "", data.winner2 && data.winner2 != "" && user == data.host)
+			document.getElementById("create-final").style.display = "block";
+			
 		if (data.playerNum === 4)
 			document.getElementById("header").style.color = "green";
 	}
+
 }

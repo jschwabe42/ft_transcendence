@@ -104,6 +104,7 @@
 	<!-- The content of the Pong app -->
 	 <!-- THIS IS REDUNDANT. REPLACE WITH THE ONE ABOVE -->
 	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+	<div id="username" data-username="{{ user.username }}"></div>
 
 	<div class="container mt-5" id="pong-app-content"></div>
 	<!-- The content of the user app -->
