@@ -21,9 +21,40 @@ from transcendence.decorators import login_required_redirect
 
 from user_management.friends import Friends_Manager
 
+from .blocked_users import BlockedUsers
+
 # from .consumers import UserProfileConsumer
 
 User = get_user_model()
+
+# @follow-up
+# def block_user(request):
+# 	"""
+# 	Block a user.
+# 	API Endpoint: /users/api/block_user/
+# 	"""
+# 	if request.method == 'POST':
+# 		data = json.loads(request.body)
+# 		target_username = data.get('target_username')
+# 		target_user = User.objects.get(username=target_username)
+# 		BlockedUsers.objects.create(blocker=request.user, blockee=target_user)
+# 		return JsonResponse({'success': True, 'message': _('User blocked successfully.')})
+# 	return JsonResponse({'success': False, 'message': _('Invalid request method.')})
+
+
+def blocks(request):
+	"""
+	Shows all entries of blocked users.
+	API Endpoint: /users/api/blocked/
+	"""
+	return JsonResponse(
+		{
+			'blocked_users': [
+				{'blockee': blocked.blockee.username, 'blocker': blocked.blocker.username}
+				for blocked in BlockedUsers.objects.get_queryset()
+			]
+		}
+	)
 
 
 def register(request):
