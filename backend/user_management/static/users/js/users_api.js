@@ -1,31 +1,41 @@
 /**
  * endpoints nested in `/users/api/`
- * handles endpoints `blocked-users/`, `block/:username/`, `unblock/:username/`
+ * handles endpoints:
+ *
+ * `blocked-users/`, `block/:username/`, `unblock/:username/`
  */
-
-import { blockUser, unblockUser, fetchBlockedRelationshipsUser } from "blocked_users.js";
-
-// const blockedUsersPathRegex = /^\/users\/api\/block\/([^\/]+)\/?$/;
-// const unblockedUsersPathRegex = /^\/users\/api\/unblock\/([^\/]+)\/?$/;
-
 export function UsersApiHandler(match) {
 	const path = match[1];
 	const endpoint = match[2];
 	if (endpoint === '') {
 		if (path === 'blocked-users')
-			fetchBlockedRelationshipsUser();
+			fetch(`/users/api/blocked-users/`)
+				.then(response => response.json())
 		else
-			console.error('Invalid endpoint:', endpoint);
+			Response.error('Invalid endpoint:', endpoint);
 	} else {
+		function blockDefaultHeaders() {
+			return {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': getCookie('csrftoken')
+			};
+		}
 		switch (path) {
 			case 'block':
-				blockUser(endpoint);
+				fetch(`/users/api/block/${username = endpoint}`, {
+					method: 'POST',
+					headers: blockDefaultHeaders(),
+				})
 				break;
 			case 'unblock':
-				unblockUser(endpoint);
+				fetch(`/users/api/unblock/${username = endpoint}`, {
+					method: 'POST',
+					headers: blockDefaultHeaders(),
+				})
+					.then(response => response.json());
 				break;
 			default:
-				console.error('Invalid path:', path);
+				Response.error('Invalid path:', path);
 		}
 	}
 }
