@@ -73,22 +73,6 @@ def blocked_users(request):
 	)
 
 
-# @audit remove this function if not used
-def blocks(request):
-	"""
-	Shows all entries of blocked users.
-	API Endpoint: /users/api/blocked/
-	"""
-	return JsonResponse(
-		{
-			'blocked_users': [
-				{'blockee': blocked.blockee.username, 'blocker': blocked.blocker.username}
-				for blocked in BlockedUsers.objects.get_queryset()
-			]
-		}
-	)
-
-
 def register(request):
 	"""
 	Registers a new user.

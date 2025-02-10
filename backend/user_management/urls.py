@@ -4,7 +4,6 @@ from . import views
 
 app_name = 'users'
 urlpatterns = [
-	path('api/blocked/', views.blocks, name='blocked'),
 	path('api/blocked-users/', views.blocked_users, name='blocked_users'),
 	path('api/block/<str:username>/', views.block_user, name='block_user'),
 	path('api/unblock/<str:username>/', views.unblock_user, name='unblock_user'),
