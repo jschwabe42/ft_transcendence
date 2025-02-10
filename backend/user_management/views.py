@@ -1,3 +1,6 @@
+import json
+import re
+
 from django.contrib.auth import (
 	authenticate,
 	get_user_model,
@@ -5,21 +8,18 @@ from django.contrib.auth import (
 	logout,
 	update_session_auth_hash,
 )
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.db.models import F
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.shortcuts import redirect, render
+from django.utils.translation import gettext as _
 from pong.models import PongGame
 from pong.utils import win_to_loss_ratio
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
-import re
-import json
-from user_management.friends import Friends_Manager
-
 from transcendence.decorators import login_required_redirect
-from django.utils.translation import gettext as _
 
+from user_management.friends import Friends_Manager
 
 # from .consumers import UserProfileConsumer
 
@@ -164,7 +164,9 @@ def validate_data(username, display_name, email, current_user=None):
 			return JsonResponse(
 				{
 					'success': False,
-					'message': _('Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'),
+					'message': _(
+						'Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'
+					),
 				}
 			)
 		if current_user:
@@ -178,7 +180,9 @@ def validate_data(username, display_name, email, current_user=None):
 			return JsonResponse(
 				{
 					'success': False,
-					'message': _('Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'),
+					'message': _(
+						'Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'
+					),
 				}
 			)
 		if current_user:
