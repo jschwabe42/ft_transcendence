@@ -44,7 +44,7 @@ class CreateGameView(APIView):
 		if (tournament_id != 0):
 			tournament = Tournament.objects.get(id=tournament_id)
 			if (tournament.finalWinner != ""):
-				return Response({'error': 'Final Game already Done'}, status=status.HTTP_400_BAD_REQUEST)
+				return
 			if (tournament.openTournament == False):
 				tournament.openTournament = True
 				tournament.save()

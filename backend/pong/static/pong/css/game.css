@@ -99,3 +99,10 @@ button.ready:active {
     border: 1px solid #ccc; /* Optional: Fügt Rahmen hinzu */
     margin: 5px; /* Optional: Fügt Abstände zwischen den Divs hinzu */
 }
+
+.header-container {
+    display: flex;
+    justify-content: space-between; /* Abstand zwischen den Elementen */
+    align-items: center; /* Vertikal ausrichten */
+    width: 100%; /* Volle Breite nutzen */
+}
