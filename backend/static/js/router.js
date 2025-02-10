@@ -12,7 +12,7 @@ import { PongOverview } from '/static/pong/js/overview.js';
 import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
 import { PongResult } from '/static/pong/js/pong_result.js';
 import { DisplayTournament } from '/static/pong/js/tournament_display.js';
-import { fetchBlockedRelationships, fetchBlockedRelationshipsUser } from '/static/users/js/blocked_users.js';
+import { fetchBlockedRelationships, fetchBlockedRelationshipsUser, blockUser } from '/static/users/js/blocked_users.js';
 
 class Router {
 	constructor() {
@@ -59,6 +59,8 @@ class Router {
 		const pongPathRegex = /^\/pong\/([^\/]+)\/?$/;  // Neue Regex für '/pong/:game_id'
 		const pongDetailsPathRegex = /^\/pong\/game-details\/([^\/]+)\/?$/;
 		const tournamentPathRegex = /^\/pong\/tournament\/([^\/]+)\/?$/;
+		const blockedUsersPathRegex = /^\/users\/api\/block\/([^\/]+)\/?$/;
+		const unblockedUsersPathRegex = /^\/users\/api\/unblock\/([^\/]+)\/?$/;
 
 		let match = path.match(quizPathRegex);
 		if (match) {
@@ -96,6 +98,19 @@ class Router {
 		if (match) {
 			const tournamentId = match[1];
 			DisplayTournament({ tournament_id: tournamentId });
+			return;
+		}
+
+		match = path.match(blockedUsersPathRegex);
+		if (match) {
+			const username = match[1];
+			blockUser(username);
+			return;
+		}
+		match = path.match(unblockedUsersPathRegex);
+		if (match) {
+			const username = match[1];
+			fetchBlockedRelationshipsUser();
 			return;
 		}
 
@@ -180,6 +195,7 @@ router.addRoute('/account/', display_account);
 
 router.addRoute('/users/api/blocked/', fetchBlockedRelationships);
 router.addRoute('/users/api/blocked-users/', fetchBlockedRelationshipsUser);
+router.addRoute('/users/api/block/', blockUser);
 
 router.handleRouteChange();
 export default router;

@@ -13,3 +13,17 @@ export function fetchBlockedRelationshipsUser() {
 			console.log(data);
 		});
 }
+
+export function blockUser(username) {
+	fetch(`/users/api/block/${username}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': getCookie('csrftoken')
+		},
+	})
+		.then(response => response.json())
+		.then(data => {
+			console.log(data);
+		});
+}
