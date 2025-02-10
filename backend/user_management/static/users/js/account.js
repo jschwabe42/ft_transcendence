@@ -82,15 +82,16 @@ function get_account_details() {
 			document.getElementById('email').textContent = data.email;
 			document.getElementById('display_name').textContent = data.display_name;
 
-			document.getElementById('edit-username').addEventListener('click', () => {
+			document.getElementById('edit-username').onclick = () => {
 				edit_field('username', data.username);
-			});
-			document.getElementById('edit-email').addEventListener('click', () => {
+			};
+			document.getElementById('edit-email').onclick = () => {
 				edit_field('email', data.email);
-			});
-			document.getElementById('edit-display_name').addEventListener('click', () => {
+			};
+			document.getElementById('edit-display_name').onclick = () => {
 				edit_field('display_name', data.display_name);
-			});
+			};
+			
 
 			document.getElementById('update-profile-data').addEventListener('click', () => {
 				const passwordInputContainer = document.getElementById('password-input-container');
