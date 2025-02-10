@@ -195,7 +195,6 @@ router.addRoute('/account/', display_account);
 
 router.addRoute('/users/api/blocked/', fetchBlockedRelationships);
 router.addRoute('/users/api/blocked-users/', fetchBlockedRelationshipsUser);
-router.addRoute('/users/api/block/', blockUser);
 
 router.handleRouteChange();
 export default router;

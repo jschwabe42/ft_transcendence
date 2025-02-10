@@ -28,6 +28,7 @@ from .blocked_users import Block_Manager, BlockedUsers
 User = get_user_model()
 
 
+@login_required_redirect
 def block_user(request, username):
 	"""
 	Block a user.
@@ -41,6 +42,7 @@ def block_user(request, username):
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
 
+@login_required_redirect
 def unblock_user(request, username):
 	"""
 	Unblock a user.
@@ -54,6 +56,7 @@ def unblock_user(request, username):
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
 
+@login_required_redirect
 def blocked_users(request):
 	"""
 	Shows for the request user, their blocked users.
@@ -70,6 +73,7 @@ def blocked_users(request):
 	)
 
 
+# @audit remove this function if not used
 def blocks(request):
 	"""
 	Shows all entries of blocked users.
