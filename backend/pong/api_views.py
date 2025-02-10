@@ -41,6 +41,13 @@ class CreateGameView(APIView):
 			return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
 		# Create the game
+		if (tournament_id != 0):
+			tournament = Tournament.objects.get(id=tournament_id)
+			if (tournament.finalWinner != ""):
+				return Response({'error': 'Final Game already Done'}, status=status.HTTP_400_BAD_REQUEST)
+			if (tournament.openTournament == False):
+				tournament.openTournament = True
+				tournament.save()
 		game = PongGame.objects.create(
 			player1=player, player2=opponent, tournament_id=tournament_id
 		)
