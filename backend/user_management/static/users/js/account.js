@@ -111,7 +111,7 @@ function get_account_details() {
 				}
 				update_profile(data, password);
 				const passwordInputContainer = document.getElementById('password-input-container');
-				passwordInputContainer.style.display = 'none';
+				passwordInputContainer.style.visibility = 'hidden';
 			});
 		});
 }
