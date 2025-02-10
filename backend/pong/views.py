@@ -72,6 +72,7 @@ def tournament(request):
 			'created_at': tournament.created_at.isoformat() if tournament.created_at else None,
 			'winner1': tournament.winner1,
 			'winner2': tournament.winner2,
+			'finalWinner': tournament.finalWinner,
 			'openTournament': tournament.openTournament,
 			'playernum': tournament.playernum,
 			'id': tournament.id,
