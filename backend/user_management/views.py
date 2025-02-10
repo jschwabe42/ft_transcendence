@@ -31,7 +31,7 @@ User = get_user_model()
 @login_required_redirect
 def block_user(request, username):
 	"""
-	Block a user.
+	Block a user. This will return an error if the user is already blocked.
 	API Endpoint: /users/api/block/
 	"""
 
@@ -45,7 +45,7 @@ def block_user(request, username):
 @login_required_redirect
 def unblock_user(request, username):
 	"""
-	Unblock a user.
+	Unblock a user. This is successful even if the user was not blocked.
 	API Endpoint: /users/api/unblock/
 	"""
 
@@ -60,7 +60,7 @@ def unblock_user(request, username):
 def blocked_users(request):
 	"""
 	Shows for the request user, their blocked users.
-	API Endpoint: /users/api/blocked-users/
+	API Endpoint: /users/api/blocked/
 	"""
 	blocked_by_request_user = BlockedUsers.objects.filter(blocker=request.user)
 	if blocked_by_request_user.count() == 0:

@@ -19,11 +19,7 @@ class BlockedUsers(models.Model):
 
 class Block_Manager:
 	@staticmethod
-	def __has_blocked_users(origin):
-		"""for origin, check if they have blocked other users"""
-		return BlockedUsers.objects.filter(blocker=origin).exists()
-
-	@staticmethod
+	# @follow-up check if this is used or not
 	def is_blocked(origin):
 		"""for all users, check if anyone has blocked origin"""
 		return BlockedUsers.objects.filter(blockee=origin).exists()
@@ -43,7 +39,7 @@ class Block_Manager:
 		"""check if either user has blocked the other"""
 		return Block_Manager.is_blocked_by(
 			blockee=origin, blocker=target
-		) or Block_Manager.is_blocked_by(blockee=target, blocker=origin)
+		) or Block_Manager.has_blocked(blocker=origin, blockee=target)
 
 	@staticmethod
 	def block_user(blocker, target_username):
@@ -59,8 +55,6 @@ class Block_Manager:
 	def unblock_user(origin, target_username):
 		"""unblock a user"""
 		target = Block_Manager.__get_existing_user_instance(target_username)
-		# if Block_Manager.is_blocked_by(target, origin):
-		# 	raise ValidationError('This user is already blocked')
 		BlockedUsers.objects.filter(blocker=origin, blockee=target).delete()
 
 	# internal

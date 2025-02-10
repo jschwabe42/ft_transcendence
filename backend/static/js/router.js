@@ -60,6 +60,7 @@ class Router {
 		const pongDetailsPathRegex = /^\/pong\/game-details\/([^\/]+)\/?$/;
 		const tournamentPathRegex = /^\/pong\/tournament\/([^\/]+)\/?$/;
 		const usersApiPathRegex = /^\/users\/api\/(.*)$/;
+
 		let match = path.match(quizPathRegex);
 		if (match) {
 			const roomName = match[1];
