@@ -49,6 +49,8 @@ class Block_Manager:
 	def block_user(blocker, target_username):
 		"""block a user"""
 		target = Block_Manager.__get_existing_user_instance(target_username)
+		if blocker == target:
+			raise ValidationError('You cannot block yourself!')
 		if Block_Manager.is_blocked_by(blockee=target, blocker=blocker):
 			raise ValidationError('This user is already blocked')
 		BlockedUsers.objects.create(blocker=blocker, blockee=target)

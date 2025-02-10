@@ -51,6 +51,13 @@ class BlockManagerTest(TestCase):
 			BlockedUsers.objects.filter(blocker=self.user2, blockee=self.user1).exists()
 		)
 
+	def test_cannot_block_oneself(self):
+		with self.assertRaises(ValidationError):
+			Block_Manager.block_user(self.user1, 'user1')
+		self.assertFalse(
+			BlockedUsers.objects.filter(blocker=self.user1, blockee=self.user1).exists()
+		)
+
 
 class FriendsManagerTest(TestCase):
 	def setUp(self):
