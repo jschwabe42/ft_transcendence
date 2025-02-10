@@ -5,3 +5,11 @@ export function fetchBlockedRelationships() {
 			console.log(data);
 		});
 }
+
+export function fetchBlockedRelationshipsUser() {
+	fetch(`/users/api/blocked-users/`)
+		.then(response => response.json())
+		.then(data => {
+			console.log(data);
+		});
+}

@@ -42,6 +42,22 @@ User = get_user_model()
 # 	return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
 
+def blocked_users(request):
+	"""
+	Shows for the request user, their blocked users.
+	API Endpoint: /users/api/blocked-users/
+	"""
+	blocked_by_request_user = BlockedUsers.objects.filter(blocker=request.user)
+	if blocked_by_request_user.count() == 0:
+		return JsonResponse({'success': False, 'blocked_users': []})
+	return JsonResponse(
+		{
+			'success': True,
+			'blocked_users': [blocked.blockee.username for blocked in blocked_by_request_user],
+		}
+	)
+
+
 def blocks(request):
 	"""
 	Shows all entries of blocked users.

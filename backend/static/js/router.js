@@ -12,7 +12,7 @@ import { PongOverview } from '/static/pong/js/overview.js';
 import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
 import { PongResult } from '/static/pong/js/pong_result.js';
 import { DisplayTournament } from '/static/pong/js/tournament_display.js';
-import { fetchBlockedRelationships } from '/static/users/js/blocked_users.js';
+import { fetchBlockedRelationships, fetchBlockedRelationshipsUser } from '/static/users/js/blocked_users.js';
 
 class Router {
 	constructor() {
@@ -178,7 +178,8 @@ router.addRoute('/logout/', logout_user);
  */
 router.addRoute('/account/', display_account);
 
-router.addRoute('/users/', fetchBlockedRelationships);
+router.addRoute('/users/api/blocked/', fetchBlockedRelationships);
+router.addRoute('/users/api/blocked-users/', fetchBlockedRelationshipsUser);
 
 router.handleRouteChange();
 export default router;
