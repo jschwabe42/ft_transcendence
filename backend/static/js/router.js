@@ -31,7 +31,9 @@ class Router {
 
 	showNotFound() {
 		clear_containers();
-		document.getElementById('error-content').innerHTML = `<H2>Page Not found<\h2>`;
+		document.getElementById('error-content').innerHTML = `
+		<h2>${gettext("Page not found!")}</h2>
+		<p>${gettext("Please ensure the current URL is correct.")}</p>`;
 	}
 
 	// ! ALWAYS use this function to navigate to a new page, it ensures that the router is used and cleanup is done correctly!
@@ -61,7 +63,7 @@ class Router {
 	handleDynamicRoute(path) {
 		const quizPathRegex = /^\/quiz\/([^\/]+)\/?$/;
 		const dashboardPathRegex = /^\/dashboard\/([^\/]+)\/?$/;
-		const pongPathRegex = /^\/pong\/([^\/]+)\/?$/;  // Neue Regex für '/pong/:game_id'
+		const pongPathRegex = /^\/pong\/([^\/]+)\/?$/;
 		const pongDetailsPathRegex = /^\/pong\/game-details\/([^\/]+)\/?$/;
 		const tournamentPathRegex = /^\/pong\/tournament\/([^\/]+)\/?$/;
 		const usersApiPathRegex = /^\/users\/api\/(.*)$/;
