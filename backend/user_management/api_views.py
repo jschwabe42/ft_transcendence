@@ -1,27 +1,26 @@
 from urllib.parse import urlencode
 
-import django.shortcuts
 import requests
 from django.contrib.auth import login
 
 # import rest_framework
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 
 from user_management.models import CustomUser
 
+OAUTH_CALLBACK = 'http://localhost:8000/users/oauth/callback'
+
 
 class OauthView(APIView):
-	permission_classes = [AllowAny]
-	OAUTH_CALLBACK = 'http://localhost:8000/users/oauth/callback'
 	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
 
 	def post(self, request):
-		"""request user login on API endpoint"""
+		"""provide user with generated link for login on API endpoint"""
 		params = {
 			'client_id': OauthView.CLIENT_ID,
-			'redirect_uri': OauthView.OAUTH_CALLBACK,
+			'redirect_uri': OAUTH_CALLBACK,
 			'response_type': 'code',
 			'state': OauthView.SECRET_STATE,
 			'scope': 'public',
@@ -29,8 +28,13 @@ class OauthView(APIView):
 		auth_url = {'location': f'https://api.intra.42.fr/oauth/authorize?{urlencode(params)}'}
 		return JsonResponse(auth_url)
 
+
+class OauthCallBackView(APIView):
+	permission_classes = [AllowAny]
+	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
+
 	def __bearer_token(self, request):
-		"""exchange the code for a users' bearer token"""
+		"""server-side: exchange the code for a users' bearer token"""
 		from transcendence.settings import SECRET_STATE
 
 		code = request.GET.get('code')
@@ -42,22 +46,17 @@ class OauthView(APIView):
 
 		params = {
 			'grant_type': 'authorization_code',
-			'client_id': OauthView.CLIENT_ID,
-			'client_secret': OauthView.REMOTE_OAUTH_SECRET,
+			'client_id': OauthCallBackView.CLIENT_ID,
+			'client_secret': OauthCallBackView.REMOTE_OAUTH_SECRET,
 			'code': code,
-			'redirect_uri': OauthView.OAUTH_CALLBACK,
-			'state': OauthView.SECRET_STATE,
+			'redirect_uri': OAUTH_CALLBACK,
+			'state': OauthCallBackView.SECRET_STATE,
 		}
 
-		bearer_token_response = requests.post(
-			f'https://api.intra.42.fr/oauth/token?{urlencode(params)}'
-		)
-		# Error: could not exchange code for token
-		bearer_token_response.raise_for_status()
-		return bearer_token_response.json()
+		return requests.post(f'https://api.intra.42.fr/oauth/token?{urlencode(params)}')
 
-	def __create_user(request, jsonresponse, BEARER_TOKEN, REFRESH_TOKEN):
-		"""handle user management from oauth"""
+	def get_or_create_oauth(jsonresponse):
+		"""get or create user from oauth: this should be infallible"""
 		user_instance = CustomUser.objects.filter(oauth_id=jsonresponse['login'])
 		if not user_instance.exists():
 			# create the account
@@ -68,22 +67,19 @@ class OauthView(APIView):
 			)
 		else:
 			user_instance = CustomUser.objects.filter(oauth_id=jsonresponse['login']).first()
-		# log the user into the account - this took way longer than it should have
-		print(user_instance)
-		# user = authenticate(request, username=user.instance)
-		# WIP: this is not working with @login_required
-		login(request, user=user_instance)
-		from .views import public_profile
-
-		return public_profile(request, jsonresponse['login'])
+		return user_instance
 
 	def get(self, request):
 		"""handle the callback from the 42 API: obtain user public data"""
-		bearer_token_response = OauthView.__bearer_token(self, request)
-		BEARER_TOKEN = bearer_token_response.get('access_token')
-		REFRESH_TOKEN = bearer_token_response.get('refresh_token')
+		print(request, flush=True)
+		bearer_token_response = OauthCallBackView.__bearer_token(self, request)
+		# if not bearer_token_response.json().ok:
+		# 	return JsonResponse({'success': False, 'error': 'could not obtain bearer token'})
+		bearer_token_response = bearer_token_response.json()
+		BEARER_TOKEN = bearer_token_response['access_token']
+		print(bearer_token_response, flush=True)
 		if BEARER_TOKEN is None:
-			return HttpResponse('Error: bearer token invalid/not found')
+			return JsonResponse({'success': False, 'error': 'bearer token invalid/not found'})
 		response = requests.get(
 			'https://api.intra.42.fr/v2/me',
 			headers={
@@ -91,11 +87,11 @@ class OauthView(APIView):
 				'Authorization': f'Bearer {BEARER_TOKEN}',
 			},
 		)
-		if not response.ok:
-			django.contrib.messages.error(request, 'user did not authorize')
-			return django.shortcuts.redirect('users:login')
 		jsonresponse = response.json()
-		username, email = jsonresponse['login'], jsonresponse['email']
-		if username is None or email is None:
-			return HttpResponse('Error: could not obtain username from token')
-		return OauthView.__create_user(request, jsonresponse, BEARER_TOKEN, REFRESH_TOKEN)
+		if not response.ok or jsonresponse['login'] is None:
+			return JsonResponse({'success': False, 'error': 'could not obtain username from token'})
+		user_instance = OauthCallBackView.get_or_create_oauth(jsonresponse)
+		# log the user into the account - this took way longer than it should have
+		login(request, user=user_instance)
+		print(user_instance, flush=True)
+		return HttpResponseRedirect('/account/')

@@ -31,30 +31,30 @@ INTERNAL_IPS = [
 	'127.0.0.1',
 ]
 
-# from corsheaders.defaults import default_headers
+from corsheaders.defaults import default_headers
 
-# CORS_ALLOW_ORIGINS = [
-# 	'http://localhost',
-# 	'https://localhost',
-# 	'http://localhost:8000',
-# 	'https://localhost:8000',
-# 	'http://127.0.0.1',
-# 	'https://127.0.0.1',
-# 	'http://127.0.0.1:8000',
-# 	'https://127.0.0.1:8000',
-# ]
+CORS_ALLOW_ORIGINS = [
+	'http://localhost',
+	'https://localhost',
+	'http://localhost:8000',
+	'https://localhost:8000',
+	'http://127.0.0.1',
+	'https://127.0.0.1',
+	'http://127.0.0.1:8000',
+	'https://127.0.0.1:8000',
+]
 
-# CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True
 
-# CORS_ALLOW_HEADERS = list(default_headers) + [
-# 	'X-42-Token',
-# ]
+CORS_ALLOW_HEADERS = list(default_headers) + [
+	'X-42-Token',
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-	# 'corsheaders',
+	'corsheaders',
 	'quiz.apps.QuizConfig',
 	'pong.apps.PongConfig',
 	'chat.apps.ChatConfig',
@@ -74,7 +74,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-	# 'corsheaders.middleware.CorsMiddleware',
+	'corsheaders.middleware.CorsMiddleware',
 	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.locale.LocaleMiddleware',

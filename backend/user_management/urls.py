@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 
 from . import views
-from .api_views import OauthView
+from .api_views import OauthView, OauthCallBackView
 
 app_name = 'users'
 urlpatterns = [
@@ -47,7 +47,7 @@ urlpatterns = [
 	# path('oauth', OauthView.request_login_oauth, name='oauth'),
 	path(
 		'oauth/callback',
-		OauthView.as_view(),
+		OauthCallBackView.as_view(),
 		name='oauth-callback',
 	),
 ]
