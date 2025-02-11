@@ -1,3 +1,6 @@
+import json
+import re
+
 from django.contrib.auth import (
 	authenticate,
 	get_user_model,
@@ -5,25 +8,69 @@ from django.contrib.auth import (
 	logout,
 	update_session_auth_hash,
 )
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.db.models import F
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.shortcuts import redirect, render
+from django.utils.translation import gettext as _
 from pong.models import PongGame
 from pong.utils import win_to_loss_ratio
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
-import re
-import json
+from transcendence.decorators import login_required_redirect
+
 from user_management.friends import Friends_Manager
 
-from transcendence.decorators import login_required_redirect
-from django.utils.translation import gettext as _
-
+from .blocked_users import Block_Manager, BlockedUsers
 
 # from .consumers import UserProfileConsumer
 
 User = get_user_model()
+
+
+@login_required_redirect
+def block_user(request, username):
+	"""
+	Block a user. This will return an error if the user is already blocked.
+	API Endpoint: /users/api/block/
+	"""
+
+	try:
+		Block_Manager.block_user(blocker=request.user, target_username=username)
+		return JsonResponse({'success': True, 'message': _('User blocked successfully.')})
+	except ValidationError:
+		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
+
+
+@login_required_redirect
+def unblock_user(request, username):
+	"""
+	Unblock a user. This is successful even if the user was not blocked.
+	API Endpoint: /users/api/unblock/
+	"""
+
+	try:
+		Block_Manager.unblock_user(origin=request.user, target_username=username)
+		return JsonResponse({'success': True, 'message': _('User unblocked successfully.')})
+	except ValidationError:
+		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
+
+
+@login_required_redirect
+def blocked_users(request):
+	"""
+	Shows for the request user, their blocked users.
+	API Endpoint: /users/api/blocked/
+	"""
+	blocked_by_request_user = BlockedUsers.objects.filter(blocker=request.user)
+	if blocked_by_request_user.count() == 0:
+		return JsonResponse({'success': False, 'blocked_users': []})
+	return JsonResponse(
+		{
+			'success': True,
+			'blocked_users': [blocked.blockee.username for blocked in blocked_by_request_user],
+		}
+	)
 
 
 def register(request):
@@ -164,7 +211,9 @@ def validate_data(username, display_name, email, current_user=None):
 			return JsonResponse(
 				{
 					'success': False,
-					'message': _('Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'),
+					'message': _(
+						'Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'
+					),
 				}
 			)
 		if current_user:
@@ -178,7 +227,9 @@ def validate_data(username, display_name, email, current_user=None):
 			return JsonResponse(
 				{
 					'success': False,
-					'message': _('Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'),
+					'message': _(
+						'Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'
+					),
 				}
 			)
 		if current_user:
