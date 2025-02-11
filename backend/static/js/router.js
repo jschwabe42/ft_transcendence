@@ -13,6 +13,7 @@ import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
 import { PongResult } from '/static/pong/js/pong_result.js';
 import { DisplayTournament } from '/static/pong/js/tournament_display.js';
 import { UsersApiHandler } from '/static/users/js/users_api.js';
+import { oauth_flow } from '/static/users/js/oauth.js';
 
 class Router {
 	constructor() {
@@ -183,6 +184,11 @@ router.addRoute('/register/', register_user);
  * The login user view
  */
 router.addRoute('/login/', login_user);
+
+/**
+ * The login user view
+ */
+router.addRoute('/users/oauth/', oauth_flow);
 
 /**
  * THe logout user view

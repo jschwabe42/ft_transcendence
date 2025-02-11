@@ -5,7 +5,7 @@ import requests
 from django.contrib.auth import login
 
 # import rest_framework
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 
@@ -17,7 +17,7 @@ class OauthView(APIView):
 	OAUTH_CALLBACK = 'http://localhost:8000/users/oauth/callback'
 	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
 
-	def request_login_oauth(self):
+	def post(self, request):
 		"""request user login on API endpoint"""
 		params = {
 			'client_id': OauthView.CLIENT_ID,
@@ -26,10 +26,8 @@ class OauthView(APIView):
 			'state': OauthView.SECRET_STATE,
 			'scope': 'public',
 		}
-
-		auth_url = f'https://api.intra.42.fr/oauth/authorize?{urlencode(params)}'
-
-		return django.shortcuts.redirect(auth_url)
+		auth_url = {'location': f'https://api.intra.42.fr/oauth/authorize?{urlencode(params)}'}
+		return JsonResponse(auth_url)
 
 	def __bearer_token(self, request):
 		"""exchange the code for a users' bearer token"""

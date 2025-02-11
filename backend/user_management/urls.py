@@ -43,8 +43,8 @@ urlpatterns = [
 		name='remove-friend',
 	),
 	# WIP: oauth with 42 API
-	path('oauth/', OauthView.request_login_oauth, name='oauth'),
-	path('oauth', OauthView.request_login_oauth, name='oauth'),
+	path('oauth/', OauthView.as_view(), name='oauth'),
+	# path('oauth', OauthView.request_login_oauth, name='oauth'),
 	path(
 		'oauth/callback',
 		OauthView.as_view(),
