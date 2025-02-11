@@ -41,10 +41,8 @@ INTERNAL_IPS = [
 
 INSTALLED_APPS = [
 	'quiz.apps.QuizConfig',
-	'game.apps.GameConfig',
+	'pong.apps.PongConfig',
 	'chat.apps.ChatConfig',
-	'blog.apps.BlogConfig',
-	'users.apps.UsersConfig',
 	'dashboard.apps.DashboardConfig',
 	'channels',
 	'daphne',
@@ -52,6 +50,7 @@ INSTALLED_APPS = [
 	'crispy_bootstrap4',
 	'django.contrib.admin',
 	'django.contrib.auth',
+	'user_management.apps.UserManagementConfig',
 	'django.contrib.contenttypes',
 	'django.contrib.sessions',
 	'django.contrib.messages',
@@ -61,14 +60,15 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.middleware.security.SecurityMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.locale.LocaleMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'users.middleware.JWTAuthMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 import sys
@@ -153,8 +153,6 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'CET'
 
-USE_I18N = True
-
 USE_TZ = True
 
 
@@ -167,6 +165,7 @@ STATICFILES_DIRS = [
 	BASE_DIR / 'static',
 	BASE_DIR / 'quiz/static',
 	BASE_DIR / 'dashboard/static',
+	BASE_DIR / 'pong/static',
 ]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -183,10 +182,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'users:list'
+LOGIN_REDIRECT_URL = '/dashboard/'
 
-LOGIN_URL = 'users:login'
+LOGIN_URL = '/login/'
 
+AUTH_USER_MODEL = 'user_management.CustomUser'
 
 ASGI_APPLICATION = 'transcendence.asgi.application'
 

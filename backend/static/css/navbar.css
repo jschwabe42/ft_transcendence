@@ -29,3 +29,25 @@ ul {
 .site-header .navbar-nav .nav-link.active {
 	font-weight: 500;
 }
+
+.navbar-nav.ms-auto {
+	margin-left: auto !important;
+}
+
+.navbar-nav.me-2 {
+	margin-right: 0.5rem !important;
+}
+
+#language-options {
+	margin-top: 18px;
+	border-color: #1c4f73;
+}
+
+.dropdown-menu {
+	min-width: auto;
+	white-space: nowrap;
+}
+
+.dropdown-item.language-option {
+	font-size: 20px;
+}

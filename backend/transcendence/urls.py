@@ -15,25 +15,27 @@ Including another URLconf
 	2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from debug_toolbar.toolbar import debug_toolbar_urls
+from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include, re_path
-from django.conf import settings
-from debug_toolbar.toolbar import debug_toolbar_urls
+from django.urls import include, path, re_path
+from django.views.i18n import JavaScriptCatalog
+
 from . import views
 
 urlpatterns = [
 	path('', views.index, name='index'),
 	path('quiz/', views.index, name='quiz'),
-	path('users/', include('users.urls')),
-	path('game/', include('game.urls')),
+	path('users/', include('user_management.urls')),
+	path('pong/', include('pong.urls')),
 	path('admin/', admin.site.urls),
-	path('blog/', include('blog.urls')),
 	path('chat/', include('chat.urls')),
 	path('quiz/', include('quiz.urls')),
 	path('dashboard/', include('dashboard.urls')),
+	path('i18n/', include('django.conf.urls.i18n')),
+	path('jsi18n/', JavaScriptCatalog.as_view(), name='js_catalog'),
 ]
-
 
 if not settings.TESTING:
 	urlpatterns = [

@@ -56,7 +56,7 @@ export function displayQuestion(question, answers) {
 		});
 		answerOptions.appendChild(button);
 	});
-	quizQuestionContainer.style.display = 'block';
+	// quizQuestionContainer.style.display = 'block';
 }
 
 /**
@@ -131,7 +131,7 @@ export function displayUserAnswers(answersData) {
 				const userInfo = document.createElement('div');
 				userInfo.className = 'user-info';
 				userInfo.innerHTML = `
-					<span class="username">${user.username}: +${user.score_difference} points</span>
+					<span class="username">${user.username}: +${user.score_difference} ${gettext("points")}</span>
 				`;
 				userList.appendChild(userInfo);
 			});
@@ -146,11 +146,11 @@ export function displayScore(participantData) {
 		if (participantLi) {
 			const scoreSpan = participantLi.querySelector('.score-list');
 			if (scoreSpan) {
-				scoreSpan.innerHTML = `(${data.score} points)`;
+				scoreSpan.innerHTML = `(${data.score} ${gettext("points")})`;
 			} else {
 				const newScoreSpan = document.createElement('span');
 				newScoreSpan.className = 'score-list';
-				newScoreSpan.innerText = `(${data.score} points)`;
+				newScoreSpan.innerText = `(${data.score} ${gettext("points")})`;
 				participantLi.appendChild(newScoreSpan);
 			}
 		}

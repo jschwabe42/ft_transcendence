@@ -14,22 +14,22 @@ export function loadRoomList() {
 				<div id="room-list" class="list-group"></div>
 			</div>
 			<div class="col-md-6 text.end">
-				<h2> Create a new room</h2>
-				<button id="show-create-room-form" class="btn btn-primary">Create Room</button>
+				<h2>${gettext("Create a new room")}</h2>
+				<button id="show-create-room-form" class="btn btn-primary">${gettext("Create Room")}</button>
 				<div id="create-room-form-con" class="mt-3" style="display: none;">
 					<form id="create-room-form">
 						<div class="mb-3">
-							<label for="roomName" class="form-label">Room Name</label>
-							<input type="text" id="roomName" name="room_name" class="form-control" placeholder="Enter room name" required>
+							<label for="roomName" class="form-label">${gettext("Room Name")}</label>
+							<input type="text" id="roomName" name="room_name" class="form-control" placeholder="${gettext("Enter room name")}" required>
 						</div>
-						<button type="submit" class="btn btn-success">Submit</button>
+						<button type="submit" class="btn btn-success">${gettext("Submit")}</button>
 					</form>
 				</div>
 			</div>
 			<div id="create-room-feedback" class="mt-3"></div>
 		</div>
 	</div>
-	<a href="https://opentdb.com" target="_blank" id="powered-by-opentd">Gratefully using OpenTD</a>
+	<a href="https://opentdb.com" target="_blank" id="powered-by-opentd">${gettext("Gratefully using OpenTD")}</a>
 	`;
 
 	initCreateRoomForm();
@@ -64,7 +64,13 @@ function initCreateRoomForm() {
 		},
 		body: `room_name=${encodeURIComponent(roomName)}`
 	})
-	.then(response => response.json())
+	.then(response => {
+		if (response.redirected) {
+			router.navigateTo('/login/');
+			return;
+		}
+		return response.json();
+	})
 	.then(data => {
 		if (data.success) {
 			feedbackDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
@@ -76,7 +82,7 @@ function initCreateRoomForm() {
 		}
 	})
 	.catch(error => {
-		feedbackDiv.innerHTML = `<div class="alert alert-danger">An error occurred: ${error}</div>`;
+		feedbackDiv.innerHTML = `<div class="alert alert-danger">${gettext("An error occurred:")} ${error}</div>`;
 	});
 	});
 }
@@ -86,7 +92,7 @@ function initCreateRoomForm() {
  */
 function initWebSocket() {
 	const roomListContainer = document.getElementById('room-list');
-	roomListContainer.innerHTML = '<p>Loading rooms...</p>';
+	roomListContainer.innerHTML = `<p>${gettext("Loading rooms...")}</p>`;
 	// const quizAppContent = document.getElementById('quiz-app-content');
 	// const roomListContainer = document.createElement('div');
 	// roomListContainer.id = 'room-list';
@@ -129,7 +135,7 @@ async function loadRooms() {
 		const data = await response.json();
 		displayRooms(data.rooms);
 	} catch (error) {
-		roomListContainer.innerHTML = '<p>Error loading rooms. Please try again later.</p>';
+		roomListContainer.innerHTML = `<p>${gettext("Error loading rooms. Please try again later.")}</p>`;
 	}
 }
 
@@ -139,18 +145,18 @@ async function loadRooms() {
 function displayRooms(rooms) {
 	const roomListContainer = document.getElementById('room-list');
 	if (rooms.length === 0) {
-		roomListContainer.innerHTML = '<p>No rooms available. Create a new room to get started.</p>';
+		roomListContainer.innerHTML = `<p>${gettext("No rooms available. Create a new room to get started.")}</p>`;
 		return;
 	}
 	const roomItems = rooms.map(room => `
 		<div class="room border p-2 my-2">
 			<strong>${room.name}</strong> 
-			- Last activity: ${new Date(room.last_activity).toLocaleString()}
+			- ${gettext("Last activity:")} ${new Date(room.last_activity).toLocaleString()}
 			${room.is_active ? '(Active)' : '(Inactive)'}
-			<button id="join-button" class="join-button btn btn-primary" data-room-id="${room.id}">Join</button>
+			<button id="join-button" class="join-button btn btn-primary" data-room-id="${room.id}">${gettext("Join")}</button>
 		</div>
 	`).join('');
-	roomListContainer.innerHTML = `<h2>Available Rooms</h2>${roomItems}`;
+	roomListContainer.innerHTML = `<h2>${gettext("Available Rooms")}</h2>${roomItems}`;
 	
 	document.querySelectorAll('.join-button').forEach(button => {
 		button.addEventListener('click', function () {
@@ -174,7 +180,13 @@ export function joinRoom(roomId) {
 		body: `room_id=${roomId}`
 	})
 
-	.then(response => response.json())
+	.then(response => {
+		if (response.redirected) {
+			router.navigateTo('/login/');
+			return;
+		}
+		return response.json();
+	})
 	.then(data => {
 		if (data.success) {
 			const room_name = data.room.name;

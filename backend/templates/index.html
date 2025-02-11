@@ -1,28 +1,58 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ request.LANGUAGE_CODE }}">
 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- For translations -->
+	<script src="/jsi18n/"></script>
+	<script type="text/javascript">
+		var gettext = window.gettext;
+	</script>
+	<!-- The bootstrap toolkit -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-	<!-- The CSS files of the quiz app. Those files could also be dynamically included using a js function -->
+	<!-- The CSS files of the quiz app.-->
 	<link href="{% static 'quiz/css/room_list.css' %}" rel="stylesheet">
 	<link href="{% static 'quiz/css/room_display.css' %}" rel="stylesheet">
 	<link href="{% static 'quiz/css/quiz_game.css' %}" rel="stylesheet">
+
+	<!-- CSS files of the dashboard -->
 	<link href="{% static 'dashboard/css/dashboard.css' %}" rel="stylesheet">
 	<link href="{% static 'dashboard/css/profile.css' %}" rel="stylesheet">
 
-	<!-- The files of the old navbar.html -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- CSS files of the pong game -->
+	<link rel="stylesheet" href="/static/chat/chat.css">
+	<link rel="stylesheet" href="/static/pong/css/game.css">
+
+	<!-- CSS files of the users -->
+	<link href="{% static 'users/css/account.css' %}" rel="stylesheet">
+	<link href="{% static 'users/css/login.css' %}" rel="stylesheet">
+	<link href="{% static 'users/css/register.css' %}" rel="stylesheet">
+
+	<!-- The files needed to run the index.html. -->
 	<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 	<link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
+	<script type="module" src="{% static 'js/navbar.js' %}"></script>
+	<script type="module" src="{% static 'js/router.js' %}"></script>
+
+	<!-- NEEDS TO BE REMOVED -->
+	<script type="module" src="{% static 'pong/js/pong_display_ingame.js' %}"></script>
+	<script type="module" src="{% static 'pong/js/overview.js' %}"></script>
+	<script type="module" src="{% static 'pong/js/pong_result.js' %}"></script>
+	<script type="module" src="{% static 'pong/js/tournament_display.js' %}"></script>
+
+
 
 	<meta name="csrf-token" content="{{ csrf_token }}">
-	<title>Transcendence</title>
+	<title>{% trans "Transcendence" %}</title>
 </head>
 
 <body>
@@ -31,31 +61,33 @@
 
 		<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
 			<div class="container">
-				<a class="navbar-brand mr-4" href="/" id="transcendence-link">Transcendence</a>
+				<a class="navbar-brand mr-4" href="/" id="transcendence-link">{% trans "Transcendence" %}</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
 					aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation"> <span
 						class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarToggle">
 					<div class="navbar-nav mr-auto">
-						<a class="nav-item nav-link" href="/" id="home-link">Home</a>
-						<a class="nav-item nav-link" href="{% url 'chat' %}">Chat</a>
-						<a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
-						<a class="nav-item nav-link" href="/quiz/" id="quiz-link">Quiz App</a>
-						<a class="nav-item nav-link" href="{% url 'game:recent_games' %}">Game</a>
-						<a class="nav-item nav-link" href="/dashboard/" id="dashboard-link">Dashboard</a>
+						<a class="nav-item nav-link" href="/" id="home-link">{% trans "Home" %}</a>
+						<a class="nav-item nav-link" href="{% url 'chat' %}">{% trans "Chat" %}</a>
+						<!-- @follow-up implement about page -->
+						<a class="nav-item nav-link" href="/quiz/" id="quiz-link">{% trans "Quiz" %}</a>
+						<a class="nav-item nav-link" href="/pong/">{% trans "Pong" %}</a>
+						<a class="nav-item nav-link" href="/dashboard/" id="dashboard-link">{% trans "Dashboard" %}</a>
 					</div>
 					<!-- Navbar Right Side -->
-					<div class="navbar-nav">
-						{% if user.is_authenticated %}
-						<a class="nav-item nav-link" href="{% url 'users:account' %}">Account</a>
-						<a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
-						<a class="nav-item nav-link" href="{% url 'users:logout' %}">Logout</a>
-						{% else%}
-						<a class="nav-item nav-link" href="{% url 'users:login' %}">Login</a>
-						<a class="nav-item nav-link" href="{% url 'users:register' %}">Register</a>
-						{% endif%}
+					<div class="navbar-nav ms-auto" id="navbar-right"></div>
+					<!-- Language Switch -->
+					<div class="navbar-nav me-2" id="navbar-language-right">
+						<div class="dropdown">
+							<button class="btn btn-primary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+								<img src="/media/flags/en.svg" alt="English" height="20" id="current-language-flag">
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="languageDropdown" id="language-options"></ul>
+						</div>
+						
 					</div>
+
 				</div>
 			</div>
 		</nav>
@@ -70,6 +102,9 @@
 	<!-- The content of the quiz app -->
 	<div class="container mt-5" id="quiz-app-content"></div>
 	<!-- The content of the Pong app -->
+	 <!-- THIS IS REDUNDANT. REPLACE WITH THE ONE ABOVE -->
+	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
 	<div class="container mt-5" id="pong-app-content"></div>
 	<!-- The content of the user app -->
 	<div class="container mt-5" id="user-app-content"></div>
@@ -77,14 +112,6 @@
 	<div class="container mt-5" id="dashboard-app-content"></div>
 	<!-- The content of Error pages -->
 	<div class="container mt-5" id="error-content"></div>
-
-	
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
-	<script type="module" src="{% static 'js/router.js' %}"></script>
-	<script type="module" src="{% static 'js/navbar.js' %}"></script>
 
 </body>
 

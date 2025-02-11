@@ -9,7 +9,7 @@ export function loadProfile(username) {
 	</div>
 	<div id="pv-profile-content">
 		<div id="pv-quiz-stats">
-			<h4>Quiz Stats</h4>
+			<h4>${gettext("Quiz Stats")}</h4>
 			<ul id="pv-quiz-stats-list"></ul>
 		</div>
 	</div>
@@ -37,17 +37,17 @@ function fetchData(username) {
 function displayProfile(profile) {
 	const profilePicture = document.getElementById('pv-profile-picture');
 	profilePicture.src = profile.image_url;
-	profilePicture.alt = `${profile.username}'s profile picture`;
+	profilePicture.alt = `${profile.username}${gettext("'s profile picture")}`;
 	const profileName = document.getElementById('pv-profile-name');
-	profileName.textContent = `${profile.username}'s Profile`;
+	profileName.textContent = `${profile.username}${gettext("'s Profile")}`;
 
 	const quizStatsList = document.getElementById('pv-quiz-stats-list');
 	quizStatsList.innerHTML = `
-		<li>Games Played: ${profile.quiz_games_played}</li>
-		<li>Games Won: ${profile.quiz_games_won}</li>
-		<li>Total Score: ${profile.quiz_total_score}</li>
-		<li>High Score: ${profile.quiz_high_score}</li>
-		<li>Questions Asked: ${profile.quiz_questions_asked}</li>
-		<li>Correct Answers: ${profile.quiz_correct_answers}</li>
+		<li>${gettext("Games Played:")} ${profile.quiz_games_played}</li>
+		<li>${gettext("Games Won:")} ${profile.quiz_games_won}</li>
+		<li>${gettext("Total Score:")} ${profile.quiz_total_score}</li>
+		<li>${gettext("High Score:")} ${profile.quiz_high_score}</li>
+		<li>${gettext("Questions Asked:")} ${profile.quiz_questions_asked}</li>
+		<li>${gettext("Correct Answers:")} ${profile.quiz_correct_answers}</li>
 	`;
 }
