@@ -38,7 +38,7 @@ export function PongOverview() {
 			document.getElementById('pong-app-content').innerHTML = `
 				<div class="header-container">
 					<h2>Recent Games</h2>
-					<button class="navigate-button" data-path="/pong/practice">Practice Game</button>
+					<button class="navigate-button" data-path="/pong/practice/">Practice Game</button>
 				</div>
 				<div>${recentGames || '<p>No games have been played yet.</p>'}</div>
 

@@ -12,6 +12,7 @@ import { PongOverview } from '/static/pong/js/overview.js';
 import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
 import { PongResult } from '/static/pong/js/pong_result.js';
 import { DisplayTournament } from '/static/pong/js/tournament_display.js';
+import { PongPractice } from '/static/pong/js/pong_practice.js';
 
 class Router {
 	constructor() {
@@ -146,6 +147,11 @@ router.addRoute('/quiz/', loadRoomList);
  * The main view of the pong app
  */
 router.addRoute('/pong/', PongOverview);
+
+/**
+ * Pong Practice
+ */
+router.addRoute('/pong/practice/', PongPractice);
 
 /**
  * The Homepage

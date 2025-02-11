@@ -39,7 +39,7 @@ export function DisplayPong(params) {
 					</div>
 
 					<div id="gameContainer">
-						<canvas id="gameCanvas" width="800" height="600"></canvas>
+						<canvas class="gameCanvas" id="game_Canvas" width="800" height="600"></canvas>
 					</div>
 
 					<div class="score">
@@ -132,7 +132,7 @@ function renderGameData() {
 			updateGameFromServer(data.state);
 		}
 	};
-	const canvas = document.getElementById("gameCanvas");
+	const canvas = document.getElementById("game_Canvas");
 	const ctx = canvas.getContext("2d");
 	const canvasHeight = canvas.height;
 	const canvasWidth = canvas.width;
