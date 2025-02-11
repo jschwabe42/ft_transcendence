@@ -56,6 +56,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
 	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.locale.LocaleMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -175,8 +176,6 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'CET'
 
-USE_I18N = True
-
 USE_TZ = True
 
 
@@ -215,3 +214,18 @@ AUTH_USER_MODEL = 'user_management.CustomUser'
 ASGI_APPLICATION = 'transcendence.asgi.application'
 
 CHANNEL_LAYERS = {'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}}
+
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGES = [
+	('en', _('English')),
+	('sv', _('Swedish')),
+	('de', _('German')),
+]
+
+LOCALE_PATHS = [
+	BASE_DIR / 'locale',
+]
+
+USE_I18N = True
+USE_L10N = True

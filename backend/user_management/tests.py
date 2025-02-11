@@ -1,10 +1,62 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
+from user_management.blocked_users import Block_Manager, BlockedUsers
 from user_management.friends import Friends, Friends_Manager
 from user_management.models import CustomUser
 
 User = CustomUser
+
+
+class BlockManagerTest(TestCase):
+	def setUp(self):
+		# Create test users
+		self.user1 = User.objects.create_user(username='user1', password='password1')
+		self.user2 = User.objects.create_user(username='user2', password='password2')
+		self.user3 = User.objects.create_user(username='user3', password='password3')
+
+	def test_blocked(self):
+		Block_Manager.block_user(self.user1, 'user2')
+		self.assertTrue(
+			BlockedUsers.objects.filter(blocker=self.user1, blockee=self.user2).exists()
+		)
+		self.assertTrue(
+			Block_Manager.is_blocked(self.user2),
+			Block_Manager.is_blocked_by(blockee=self.user2, blocker=self.user1),
+		)
+		self.assertTrue(
+			Block_Manager.has_blocked(blocker=self.user1, blockee=self.user2),
+		)
+		self.assertTrue(
+			Block_Manager.have_block(origin=self.user2, target=self.user1),
+			Block_Manager.have_block(origin=self.user1, target=self.user2),
+		)
+
+	def test_unblocked(self):
+		# Test unblocking a user: origin has to unblock target - blocking can be done by either party and will have multiple instances
+		Block_Manager.block_user(self.user1, 'user2')
+		Block_Manager.block_user(self.user2, 'user1')
+		Block_Manager.unblock_user(self.user1, 'user2')
+		self.assertFalse(
+			BlockedUsers.objects.filter(blocker=self.user1, blockee=self.user2).exists()
+		)
+		self.assertTrue(
+			BlockedUsers.objects.filter(blocker=self.user2, blockee=self.user1).exists()
+		)
+		Block_Manager.unblock_user(self.user2, 'user1')
+		self.assertFalse(
+			BlockedUsers.objects.filter(blocker=self.user1, blockee=self.user2).exists()
+		)
+		self.assertFalse(
+			BlockedUsers.objects.filter(blocker=self.user2, blockee=self.user1).exists()
+		)
+
+	def test_cannot_block_oneself(self):
+		with self.assertRaises(ValidationError):
+			Block_Manager.block_user(self.user1, 'user1')
+		self.assertFalse(
+			BlockedUsers.objects.filter(blocker=self.user1, blockee=self.user1).exists()
+		)
 
 
 class FriendsManagerTest(TestCase):

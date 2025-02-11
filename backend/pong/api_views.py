@@ -102,7 +102,7 @@ class ScoreBoardView(APIView):
 		return Response({'scores': 'Game successfully saved score.'}, status=status.HTTP_200_OK)
 
 
-class ControllKeySetting(APIView):
+class ControlKeySetting(APIView):
 	# permission_classes = [IsAuthenticated]
 
 	def post(self, request):

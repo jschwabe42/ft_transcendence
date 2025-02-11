@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-08 17:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/index.html:55 templates/index.html:64
+msgid "Transcendence"
+msgstr "Transcendence"
+
+#: templates/index.html:71
+msgid "Home"
+msgstr "Startseite"
+
+#: templates/index.html:72
+msgid "Chat"
+msgstr "Chat"
+
+#: templates/index.html:74
+msgid "Quiz"
+msgstr "Quiz"
+
+#: templates/index.html:75
+msgid "Pong"
+msgstr "Pong"
+
+#: templates/index.html:76
+msgid "Dashboard"
+msgstr "Benutzerübersicht"
+
+#: transcendence/settings.py:191
+msgid "English"
+msgstr "Englisch"
+
+#: transcendence/settings.py:192
+msgid "Swedish"
+msgstr "Schwedisch"
+
+#: transcendence/settings.py:193
+msgid "German"
+msgstr "Deutsch"
+
+#: user_management/views.py:41
+msgid "Passwords do not match."
+msgstr "Passwörter stimmen nicht überein."
+
+#: user_management/views.py:50
+msgid "Account created successfully."
+msgstr "Benutzerkonto wurde erfolgreich erstellt."
+
+#: user_management/views.py:52 user_management/views.py:74
+#: user_management/views.py:89 user_management/views.py:110
+#: user_management/views.py:143 user_management/views.py:212
+msgid "Invalid request method."
+msgstr "Ungültige Anforderungsmethode."
+
+#: user_management/views.py:69
+msgid "Login successful."
+msgstr "Anmeldung war erfolgreich."
+
+#: user_management/views.py:72
+msgid "Invalid username or password!"
+msgstr "Ungülter Benutzername or Passwort!"
+
+#: user_management/views.py:86
+msgid "Logout successful."
+msgstr "Abmeldung war erfolgreich."
+
+#: user_management/views.py:132
+msgid "Invalid password."
+msgstr "Ungültiges Passwort."
+
+#: user_management/views.py:142
+msgid "Profile updated successfully."
+msgstr "Profil erfolgreich aktualisiert."
+
+#: user_management/views.py:151
+msgid "Invalid email address."
+msgstr "Ungültige E-Mail Addresse"
+
+#: user_management/views.py:155 user_management/views.py:160
+msgid "An Account with this email already exists."
+msgstr "Ein Benutzerkonto mit dieser E-Mail existiert bereits."
+
+#: user_management/views.py:167
+msgid "Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace."
+msgstr "Ungültiger Benutzername. Der Benutzername darf nur Buchstaben, Zahlen und Unterstriche enthalten und darf nicht leer sein oder nur Leerzeichen enthalten."
+
+#: user_management/views.py:172 user_management/views.py:175
+msgid "Username already taken."
+msgstr "Benutzername schon vergeben."
+
+#: user_management/views.py:181
+msgid "Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace."
+msgstr "Ungültiger Anzeigename. Der Anzeigename darf nur Buchstaben, Zahlen und Unterstriche enthalten und darf nicht leer sein oder nur Leerzeichen enthalten."
+
+#: user_management/views.py:186 user_management/views.py:189
+msgid "Display name already taken."
+msgstr "Anzeigename schon vergeben."
+
+#: user_management/views.py:206
+msgid "Invalid current password."
+msgstr "Ungültiges aktuelles Passwort."
+
+#: user_management/views.py:211
+msgid "Password changed successfully."
+msgstr "Passwort wurde erfolgreich geändert."

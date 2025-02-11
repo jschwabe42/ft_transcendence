@@ -1,0 +1,322 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-08 17:16+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: dashboard/static/dashboard/js/dashboard.js:6
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#: dashboard/static/dashboard/js/dashboard.js:28
+#: dashboard/static/dashboard/js/profile.js:40
+msgid "'s profile picture"
+msgstr "s Profilbild"
+
+#: dashboard/static/dashboard/js/profile.js:12
+msgid "Quiz Stats"
+msgstr "Quiz-Statistiken"
+
+#: dashboard/static/dashboard/js/profile.js:42
+msgid "'s Profile"
+msgstr "s Profil"
+
+#: dashboard/static/dashboard/js/profile.js:46
+msgid "Games Played:"
+msgstr "Gespielte Partien:"
+
+#: dashboard/static/dashboard/js/profile.js:47
+msgid "Games Won:"
+msgstr "Gewonnene Partien:"
+
+#: dashboard/static/dashboard/js/profile.js:48
+msgid "Total Score:"
+msgstr "Gesamtpunktzahl:"
+
+#: dashboard/static/dashboard/js/profile.js:49
+msgid "High Score:"
+msgstr "Höchste Punktzahl:"
+
+#: dashboard/static/dashboard/js/profile.js:50
+msgid "Questions Asked:"
+msgstr "Gestellte Fragen:"
+
+#: dashboard/static/dashboard/js/profile.js:51
+msgid "Correct Answers:"
+msgstr "Richtige Antworten:"
+
+#: quiz/static/quiz/js/quiz_logic.js:134 quiz/static/quiz/js/quiz_logic.js:149
+#: quiz/static/quiz/js/quiz_logic.js:153
+msgid "points"
+msgstr "Punkte"
+
+#: quiz/static/quiz/js/room_display.js:14
+#: quiz/static/quiz/js/room_display.js:395
+msgid "Welcome to"
+msgstr "Willkommen in"
+
+#: quiz/static/quiz/js/room_display.js:15
+msgid "You have successfully joined the room!"
+msgstr "Du bist dem Raum beigetreten!"
+
+#: quiz/static/quiz/js/room_display.js:15
+msgid "Here you can start participating in the quiz."
+msgstr "Hier kannst du am Quiz teilnehmen. (Die Fragen im Quiz sind auf Englisch!)"
+
+#: quiz/static/quiz/js/room_display.js:16
+msgid "Start Game"
+msgstr "Spiel starten"
+
+#: quiz/static/quiz/js/room_display.js:20
+msgid "Leave Room"
+msgstr "Raum verlassen"
+
+#: quiz/static/quiz/js/room_display.js:32
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: quiz/static/quiz/js/room_display.js:201
+msgid "Participants:"
+msgstr "Mitspieler:"
+
+#: quiz/static/quiz/js/room_display.js:345
+msgid "Quiz in Progress"
+msgstr "Quiz läuft"
+
+#: quiz/static/quiz/js/room_display.js:346
+msgid "The quiz has started! Good luck!"
+msgstr "Das Quiz is gestartet! Viel Glück!"
+
+#: quiz/static/quiz/js/room_display.js:396
+msgid "The quiz has ended!"
+msgstr "Das Quiz ist beendet!"
+
+#: quiz/static/quiz/js/room_list.js:17
+msgid "Create a new room"
+msgstr "Erstelle einen neuen Raum"
+
+#: quiz/static/quiz/js/room_list.js:18
+msgid "Create Room"
+msgstr "Raum erstellen"
+
+#: quiz/static/quiz/js/room_list.js:22
+msgid "Room Name"
+msgstr "Raumname"
+
+#: quiz/static/quiz/js/room_list.js:23
+msgid "Enter room name"
+msgstr "Gib den Raumnamen ein"
+
+#: quiz/static/quiz/js/room_list.js:25
+#: user_management/static/users/js/account.js:42
+msgid "Submit"
+msgstr "Erstellen"
+
+#: quiz/static/quiz/js/room_list.js:32
+msgid "Gratefully using OpenTD"
+msgstr "Das Quiz benutzt OpenTD"
+
+#: quiz/static/quiz/js/room_list.js:85
+msgid "An error occurred:"
+msgstr "Ein Fehler ist aufgetreten:"
+
+#: quiz/static/quiz/js/room_list.js:95
+msgid "Loading rooms..."
+msgstr "Räume werden geladen..."
+
+#: quiz/static/quiz/js/room_list.js:138
+msgid "Error loading rooms. Please try again later."
+msgstr "Fehler beim laden der Räume. Versuche es später nocheinmal"
+
+#: quiz/static/quiz/js/room_list.js:148
+msgid "No rooms available. Create a new room to get started."
+msgstr "Keine Räume verfügbar. Erstelle einen neuen Raum um ein Quiz zu starten."
+
+#: quiz/static/quiz/js/room_list.js:154
+msgid "Last activity:"
+msgstr "Letzte Aktivität:"
+
+#: quiz/static/quiz/js/room_list.js:156
+msgid "Join"
+msgstr "Beitreten"
+
+#: quiz/static/quiz/js/room_list.js:159
+msgid "Available Rooms"
+msgstr "Verfügbare Räume"
+
+#: static/js/navbar.js:64
+msgid "Welcome to the Transcendence Webpage"
+msgstr "Willkommen auf unserer Transcendence-Webseite"
+
+#: static/js/navbar.js:75
+msgid "Account"
+msgstr "Benutzerkonto"
+
+#: static/js/navbar.js:76 user_management/static/users/js/logout.js:12
+msgid "Logout"
+msgstr "Abmelden"
+
+#: static/js/navbar.js:88 user_management/static/users/js/login.js:13
+msgid "Login"
+msgstr "Anmelden"
+
+#: static/js/navbar.js:89 user_management/static/users/js/login.js:31
+#: user_management/static/users/js/logout.js:17
+msgid "Register"
+msgstr "Registrieren"
+
+#: user_management/static/users/js/account.js:13
+msgid "Your Profile Picture"
+msgstr "Dein Profilbild"
+
+#: user_management/static/users/js/account.js:25
+msgid "Profile Info:"
+msgstr "Profil Infos:"
+
+#: user_management/static/users/js/account.js:28
+#: user_management/static/users/js/login.js:15
+#: user_management/static/users/js/register.js:14
+msgid "Username:"
+msgstr "Benutzername:"
+
+#: user_management/static/users/js/account.js:32
+#: user_management/static/users/js/register.js:20
+msgid "Email:"
+msgstr "E-Mail:"
+
+#: user_management/static/users/js/account.js:36
+msgid "Display Name:"
+msgstr "Anzeigename:"
+
+#: user_management/static/users/js/account.js:39
+msgid "Update Profile Data"
+msgstr "Profildaten aktualisieren"
+
+#: user_management/static/users/js/account.js:41
+msgid "Enter your password"
+msgstr "Bitte gib dein Passwort ein"
+
+#: user_management/static/users/js/account.js:46
+msgid "Change Password"
+msgstr "Passwort ändern"
+
+#: user_management/static/users/js/account.js:48
+msgid "Current Password"
+msgstr "Aktuelles Passwort"
+
+#: user_management/static/users/js/account.js:49
+msgid "New Password"
+msgstr "Neues Passwort"
+
+#: user_management/static/users/js/account.js:50
+msgid "Repeat New Password"
+msgstr "Neues Passwort wiederholen"
+
+#: user_management/static/users/js/account.js:51
+msgid "Save"
+msgstr "Speichern"
+
+#: user_management/static/users/js/account.js:77
+#, fuzzy
+#| msgid "'s Profile"
+msgid "'s profile"
+msgstr "s Profil"
+
+#: user_management/static/users/js/account.js:109
+msgid "Password is required."
+msgstr "Passwort ist erforderlich."
+
+#: user_management/static/users/js/account.js:136
+msgid "No changes detected."
+msgstr "Keine Änderungen gefunden."
+
+#: user_management/static/users/js/account.js:140
+msgid "Password is required to update profile data."
+msgstr "Das Passwort ist notwendig um die Profildaten zu ändern."
+
+#: user_management/static/users/js/account.js:211
+msgid "All fields are required."
+msgstr "Alle Felder müssen ausgefüllt sein."
+
+#: user_management/static/users/js/account.js:215
+msgid "New password and repeat password do not match."
+msgstr "Neues Passwort und Passwortwiederholung stimmen nicht überein."
+
+#: user_management/static/users/js/login.js:21
+#: user_management/static/users/js/register.js:25
+msgid "Password:"
+msgstr "Passwort:"
+
+#: user_management/static/users/js/login.js:26
+#: user_management/static/users/js/logout.js:22
+#: user_management/static/users/js/register.js:39
+msgid "Sign In"
+msgstr "Anmelden"
+
+#: user_management/static/users/js/login.js:31
+#: user_management/static/users/js/logout.js:17
+msgid "Want to create an Account?"
+msgstr "Willst du ein Benutzerkonto erstellen?"
+
+#: user_management/static/users/js/login.js:55
+msgid "Username is required"
+msgstr "Benutzername ist notwendig"
+
+#: user_management/static/users/js/login.js:61
+msgid "Password is required"
+msgstr "Passwort ist notwendig"
+
+#: user_management/static/users/js/logout.js:22
+#: user_management/static/users/js/register.js:39
+msgid "Already have an account?"
+msgstr "Hast du schon ein Benutzerkonto?"
+
+#: user_management/static/users/js/register.js:12
+msgid "Join Today"
+msgstr "Heute beitreten"
+
+#: user_management/static/users/js/register.js:30
+msgid "Confirm Password:"
+msgstr "Password bestätigen:"
+
+#: user_management/static/users/js/register.js:34
+msgid "Sign Up"
+msgstr "Anmelden:"
+
+#: user_management/static/users/js/register.js:70
+msgid "Username is required!"
+msgstr "Benutzername is notwendig!"
+
+#: user_management/static/users/js/register.js:76
+msgid "Email is required!"
+msgstr "E-Mail ist notwendig!"
+
+#: user_management/static/users/js/register.js:80
+msgid "Invalid email address!"
+msgstr "Ungültige E-Mail Addresse!"
+
+#: user_management/static/users/js/register.js:86
+msgid "Password is required!"
+msgstr "Passwort ist notwendig!"
+
+#: user_management/static/users/js/register.js:92
+msgid "Password confirmation is required!"
+msgstr "Passwortwiederholung ist notwendig!"
+
+#: user_management/static/users/js/register.js:96
+msgid "Passwords do not match!"
+msgstr "Passwörter stimmen nicht überein!"

@@ -5,3 +5,4 @@ db.sqlite3
 backend/media/profile_pics/*
 **/migrations/[0-9]*.py
 **/migrations/*.pyc
+**/LC_MESSAGES/*.mo
