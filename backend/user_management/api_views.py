@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 from user_management.models import CustomUser
 
-OAUTH_CALLBACK = 'http://localhost:8000/users/oauth/callback'
+OAUTH_CALLBACK = 'http://localhost:8000/users/oauth/callback/'
 
 
 class OauthView(APIView):
@@ -33,8 +33,23 @@ class OauthCallBackView(APIView):
 	permission_classes = [AllowAny]
 	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
 
-	def __bearer_token(self, request):
-		"""server-side: exchange the code for a users' bearer token"""
+	def get_or_create_oauth(jsonresponse):
+		"""get or create user from oauth: this should be infallible"""
+		user_instance = CustomUser.objects.filter(oauth_id=jsonresponse['login'])
+		if not user_instance.exists():
+			# create the account
+			user_instance = CustomUser.objects.create_user(
+				username=jsonresponse['login'],
+				oauth_id=jsonresponse['login'],
+				email=jsonresponse['email'],
+			)
+		else:
+			user_instance = CustomUser.objects.filter(oauth_id=jsonresponse['login']).first()
+		return user_instance
+
+	def get(self, request):
+		"""handle the callback from the 42 API: obtain user public data"""
+		print(request, flush=True)
 		from transcendence.settings import SECRET_STATE
 
 		code = request.GET.get('code')
@@ -53,28 +68,14 @@ class OauthCallBackView(APIView):
 			'state': OauthCallBackView.SECRET_STATE,
 		}
 
-		return requests.post(f'https://api.intra.42.fr/oauth/token?{urlencode(params)}')
+		bearer_token_response = requests.post(
+			f'https://api.intra.42.fr/oauth/token?{urlencode(params)}'
+		)
 
-	def get_or_create_oauth(jsonresponse):
-		"""get or create user from oauth: this should be infallible"""
-		user_instance = CustomUser.objects.filter(oauth_id=jsonresponse['login'])
-		if not user_instance.exists():
-			# create the account
-			user_instance = CustomUser.objects.create_user(
-				username=jsonresponse['login'],
-				oauth_id=jsonresponse['login'],
-				email=jsonresponse['email'],
-			)
-		else:
-			user_instance = CustomUser.objects.filter(oauth_id=jsonresponse['login']).first()
-		return user_instance
-
-	def get(self, request):
-		"""handle the callback from the 42 API: obtain user public data"""
-		print(request, flush=True)
-		bearer_token_response = OauthCallBackView.__bearer_token(self, request)
-		# if not bearer_token_response.json().ok:
-		# 	return JsonResponse({'success': False, 'error': 'could not obtain bearer token'})
+		try:
+			bearer_token_response.raise_for_status()
+		except:  # noqa: E722
+			return HttpResponse('Error: could not obtain bearer token')
 		bearer_token_response = bearer_token_response.json()
 		BEARER_TOKEN = bearer_token_response['access_token']
 		print(bearer_token_response, flush=True)

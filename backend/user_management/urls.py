@@ -46,7 +46,7 @@ urlpatterns = [
 	path('oauth/', OauthView.as_view(), name='oauth'),
 	# path('oauth', OauthView.request_login_oauth, name='oauth'),
 	path(
-		'oauth/callback',
+		'oauth/callback/',
 		OauthCallBackView.as_view(),
 		name='oauth-callback',
 	),
