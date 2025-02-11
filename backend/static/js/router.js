@@ -7,11 +7,13 @@ import { register_user } from '/static/users/js/register.js';
 import { login_user } from '/static/users/js/login.js';
 import { logout_user } from '/static/users/js/logout.js';
 import { display_account } from '/static/users/js/account.js';
+import { UsersApiHandler } from '/static/users/js/users_api.js';
 
 import { PongOverview } from '/static/pong/js/overview.js';
 import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
 import { PongResult } from '/static/pong/js/pong_result.js';
 import { DisplayTournament } from '/static/pong/js/tournament_display.js';
+import { UsersApiHandler } from '/static/users/js/users_api.js';
 import { PongPractice } from '/static/pong/js/pong_practice.js';
 
 class Router {
@@ -27,6 +29,13 @@ class Router {
 	addRoute(path, handler) {
 		console.log("Adding route: ", path);
 		this.routes[path] = handler;
+	}
+
+	showNotFound() {
+		clear_containers();
+		document.getElementById('error-content').innerHTML = `
+		<h2>${gettext("Page not found!")}</h2>
+		<p>${gettext("Please ensure the current URL is correct.")}</p>`;
 	}
 
 	// ! ALWAYS use this function to navigate to a new page, it ensures that the router is used and cleanup is done correctly!
@@ -56,9 +65,10 @@ class Router {
 	handleDynamicRoute(path) {
 		const quizPathRegex = /^\/quiz\/([^\/]+)\/?$/;
 		const dashboardPathRegex = /^\/dashboard\/([^\/]+)\/?$/;
-		const pongPathRegex = /^\/pong\/([^\/]+)\/?$/;  // Neue Regex für '/pong/:game_id'
+		const pongPathRegex = /^\/pong\/([^\/]+)\/?$/;
 		const pongDetailsPathRegex = /^\/pong\/game-details\/([^\/]+)\/?$/;
 		const tournamentPathRegex = /^\/pong\/tournament\/([^\/]+)\/?$/;
+		const usersApiPathRegex = /^\/users\/api\/(.*)$/;
 
 		let match = path.match(quizPathRegex);
 		if (match) {
@@ -97,6 +107,14 @@ class Router {
 			const tournamentId = match[1];
 			DisplayTournament({ tournament_id: tournamentId });
 			return;
+		}
+
+		match = path.match(usersApiPathRegex);
+		if (match) {
+			try {
+				UsersApiHandler(match);
+				return;
+			} catch (error) { }
 		}
 
 		this.showNotFound();
