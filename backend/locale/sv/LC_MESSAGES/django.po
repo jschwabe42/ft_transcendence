@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 17:45+0000\n"
+"POT-Creation-Date: 2025-02-12 12:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,68 +54,91 @@ msgstr "Svenska"
 msgid "German"
 msgstr "Tyska"
 
-#: user_management/views.py:41
-msgid "Passwords do not match."
-msgstr "Lösenorden stämmer inte överens."
+#: user_management/views.py:40
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "User blocked successfully."
+msgstr "Lösenordet har ändrats framgångsrikt."
 
-#: user_management/views.py:50
-msgid "Account created successfully."
-msgstr "Konto har skapats framgångsrikt."
-
-#: user_management/views.py:52 user_management/views.py:74
-#: user_management/views.py:89 user_management/views.py:110
-#: user_management/views.py:143 user_management/views.py:212
+#: user_management/views.py:42 user_management/views.py:56
+#: user_management/views.py:99 user_management/views.py:121
+#: user_management/views.py:136 user_management/views.py:157
+#: user_management/views.py:190 user_management/views.py:263
 msgid "Invalid request method."
 msgstr "Ogiltig metod för begäran."
 
-#: user_management/views.py:69
+#: user_management/views.py:54
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "User unblocked successfully."
+msgstr "Lösenordet har ändrats framgångsrikt."
+
+#: user_management/views.py:88
+msgid "Passwords do not match."
+msgstr "Lösenorden stämmer inte överens."
+
+#: user_management/views.py:97
+msgid "Account created successfully."
+msgstr "Konto har skapats framgångsrikt."
+
+#: user_management/views.py:116
 msgid "Login successful."
 msgstr "Inloggningen lyckades."
 
-#: user_management/views.py:72
+#: user_management/views.py:119
 msgid "Invalid username or password!"
 msgstr "Ogiltigt användarnamn eller lösenord!"
 
-#: user_management/views.py:86
+#: user_management/views.py:133
 msgid "Logout successful."
 msgstr "Utloggningen lyckades."
 
-#: user_management/views.py:132
+#: user_management/views.py:179
 msgid "Invalid password."
 msgstr "Ogiltigt lösenord."
 
-#: user_management/views.py:142
+#: user_management/views.py:189
 msgid "Profile updated successfully."
 msgstr "Profilen uppdaterades framgångsrikt."
 
-#: user_management/views.py:151
+#: user_management/views.py:198
 msgid "Invalid email address."
 msgstr "Ogiltig e-postadress."
 
-#: user_management/views.py:155 user_management/views.py:160
+#: user_management/views.py:202 user_management/views.py:207
 msgid "An Account with this email already exists."
 msgstr "Ett konto med den här e-postadressen finns redan."
 
-#: user_management/views.py:167
-msgid "Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace."
-msgstr "Ogiltigt användarnamn. Användarnamnet får endast innehålla bokstäver, siffror och understreck och får inte vara tomt eller innehålla enbart blanksteg."
+#: user_management/views.py:215
+msgid ""
+"Invalid username. Username must contain only letters, numbers, and "
+"underscores, and cannot be empty or contain only whitespace."
+msgstr ""
+"Ogiltigt användarnamn. Användarnamnet får endast innehålla bokstäver, "
+"siffror och understreck och får inte vara tomt eller innehålla enbart "
+"blanksteg."
 
-#: user_management/views.py:172 user_management/views.py:175
+#: user_management/views.py:221 user_management/views.py:224
 msgid "Username already taken."
 msgstr "Användarnamn redan taget."
 
-#: user_management/views.py:181
-msgid "Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace."
-msgstr "Ogiltigt visningsnamn. Visningsnamnet får endast innehålla bokstäver, siffror och understreck och får inte vara tomt eller innehålla enbart blanksteg."
+#: user_management/views.py:231
+msgid ""
+"Invalid display name. Display name must contain only letters, numbers, and "
+"underscores, and cannot be empty or contain only whitespace."
+msgstr ""
+"Ogiltigt visningsnamn. Visningsnamnet får endast innehålla bokstäver, "
+"siffror och understreck och får inte vara tomt eller innehålla enbart "
+"blanksteg."
 
-#: user_management/views.py:186 user_management/views.py:189
+#: user_management/views.py:237 user_management/views.py:240
 msgid "Display name already taken."
 msgstr "Visningsnamnet är redan upptaget."
 
-#: user_management/views.py:206
+#: user_management/views.py:257
 msgid "Invalid current password."
 msgstr "Ogiltigt aktuellt lösenord."
 
-#: user_management/views.py:211
+#: user_management/views.py:262
 msgid "Password changed successfully."
 msgstr "Lösenordet har ändrats framgångsrikt."
