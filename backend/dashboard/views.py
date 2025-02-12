@@ -1,8 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from user_management.models import CustomUser
-from user_management.blocked_users import Block_Manager, BlockedUsers
-from django.utils.translation import gettext as _
+from user_management.blocked_users import Block_Manager
 from transcendence.decorators import login_required_redirect
 
 def profile_list(request):
