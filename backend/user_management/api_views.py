@@ -42,6 +42,9 @@ class OauthCallBackView(APIView):
 				oauth_id=jsonresponse['login'],
 				email=jsonresponse['email'],
 			)
+			user_instance.set_unusable_password()
+			user_instance.save()
+			assert user_instance.check_password('') is False
 		else:
 			user_instance = CustomUser.objects.filter(oauth_id=jsonresponse['login']).first()
 		return user_instance
