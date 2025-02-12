@@ -50,8 +50,10 @@ export async function oauth_callback() {
 			const data = await response.json();
 			if (response.ok) {
 				console.warn("OAuth callback success:", data);
+				localStorage.setItem('csrftoken', data.csrftoken);
 				update_navbar();
 				router.navigateTo('/dashboard/');
+				window.location.reload();
 			} else {
 				throw new Error(data.error);
 			}

@@ -5,6 +5,7 @@ from django.contrib.auth import login
 
 # import rest_framework
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.middleware.csrf import get_token
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 
@@ -94,4 +95,4 @@ class OauthCallBackView(APIView):
 		# log the user into the account - this took way longer than it should have
 		login(request, user=user_instance)
 		print(user_instance, flush=True)
-		return JsonResponse({'success': True, 'user': user_instance.username})
+		return JsonResponse({'success': True, 'csrftoken': get_token(request)})
