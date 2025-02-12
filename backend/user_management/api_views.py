@@ -2,9 +2,7 @@ from urllib.parse import urlencode
 
 import requests
 from django.contrib.auth import login
-
-# import rest_framework
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
@@ -34,7 +32,7 @@ class OauthCallBackView(APIView):
 	permission_classes = [AllowAny]
 	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
 
-	def get_or_create_oauth(jsonresponse):
+	def __get_or_create_oauth(jsonresponse):
 		"""get or create user from oauth: this should be infallible"""
 		user_instance = CustomUser.objects.filter(oauth_id=jsonresponse['login'])
 		if not user_instance.exists():
@@ -48,16 +46,16 @@ class OauthCallBackView(APIView):
 			user_instance = CustomUser.objects.filter(oauth_id=jsonresponse['login']).first()
 		return user_instance
 
-	def get(self, request):
+	def post(self, request):
 		"""handle the callback from the 42 API: obtain user public data"""
 		from transcendence.settings import SECRET_STATE
 
 		code = request.GET.get('code')
 		state = request.GET.get('state')
 		if code is None:
-			return HttpResponseRedirect('/login/', 'Error: user did not authorize the app')
+			return JsonResponse({'success': False, 'error': 'could not obtain code from callback'})
 		if state != SECRET_STATE:
-			return HttpResponseRedirect('/login/', 'Error: state mismatch')
+			return JsonResponse({'success': False, 'error': 'state mismatch'})
 
 		params = {
 			'grant_type': 'authorization_code',
@@ -75,10 +73,9 @@ class OauthCallBackView(APIView):
 		try:
 			bearer_token_response.raise_for_status()
 		except:  # noqa: E722
-			return HttpResponse('Error: could not obtain bearer token')
+			return JsonResponse({'success': False, 'error': 'could not obtain bearer token'})
 		bearer_token_response = bearer_token_response.json()
 		BEARER_TOKEN = bearer_token_response['access_token']
-		print(bearer_token_response, flush=True)
 		if BEARER_TOKEN is None:
 			return JsonResponse({'success': False, 'error': 'bearer token invalid/not found'})
 		response = requests.get(
@@ -91,8 +88,7 @@ class OauthCallBackView(APIView):
 		jsonresponse = response.json()
 		if not response.ok or jsonresponse['login'] is None:
 			return JsonResponse({'success': False, 'error': 'could not obtain username from token'})
-		user_instance = OauthCallBackView.get_or_create_oauth(jsonresponse)
+		user_instance = OauthCallBackView.__get_or_create_oauth(jsonresponse)
 		# log the user into the account - this took way longer than it should have
 		login(request, user=user_instance)
-		print(user_instance, flush=True)
 		return JsonResponse({'success': True, 'csrftoken': get_token(request)})

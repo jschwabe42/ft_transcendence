@@ -41,7 +41,7 @@ export async function oauth_callback() {
 			throw new Error(error);
 		} else if (code && state) {
 			const response = await fetch(`/users/api/callback/?code=${code}&state=${state}`, {
-				method: "GET",
+				method: "POST",
 				headers: {
 					'Content-Type': "application/json",
 					'X-CSRFToken': localStorage.getItem('csrftoken'),
