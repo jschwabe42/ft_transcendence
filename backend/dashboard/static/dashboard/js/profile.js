@@ -22,6 +22,9 @@ function fetchData(username) {
 		.then(response => response.json())
 		.then(data => {
 			if (data.success) {
+				if (data.blocked === true) {
+					displayBlockedProfile(data);
+				}
 				console.log('Profile:', data.profile);
 				displayProfile(data.profile);
 			} else {
@@ -50,4 +53,17 @@ function displayProfile(profile) {
 		<li>${gettext("Questions Asked:")} ${profile.quiz_questions_asked}</li>
 		<li>${gettext("Correct Answers:")} ${profile.quiz_correct_answers}</li>
 	`;
+}
+
+function displayBlockedProfile(data) {
+	const profilePicture = document.getElementById('pv-profile-picture');
+	profilePicture.src = data.image_url;
+	profilePicture.alt = `${data.username}${gettext("'s profile picture")}`;
+	const profileName = document.getElementById('pv-profile-name');
+	profileName.textContent = `${data.username}${gettext("'s Profile")}`;
+
+	const profileContent = document.getElementById('pv-profile-content');
+	const paragraph = document.createElement('p');
+	paragraph.id = 'profile-is-blocked';
+	paragraph.innerHTML = `${gettext("This user has blocked you. You cannot view their profile.")}`;
 }
