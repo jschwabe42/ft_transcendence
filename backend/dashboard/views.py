@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from user_management.models import CustomUser
-
+from user_management.blocked_users import Block_Manager
+from transcendence.decorators import login_required_redirect
 
 def profile_list(request):
 	"""
@@ -21,6 +22,7 @@ def profile_list(request):
 		'profiles': profile_data,
 	})
 
+@login_required_redirect
 def get_profile(request, username):
 	"""
 	Api call that returns a specific profile.
@@ -29,6 +31,24 @@ def get_profile(request, username):
 	print(f"Username: {username}", flush=True)
 	user = get_object_or_404(CustomUser, username=username)
 	print(f"User: {user}", flush=True)
+
+	is_requests_profile = False
+	is_user_blocked_by_requester = False
+	if (request.user == user):
+		is_requests_profile = True
+	else:
+		if Block_Manager.is_blocked_by(blockee=user, blocker=request.user):
+			is_user_blocked_by_requester = True
+
+	if Block_Manager.is_blocked_by(blockee=request.user, blocker=user):
+		return JsonResponse({
+			'success': True,
+			'username': user.username,
+			'image_url': user.image.url,
+			'blocked': True,
+			'is_user_blocked_by_requester': is_user_blocked_by_requester,
+		})
+
 	profile_data = {
 		'username': user.username,
 		'image_url': user.image.url,
@@ -38,8 +58,11 @@ def get_profile(request, username):
 		'quiz_high_score': user.quiz_high_score,
 		'quiz_questions_asked': user.quiz_questions_asked,
 		'quiz_correct_answers': user.quiz_correct_answers,
+		'is_requests_profile': is_requests_profile,
+		'is_user_blocked_by_requester': is_user_blocked_by_requester,
 	}
 	return JsonResponse({
 		'success': True,
 		'profile': profile_data,
+		'blocked': False,
 	})
