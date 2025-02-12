@@ -222,20 +222,28 @@ function addBlockedUsersList(profile) {
 			const blockedUsersList = document.getElementById('pv-blocked-users-list');
 			blockedUsersList.style.visibility = 'visible';
 			blockedUsersList.innerHTML = '';
-			data.blocked_users.forEach(username => {
-				const userItem = document.createElement('div');
-				userItem.className = 'pv-blocked-user-item';
-				userItem.innerHTML = `
-					<span>${username}</span>
-					<button class="btn btn-danger pv-unblock-button" data-username="${username}">${gettext("Unblock")}</button>
-				`;
-				blockedUsersList.appendChild(userItem);
-			});
+			if (data.blocked_users.length === 0) {
+				const noBlockedUsers = document.createElement('p');
+				noBlockedUsers.textContent = gettext('No blocked users');
+				blockedUsersList.appendChild(noBlockedUsers);
+			}
+			else {
+				data.blocked_users.forEach(username => {
+					const userItem = document.createElement('div');
+					userItem.className = 'pv-blocked-user-item';
+					userItem.innerHTML = `
+						<span>${username}</span>
+						<button class="btn btn-danger pv-unblock-button" data-username="${username}">${gettext("Unblock")}</button>
+					`;
+					blockedUsersList.appendChild(userItem);
+				});
+			}
 			const unblockButtons = document.querySelectorAll('.pv-unblock-button');
 			unblockButtons.forEach(button => {
 				button.addEventListener('click', function () {
 					const username = button.getAttribute('data-username');
-					if (button.textContent = gettext('Unblock')) {
+					if (button.textContent === gettext('Unblock')) {
+						console.log("HEllo");
 						fetch(`/users/api/unblock/${username}/`, {
 							method: 'POST',
 							headers: {
@@ -248,7 +256,7 @@ function addBlockedUsersList(profile) {
 							alert(data.message);
 							if (data.success) {
 								console.log('User unblocked');
-								button.textContent = gettext('Blocked');
+								button.textContent = gettext('Block');
 							} else {
 								console.error('Failed to unblock user');
 							}
