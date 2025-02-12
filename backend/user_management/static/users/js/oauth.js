@@ -30,7 +30,6 @@ function display_oauth_error(error, error_description) {
 }
 
 export async function oauth_callback() {
-	console.warn(window.location.search);
 	const urlParams = new URLSearchParams(window.location.search);
 	const code = urlParams.get('code');
 	const error = urlParams.get('error');
@@ -40,29 +39,28 @@ export async function oauth_callback() {
 		if (error) {
 			console.warn("OAuth error:", error);
 			throw new Error(error);
-			// alert(error)
 		} else if (code && state) {
-			// Process the authorization code (e.g., exchange it for an access token)
-		} else {
-			console.warn("No code or error received in OAuth callback");
-			throw new Error(error);
+			const response = await fetch(`/users/api/callback/?code=${code}&state=${state}`, {
+				method: "GET",
+				headers: {
+					'Content-Type': "application/json",
+					'X-CSRFToken': localStorage.getItem('csrftoken'),
+				},
+			});
+			const data = await response.json();
+			if (response.ok) {
+				console.warn("OAuth callback success:", data);
+				update_navbar();
+				router.navigateTo('/dashboard/');
+			} else {
+				throw new Error(data.error);
+			}
 		}
 	} catch (error) {
-		display_oauth_error(error, urlParams.get('error_description'));
-	}
-	const response = await fetch(`/users/api/callback/?code=${code}&state=${state}`, {
-		method: "GET",
-		headers: {
-			'Content-Type': "application/json",
-			'X-CSRFToken': localStorage.getItem('csrftoken'),
-		},
-	});
-	const data = await response.json();
-	if (response.ok) {
-		console.warn("OAuth callback success:", data);
-		update_navbar();
-		router.navigateTo('/dashboard/');
-	} else {
-		display_oauth_error(error);
+		const error_description = urlParams.get('error_description');
+		if (!error_description) {
+			display_oauth_error(error);
+		}
+		display_oauth_error(error, error_description);
 	}
 }

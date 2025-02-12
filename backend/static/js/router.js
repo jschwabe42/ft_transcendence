@@ -200,11 +200,6 @@ router.addRoute('/register/', register_user);
 router.addRoute('/login/', login_user);
 
 /**
- * The login user view
- */
-// router.addRoute('/users/oauth/', oauth_flow);
-
-/**
  * THe logout user view
  */
 router.addRoute('/logout/', logout_user);
