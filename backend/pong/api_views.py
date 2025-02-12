@@ -16,8 +16,6 @@ class CreateGameView(APIView):
 	# For testing CLI comment permission_classes cause canot acces csrf_token
 	permission_classes = [IsAuthenticated]
 
-	print('\nAPI CreateGameView\n', flush=True)
-
 	def post(self, request):
 		opponent_username = request.data.get('opponent')
 		user_username = request.data.get('username')
@@ -43,7 +41,6 @@ class CreateGameView(APIView):
 
 		tournament_id = request.data.get('tournament', 0)
 
-		print(tournament_id, flush=True)
 		# Create the game
 		game = PongGame.objects.create(
 			player1=player, player2=opponent, tournament_id=tournament_id

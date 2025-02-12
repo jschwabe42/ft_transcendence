@@ -1,10 +1,16 @@
 from django.urls import path, re_path
 
 from . import views
-from .api_views import OauthView, OauthCallBackView
+from .api_views import OauthCallBackView, OauthView
 
 app_name = 'users'
 urlpatterns = [
+	path('oauth/', OauthView.as_view(), name='oauth'),
+	path(
+		'api/callback/',
+		OauthCallBackView.as_view(),
+		name='api-callback',
+	),
 	path('api/blocked/', views.blocked_users, name='blocked_users'),
 	path('api/block/<str:username>/', views.block_user, name='block_user'),
 	path('api/unblock/<str:username>/', views.unblock_user, name='unblock_user'),
@@ -42,12 +48,31 @@ urlpatterns = [
 		views.remove_friend,
 		name='remove-friend',
 	),
-	# WIP: oauth with 42 API
-	path('oauth/', OauthView.as_view(), name='oauth'),
-	# path('oauth', OauthView.request_login_oauth, name='oauth'),
-	path(
-		'api/callback/',
-		OauthCallBackView.as_view(),
-		name='api-callback',
+	# friendship management: both `user` and `users` prefix
+	re_path(r'^user(s)?/(?P<query_user>[^/]+)$', views.public_profile, name='public-profile'),
+	re_path(
+		r'^user(s)?/(?P<target_username>[^/]+)/friend-request$',
+		views.friend_request,
+		name='friend-request',
+	),
+	re_path(
+		r'^user(s)?/(?P<target_username>[^/]+)/cancel-friend-request$',
+		views.cancel_friend_request,
+		name='cancel-friend-request',
+	),
+	re_path(
+		r'^user(s)?/(?P<origin_username>[^/]+)/deny-friend-request$',
+		views.deny_friend_request,
+		name='deny-friend-request',
+	),
+	re_path(
+		r'^user(s)?/(?P<origin_username>[^/]+)/accept-friend-request$',
+		views.accept_friend_request,
+		name='accept-friend-request',
+	),
+	re_path(
+		r'^user(s)?/(?P<other_username>[^/]+)/remove-friend$',
+		views.remove_friend,
+		name='remove-friend',
 	),
 ]
