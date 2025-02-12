@@ -2,7 +2,7 @@ import router from '/static/js/router.js';
 import { update_navbar, clear_containers } from '/static/js/navbar.js';
 
 export async function oauth_flow() {
-	const response = await fetch(`/users/oauth/`, {
+	const response = await fetch(`/users/api/oauth/`, {
 		method: "POST",
 		headers: {
 			'Content-Type': "application/json",

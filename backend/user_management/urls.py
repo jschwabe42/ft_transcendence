@@ -5,7 +5,7 @@ from .api_views import OauthCallBackView, OauthView
 
 app_name = 'users'
 urlpatterns = [
-	path('oauth/', OauthView.as_view(), name='oauth'),
+	path('api/oauth/', OauthView.as_view(), name='oauth'),
 	path(
 		'api/callback/',
 		OauthCallBackView.as_view(),
