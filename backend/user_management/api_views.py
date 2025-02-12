@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 from user_management.models import CustomUser
 
-OAUTH_CALLBACK = 'http://localhost:8000/users/oauth/callback/'
+OAUTH_CALLBACK = 'http://localhost:8000/users/oauth-callback/'
 
 
 class OauthView(APIView):
@@ -49,15 +49,14 @@ class OauthCallBackView(APIView):
 
 	def get(self, request):
 		"""handle the callback from the 42 API: obtain user public data"""
-		print(request, flush=True)
 		from transcendence.settings import SECRET_STATE
 
 		code = request.GET.get('code')
 		state = request.GET.get('state')
 		if code is None:
-			return HttpResponse('Error: user did not authorize the app')
+			return HttpResponseRedirect('/login/', 'Error: user did not authorize the app')
 		if state != SECRET_STATE:
-			return HttpResponse('Error: state mismatch')
+			return HttpResponseRedirect('/login/', 'Error: state mismatch')
 
 		params = {
 			'grant_type': 'authorization_code',
