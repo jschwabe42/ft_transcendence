@@ -16,7 +16,7 @@ class OauthView(APIView):
 	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
 
 	def post(self, request):
-		"""provide user with generated link for login on API endpoint"""
+		"""provide user with generated link for login on API endpoint: `/users/api/oauth/`"""
 		params = {
 			'client_id': OauthView.CLIENT_ID,
 			'redirect_uri': OAUTH_CALLBACK,
@@ -50,7 +50,11 @@ class OauthCallBackView(APIView):
 		return user_instance
 
 	def post(self, request):
-		"""handle the callback from the 42 API: obtain user public data"""
+		"""
+		handle the callback from the 42 API: obtain user public data and log them in
+
+		API endpoint: `/users/api/oauth-callback/`
+		"""
 		from transcendence.settings import SECRET_STATE
 
 		code = request.GET.get('code')

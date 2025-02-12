@@ -39,7 +39,7 @@ export async function oauth_callback() {
 			console.warn("OAuth error:", error);
 			throw new Error(error);
 		} else if (code && state) {
-			const response = await fetch(`/users/api/callback/?code=${code}&state=${state}`, {
+			const response = await fetch(`/users/api/oauth-callback/?code=${code}&state=${state}`, {
 				method: "POST",
 				headers: {
 					'Content-Type': "application/json",
