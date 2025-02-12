@@ -59,3 +59,22 @@
 	margin-bottom: 5px;
 	font-size: 16px;
 }
+
+#pv-profile-settings-content {
+	margin-bottom: 10px;
+}
+
+#pv-show-blocked-users {
+	margin-bottom: 5px;
+}
+
+.pv-blocked-user-item {
+	font-size: 18px;
+}
+
+.pv-unblock-button {
+	margin-left: 5px;
+	height: 30px;
+	font-size: 16px;
+	padding: 2px;
+}
