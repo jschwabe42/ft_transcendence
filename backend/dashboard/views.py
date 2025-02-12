@@ -33,12 +33,21 @@ def get_profile(request, username):
 	user = get_object_or_404(CustomUser, username=username)
 	print(f"User: {user}", flush=True)
 
+	is_requests_profile = False
+	is_user_blocked_by_requester = False
+	if (request.user == user):
+		is_requests_profile = True
+	else:
+		if Block_Manager.is_blocked_by(blockee=user, blocker=request.user):
+			is_user_blocked_by_requester = True
+
 	if Block_Manager.is_blocked_by(blockee=request.user, blocker=user):
 		return JsonResponse({
 			'success': True,
 			'username': user.username,
 			'image_url': user.image.url,
 			'blocked': True,
+			'is_user_blocked_by_requester': is_user_blocked_by_requester,
 		})
 
 	profile_data = {
@@ -50,6 +59,8 @@ def get_profile(request, username):
 		'quiz_high_score': user.quiz_high_score,
 		'quiz_questions_asked': user.quiz_questions_asked,
 		'quiz_correct_answers': user.quiz_correct_answers,
+		'is_requests_profile': is_requests_profile,
+		'is_user_blocked_by_requester': is_user_blocked_by_requester,
 	}
 	return JsonResponse({
 		'success': True,

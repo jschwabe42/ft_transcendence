@@ -11,6 +11,14 @@
 	margin-bottom: 20px;
 }
 
+#pv-block-button {
+	margin-left: auto;
+}
+
+#pv-settings-button {
+	margin-left: auto;
+}
+
 #pv-profile-name {
 	font-size: 60px;
 	font-weight: bold;
