@@ -13,7 +13,6 @@ import { PongOverview } from '/static/pong/js/overview.js';
 import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
 import { PongResult } from '/static/pong/js/pong_result.js';
 import { DisplayTournament } from '/static/pong/js/tournament_display.js';
-import { UsersApiHandler } from '/static/users/js/users_api.js';
 import { PongPractice } from '/static/pong/js/pong_practice.js';
 
 class Router {

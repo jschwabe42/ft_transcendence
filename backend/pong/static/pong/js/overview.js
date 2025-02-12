@@ -40,6 +40,7 @@ export function PongOverview() {
 					<h2>Recent Games</h2>
 					<button class="navigate-button" data-path="/pong/practice/">Practice Game</button>
 				</div>
+				<button id="refresh-button">Refresh</button>
 				<div>${recentGames || '<p>No games have been played yet.</p>'}</div>
 
 				<h2>Pending Games</h2>
@@ -69,6 +70,9 @@ export function PongOverview() {
 				event.preventDefault();
 				CreateTournament(event, socket);
 			});
+			document.getElementById("refresh-button").addEventListener("click", () => {
+				PongOverview();
+			});
 			return fetch('/pong/api/tournament_data/');
 		})
 		.then(response => response.json())
@@ -76,7 +80,7 @@ export function PongOverview() {
 			console.log(tournaments);
 	
 			const openTournaments = tournaments
-				.filter(tournament => tournament.openTournament == false || tournament.host === userName)
+				.filter(tournament => tournament.openTournament == true || tournament.host === userName)
 				.map(tournament => `
 					<button class="ChatButtonBackground navigate-button" data-path="/pong/tournament/${tournament.tournament_id}">
 						Join Open Tournament #${tournament.tournament_id}
