@@ -58,7 +58,7 @@ msgstr "Deutsch"
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "User blocked successfully."
-msgstr "Passwort wurde erfolgreich geändert."
+msgstr "Benutzer wurde erfolgreich blockiert."
 
 #: user_management/views.py:42 user_management/views.py:56
 #: user_management/views.py:99 user_management/views.py:121
@@ -71,7 +71,7 @@ msgstr "Ungültige Anforderungsmethode."
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "User unblocked successfully."
-msgstr "Passwort wurde erfolgreich geändert."
+msgstr "Benutzer ist nun nicht mehr blockiert."
 
 #: user_management/views.py:88
 msgid "Passwords do not match."
