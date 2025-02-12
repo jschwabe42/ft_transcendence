@@ -4,7 +4,6 @@ django-debug-toolbar>=4.2.6
 pillow
 crispy-bootstrap4
 django-crispy-forms
-django-cors-headers
 channels
 daphne
 djangorestframework

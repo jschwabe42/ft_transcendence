@@ -31,42 +31,22 @@ INTERNAL_IPS = [
 	'127.0.0.1',
 ]
 
-from corsheaders.defaults import default_headers
-
-CORS_ALLOW_ORIGINS = [
-	'http://localhost',
-	'https://localhost',
-	'http://localhost:8000',
-	'https://localhost:8000',
-	'http://127.0.0.1',
-	'https://127.0.0.1',
-	'http://127.0.0.1:8000',
-	'https://127.0.0.1:8000',
-]
-
-CORS_ALLOW_CREDENTIALS = True
-
-CORS_ALLOW_HEADERS = list(default_headers) + [
-	'X-42-Token',
-]
-
 
 # Application definition
 
 INSTALLED_APPS = [
-	'corsheaders',
 	'quiz.apps.QuizConfig',
 	'pong.apps.PongConfig',
 	'chat.apps.ChatConfig',
 	'dashboard.apps.DashboardConfig',
 	'channels',
 	'daphne',
-	'user_management.apps.UserManagementConfig',
 	'rest_framework',
 	'crispy_forms',
 	'crispy_bootstrap4',
 	'django.contrib.admin',
 	'django.contrib.auth',
+	'user_management.apps.UserManagementConfig',
 	'django.contrib.contenttypes',
 	'django.contrib.sessions',
 	'django.contrib.messages',
@@ -74,7 +54,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-	'corsheaders.middleware.CorsMiddleware',
 	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.locale.LocaleMiddleware',
