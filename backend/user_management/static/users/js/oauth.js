@@ -12,7 +12,6 @@ export async function oauth_flow() {
 	const data = await response.json();
 	if (response.ok) {
 		console.warn(data.location);
-		update_navbar();
 		window.location.href = data.location;
 	} else {
 		console.error("Error during OAuth authorization");
@@ -51,7 +50,6 @@ export async function oauth_callback() {
 			if (response.ok) {
 				console.warn("OAuth callback success:", data);
 				localStorage.setItem('csrftoken', data.csrftoken);
-				update_navbar();
 				router.navigateTo('/dashboard/');
 				window.location.reload();
 			} else {
