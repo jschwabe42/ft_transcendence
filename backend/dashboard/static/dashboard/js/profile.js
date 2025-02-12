@@ -19,7 +19,13 @@ export function loadProfile(username) {
 
 function fetchData(username) {
 	fetch(`/dashboard/api/get_profile/${username}/`)
-		.then(response => response.json())
+		.then(response => {
+			if (response.redirected) {
+				router.navigateTo('/login/');
+				return;
+			}
+			return response.json();
+		})
 		.then(data => {
 			if (data.success) {
 				if (data.blocked === true) {

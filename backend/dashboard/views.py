@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from user_management.models import CustomUser
 from user_management.blocked_users import Block_Manager, BlockedUsers
 from django.utils.translation import gettext as _
-
+from transcendence.decorators import login_required_redirect
 
 def profile_list(request):
 	"""
@@ -23,6 +23,7 @@ def profile_list(request):
 		'profiles': profile_data,
 	})
 
+@login_required_redirect
 def get_profile(request, username):
 	"""
 	Api call that returns a specific profile.
