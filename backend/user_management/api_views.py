@@ -94,4 +94,4 @@ class OauthCallBackView(APIView):
 		# log the user into the account - this took way longer than it should have
 		login(request, user=user_instance)
 		print(user_instance, flush=True)
-		return HttpResponseRedirect('/account/')
+		return JsonResponse({'success': True, 'user': user_instance.username})

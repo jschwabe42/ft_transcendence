@@ -37,7 +37,6 @@ export function login_user() {
 	document.getElementById('oauth-authenticate').addEventListener('click', function (event) {
 		event.preventDefault();
 		router.navigateTo('/users/oauth/');
-		return;
 	});
 	add_login_form_listener();
 
