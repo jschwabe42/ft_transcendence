@@ -24,7 +24,7 @@ export function displayRoom(roomName) {
 		
 		<button id="settings-button" class="btn btn-primary" style="display: none;" title="Settings">
 			<i class="bi bi-gear-fill"></i>
-			<span class="sr-only">Settings</span>
+			<span class="sr-only">${gettext("Settings")}</span>
 		</button>
 
 		<div id="settings-menu" class="card" style="display: none;">
