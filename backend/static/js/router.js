@@ -74,16 +74,13 @@ class Router {
 		if (match) {
 			console.warn("OAuth authorize: ", match);
 			oauth_flow();
+			return;
 		}
 
 		match = path.match(oauthCallbackRegex);
 		if (match) {
-			try {
-				oauth_callback();
-				this.navigateTo('/dashboard/');
-			} catch (error) { 
-				this.navigateTo('/login/');
-			}
+			oauth_callback();
+			return;
 		}
 
 		match = path.match(quizPathRegex);

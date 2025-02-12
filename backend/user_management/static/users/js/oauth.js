@@ -1,5 +1,5 @@
 import router from '/static/js/router.js';
-import { update_navbar } from '/static/js/navbar.js';
+import { update_navbar, clear_containers } from '/static/js/navbar.js';
 
 export async function oauth_flow() {
 	const response = await fetch(`/users/oauth/`, {
@@ -16,10 +16,17 @@ export async function oauth_flow() {
 		window.location.href = data.location;
 	} else {
 		console.error("Error during OAuth authorization");
-		update_navbar();
-		router.navigateTo('/login/');
-		// oauth_error();
 	}
+}
+
+function display_oauth_error(error, error_description) {
+	clear_containers();
+	document.getElementById('error-content').innerHTML = `
+	<h2>${gettext("OAuth Error")}</h2>
+	<p>${gettext(error.message)}</p>
+	<p>${gettext(error_description)}</p>
+	<a href="/login/">${gettext("Back to Login")}</a>
+	`;
 }
 
 export async function oauth_callback() {
@@ -29,42 +36,33 @@ export async function oauth_callback() {
 	const error = urlParams.get('error');
 	const state = urlParams.get('state');
 
-	if (error) {
-		console.error("OAuth error:", error);
-		//router.navigateTo('/login/');
-		window.location.href = '/login/';
-		throw new Error(error);
-		// Handle the error (e.g., display an error message)
-	} else if (code) {
-		console.log("Authorization code:", code);
-		const response = await fetch(`/users/api/callback/?code=${code}&state=${state}`, {
-			method: "GET",
-			headers: {
-				'Content-Type': "application/json",
-				'X-CSRFToken': localStorage.getItem('csrftoken'),
-			},
-		});
-		const data = await response.json();
-		if (response.ok) {
-			console.warn("OAuth callback success:", data);
-			// update_navbar();
-			// router.navigateTo('/dashboard/');
-			// window.location.href = '/dashboard/';
-		} else {
-			console.error("OAuth callback error:", data);
-			// window.location.href = '/login/';
+	try {
+		if (error) {
+			console.warn("OAuth error:", error);
 			throw new Error(error);
-			// router.navigateTo('/login/');
+			// alert(error)
+		} else if (code && state) {
+			// Process the authorization code (e.g., exchange it for an access token)
+		} else {
+			console.warn("No code or error received in OAuth callback");
+			throw new Error(error);
 		}
-		// Process the authorization code (e.g., exchange it for an access token)
-	} else {
-		console.warn("No code or error received in OAuth callback");
-		throw new Error(error);
-		// Handle the case where no code or error is present
+	} catch (error) {
+		display_oauth_error(error, urlParams.get('error_description'));
 	}
-}
-
-function oauth_error() {
-	// show some sort of error page to the user
-	// Response.redirect('/login/');
+	const response = await fetch(`/users/api/callback/?code=${code}&state=${state}`, {
+		method: "GET",
+		headers: {
+			'Content-Type': "application/json",
+			'X-CSRFToken': localStorage.getItem('csrftoken'),
+		},
+	});
+	const data = await response.json();
+	if (response.ok) {
+		console.warn("OAuth callback success:", data);
+		update_navbar();
+		router.navigateTo('/dashboard/');
+	} else {
+		display_oauth_error(error);
+	}
 }
