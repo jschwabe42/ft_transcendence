@@ -108,11 +108,13 @@ class ScoreBoardView(APIView):
 
 
 class ControlKeySetting(APIView):
-	# permission_classes = [IsAuthenticated]
+	permission_classes = [IsAuthenticated]
 
 	def post(self, request):
 		game_id = request.data.get('game_id')
 		username = request.data.get('username')
+
+
 
 		if username:
 			user = User.objects.filter(username=username)
@@ -139,7 +141,7 @@ class ControlKeySetting(APIView):
 			game.player2_control_settings = control2
 		else:
 			return Response(
-				{'error': 'You are not a player in this game.'}, status=status.HTTP_403_FORBIDDEN
+				{'error': 'You are not a player in 1this game.'}, status=status.HTTP_403_FORBIDDEN
 			)
 
 		game.save()
