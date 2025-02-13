@@ -1,9 +1,12 @@
 from django.urls import path, re_path
 
 from . import views
+from .api_views import OauthCallBackView, OauthView
 
 app_name = 'users'
 urlpatterns = [
+	path('api/oauth/', OauthView.as_view(), name='oauth'),
+	path('api/oauth-callback/', OauthCallBackView.as_view(), name='api-callback'),
 	path('api/blocked/', views.blocked_users, name='blocked_users'),
 	path('api/block/<str:username>/', views.block_user, name='block_user'),
 	path('api/unblock/<str:username>/', views.unblock_user, name='unblock_user'),

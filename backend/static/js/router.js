@@ -13,6 +13,7 @@ import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
 import { PongResult } from '/static/pong/js/pong_result.js';
 import { DisplayTournament } from '/static/pong/js/tournament_display.js';
 import { UsersApiHandler } from '/static/users/js/users_api.js';
+import { oauth_flow, oauth_callback } from '/static/users/js/oauth.js';
 
 class Router {
 	constructor() {
@@ -67,8 +68,22 @@ class Router {
 		const pongDetailsPathRegex = /^\/pong\/game-details\/([^\/]+)\/?$/;
 		const tournamentPathRegex = /^\/pong\/tournament\/([^\/]+)\/?$/;
 		const usersApiPathRegex = /^\/users\/api\/(.*)$/;
+		const oauthCallbackRegex = /^\/users\/oauth-callback\/?(\?(.*))?$/;
+		const oauthAuthorizeRegex = /^\/users\/oauth\/?$/;
+		let match = path.match(oauthAuthorizeRegex);
+		if (match) {
+			console.warn("OAuth authorize: ", match);
+			oauth_flow();
+			return;
+		}
 
-		let match = path.match(quizPathRegex);
+		match = path.match(oauthCallbackRegex);
+		if (match) {
+			oauth_callback();
+			return;
+		}
+
+		match = path.match(quizPathRegex);
 		if (match) {
 			const roomName = match[1];
 			const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
