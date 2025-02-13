@@ -395,3 +395,15 @@ def friends_requests(request):
 			'sent': [receiver.username for receiver in sent],
 		}
 	)
+
+
+@login_required_redirect
+def friends_send_request(request, username):
+	"""
+	API endpoint: `/users/api/friends/request/<str:username>/`
+	"""
+	try:
+		Friends_Manager.friends_request(origin=request.user, target_username=username)
+	except ValidationError as e:
+		return JsonResponse({'success': False, 'message': str(e)})
+	return JsonResponse({'success': True, 'message': _('Friend request sent successfully.')})
