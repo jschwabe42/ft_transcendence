@@ -17,7 +17,7 @@ nuke: clean
 	$(MAKE) run
 
 genenv:
-	cd secrets && touch pgadmin_password postgres_password
+	cd secrets && touch pgadmin_password postgres_password oauth_api_secret
 	./genenv.sh
 
 re: clean run

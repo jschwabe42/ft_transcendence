@@ -64,6 +64,8 @@ MIDDLEWARE = [
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+import os
+import secrets
 import sys
 
 TESTING = 'test' in sys.argv
@@ -119,6 +121,34 @@ DATABASES = {
 	}
 }
 
+# for 42 api - enables requesting bearer token: requires running Makefile to export the variable(s)
+import platform
+
+if platform.system() == 'Darwin':  # macOS
+	SECRETS_PATH = Path('../secrets/')
+	REMOTE_OAUTH_SECRET = Path(SECRETS_PATH / 'oauth_api_secret').read_text().strip()
+
+	def get_env_variable(env, key):  # dotenv would not install for some reason
+		return next(
+			(
+				line.split('=', 1)[1].strip()
+				for line in env.splitlines()
+				if line.startswith(key + '=')
+			),
+			None,
+		)
+
+	CLIENT_ID = get_env_variable(
+		env=Path(SECRETS_PATH / '.env').read_text(), key='REMOTE_OAUTH_UID'
+	)
+else:  # Assume Linux (Docker)
+	REMOTE_OAUTH_SECRET = Path('/var/run/secrets/oauth_api_secret').read_text().strip()
+	CLIENT_ID = os.getenv('REMOTE_OAUTH_UID')
+if REMOTE_OAUTH_SECRET is None:
+	raise ValueError('Environment variable REMOTE_OAUTH_UID is not set')
+if CLIENT_ID is None:
+	raise ValueError('Secret oauth_api_secret is not set')
+SECRET_STATE = secrets.token_urlsafe(32)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
