@@ -2,19 +2,28 @@ from django.urls import include, path
 
 from . import views
 from .api_views import OauthCallBackView, OauthView
+from .friends_api import (
+	accept_request,
+	cancel_request,
+	deny_request,
+	friendships,
+	remove,
+	requests,
+	send_request,
+)
 
 app_name = 'users'
 
 # urls under `/users/api/friends/`
 friends_urls = [
-	path('active/', views.friends_users_active, name='friends'),
-	path('active/<str:username>/', views.friends_users_active, name='friends-public'),
-	path('inactive/', views.friends_requests, name='friends-requests'),
-	path('request/<str:username>/', views.friends_send_request, name='friends-send-request'),
-	path('cancel/<str:username>/', views.friends_cancel, name='friends-cancel-request'),
-	path('accept/<str:username>/', views.friends_accept, name='friends-accept-request'),
-	path('deny/<str:username>/', views.friends_deny, name='friends-deny-request'),
-	path('remove/<str:username>/', views.friends_remove, name='friends-remove'),
+	path('active/', friendships, name='friends'),
+	path('active/<str:username>/', friendships, name='friends-public'),
+	path('inactive/', requests, name='friends-requests'),
+	path('request/<str:username>/', send_request, name='friends-send-request'),
+	path('cancel/<str:username>/', cancel_request, name='friends-cancel-request'),
+	path('accept/<str:username>/', accept_request, name='friends-accept-request'),
+	path('deny/<str:username>/', deny_request, name='friends-deny-request'),
+	path('remove/<str:username>/', remove, name='friends-remove'),
 ]
 
 urlpatterns = [
