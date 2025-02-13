@@ -360,11 +360,11 @@ def list(request):
 
 # TODO @follow-up merge into Friends_Manager/decide on friends management API
 @login_required_redirect
-def friends_users(request, username=None):
+def friends_users_active(request, username=None):
 	"""
 	wrapper for fetch_friends_public
 
-	API Endpoint: /users/api/friends/<str:username>/ where username is optional
+	API Endpoint: /users/api/friends/active/<str:username>/ where username is optional
 	"""
 	if username is None:
 		user = request.user

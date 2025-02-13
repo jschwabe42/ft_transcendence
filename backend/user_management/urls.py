@@ -11,8 +11,8 @@ urlpatterns = [
 	path('api/block/<str:username>/', views.block_user, name='block_user'),
 	path('api/unblock/<str:username>/', views.unblock_user, name='unblock_user'),
 	# friends: endpoints
-	path('api/friends/', views.friends_users, name='friends'),
-	path('api/friends/<str:username>/', views.friends_users, name='friends-public'),
+	path('api/friends/active/', views.friends_users_active, name='friends'),
+	path('api/friends/active/<str:username>/', views.friends_users_active, name='friends-public'),
 	path('api/register/', views.register, name='register'),
 	path('api/login/', views.login_view, name='login'),
 	path('api/logout/', views.logout_view, name='logout'),
