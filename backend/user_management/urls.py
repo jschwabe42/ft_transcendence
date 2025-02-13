@@ -20,6 +20,11 @@ urlpatterns = [
 		name='friends-send-request',
 	),
 	path(
+		'api/friends/cancel/<str:username>/',
+		views.friends_cancel,
+		name='friends-cancel-request',
+	),
+	path(
 		'api/friends/accept/<str:username>/',
 		views.friends_accept,
 		name='friends-accept-request',

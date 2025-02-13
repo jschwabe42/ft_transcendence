@@ -410,6 +410,18 @@ def friends_send_request(request, username):
 
 
 @login_required_redirect
+def friends_cancel(request, username):
+	"""
+	API endpoint: `/users/api/friends/cancel/<str:username>/`
+	"""
+	try:
+		Friends_Manager.cancel_friends_request(origin=request.user, target_username=username)
+	except Exception as e:
+		return JsonResponse({'success': False, 'message': str(e)})
+	return JsonResponse({'success': True, 'message': _('Friend request cancelled.')})
+
+
+@login_required_redirect
 def friends_accept(request, username):
 	"""
 	API endpoint: `/users/api/friends/accept/<str:username>/`
