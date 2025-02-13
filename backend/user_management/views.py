@@ -419,3 +419,15 @@ def friends_accept(request, username):
 	except Exception as e:
 		return JsonResponse({'success': False, 'message': str(e)})
 	return JsonResponse({'success': True, 'message': _('Friend request accepted successfully.')})
+
+
+@login_required_redirect
+def friends_deny(request, username):
+	"""
+	API endpoint: `/users/api/friends/deny/<str:username>/`
+	"""
+	try:
+		Friends_Manager.deny_friends_request(target=request.user, origin_username=username)
+	except Exception as e:
+		return JsonResponse({'success': False, 'message': str(e)})
+	return JsonResponse({'success': True, 'message': _('Friend request denied.')})

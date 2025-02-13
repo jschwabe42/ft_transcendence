@@ -56,10 +56,11 @@ class Friends_Manager:
 	def deny_friends_request(target, origin_username):
 		"""User instance (target), origin username: deny"""
 		origin = Friends_Manager.__get_existing_user_instance(origin_username)
+		request = Friends.objects.filter(origin=origin, target=target, accepted=False).first()
+		if request is None:
+			raise ValidationError('There is no request to deny')
 		try:
-			Friends_Manager.__delete_instance(
-				Friends.objects.filter(origin=origin, target=target, accepted=False).first()
-			)
+			Friends_Manager.__delete_instance(request)
 		except ValueError:
 			raise ValidationError('you sent the friend request, you can only cancel it!')
 
