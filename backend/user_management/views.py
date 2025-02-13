@@ -443,3 +443,15 @@ def friends_deny(request, username):
 	except Exception as e:
 		return JsonResponse({'success': False, 'message': str(e)})
 	return JsonResponse({'success': True, 'message': _('Friend request denied.')})
+
+
+@login_required_redirect
+def friends_remove(request, username):
+	"""
+	API endpoint: `/users/api/friends/remove/<str:username>/`
+	"""
+	try:
+		Friends_Manager.remove_friend(remover=request.user, target_username=username)
+	except Exception as e:
+		return JsonResponse({'success': False, 'message': str(e)})
+	return JsonResponse({'success': True, 'message': _('Friendship ended.')})

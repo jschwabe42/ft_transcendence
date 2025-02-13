@@ -34,6 +34,11 @@ urlpatterns = [
 		views.friends_deny,
 		name='friends-deny-request',
 	),
+	path(
+		'api/friends/remove/<str:username>/',
+		views.friends_remove,
+		name='friends-remove',
+	),
 	path('api/register/', views.register, name='register'),
 	path('api/login/', views.login_view, name='login'),
 	path('api/logout/', views.logout_view, name='logout'),
