@@ -13,7 +13,7 @@ from django.core.validators import validate_email
 from django.db.models import F
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.utils.translation import gettext as _
 from pong.models import PongGame
 from pong.utils import win_to_loss_ratio
@@ -314,43 +314,6 @@ def public_profile(request, query_user):
 			'friend_requests_received': friend_requests_received,
 		},
 	)
-
-
-# @follow-up some way of displaying errors to the user (without template?, e.g. HttpResponses)
-# (we are returning raw errors that are meant for development)
-@login_required_redirect
-def friend_request(request, target_username):
-	"""/user/target_username/friend-request"""
-	Friends_Manager.friends_request(origin=request.user, target_username=target_username)
-	return redirect('/users/user/' + target_username)
-
-
-@login_required_redirect
-def cancel_friend_request(request, target_username):
-	"""/user/target_username/cancel-friend-request"""
-	Friends_Manager.cancel_friends_request(origin=request.user, target_username=target_username)
-	return redirect('/users/user/' + request.user.username)
-
-
-@login_required_redirect
-def deny_friend_request(request, origin_username):
-	"""/user/origin_username/deny-friend-request"""
-	Friends_Manager.deny_friends_request(target=request.user, origin_username=origin_username)
-	return redirect('/users/user/' + request.user.username)
-
-
-@login_required_redirect
-def accept_friend_request(request, origin_username):
-	"""/user/origin_username/accept-friend-request"""
-	Friends_Manager.accept_request_as_target(target=request.user, origin_username=origin_username)
-	return redirect('/users/user/' + request.user.username)
-
-
-@login_required_redirect
-def remove_friend(request, other_username):
-	"""/user/other_username/remove-friend"""
-	Friends_Manager.remove_friend(remover=request.user, target_username=other_username)
-	return redirect('/users/user/' + request.user.username)
 
 
 def list(request):
