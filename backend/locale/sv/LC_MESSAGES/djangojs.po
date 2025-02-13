@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 17:16+0000\n"
+"POT-Creation-Date: 2025-02-12 12:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,41 +23,83 @@ msgid "Refresh"
 msgstr "Uppdatera"
 
 #: dashboard/static/dashboard/js/dashboard.js:28
-#: dashboard/static/dashboard/js/profile.js:40
+#: dashboard/static/dashboard/js/profile.js:64
+#: dashboard/static/dashboard/js/profile.js:107
 msgid "'s profile picture"
 msgstr "'s profilbild"
 
-#: dashboard/static/dashboard/js/profile.js:12
+#: dashboard/static/dashboard/js/profile.js:11
+msgid "Blocked Users"
+msgstr "Blockerade användare"
+
+#: dashboard/static/dashboard/js/profile.js:16
 msgid "Quiz Stats"
 msgstr "Statistik för frågesport"
 
-#: dashboard/static/dashboard/js/profile.js:42
+#: dashboard/static/dashboard/js/profile.js:57
+msgid "Error loading profile for"
+msgstr "Fel vid inläsning av profil för"
+
+#: dashboard/static/dashboard/js/profile.js:66
+#: dashboard/static/dashboard/js/profile.js:109
 msgid "'s Profile"
 msgstr "'s Profil"
 
-#: dashboard/static/dashboard/js/profile.js:46
+#: dashboard/static/dashboard/js/profile.js:76
+#: dashboard/static/dashboard/js/profile.js:125
+#: dashboard/static/dashboard/js/profile.js:155
+#: dashboard/static/dashboard/js/profile.js:236
+#: dashboard/static/dashboard/js/profile.js:245
+#: dashboard/static/dashboard/js/profile.js:280
+msgid "Unblock"
+msgstr "Avblockera"
+
+#: dashboard/static/dashboard/js/profile.js:78
+#: dashboard/static/dashboard/js/profile.js:81
+#: dashboard/static/dashboard/js/profile.js:127
+#: dashboard/static/dashboard/js/profile.js:130
+#: dashboard/static/dashboard/js/profile.js:181
+#: dashboard/static/dashboard/js/profile.js:259
+msgid "Block"
+msgstr "Block"
+
+#: dashboard/static/dashboard/js/profile.js:94
 msgid "Games Played:"
 msgstr "Spelade matcher:"
 
-#: dashboard/static/dashboard/js/profile.js:47
+#: dashboard/static/dashboard/js/profile.js:95
 msgid "Games Won:"
 msgstr "Vunna matcher:"
 
-#: dashboard/static/dashboard/js/profile.js:48
+#: dashboard/static/dashboard/js/profile.js:96
 msgid "Total Score:"
 msgstr "Total poäng:"
 
-#: dashboard/static/dashboard/js/profile.js:49
+#: dashboard/static/dashboard/js/profile.js:97
 msgid "High Score:"
 msgstr "Högsta poäng:"
 
-#: dashboard/static/dashboard/js/profile.js:50
+#: dashboard/static/dashboard/js/profile.js:98
 msgid "Questions Asked:"
 msgstr "Frågor som ställts:"
 
-#: dashboard/static/dashboard/js/profile.js:51
+#: dashboard/static/dashboard/js/profile.js:99
 msgid "Correct Answers:"
 msgstr "Korrekta svar:"
+
+#: dashboard/static/dashboard/js/profile.js:115
+msgid "This user has blocked you. You cannot view their profile."
+msgstr "Den här användaren har blockerat dig. Du kan inte se deras profil."
+
+#: dashboard/static/dashboard/js/profile.js:199
+#: quiz/static/quiz/js/room_display.js:27
+#: quiz/static/quiz/js/room_display.js:32
+msgid "Settings"
+msgstr "Inställningar"
+
+#: dashboard/static/dashboard/js/profile.js:227
+msgid "No blocked users"
+msgstr "Inga blockerade användare"
 
 #: quiz/static/quiz/js/quiz_logic.js:134 quiz/static/quiz/js/quiz_logic.js:149
 #: quiz/static/quiz/js/quiz_logic.js:153
@@ -75,7 +117,8 @@ msgstr "Du har anslutit dig till rummet!"
 
 #: quiz/static/quiz/js/room_display.js:15
 msgid "Here you can start participating in the quiz."
-msgstr "Här kan du börja delta i frågesporten. (Varning: Frågesporten är på engelska)"
+msgstr ""
+"Här kan du börja delta i frågesporten. (Varning: Frågesporten är på engelska)"
 
 #: quiz/static/quiz/js/room_display.js:16
 msgid "Start Game"
@@ -84,10 +127,6 @@ msgstr "Starta spelet"
 #: quiz/static/quiz/js/room_display.js:20
 msgid "Leave Room"
 msgstr "Lämna rummet"
-
-#: quiz/static/quiz/js/room_display.js:32
-msgid "Settings"
-msgstr "Inställningar"
 
 #: quiz/static/quiz/js/room_display.js:201
 msgid "Participants:"
@@ -179,6 +218,14 @@ msgstr "Logga in"
 msgid "Register"
 msgstr "Registrera"
 
+#: static/js/router.js:35
+msgid "Page not found!"
+msgstr "Sidan hittades inte!"
+
+#: static/js/router.js:36
+msgid "Please ensure the current URL is correct."
+msgstr "Se till att den aktuella URL:en är korrekt."
+
 #: user_management/static/users/js/account.js:13
 msgid "Your Profile Picture"
 msgstr "Din profilbild"
@@ -236,23 +283,23 @@ msgstr "Spara"
 msgid "'s profile"
 msgstr "'s Profil"
 
-#: user_management/static/users/js/account.js:109
+#: user_management/static/users/js/account.js:110
 msgid "Password is required."
 msgstr "Lösenord krävs"
 
-#: user_management/static/users/js/account.js:136
+#: user_management/static/users/js/account.js:137
 msgid "No changes detected."
 msgstr "Inga förändringar upptäckta."
 
-#: user_management/static/users/js/account.js:140
+#: user_management/static/users/js/account.js:141
 msgid "Password is required to update profile data."
 msgstr "Lösenord krävs för att uppdatera profildata."
 
-#: user_management/static/users/js/account.js:211
+#: user_management/static/users/js/account.js:212
 msgid "All fields are required."
 msgstr "Alla fält måste fyllas i."
 
-#: user_management/static/users/js/account.js:215
+#: user_management/static/users/js/account.js:216
 msgid "New password and repeat password do not match."
 msgstr "Det nya lösenordet och det upprepade lösenordet stämmer inte överens."
 

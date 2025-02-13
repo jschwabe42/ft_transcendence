@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 17:16+0000\n"
+"POT-Creation-Date: 2025-02-12 12:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,41 +23,83 @@ msgid "Refresh"
 msgstr "Aktualisieren"
 
 #: dashboard/static/dashboard/js/dashboard.js:28
-#: dashboard/static/dashboard/js/profile.js:40
+#: dashboard/static/dashboard/js/profile.js:64
+#: dashboard/static/dashboard/js/profile.js:107
 msgid "'s profile picture"
 msgstr "s Profilbild"
 
-#: dashboard/static/dashboard/js/profile.js:12
+#: dashboard/static/dashboard/js/profile.js:11
+msgid "Blocked Users"
+msgstr "Geblockte Nutzer"
+
+#: dashboard/static/dashboard/js/profile.js:16
 msgid "Quiz Stats"
 msgstr "Quiz-Statistiken"
 
-#: dashboard/static/dashboard/js/profile.js:42
+#: dashboard/static/dashboard/js/profile.js:57
+msgid "Error loading profile for"
+msgstr "Fehler beim Laden des Profils von"
+
+#: dashboard/static/dashboard/js/profile.js:66
+#: dashboard/static/dashboard/js/profile.js:109
 msgid "'s Profile"
 msgstr "s Profil"
 
-#: dashboard/static/dashboard/js/profile.js:46
+#: dashboard/static/dashboard/js/profile.js:76
+#: dashboard/static/dashboard/js/profile.js:125
+#: dashboard/static/dashboard/js/profile.js:155
+#: dashboard/static/dashboard/js/profile.js:236
+#: dashboard/static/dashboard/js/profile.js:245
+#: dashboard/static/dashboard/js/profile.js:280
+msgid "Unblock"
+msgstr "Entblocken"
+
+#: dashboard/static/dashboard/js/profile.js:78
+#: dashboard/static/dashboard/js/profile.js:81
+#: dashboard/static/dashboard/js/profile.js:127
+#: dashboard/static/dashboard/js/profile.js:130
+#: dashboard/static/dashboard/js/profile.js:181
+#: dashboard/static/dashboard/js/profile.js:259
+msgid "Block"
+msgstr "Blocken"
+
+#: dashboard/static/dashboard/js/profile.js:94
 msgid "Games Played:"
 msgstr "Gespielte Partien:"
 
-#: dashboard/static/dashboard/js/profile.js:47
+#: dashboard/static/dashboard/js/profile.js:95
 msgid "Games Won:"
 msgstr "Gewonnene Partien:"
 
-#: dashboard/static/dashboard/js/profile.js:48
+#: dashboard/static/dashboard/js/profile.js:96
 msgid "Total Score:"
 msgstr "Gesamtpunktzahl:"
 
-#: dashboard/static/dashboard/js/profile.js:49
+#: dashboard/static/dashboard/js/profile.js:97
 msgid "High Score:"
 msgstr "Höchste Punktzahl:"
 
-#: dashboard/static/dashboard/js/profile.js:50
+#: dashboard/static/dashboard/js/profile.js:98
 msgid "Questions Asked:"
 msgstr "Gestellte Fragen:"
 
-#: dashboard/static/dashboard/js/profile.js:51
+#: dashboard/static/dashboard/js/profile.js:99
 msgid "Correct Answers:"
 msgstr "Richtige Antworten:"
+
+#: dashboard/static/dashboard/js/profile.js:115
+msgid "This user has blocked you. You cannot view their profile."
+msgstr "Dieser Nutzer hat dich geblockt. Du kannst ihr Profil nicht ansehen."
+
+#: dashboard/static/dashboard/js/profile.js:199
+#: quiz/static/quiz/js/room_display.js:27
+#: quiz/static/quiz/js/room_display.js:32
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: dashboard/static/dashboard/js/profile.js:227
+msgid "No blocked users"
+msgstr "Keine geblockten Nutzer"
 
 #: quiz/static/quiz/js/quiz_logic.js:134 quiz/static/quiz/js/quiz_logic.js:149
 #: quiz/static/quiz/js/quiz_logic.js:153
@@ -75,7 +117,8 @@ msgstr "Du bist dem Raum beigetreten!"
 
 #: quiz/static/quiz/js/room_display.js:15
 msgid "Here you can start participating in the quiz."
-msgstr "Hier kannst du am Quiz teilnehmen. (Die Fragen im Quiz sind auf Englisch!)"
+msgstr ""
+"Hier kannst du am Quiz teilnehmen. (Die Fragen im Quiz sind auf Englisch!)"
 
 #: quiz/static/quiz/js/room_display.js:16
 msgid "Start Game"
@@ -84,10 +127,6 @@ msgstr "Spiel starten"
 #: quiz/static/quiz/js/room_display.js:20
 msgid "Leave Room"
 msgstr "Raum verlassen"
-
-#: quiz/static/quiz/js/room_display.js:32
-msgid "Settings"
-msgstr "Einstellungen"
 
 #: quiz/static/quiz/js/room_display.js:201
 msgid "Participants:"
@@ -144,7 +183,8 @@ msgstr "Fehler beim laden der Räume. Versuche es später nocheinmal"
 
 #: quiz/static/quiz/js/room_list.js:148
 msgid "No rooms available. Create a new room to get started."
-msgstr "Keine Räume verfügbar. Erstelle einen neuen Raum um ein Quiz zu starten."
+msgstr ""
+"Keine Räume verfügbar. Erstelle einen neuen Raum um ein Quiz zu starten."
 
 #: quiz/static/quiz/js/room_list.js:154
 msgid "Last activity:"
@@ -178,6 +218,14 @@ msgstr "Anmelden"
 #: user_management/static/users/js/logout.js:17
 msgid "Register"
 msgstr "Registrieren"
+
+#: static/js/router.js:35
+msgid "Page not found!"
+msgstr "Seite konnte nicht gefunden werden!"
+
+#: static/js/router.js:36
+msgid "Please ensure the current URL is correct."
+msgstr "Bitte stelle sicher, dass die aktuelle URL korrekt ist."
 
 #: user_management/static/users/js/account.js:13
 msgid "Your Profile Picture"
@@ -236,23 +284,23 @@ msgstr "Speichern"
 msgid "'s profile"
 msgstr "s Profil"
 
-#: user_management/static/users/js/account.js:109
+#: user_management/static/users/js/account.js:110
 msgid "Password is required."
 msgstr "Passwort ist erforderlich."
 
-#: user_management/static/users/js/account.js:136
+#: user_management/static/users/js/account.js:137
 msgid "No changes detected."
 msgstr "Keine Änderungen gefunden."
 
-#: user_management/static/users/js/account.js:140
+#: user_management/static/users/js/account.js:141
 msgid "Password is required to update profile data."
 msgstr "Das Passwort ist notwendig um die Profildaten zu ändern."
 
-#: user_management/static/users/js/account.js:211
+#: user_management/static/users/js/account.js:212
 msgid "All fields are required."
 msgstr "Alle Felder müssen ausgefüllt sein."
 
-#: user_management/static/users/js/account.js:215
+#: user_management/static/users/js/account.js:216
 msgid "New password and repeat password do not match."
 msgstr "Neues Passwort und Passwortwiederholung stimmen nicht überein."
 

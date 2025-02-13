@@ -64,7 +64,7 @@ def blocked_users(request):
 	"""
 	blocked_by_request_user = BlockedUsers.objects.filter(blocker=request.user)
 	if blocked_by_request_user.count() == 0:
-		return JsonResponse({'success': False, 'blocked_users': []})
+		return JsonResponse({'success': True, 'blocked_users': []})
 	return JsonResponse(
 		{
 			'success': True,
