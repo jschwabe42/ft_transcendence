@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 
 from . import views
 from .api_views import OauthCallBackView, OauthView
@@ -17,58 +17,24 @@ urlpatterns = [
 	path('api/update_profile/', views.update_profile, name='update-profile'),
 	path('api/change_password/', views.change_password, name='change-password'),
 	path('api/check_authentication/', views.check_authentication, name='check-authentication'),
+	# TODO: remove once dashboard is feature complete @follow-up
+	path('<str:query_user>', views.public_profile, name='public-profile'),
 	# friendship management: both `user` and `users` prefix
-	re_path(r'^user(s)?/(?P<query_user>[^/]+)$', views.public_profile, name='public-profile'),
-	re_path(
-		r'^user(s)?/(?P<target_username>[^/]+)/friend-request$',
-		views.friend_request,
-		name='friend-request',
-	),
-	re_path(
-		r'^user(s)?/(?P<target_username>[^/]+)/cancel-friend-request$',
+	path('<str:target_username>/friend-request', views.friend_request, name='friends-request'),
+	path(
+		'<str:target_username>/cancel-friend-request',
 		views.cancel_friend_request,
-		name='cancel-friend-request',
+		name='friends-cancel',
 	),
-	re_path(
-		r'^user(s)?/(?P<origin_username>[^/]+)/deny-friend-request$',
+	path(
+		'<str:origin_username>/deny-friend-request',
 		views.deny_friend_request,
-		name='deny-friend-request',
+		name='friends-deny',
 	),
-	re_path(
-		r'^user(s)?/(?P<origin_username>[^/]+)/accept-friend-request$',
+	path(
+		'<str:origin_username>/accept-friend-request',
 		views.accept_friend_request,
-		name='accept-friend-request',
+		name='friends-accept',
 	),
-	re_path(
-		r'^user(s)?/(?P<other_username>[^/]+)/remove-friend$',
-		views.remove_friend,
-		name='remove-friend',
-	),
-	# friendship management: both `user` and `users` prefix
-	re_path(r'^user(s)?/(?P<query_user>[^/]+)$', views.public_profile, name='public-profile'),
-	re_path(
-		r'^user(s)?/(?P<target_username>[^/]+)/friend-request$',
-		views.friend_request,
-		name='friend-request',
-	),
-	re_path(
-		r'^user(s)?/(?P<target_username>[^/]+)/cancel-friend-request$',
-		views.cancel_friend_request,
-		name='cancel-friend-request',
-	),
-	re_path(
-		r'^user(s)?/(?P<origin_username>[^/]+)/deny-friend-request$',
-		views.deny_friend_request,
-		name='deny-friend-request',
-	),
-	re_path(
-		r'^user(s)?/(?P<origin_username>[^/]+)/accept-friend-request$',
-		views.accept_friend_request,
-		name='accept-friend-request',
-	),
-	re_path(
-		r'^user(s)?/(?P<other_username>[^/]+)/remove-friend$',
-		views.remove_friend,
-		name='remove-friend',
-	),
+	path('<str:other_username>/remove-friend', views.remove_friend, name='friends-remove'),
 ]
