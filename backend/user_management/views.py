@@ -377,3 +377,21 @@ def friends_users_active(request, username=None):
 			'friends_users': [friend.username for friend in friends_of],
 		}
 	)
+
+
+@login_required_redirect
+def friends_requests(request):
+	"""
+	wrapper for fetch_received, fetch_sent
+
+	API Endpoint: /users/api/friends/inactive/
+	"""
+	received = Friends_Manager.fetch_received(target=request.user)
+	sent = Friends_Manager.fetch_sent(origin=request.user)
+	return JsonResponse(
+		{
+			'success': True,
+			'received': [sender.username for sender in received],
+			'sent': [receiver.username for receiver in sent],
+		}
+	)

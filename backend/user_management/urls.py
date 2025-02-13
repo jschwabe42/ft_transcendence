@@ -13,6 +13,7 @@ urlpatterns = [
 	# friends: endpoints
 	path('api/friends/active/', views.friends_users_active, name='friends'),
 	path('api/friends/active/<str:username>/', views.friends_users_active, name='friends-public'),
+	path('api/friends/inactive/', views.friends_requests, name='friends-requests'),
 	path('api/register/', views.register, name='register'),
 	path('api/login/', views.login_view, name='login'),
 	path('api/logout/', views.logout_view, name='logout'),
