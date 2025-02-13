@@ -19,13 +19,13 @@ class CreateGameView(APIView):
 	def post(self, request):
 		opponent_username = request.data.get('opponent')
 		user_username = request.data.get('username')
-		tournament_id =  request.data.get('tournament', 0)
+		tournament_id = request.data.get('tournament', 0)
 		if not opponent_username:
 			return Response(
 				{'error': 'Opponent username is required.'}, status=status.HTTP_400_BAD_REQUEST
 			)
 
-		if (opponent_username == request.user.username and tournament_id == 0):
+		if opponent_username == request.user.username and tournament_id == 0:
 			return Response(
 				{'error': 'You cannot play against yourself.'}, status=status.HTTP_400_BAD_REQUEST
 			)
@@ -41,11 +41,11 @@ class CreateGameView(APIView):
 			return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
 		# Create the game
-		if (tournament_id != 0):
+		if tournament_id != 0:
 			tournament = Tournament.objects.get(id=tournament_id)
-			if (tournament.finalWinner != ""):
+			if tournament.finalWinner != '':
 				return
-			if (tournament.openTournament == False):
+			if not tournament.openTournament:
 				tournament.openTournament = True
 				tournament.save()
 		game = PongGame.objects.create(

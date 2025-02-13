@@ -84,7 +84,7 @@ def tournament(request):
 
 def tournament_data(request):
 	try:
-		tournaments = Tournament.objects.filter(finalWinner="").order_by('-created_at')[:10]
+		tournaments = Tournament.objects.filter(finalWinner='').order_by('-created_at')[:10]
 		tournaments_data = []
 
 		for tournament in tournaments:
