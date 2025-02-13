@@ -4,12 +4,11 @@ from django.http import JsonResponse
 from django.utils.translation import gettext as _
 from transcendence.decorators import login_required_redirect
 
-from user_management.friends import Friends_Manager
+from user_management.friends import Friends, Friends_Manager
 
 User = get_user_model()
 
 
-# TODO @follow-up merge into Friends_Manager/decide on friends management API
 @login_required_redirect
 def friendships(request, username=None):
 	"""
@@ -21,7 +20,9 @@ def friendships(request, username=None):
 		user = request.user
 	else:
 		user = User.objects.get(username=username)
-	friends_of = Friends_Manager.fetch_friends_public(user_instance=user)
+	friends_of = {
+		friendship.origin for friendship in Friends.objects.filter(target=user, accepted=True)
+	} | {friendship.target for friendship in Friends.objects.filter(origin=user, accepted=True)}
 	return JsonResponse(
 		{
 			'success': True,

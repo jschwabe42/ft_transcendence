@@ -83,18 +83,6 @@ class Friends_Manager:
 			or Friends.objects.filter(origin=target, target=remover, accepted=True).first()
 		)
 
-	# get user instances of friends
-	def fetch_friends_public(user_instance):
-		"""User instance: get active friends (accepted friendships)"""
-		friends = set()
-		accepted_friendships_incoming = Friends.objects.filter(target=user_instance, accepted=True)
-		for friendship in accepted_friendships_incoming:
-			friends.add(friendship.origin)
-		accepted_friendships_outgoing = Friends.objects.filter(origin=user_instance, accepted=True)
-		for friendship in accepted_friendships_outgoing:
-			friends.add(friendship.target)
-		return friends
-
 	# this is only called in a user (self-serving) context
 	def fetch_received(target):
 		"""receiver User instance: get inactive (not yet accepted)"""
