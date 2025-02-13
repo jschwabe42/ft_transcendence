@@ -3,6 +3,8 @@ secrets:
     file: ./secrets/postgres_password
   pgadmin_password:
     file: ./secrets/pgadmin_password
+  oauth_api_secret:
+    file: ./secrets/oauth_api_secret
 
 x-global-env:
   &default-env
