@@ -356,3 +356,24 @@ def remove_friend(request, other_username):
 def list(request):
 	users_players = User.objects.order_by('-date_joined')[:10]
 	return render(request, 'users/list.html', {'players_list': users_players})
+
+
+# TODO @follow-up merge into Friends_Manager/decide on friends management API
+@login_required_redirect
+def friends_users(request, username=None):
+	"""
+	wrapper for fetch_friends_public
+
+	API Endpoint: /users/api/friends/<str:username>/ where username is optional
+	"""
+	if username is None:
+		user = request.user
+	else:
+		user = User.objects.get(username=username)
+	friends_of = Friends_Manager.fetch_friends_public(user_instance=user)
+	return JsonResponse(
+		{
+			'success': True,
+			'friends_users': [friend.username for friend in friends_of],
+		}
+	)

@@ -10,6 +10,9 @@ urlpatterns = [
 	path('api/blocked/', views.blocked_users, name='blocked_users'),
 	path('api/block/<str:username>/', views.block_user, name='block_user'),
 	path('api/unblock/<str:username>/', views.unblock_user, name='unblock_user'),
+	# friends: endpoints
+	path('api/friends/', views.friends_users, name='friends'),
+	path('api/friends/<str:username>/', views.friends_users, name='friends-public'),
 	path('api/register/', views.register, name='register'),
 	path('api/login/', views.login_view, name='login'),
 	path('api/logout/', views.logout_view, name='logout'),
@@ -19,7 +22,7 @@ urlpatterns = [
 	path('api/check_authentication/', views.check_authentication, name='check-authentication'),
 	# TODO: remove once dashboard is feature complete @follow-up
 	path('<str:query_user>', views.public_profile, name='public-profile'),
-	# friendship management: both `user` and `users` prefix
+	# friendship management: endpoints will be deprecated in favor of `api` prefix
 	path('<str:target_username>/friend-request', views.friend_request, name='friends-request'),
 	path(
 		'<str:target_username>/cancel-friend-request',
