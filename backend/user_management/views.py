@@ -407,3 +407,15 @@ def friends_send_request(request, username):
 	except ValidationError as e:
 		return JsonResponse({'success': False, 'message': str(e)})
 	return JsonResponse({'success': True, 'message': _('Friend request sent successfully.')})
+
+
+@login_required_redirect
+def friends_accept(request, username):
+	"""
+	API endpoint: `/users/api/friends/accept/<str:username>/`
+	"""
+	try:
+		Friends_Manager.accept_request_as_target(target=request.user, origin_username=username)
+	except Exception as e:
+		return JsonResponse({'success': False, 'message': str(e)})
+	return JsonResponse({'success': True, 'message': _('Friend request accepted successfully.')})
