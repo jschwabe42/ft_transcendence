@@ -284,17 +284,6 @@ def public_profile(request, query_user):
 	pong_games_lost = [game for game in pong_games_finished if game not in pong_games_won]
 	pong_games_won = sorted(pong_games_won, key=lambda game: game.played_at, reverse=True)
 	pong_games_lost = sorted(pong_games_lost, key=lambda game: game.played_at, reverse=True)
-	# friends = Friends_Manager.fetch_friends_public(user_instance=query_user_instance)
-	# if request.user == query_user_instance:
-	# 	# privately manage own user profile
-	# 	friend_requests_sent = Friends_Manager.fetch_sent(origin=query_user_instance)
-	# 	friend_requests_received = Friends_Manager.fetch_received(target=query_user_instance)
-	# else:
-	# 	# UserProfileConsumer.connect(user_instance.username)#@audit not working (was DisplayOnlineStatus.js)
-	# 	# check for the request user if he is an origin or a target of a request by the user_instance
-	# 	friend_requests_sent = Friends_Manager.fetch_sent(origin=request.user)
-	# 	friend_requests_received = Friends_Manager.fetch_received(target=request.user)
-
 	pong_ratio = win_to_loss_ratio(
 		query_user_instance.matches_won, query_user_instance.matches_lost
 	)
@@ -309,16 +298,8 @@ def public_profile(request, query_user):
 			'pong_win_loss_ratio': pong_ratio,
 			'games_won': pong_games_won,
 			'games_lost': pong_games_lost,
-			# 'friends': friends,
-			# 'friend_requests_sent': friend_requests_sent,
-			# 'friend_requests_received': friend_requests_received,
 		},
 	)
-
-
-# def list(request):
-# 	users_players = User.objects.order_by('-date_joined')[:10]
-# 	return render(request, 'users/list.html', {'players_list': users_players})
 
 
 # TODO @follow-up merge into Friends_Manager/decide on friends management API
