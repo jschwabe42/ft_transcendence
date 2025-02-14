@@ -339,7 +339,7 @@ msgstr "Password bestätigen:"
 
 #: user_management/static/users/js/register.js:34
 msgid "Sign Up"
-msgstr "Anmelden:"
+msgstr "Anmelden"
 
 #: user_management/static/users/js/register.js:70
 msgid "Username is required!"
