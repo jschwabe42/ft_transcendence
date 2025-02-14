@@ -122,19 +122,6 @@ msgstr ""
 msgid "Username already taken."
 msgstr "Användarnamn redan taget."
 
-#: user_management/views.py:231
-msgid ""
-"Invalid display name. Display name must contain only letters, numbers, and "
-"underscores, and cannot be empty or contain only whitespace."
-msgstr ""
-"Ogiltigt visningsnamn. Visningsnamnet får endast innehålla bokstäver, "
-"siffror och understreck och får inte vara tomt eller innehålla enbart "
-"blanksteg."
-
-#: user_management/views.py:237 user_management/views.py:240
-msgid "Display name already taken."
-msgstr "Visningsnamnet är redan upptaget."
-
 #: user_management/views.py:257
 msgid "Invalid current password."
 msgstr "Ogiltigt aktuellt lösenord."
