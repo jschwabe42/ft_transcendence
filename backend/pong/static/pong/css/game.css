@@ -7,6 +7,7 @@
     padding: 10px 20px; /* Abstand innerhalb der Leiste */
     border-radius: 10px; /* Abgerundete Ecken */
     margin: 20px 0; /* Etwas Abstand oben und unten */
+    max-width: 804px;
 }
 
 /* Der "Ready"-Button */
@@ -76,20 +77,23 @@ button.ready:active {
     text-orientation: upright; /* Zeichen aufrecht ausrichten */
 }
 
-#gameContainer {
+.gameContainer {
     text-align: center;
     margin-top: 50px;
 }
 
-#gameCanvas {
+.gameCanvas {
     border: 2px solid #000; /* Optional: fügt dem Canvas einen Rahmen hinzu */
     background-color: #f0f0f0; /* Optional: Hintergrundfarbe für das Canvas */
+    justify-content: center;
+    align-items: center;
 }
 
 .score {
     display: flex; /* Aktiviert Flexbox */
     justify-content: space-between; /* Platz zwischen den beiden Divs */
     align-items: center; /* Zentriert den Inhalt vertikal */
+    max-width: 804px;
 }
 
 .player {
@@ -97,5 +101,37 @@ button.ready:active {
     text-align: center; /* Zentriert den Text */
     padding: 10px; /* Optional: Fügt etwas Innenabstand hinzu */
     border: 1px solid #ccc; /* Optional: Fügt Rahmen hinzu */
-    margin: 5px; /* Optional: Fügt Abstände zwischen den Divs hinzu */
+    /* margin: 5px; Optional: Fügt Abstände zwischen den Divs hinzu */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between; /* Abstand zwischen den Elementen */
+    align-items: center; /* Vertikal ausrichten */
+    width: 100%; /* Volle Breite nutzen */
+}
+
+
+#start-game {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background-color: #4CAF50;  /* Sattes Grün */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#start-game:hover {
+    background-color: #45a049;  /* Dunkleres Grün beim Hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+#start-game:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

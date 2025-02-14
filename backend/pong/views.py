@@ -72,6 +72,7 @@ def tournament(request):
 			'created_at': tournament.created_at.isoformat() if tournament.created_at else None,
 			'winner1': tournament.winner1,
 			'winner2': tournament.winner2,
+			'finalWinner': tournament.finalWinner,
 			'openTournament': tournament.openTournament,
 			'playernum': tournament.playernum,
 			'id': tournament.id,
@@ -79,3 +80,30 @@ def tournament(request):
 		return JsonResponse(tournament_data)
 	except Tournament.DoesNotExist:
 		return JsonResponse({'error': 'Tournament not found'}, status=404)
+
+
+def tournament_data(request):
+	try:
+		tournaments = Tournament.objects.filter(finalWinner='').order_by('-created_at')[:10]
+		tournaments_data = []
+
+		for tournament in tournaments:
+			tournament_data = {
+				'tournament_id': tournament.id,
+				'host': tournament.host,
+				'player1': tournament.player1,
+				'player2': tournament.player2,
+				'player3': tournament.player3,
+				'created_at': tournament.created_at.isoformat(),
+				'winner1': tournament.winner1,
+				'winner2': tournament.winner2,
+				'finalWinner': tournament.finalWinner,
+				'openTournament': tournament.openTournament,
+				'playernum': tournament.playernum,
+			}
+			tournaments_data.append(tournament_data)
+
+		return JsonResponse(tournaments_data, safe=False)
+
+	except Exception as e:
+		return JsonResponse({'error': str(e)}, status=500)

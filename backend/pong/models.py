@@ -48,5 +48,7 @@ class Tournament(models.Model):
 	winner1 = models.CharField(max_length=255, default='')
 	winner2 = models.CharField(max_length=255, default='')
 
+	finalWinner = models.CharField(max_length=255, default='')
+
 	openTournament = models.BooleanField(default=True)
 	playernum = models.IntegerField(default=1)

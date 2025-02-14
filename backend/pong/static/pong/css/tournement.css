@@ -1,0 +1,90 @@
+/* Contenedor general del bracket */
+.bracket-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	width: 100%;
+	margin: 20px auto;
+	font-family: Arial, sans-serif;
+}
+
+/* Rondas generales */
+.round {
+	display: flex;
+	flex-direction: column;
+	margin: 0 20px;
+}
+
+/* Rondas específicas */
+.round.quarter {
+	border: 1px dashed #ccc;
+	padding: 10px;
+}
+
+.round.finals {
+	margin-top: 20px;
+}
+
+.round-1, .round-2, .round-3 {
+	margin-bottom: 20px;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+/* Colores de ejemplo para distinguirlas */
+.round-1 {
+	background-color: #f7faff;
+	border: 1px solid #b3d4fc;
+}
+
+.round-2 {
+	background-color: #fff7f0;
+	border: 1px solid #fccca9;
+}
+
+.round-3 {
+	margin-top: 60px; /* Ajustado para bajar los semifinalistas */
+	background-color: #f0fff3;
+	border: 1px solid #9afcb1;
+}
+
+/* Jugadores */
+.player1, .player2, .player3, .player4 {
+	background-color: #f0f0f0;
+	border-radius: 5px;
+	padding: 8px 12px;
+	margin: 5px 0;
+}
+
+/* Semifinalistas/Finalistas */
+.semifinalist1, .semifinalist2 {
+	background-color: #ffe4b5;
+	border-radius: 5px;
+	padding: 8px 12px;
+	margin: 5px 0;
+}
+
+/* Sección de finales */
+.finals {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 20px; /* Ajustado para bajar los semifinalistas */
+}
+
+.finalist {
+	background-color: #ffe4b5;
+	border-radius: 5px;
+	padding: 8px 12px;
+	margin: 5px 0;
+}
+
+.annouce-winner {
+	background-color: #f0fff3;
+	border: 1px solid #9afcb1;
+	margin-top: 100px; /* Ajustado para subir el ganador */
+	border-radius: 5px;
+	padding: 8px 12px;
+}
