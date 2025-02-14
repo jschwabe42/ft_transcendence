@@ -130,9 +130,8 @@ DATABASES = {
 }
 
 # for 42 api - enables requesting bearer token: requires running Makefile to export the variable(s)
-import platform
 
-if platform.system() == 'Darwin':  # macOS
+if os.environ.get('container') != 'docker':
 	SECRETS_PATH = Path('../secrets/')
 	REMOTE_OAUTH_SECRET = Path(SECRETS_PATH / 'oauth_api_secret').read_text().strip()
 
@@ -149,7 +148,7 @@ if platform.system() == 'Darwin':  # macOS
 	CLIENT_ID = get_env_variable(
 		env=Path(SECRETS_PATH / '.env').read_text(), key='REMOTE_OAUTH_UID'
 	)
-else:  # Assume Linux (Docker)
+else:  # assume running in docker
 	REMOTE_OAUTH_SECRET = Path('/var/run/secrets/oauth_api_secret').read_text().strip()
 	CLIENT_ID = os.getenv('REMOTE_OAUTH_UID')
 if REMOTE_OAUTH_SECRET is None:
