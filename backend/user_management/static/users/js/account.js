@@ -32,10 +32,6 @@ export function display_account() {
 				<span class="profile-field-label">${gettext("Email:")}</span>
 				<span id="email"></span> <i class="bi bi-pencil-square" id="edit-email"></i>
 			</p>
-			<p class="profile-field" id="last-profile-field">
-				<span class="profile-field-label">${gettext("Display Name:")}</span>
-				<span id="display_name"></span> <i class="bi bi-pencil-square" id="edit-display_name"></i>
-			</p>
 			<button id="update-profile-data" class="btn btn-primary">${gettext("Update Profile Data")}</button>
 			<div id="password-input-container" style="visibility: hidden;">
 				<input type="password" id="profile-password-input" class="form-control" placeholder="${gettext("Enter your password")}">
@@ -80,7 +76,6 @@ function get_account_details() {
 
 			document.getElementById('username').textContent = data.username;
 			document.getElementById('email').textContent = data.email;
-			document.getElementById('display_name').textContent = data.display_name;
 
 			document.getElementById('edit-username').onclick = () => {
 				edit_field('username', data.username);
@@ -88,10 +83,6 @@ function get_account_details() {
 			document.getElementById('edit-email').onclick = () => {
 				edit_field('email', data.email);
 			};
-			document.getElementById('edit-display_name').onclick = () => {
-				edit_field('display_name', data.display_name);
-			};
-			
 
 			document.getElementById('update-profile-data').addEventListener('click', () => {
 				const passwordInputContainer = document.getElementById('password-input-container');
@@ -130,10 +121,9 @@ function edit_field(field, value) {
 function update_profile(originalData, password) {
 	const username = document.getElementById('edit-text-username') ? document.getElementById('edit-text-username').value : originalData.username;
 	const email = document.getElementById('edit-text-email') ? document.getElementById('edit-text-email').value : originalData.email;
-	const display_name = document.getElementById('edit-text-display_name') ? document.getElementById('edit-text-display_name').value : originalData.display_name;
 	const image = document.getElementById('image-upload').files[0];
 
-	if (username === originalData.username && email === originalData.email && display_name === originalData.display_name && !image) {
+	if (username === originalData.username && email === originalData.email && !image) {
 		alert(`${gettext("No changes detected.")}`);
 		return;
 	}
@@ -145,7 +135,6 @@ function update_profile(originalData, password) {
 	const formData = new FormData();
 	formData.append('username', username);
 	formData.append('email', email);
-	formData.append('display_name', display_name);
 	formData.append('password', password);
 	if (image) {
 		formData.append('image', image);
@@ -172,12 +161,11 @@ function update_profile(originalData, password) {
 				alert(data.message);
 				edit_field('username', originalData.username);
 				edit_field('email', originalData.email);
-				edit_field('display_name', originalData.display_name);
 				get_account_details();
 			} else {
 				alert(data.message);
 			}
-	});
+		});
 }
 
 function upload_image(event) {
@@ -208,7 +196,7 @@ function change_password(event) {
 		const repeat_password = document.getElementById('repeat-password').value;
 
 
-		if(!current_password || !new_password || !repeat_password) {
+		if (!current_password || !new_password || !repeat_password) {
 			alert(`${gettext("All fields are required.")}`);
 			return;
 		}
@@ -216,20 +204,20 @@ function change_password(event) {
 			alert(`${gettext("New password and repeat password do not match.")}`);
 			return;
 		}
-			const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-		
-			fetch('/users/api/change_password/', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Requested-With': 'XMLHttpRequest',
-					'X-CSRFToken': csrfToken,
-				},
-				body: JSON.stringify({
-					current_password: current_password,
-					new_password: new_password,
-				}),
-			})
+		const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+		fetch('/users/api/change_password/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Requested-With': 'XMLHttpRequest',
+				'X-CSRFToken': csrfToken,
+			},
+			body: JSON.stringify({
+				current_password: current_password,
+				new_password: new_password,
+			}),
+		})
 			.then(response => {
 				if (response.redirected) {
 					router.navigateTo('/login/');
