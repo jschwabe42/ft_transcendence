@@ -31,7 +31,7 @@ export function register_user() {
 				<input type="password" name="password2" id="id_password2" class="form-control">
 				<div id="password2-errors" class="text-danger"></div>
 			</div>
-			<button class="btn btn-outline-info" type="submit">${gettext("Sign Up")}</button>
+			<button class="btn btn-outline-info" id="register-sign-up-button" type="submit">${gettext("Sign Up")}</button>
 		</fieldset>
 		<div id="message-container"></div>
 		<div class="border-top pt-3">
