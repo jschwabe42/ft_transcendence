@@ -75,12 +75,12 @@
 }
 
 #username,
-#email{
+#email {
 	margin-right: 5px;
 }
 
 .form-control {
-	color:#1c4f73 !important;
+	color: #1c4f73 !important;
 	border: 1px solid #1c4f73 !important;
 	border-radius: 10px !important;
 }

@@ -84,7 +84,7 @@ def register(request):
 
 		if password1 != password2:
 			return JsonResponse({'success': False, 'message': _('Passwords do not match.')})
-		validation_response = validate_data(username, None, email)
+		validation_response = validate_data(username, email)
 		if validation_response:
 			return validation_response
 		# If not done automatically, ensure passwords are checked for lenght etc
