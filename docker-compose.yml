@@ -6,8 +6,7 @@ secrets:
   oauth_api_secret:
     file: ./secrets/oauth_api_secret
 
-x-global-env:
-  &default-env
+x-global-env: &default-env
   env_file:
     - ./secrets/.env
 
@@ -25,7 +24,7 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres || exit 1"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres || exit 1" ]
       interval: 20s
       timeout: 30s
       retries: 5
@@ -47,7 +46,7 @@ services:
       - container=docker
     ports:
       - "8000:8000"
-    restart: always
+    restart: no
     entrypoint: /code/django.sh
     # depends_on:
     #   postgres:
