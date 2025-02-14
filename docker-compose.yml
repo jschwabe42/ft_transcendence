@@ -37,10 +37,14 @@ services:
       - 8080:8080
   backend:
     build: ./backend
+    <<: *default-env
     volumes:
       - ./backend:/code
     secrets:
       - postgres_password
+      - oauth_api_secret
+    environment:
+      - container=docker
     ports:
       - "8000:8000"
     restart: always
