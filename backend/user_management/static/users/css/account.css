@@ -68,7 +68,6 @@
 	margin-bottom: 20px;
 }
 
-#edit-text-display_name,
 #edit-text-email,
 #edit-text-username {
 	width: 300px;
@@ -76,8 +75,7 @@
 }
 
 #username,
-#email,
-#display_name {
+#email{
 	margin-right: 5px;
 }
 
