@@ -13,7 +13,7 @@ export function DisplayPong(params) {
 			document.getElementById('pong-app-content').innerHTML = `
 				<main role="main" class="container">
 					<div class="ready-bar">
-						<button class="ready" type="button" id="user_ready">Ready</button>
+						<button class="ready" type="button" id="user_ready">${gettext("Ready")}</button>
 
 						<form id="w-s" method="POST">
 							{% csrf_token %}
@@ -29,7 +29,7 @@ export function DisplayPong(params) {
 							</button>
 						</form>
 
-						<p class="is_ready Text" id="is_ready_id">Ready:</p>
+						<p class="is_ready Text" id="is_ready_id">${gettext("Ready")}:</p>
 
 						<!-- Player 1 Status -->
 						<p class="is_ready" id="ready_player_one" style="display: ${model.player1_ready ? 'block' : 'none'};">${model.player1}</p>
@@ -54,7 +54,7 @@ export function DisplayPong(params) {
 					</div>
 					<button id="winner" class="navigate-button" style="display: none;" 
 						data-path="${model.tournament_id === 0 ? '/pong/' : '/pong/tournament/' + model.tournament_id}">
-						back to menu
+						${gettext("back to menu")}
 					</button>
 				</main>
 			`;
@@ -221,11 +221,11 @@ function renderGameData() {
 				document.getElementById("winner").style.display = "block";
 				console.log("Player1 Won");
 			}
-			if (state.winner.player2) {
-				document.getElementById("winner").style.display = "block";
-				document.getElementById("player2").style.backgroundColor = "green";
-				console.log("Player2 Won");
-			}
+		if (state.winner.player2) {
+			document.getElementById("winner").style.display = "block";
+			document.getElementById("player2").style.backgroundColor = "green";
+			console.log("Player2 Won");
+		}
 
 
 

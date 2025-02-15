@@ -19,12 +19,6 @@ class BlockedUsers(models.Model):
 
 class Block_Manager:
 	@staticmethod
-	# @follow-up check if this is used or not
-	def is_blocked(origin):
-		"""for all users, check if anyone has blocked origin"""
-		return BlockedUsers.objects.filter(blockee=origin).exists()
-
-	@staticmethod
 	def is_blocked_by(blockee, blocker):
 		"""check for a specific block: blockee si blocked by blocker"""
 		return BlockedUsers.objects.filter(blocker=blocker, blockee=blockee).exists()
