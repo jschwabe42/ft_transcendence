@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-15 15:52+0100\n"
+"POT-Creation-Date: 2025-02-15 15:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -185,6 +185,24 @@ msgstr ""
 #| msgid "Start Game"
 msgid "Pause Game"
 msgstr "Starta spelet"
+
+#: pong/static/pong/js/tournament_display.js:19
+msgid "Welcome to Tournament"
+msgstr "Skapa rum"
+
+#: pong/static/pong/js/tournament_display.js:47
+#, fuzzy
+msgid "Play Tournament Games +"
+msgstr "Skapa rum"
+
+#: pong/static/pong/js/tournament_display.js:51
+#, fuzzy
+msgid "Start Final Game"
+msgstr "Starta spelet"
+
+#: pong/static/pong/js/tournament_display.js:54
+msgid "Go to Menu"
+msgstr ""
 
 #: quiz/static/quiz/js/quiz_logic.js:134 quiz/static/quiz/js/quiz_logic.js:149
 #: quiz/static/quiz/js/quiz_logic.js:153
