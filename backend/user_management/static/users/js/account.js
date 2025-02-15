@@ -84,16 +84,16 @@ function get_account_details() {
 				edit_field('email', data.email);
 			};
 
-			document.getElementById('update-profile-data').addEventListener('click', () => {
+			document.getElementById('update-profile-data').onclick = () => {
 				const passwordInputContainer = document.getElementById('password-input-container');
 				const style = passwordInputContainer.style.visibility;
-				if (style === 'hidden') {
+				if (style === 'hidden' || style === '') {
 					passwordInputContainer.style.visibility = 'visible';
 				}
 				else {
 					passwordInputContainer.style.visibility = 'hidden';
 				}
-			});
+			};
 
 			document.getElementById('submit-profile-update').addEventListener('click', () => {
 				const password = document.getElementById('profile-password-input').value;
