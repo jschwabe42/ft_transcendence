@@ -27,7 +27,7 @@ def friendships(request, username=None):
 			'friends_users': [
 				{
 					'username': friend.username,
-					'profile_picture': friend.image.url if friend.image else None,
+					# 'profile_picture': friend.image.url if friend.image else None,
 				}
 				for friend in friends_of
 			],

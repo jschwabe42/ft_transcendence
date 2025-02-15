@@ -90,6 +90,7 @@ function displayProfile(profile) {
 				unblockUser(profile.username);
 			}
 		});
+		addFriendsAddButton(profile);
 	} else {
 		addSettingsButton();
 		document.getElementById('pv-profile-settings-content').style.visibility = 'visible';
@@ -213,6 +214,153 @@ function addSettingsButton() {
 	});
 }
 
+function addFriendsAddButton(profile) {
+	const profileHeader = document.getElementById('pv-profile-header');
+	const friendsButton = document.createElement('button');
+	friendsButton.id = 'pv-friends-add-remove-button';
+	friendsButton.className = 'btn btn-primary';
+
+	if (profile.friend_status === 'not_friends') {
+		friendsButton.textContent = gettext('Add Friend');
+	} else if (profile.friend_status === 'friends') {
+		friendsButton.textContent = gettext('Remove Friend');
+	} else if (profile.friend_status === 'friend_request_sent') {
+		friendsButton.textContent = gettext('Cancel Request');
+	} else if (profile.friend_status === 'friend_request_received') {
+		friendsButton.textContent = gettext('Accept Request');
+	}
+
+	friendsButton.onclick = function () {
+		if (friendsButton.textContent === gettext('Add Friend')) {
+			addFriend(profile.username);
+		} else if (friendsButton.textContent === gettext('Remove Friend')) {
+			removeFriend(profile.username);
+		} else if (friendsButton.textContent === gettext('Cancel Request')) {
+			cancelFriendRequest(profile.username);
+		} else if (friendsButton.textContent === gettext('Accept Request')) {
+			acceptFriendRequest(profile.username);
+		}
+	};
+
+	profileHeader.appendChild(friendsButton);
+}
+
+function addFriend(username) {
+	const csfrToken = document.querySelector('meta[name="csrf-token"]').content;
+
+	fetch(`/users/api/friends/request/${username}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': csfrToken,
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+		if (data.success) {
+			console.log('Friend request sent');
+			alert(data.message);
+			const friendsButton = document.getElementById('pv-friends-add-remove-button');
+			friendsButton.textContent = gettext('Cancel Request');
+		} else {
+			console.error('Failed to send friend request');
+		}
+	})
+	.catch(error => {
+		console.error('Error:', error);
+	});
+}
+
+function removeFriend(username) {
+	const csfrToken = document.querySelector('meta[name="csrf-token"]').content;
+
+	const confirmed = confirm(gettext("Are you sure you want to remove this friend?"));
+
+	if (!confirmed) {
+		return;
+	}
+
+	fetch(`/users/api/friends/remove/${username}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': csfrToken,
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+		alert(data.message);
+		if (data.success) {
+			console.log('Friend removed');
+			const friendsButton = document.getElementById('pv-friends-add-remove-button');
+			friendsButton.textContent = gettext('Add Friend');
+		} else {
+			console.error('Failed to remove friend');
+		}
+	})
+	.catch(error => {
+		console.error('Error:', error);
+	});
+}
+
+function cancelFriendRequest(username) {
+	const csfrToken = document.querySelector('meta[name="csrf-token"]').content;
+
+	const confirmed = confirm(gettext("Are you sure you want to cancel this friend request?"));
+
+	if (!confirmed) {
+		return;
+	}
+
+	fetch(`/users/api/friends/cancel/${username}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': csfrToken,
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+		alert(data.message);
+		if (data.success) {
+			console.log('Friend request cancelled');
+			const friendsButton = document.getElementById('pv-friends-add-remove-button');
+			friendsButton.textContent = gettext('Add Friend');
+		} else {
+			console.error('Failed to cancel friend request');
+		}
+	})
+	.catch(error => {
+		console.error('Error:', error);
+	});
+}
+
+function acceptFriendRequest(username) {
+	const csfrToken = document.querySelector('meta[name="csrf-token"]').content;
+
+	fetch(`/users/api/friends/accept/${username}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': csfrToken,
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+		alert(data.message);
+		if (data.success) {
+			console.log('Friend request accepted');
+			const friendsButton = document.getElementById('pv-friends-add-remove-button');
+			friendsButton.textContent = gettext('Remove Friend');
+		} else {
+			console.error('Failed to accept friend request');
+		}
+	})
+	.catch(error => {
+		console.error('Error:', error);
+	});
+}
+
 function addBlockedUsersList(profile) {
 	const csfrToken = document.querySelector('meta[name="csrf-token"]').content;
 
@@ -326,7 +474,6 @@ function addFriendsButton(profile) {
 							const friendItem = document.createElement('div');
 							friendItem.className = 'pv-friend-item';
 							friendItem.innerHTML = `
-							<img src="${friend.image_url}" alt="${friend.username}${gettext("'s profile picture")}">
 							<span>${friend.username}</span>
 							`;
 							friendItem.onclick = function () {

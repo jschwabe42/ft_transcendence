@@ -89,3 +89,21 @@
 .pv-blocked-user-name {
 	cursor: pointer;
 }
+
+#pv-friends-add-remove-button {
+	margin-left: 10px;
+}
+
+.pv-friend-item {
+	margin-top: 5px;
+	padding: 2px;
+	cursor: pointer;
+	border: 1px solid #1c4f73;
+	margin-right: auto;
+}
+
+.pv-friend-item:hover {
+	background-color: #f0f0f0;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border: 1px solid #1c4f73;
+}
