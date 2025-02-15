@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 
 from . import views
-from .views import CustomLoginView, test_hybrid_auth
+from .views import login_view
 
 app_name = 'users'
 urlpatterns = [
@@ -18,10 +18,7 @@ urlpatterns = [
 	# friendship management: both `user` and `users` prefix
 	path(
 		'login/',
-		CustomLoginView.as_view(
-			template_name='users/login.html',
-			redirect_authenticated_user=True
-		),
+		login_view,
 		name='login',
 	),
 	re_path(r'^user(s)?/(?P<query_user>[^/]+)$', views.public_profile, name='public-profile'),

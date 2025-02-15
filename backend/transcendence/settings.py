@@ -68,7 +68,7 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'users.middleware.JWTAuthMiddleware',
+	'user_management.middleware.JWTAuthMiddleware',
 ]
 
 import sys
@@ -194,21 +194,21 @@ CHANNEL_LAYERS = {'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}
 
 # Setting for  REST Framework
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+	'DEFAULT_PERMISSION_CLASSES': (
+		'rest_framework.permissions.IsAuthenticated',
+	),
+	'DEFAULT_AUTHENTICATION_CLASSES': (
+		'rest_framework_simplejwt.authentication.JWTAuthentication',
+	),
 
 }
 
 # Setting for JWT
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Customize token lifetime
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'AUTH_HEADER_TYPES': ('Bearer',),  # Ensure Authorization headers use 'Bearer'
-    'SIGNING_KEY': SECRET_KEY,  # Use Django's secret key for signing
+	'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Customize token lifetime
+	'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+	'ROTATE_REFRESH_TOKENS': True,
+	'BLACKLIST_AFTER_ROTATION': True,
+	'AUTH_HEADER_TYPES': ('Bearer',),  # Ensure Authorization headers use 'Bearer'
+	'SIGNING_KEY': SECRET_KEY,  # Use Django's secret key for signing
 }

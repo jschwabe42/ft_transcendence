@@ -16,6 +16,7 @@ from django.middleware.csrf import get_token
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
 from pong.models import PongGame
+from rest_framework_simplejwt.tokens import RefreshToken
 from pong.utils import win_to_loss_ratio
 from transcendence.decorators import login_required_redirect
 
@@ -23,10 +24,21 @@ from user_management.friends import Friends_Manager
 
 from .blocked_users import Block_Manager, BlockedUsers
 
+from .decorators import hybrid_login_required
 # from .consumers import UserProfileConsumer
 
 User = get_user_model()
 
+
+@hybrid_login_required
+def test_hybrid_auth(request):
+	return JsonResponse({
+		'message': 'hybrid_login_required is working!',
+		'user': {
+			'username': request.user.username,
+			'email': request.user.email,
+		}
+	})
 
 @login_required_redirect
 def block_user(request, username):
@@ -99,27 +111,58 @@ def register(request):
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
 
+
+
 def login_view(request):
 	"""
-	Login a user.
+	Login a user and return JWT tokens.
 	API Endpoint: /users/api/login/
 	"""
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
 
+		# Authenticate the user
 		user = authenticate(request, username=username, password=password)
 		if user is not None:
+			# Log the user in (creates a session)
 			login(request, user)
-			new_csrf_token = get_token(request)
-			return JsonResponse(
-				{'success': True, 'message': _('Login successful.'), 'csrf_token': new_csrf_token}
+
+			# Generate JWT tokens
+			refresh = RefreshToken.for_user(user)
+			access_token = str(refresh.access_token)
+			refresh_token = str(refresh)
+
+			# Set JWT tokens in HTTP-only cookies
+			response = JsonResponse({
+				'success': True,
+				'message': _('Login successful.'),
+				'csrf_token': get_token(request),
+				'access_token': access_token,  # Optional: Include in response for frontend
+				'refresh_token': refresh_token,  # Optional: Include in response for frontend
+			})
+
+			# Set cookies
+			response.set_cookie(
+				key='access_token',
+				value=access_token,
+				httponly=True,
+				secure=False,  # Set to True in production (HTTPS only)
+				samesite='Lax'
 			)
+			response.set_cookie(
+				key='refresh_token',
+				value=refresh_token,
+				httponly=True,
+				secure=False,  # Set to True in production (HTTPS only)
+				samesite='Lax'
+			)
+
+			return response
 		else:
 			return JsonResponse({'success': False, 'message': _('Invalid username or password!')})
 	else:
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
-
 
 def logout_view(request):
 	"""
