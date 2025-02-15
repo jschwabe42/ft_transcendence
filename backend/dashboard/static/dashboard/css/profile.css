@@ -85,3 +85,7 @@
 	flex-direction: row;
 	align-items: flex-start;
 }
+
+.pv-blocked-user-name {
+	cursor: pointer;
+}

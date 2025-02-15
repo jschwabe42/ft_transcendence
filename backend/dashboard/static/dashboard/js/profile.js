@@ -240,10 +240,11 @@ function addBlockedUsersList(profile) {
 					const userItem = document.createElement('div');
 					userItem.className = 'pv-blocked-user-item';
 					userItem.innerHTML = `
-						<span>${username}</span>
+						<span class="pv-blocked-user-name">${username}</span>
 						<button class="btn btn-danger pv-unblock-button" data-username="${username}">${gettext("Unblock")}</button>
 					`;
-					userItem.onclick = function () {
+					const usernameSpan = userItem.querySelector('.pv-blocked-user-name');
+					usernameSpan.onclick = function () {
 						router.navigateTo(`/dashboard/${username}/`);
 					};
 					blockedUsersList.appendChild(userItem);
