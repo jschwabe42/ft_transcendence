@@ -246,10 +246,6 @@ msgstr "Benutzername:"
 msgid "Email:"
 msgstr "E-Mail:"
 
-#: user_management/static/users/js/account.js:36
-msgid "Display Name:"
-msgstr "Anzeigename:"
-
 #: user_management/static/users/js/account.js:39
 msgid "Update Profile Data"
 msgstr "Profildaten aktualisieren"
@@ -343,7 +339,7 @@ msgstr "Password bestätigen:"
 
 #: user_management/static/users/js/register.js:34
 msgid "Sign Up"
-msgstr "Anmelden:"
+msgstr "Anmelden"
 
 #: user_management/static/users/js/register.js:70
 msgid "Username is required!"

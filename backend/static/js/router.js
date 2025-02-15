@@ -14,7 +14,6 @@ import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
 import { PongResult } from '/static/pong/js/pong_result.js';
 import { DisplayTournament } from '/static/pong/js/tournament_display.js';
 import { PongPractice } from '/static/pong/js/pong_practice.js';
-import { UsersApiHandler } from '/static/users/js/users_api.js';
 import { oauth_flow, oauth_callback } from '/static/users/js/oauth.js';
 
 class Router {

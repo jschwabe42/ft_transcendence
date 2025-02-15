@@ -84,7 +84,7 @@ def tournament(request):
 
 def tournament_data(request):
 	try:
-		tournaments = Tournament.objects.filter(finalWinner="").order_by('-created_at')[:10]
+		tournaments = Tournament.objects.filter(finalWinner='').order_by('-created_at')[:10]
 		tournaments_data = []
 
 		for tournament in tournaments:
@@ -108,6 +108,7 @@ def tournament_data(request):
 	except Exception as e:
 		return JsonResponse({'error': str(e)}, status=500)
 
+
 @ensure_csrf_cookie
 def get_csrf_token(request):
-    return JsonResponse({'detail': 'CSRF cookie set'})
+	return JsonResponse({'detail': 'CSRF cookie set'})

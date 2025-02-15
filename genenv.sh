@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 env_vars=(
     "PGADMIN_DEFAULT_EMAIL"

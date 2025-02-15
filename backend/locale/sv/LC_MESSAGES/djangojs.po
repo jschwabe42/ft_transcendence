@@ -245,10 +245,6 @@ msgstr "Användarnamn:"
 msgid "Email:"
 msgstr "E-Post:"
 
-#: user_management/static/users/js/account.js:36
-msgid "Display Name:"
-msgstr "Visa namn:"
-
 #: user_management/static/users/js/account.js:39
 msgid "Update Profile Data"
 msgstr "Uppdatera profildata"

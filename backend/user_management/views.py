@@ -83,14 +83,12 @@ def register(request):
 		password2 = request.POST.get('password2')
 
 		if password1 != password2:
-			return JsonResponse({'success': False, 'message': _('Passwords do not match.')})
-		validation_response = validate_data(username, None, email)
+			return JsonResponse({'success': False, 'type': 'password', 'message': _('Passwords do not match.')})
+		validation_response = validate_data(username, email)
 		if validation_response:
 			return validation_response
 		# If not done automatically, ensure passwords are checked for lenght etc
-		user = User.objects.create_user(
-			username=username, email=email, password=password1, display_name=username
-		)
+		user = User.objects.create_user(username=username, email=email, password=password1)
 		user.save()
 		return JsonResponse({'success': True, 'message': _('Account created successfully.')})
 	else:
@@ -147,7 +145,6 @@ def get_account_details(request):
 				'success': True,
 				'username': user.username,
 				'email': user.email,
-				'display_name': user.display_name,
 				'image_url': user.image.url,
 			}
 		)
@@ -165,11 +162,10 @@ def update_profile(request):
 		user = request.user
 		username = request.POST.get('username')
 		email = request.POST.get('email')
-		display_name = request.POST.get('display_name')
 		password = request.POST.get('password')
 		image = request.FILES.get('image')
 
-		validation_response = validate_data(username, display_name, email, user)
+		validation_response = validate_data(username, email, user)
 		if validation_response:
 			return validation_response
 
@@ -179,8 +175,6 @@ def update_profile(request):
 			user.username = username
 		if email:
 			user.email = email
-		if display_name:
-			user.display_name = display_name
 		if image:
 			user.image = image
 		user.save()
@@ -188,27 +182,28 @@ def update_profile(request):
 	return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
 
-def validate_data(username, display_name, email, current_user=None):
+def validate_data(username, email, current_user=None):
 	if email:
 		try:
 			validate_email(email)
 		except ValidationError:
-			return JsonResponse({'success': False, 'message': _('Invalid email address.')})
+			return JsonResponse({'success': False, 'type': 'mail', 'message': _('Invalid email address.')})
 		if current_user:
 			if User.objects.filter(email=email).exclude(id=current_user.id).exists():
 				return JsonResponse(
-					{'success': False, 'message': _('An Account with this email already exists.')}
+					{'success': False, 'type': 'mail', 'message': _('An Account with this email already exists.')}
 				)
 		else:
 			if User.objects.filter(email=email).exists():
 				return JsonResponse(
-					{'success': False, 'message': _('An Account with this email already exists.')}
+					{'success': False, 'type': 'mail', 'message': _('An Account with this email already exists.')}
 				)
 	if username:
 		if len(username.strip()) == 0 or not re.match(r'^\w+$', username):
 			return JsonResponse(
 				{
 					'success': False,
+					'type': 'username', 
 					'message': _(
 						'Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'
 					),
@@ -216,26 +211,10 @@ def validate_data(username, display_name, email, current_user=None):
 			)
 		if current_user:
 			if User.objects.filter(username=username).exclude(id=current_user.id).exists():
-				return JsonResponse({'success': False, 'message': _('Username already taken.')})
+				return JsonResponse({'success': False, 'type': 'username', 'message': _('Username already taken.')})
 		else:
 			if User.objects.filter(username=username).exists():
-				return JsonResponse({'success': False, 'message': _('Username already taken.')})
-	if display_name:
-		if len(display_name.strip()) == 0 or not re.match(r'^\w+$', display_name):
-			return JsonResponse(
-				{
-					'success': False,
-					'message': _(
-						'Invalid display name. Display name must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'
-					),
-				}
-			)
-		if current_user:
-			if User.objects.filter(display_name=display_name).exclude(id=current_user.id).exists():
-				return JsonResponse({'success': False, 'message': _('Display name already taken.')})
-		else:
-			if User.objects.filter(display_name=display_name).exists():
-				return JsonResponse({'success': False, 'message': _('Display name already taken.')})
+				return JsonResponse({'success': False, 'type': 'username', 'message': _('Username already taken.')})
 	return None
 
 
@@ -278,7 +257,6 @@ def public_profile(request, query_user):
 	pong_games_won = pong_games_finished.filter(
 		player1=query_user_instance, score1__gt=F('score2')
 	) | pong_games_finished.filter(player2=query_user_instance, score2__gt=F('score1'))
-	# something to use the display_name in games (playing as display_name) @follow-up
 	pong_games_lost = [game for game in pong_games_finished if game not in pong_games_won]
 	pong_games_won = sorted(pong_games_won, key=lambda game: game.played_at, reverse=True)
 	pong_games_lost = sorted(pong_games_lost, key=lambda game: game.played_at, reverse=True)
