@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-15 14:25+0100\n"
+"POT-Creation-Date: 2025-02-15 15:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: dashboard/static/dashboard/js/dashboard.js:6
+#: pong/static/pong/js/overview.js:43
 msgid "Refresh"
 msgstr "Uppdatera"
 
@@ -100,6 +101,60 @@ msgstr "Inställningar"
 #: dashboard/static/dashboard/js/profile.js:227
 msgid "No blocked users"
 msgstr "Inga blockerade användare"
+
+#: pong/static/pong/js/overview.js:34
+msgid "pending Tournament game"
+msgstr ""
+
+#: pong/static/pong/js/overview.js:41
+#, fuzzy
+#| msgid "Start Game"
+msgid "Practice Game"
+msgstr "Starta spelet"
+
+#: pong/static/pong/js/overview.js:44
+msgid "No games have been played yet."
+msgstr ""
+
+#: pong/static/pong/js/overview.js:48
+msgid "No pending games."
+msgstr ""
+
+#: pong/static/pong/js/overview.js:50
+msgid "Open Tournaments"
+msgstr ""
+
+#: pong/static/pong/js/overview.js:53
+msgid "Play new Game"
+msgstr ""
+
+#: pong/static/pong/js/overview.js:55
+#, fuzzy
+#| msgid "Enter room name"
+msgid "Enter opponent's Username"
+msgstr "Ange nytt rumsnamn"
+
+#: pong/static/pong/js/overview.js:56
+msgid "Play Game +"
+msgstr ""
+
+#: pong/static/pong/js/overview.js:61
+#, fuzzy
+#| msgid "Create Room"
+msgid "Create Tournament"
+msgstr "Skapa rum"
+
+#: pong/static/pong/js/overview.js:87 pong/static/pong/js/overview.js:116
+msgid "Join Open Tournament"
+msgstr ""
+
+#: pong/static/pong/js/overview.js:92
+msgid "No open tournaments."
+msgstr ""
+
+#: pong/static/pong/js/overview.js:106
+msgid "pending"
+msgstr ""
 
 #: quiz/static/quiz/js/quiz_logic.js:134 quiz/static/quiz/js/quiz_logic.js:149
 #: quiz/static/quiz/js/quiz_logic.js:153

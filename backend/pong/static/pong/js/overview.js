@@ -31,33 +31,34 @@ export function PongOverview() {
 				.map(game => `
 					<button class="ChatButtonBackground navigate-button" data-path="/pong/${game.game_id}">
 						${game.player1} vs ${game.player2} 
-						(${game.tournament_id !== 0 ? `pending Tournament game #${game.tournament_id}` : 'pending'})
+						(${game.tournament_id !== 0 ? `${gettext("pending Tournament game")} #${game.tournament_id}` : 'pending'})
 					</button>
 				`).join('');
 
 			document.getElementById('pong-app-content').innerHTML = `
 				<div class="header-container">
 					<h2>Recent Games</h2>
-					<button class="navigate-button" data-path="/pong/practice/">Practice Game</button>
+					<button class="navigate-button" data-path="/pong/practice/">${gettext("Practice Game")}</button>
 				</div>
-				<button id="refresh-button">Refresh</button>
-				<div>${recentGames || '<p>No games have been played yet.</p>'}</div>
+				<button id="refresh-button">${gettext("Refresh")}</button>
+				<div>${recentGames || gettext("No games have been played yet.")
+				}</div >
 
 				<h2>Pending Games</h2>
-				<div id="pendingGamesContainer">${pendingGames || '<p>No pending games.</p>'}</div>
+				<div id="pendingGamesContainer">${pendingGames || gettext("No pending games.")}</div>
 
-				<h2>Open Tournaments</h2>
+				<h2>${gettext("Open Tournaments")}</h2>
 				<div id="pendingTournamentsContainer"></div>
 
-				<h3>Play new Game</h3>
+				<h3>${gettext("Play new Game")}</h3>
 				<form id="create-game-form">
-					<input id="opp_name" type="text" name="opp_name" placeholder="Enter opponent's Username" />
-					<button class="add_user" type="submit">Play Game +</button>
+					<input id="opp_name" type="text" name="opp_name" placeholder=${gettext("Enter opponent's Username")} />
+					<button class="add_user" type="submit">${gettext("Play Game +")}</button>
 				</form>
 
 				<h3>Create Tournament</h3>
 				<form id="create-tournament-form">
-					<button class="add_user" type="submit">Create Tournament</button>
+					<button class="add_user" type="submit">${gettext("Create Tournament")}</button>
 				</form>
 			`;
 
@@ -78,18 +79,18 @@ export function PongOverview() {
 		.then(response => response.json())
 		.then(tournaments => {
 			console.log(tournaments);
-	
+
 			const openTournaments = tournaments
 				.filter(tournament => tournament.openTournament == true || tournament.host === userName)
 				.map(tournament => `
-					<button class="ChatButtonBackground navigate-button" data-path="/pong/tournament/${tournament.tournament_id}">
-						Join Open Tournament #${tournament.tournament_id}
-					</button>
-				`).join('');
-	
+			< button class= "ChatButtonBackground navigate-button" data - path="/pong/tournament/${tournament.tournament_id}" >
+		${gettext("Join Open Tournament")} #${tournament.tournament_id}
+					</button >
+			`).join('');
+
 			document.getElementById('pendingTournamentsContainer').innerHTML = `
-				<div>${openTournaments || '<p>No open tournaments.</p>'}</div>
-			`;
+			< div > ${openTournaments || gettext("No open tournaments.")}</div >
+				`;
 		})
 		.catch(error => console.error("Fehler beim Laden der Daten:", error));
 
@@ -101,20 +102,20 @@ export function PongOverview() {
 		if (message.message === "game_created") {
 			if (userName == message.player1 || userName == message.player2) {
 				const newGameHTML = `
-					<button class="ChatButtonBackground navigate-button" data-path="/pong/${message.game_id}">
-						${message.player1} vs ${message.player2} (pending)
-					</button>
-				`;
+				< button class="ChatButtonBackground navigate-button" data - path="/pong/${message.game_id}" >
+					${message.player1} vs ${message.player2} (${gettext("pending")})
+					</button >
+	`;
 				const pendingGamesContainer = document.getElementById('pendingGamesContainer');
 				pendingGamesContainer.insertAdjacentHTML('afterbegin', newGameHTML);
 			}
 		}
 		if (message.message === "create_tournament") {
 			const newGameHTML = `
-					<button class="ChatButtonBackground navigate-button" data-path="/pong/tournament/${message.tournament_id}">
-						Join Open Tournament id=${message.tournament_id}
-					</button>
-				`;
+	< button class="ChatButtonBackground navigate-button" data - path="/pong/tournament/${message.tournament_id}" >
+		${gettext("Join Open Tournament")} id = ${message.tournament_id}
+					</button >
+	`;
 			const pendingGamesContainer = document.getElementById('pendingTournamentsContainer');
 			pendingGamesContainer.insertAdjacentHTML('afterbegin', newGameHTML);
 			let path = "/pong/tournament/" + message.tournament_id;

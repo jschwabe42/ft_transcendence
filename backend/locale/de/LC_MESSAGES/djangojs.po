@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-15 14:25+0100\n"
+"POT-Creation-Date: 2025-02-15 15:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: dashboard/static/dashboard/js/dashboard.js:6
+#: pong/static/pong/js/overview.js:43
 msgid "Refresh"
 msgstr "Aktualisieren"
 
@@ -100,6 +101,59 @@ msgstr "Einstellungen"
 #: dashboard/static/dashboard/js/profile.js:227
 msgid "No blocked users"
 msgstr "Keine geblockten Nutzer"
+
+#: pong/static/pong/js/overview.js:34
+msgid "pending Tournament game"
+msgstr "ausstehendes Spiel im Tournier"
+
+#: pong/static/pong/js/overview.js:41
+#, fuzzy
+msgid "Practice Game"
+msgstr "Übungspiel starten"
+
+#: pong/static/pong/js/overview.js:44
+msgid "No games have been played yet."
+msgstr "Bisher wurden keine Spiele gespielt."
+
+#: pong/static/pong/js/overview.js:48
+msgid "No pending games."
+msgstr "Kein ausstehendes Spiel."
+
+#: pong/static/pong/js/overview.js:50
+msgid "Open Tournaments"
+msgstr "Offene Tourniere"
+
+#: pong/static/pong/js/overview.js:53
+msgid "Play new Game"
+msgstr "Neues Spiel"
+
+#: pong/static/pong/js/overview.js:55
+#, fuzzy
+#| msgid "Enter room name"
+msgid "Enter opponent's Username"
+msgstr "Gib den Raumnamen ein"
+
+#: pong/static/pong/js/overview.js:56
+msgid "Play Game +"
+msgstr "Spiel Spielen +"
+
+#: pong/static/pong/js/overview.js:61
+#, fuzzy
+#| msgid "Create Room"
+msgid "Create Tournament"
+msgstr "Raum erstellen"
+
+#: pong/static/pong/js/overview.js:87 pong/static/pong/js/overview.js:116
+msgid "Join Open Tournament"
+msgstr "Offenem Tournier beitreten"
+
+#: pong/static/pong/js/overview.js:92
+msgid "No open tournaments."
+msgstr "Keine offenen Tourniere"
+
+#: pong/static/pong/js/overview.js:106
+msgid "pending"
+msgstr "ausstehend"
 
 #: quiz/static/quiz/js/quiz_logic.js:134 quiz/static/quiz/js/quiz_logic.js:149
 #: quiz/static/quiz/js/quiz_logic.js:153
