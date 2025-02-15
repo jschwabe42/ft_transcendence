@@ -31,7 +31,7 @@ export function register_user() {
 				<input type="password" name="password2" id="id_password2" class="form-control">
 				<div id="password2-errors" class="text-danger"></div>
 			</div>
-			<button class="btn btn-outline-info" type="submit">${gettext("Sign Up")}</button>
+			<button class="btn btn-outline-info" id="register-sign-up-button" type="submit">${gettext("Sign Up")}</button>
 		</fieldset>
 		<div id="message-container"></div>
 		<div class="border-top pt-3">
@@ -116,17 +116,24 @@ function add_register_form_listener() {
 			form.reset();
 			router.navigateTo('/login/');
 		} else {
-			for (const [field, errors] of Object.entries(data.errors)) {
-				const errorList = document.createElement('ul');
-				errors.forEach(error => {
-					const errorItem = document.createElement('li');
-					errorItem.textContent = error.message;
-					errorList.appendChild(errorItem);
-				});
-				const fieldContainer = document.getElementById(field + '-errors');
-				fieldContainer.innerHTML = '';
-				fieldContainer.appendChild(errorList);
-				document.getElementById('id_' + field).classList.add('is-invalid');
+			if (data.type) {
+				if (data.type === 'username') {
+					valid = false;
+					document.getElementById('id_username').classList.add('is-invalid');
+					document.getElementById('username-errors').innerHTML = data.message;
+				}
+				if (data.type === 'mail') {
+					valid = false;
+					document.getElementById('id_email').classList.add('is-invalid');
+					document.getElementById('email-errors').innerHTML = data.message;
+				}
+				if (data.type === 'password') {
+					valid = false;
+					document.getElementById('id_password1').classList.add('is-invalid');
+					document.getElementById('password1-errors').innerHTML = data.message;
+				}
+			} else {
+				messageContainer.innerHTML = '<p>' + data.message + '</p>';
 			}
 		}
 	});

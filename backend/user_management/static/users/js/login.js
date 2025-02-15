@@ -23,7 +23,7 @@ export function login_user() {
 				<div id="password-errors" class="text-danger"></div>
 			</div>
 
-			<button class="btn btn-outline-info" type="submit">${gettext("Sign In")}</button>
+			<button class="btn btn-outline-info" id="login-signin-button" type="submit">${gettext("Sign In")}</button>
 		</fieldset>
 		<button class="btn btn-outline-info" id="oauth-authenticate">${gettext("OAuth2 using 42")}</button>
 		<div id="message-container"></div>

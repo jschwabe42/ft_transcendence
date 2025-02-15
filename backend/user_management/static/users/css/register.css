@@ -40,3 +40,7 @@
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+#register-sign-up-button {
+	margin-top: 10px;
+}
