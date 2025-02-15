@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-15 14:24+0100\n"
+"POT-Creation-Date: 2025-02-15 15:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,62 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: pong/api_views.py:32
+msgid "Opponent username is required."
+msgstr ""
+
+#: pong/api_views.py:37
+msgid "You cannot play against yourself."
+msgstr ""
+
+#: pong/api_views.py:44
+msgid "Opponent does not exist."
+msgstr ""
+
+#: pong/api_views.py:49
+msgid "User does not exist."
+msgstr ""
+
+#: pong/api_views.py:65
+#, fuzzy
+#| msgid "Account created successfully."
+msgid "Game created successfully."
+msgstr "Konto har skapats framgångsrikt."
+
+#: pong/api_views.py:83
+msgid "game_id score1 and score2 are required"
+msgstr ""
+
+#: pong/api_views.py:90 pong/api_views.py:142
+msgid "Game not found."
+msgstr ""
+
+#: pong/api_views.py:115
+msgid "Game successfully saved score."
+msgstr ""
+
+#: pong/api_views.py:135
+msgid "game_id, control1, and control2 are required."
+msgstr ""
+
+#: pong/api_views.py:150
+msgid "You are not a player in this game."
+msgstr ""
+
+#: pong/api_views.py:156
+msgid "Control settings successfully updated for user"
+msgstr ""
+
+#: pong/api_views.py:172
+msgid "user does not exist."
+msgstr ""
+
+#: pong/api_views.py:177
+#, fuzzy
+#| msgid "Account created successfully."
+msgid "Tournament created successfully."
+msgstr "Konto har skapats framgångsrikt."
 
 #: templates/index.html:56 templates/index.html:65
 msgid "Transcendence"
@@ -123,9 +179,9 @@ msgid "User blocked successfully."
 msgstr "Användaren blockerades framgångsrikt."
 
 #: user_management/views.py:40 user_management/views.py:54
-#: user_management/views.py:95 user_management/views.py:117
-#: user_management/views.py:132 user_management/views.py:152
-#: user_management/views.py:182 user_management/views.py:240
+#: user_management/views.py:97 user_management/views.py:119
+#: user_management/views.py:134 user_management/views.py:154
+#: user_management/views.py:184 user_management/views.py:256
 msgid "Invalid request method."
 msgstr "Ogiltig metod för begäran."
 
@@ -135,43 +191,43 @@ msgstr "Ogiltig metod för begäran."
 msgid "User unblocked successfully."
 msgstr "Användaren avblockerades framgångsrikt."
 
-#: user_management/views.py:86
+#: user_management/views.py:87
 msgid "Passwords do not match."
 msgstr "Lösenorden stämmer inte överens."
 
-#: user_management/views.py:93
+#: user_management/views.py:95
 msgid "Account created successfully."
 msgstr "Konto har skapats framgångsrikt."
 
-#: user_management/views.py:112
+#: user_management/views.py:114
 msgid "Login successful."
 msgstr "Inloggningen lyckades."
 
-#: user_management/views.py:115
+#: user_management/views.py:117
 msgid "Invalid username or password!"
 msgstr "Ogiltigt användarnamn eller lösenord!"
 
-#: user_management/views.py:129
+#: user_management/views.py:131
 msgid "Logout successful."
 msgstr "Utloggningen lyckades."
 
-#: user_management/views.py:173
+#: user_management/views.py:175
 msgid "Invalid password."
 msgstr "Ogiltigt lösenord."
 
-#: user_management/views.py:181
+#: user_management/views.py:183
 msgid "Profile updated successfully."
 msgstr "Profilen uppdaterades framgångsrikt."
 
-#: user_management/views.py:190
+#: user_management/views.py:193
 msgid "Invalid email address."
 msgstr "Ogiltig e-postadress."
 
-#: user_management/views.py:194 user_management/views.py:199
+#: user_management/views.py:201 user_management/views.py:210
 msgid "An Account with this email already exists."
 msgstr "Ett konto med den här e-postadressen finns redan."
 
-#: user_management/views.py:208
+#: user_management/views.py:220
 msgid ""
 "Invalid username. Username must contain only letters, numbers, and "
 "underscores, and cannot be empty or contain only whitespace."
@@ -180,14 +236,14 @@ msgstr ""
 "siffror och understreck och får inte vara tomt eller innehålla enbart "
 "blanksteg."
 
-#: user_management/views.py:214 user_management/views.py:217
+#: user_management/views.py:227 user_management/views.py:232
 msgid "Username already taken."
 msgstr "Användarnamn redan taget."
 
-#: user_management/views.py:234
+#: user_management/views.py:250
 msgid "Invalid current password."
 msgstr "Ogiltigt aktuellt lösenord."
 
-#: user_management/views.py:239
+#: user_management/views.py:255
 msgid "Password changed successfully."
 msgstr "Lösenordet har ändrats framgångsrikt."
