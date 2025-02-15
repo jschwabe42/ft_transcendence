@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-15 15:07+0100\n"
+"POT-Creation-Date: 2025-02-15 15:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,9 +70,13 @@ msgstr ""
 
 #: pong/api_views.py:177
 #, fuzzy
-#| msgid "Account created successfully."
 msgid "Tournament created successfully."
-msgstr "Konto har skapats framgångsrikt."
+msgstr "Turneringen har skapats framgångsrikt."
+
+#: pong/consumers.py:293
+#, fuzzy
+msgid "Games created successfully"
+msgstr "Spel har skapats framgångsrikt."
 
 #: templates/index.html:56 templates/index.html:65
 msgid "Transcendence"
