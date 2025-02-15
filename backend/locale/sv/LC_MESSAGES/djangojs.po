@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-15 15:39+0100\n"
+"POT-Creation-Date: 2025-02-15 15:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,7 +106,7 @@ msgstr "Inga blockerade användare"
 msgid "pending Tournament game"
 msgstr ""
 
-#: pong/static/pong/js/overview.js:41
+#: pong/static/pong/js/overview.js:41 pong/static/pong/js/pong_practice.js:11
 #, fuzzy
 #| msgid "Start Game"
 msgid "Practice Game"
@@ -156,6 +156,36 @@ msgstr ""
 msgid "pending"
 msgstr ""
 
+#: pong/static/pong/js/pong_display_ingame.js:16
+#: pong/static/pong/js/pong_display_ingame.js:32
+msgid "Ready"
+msgstr ""
+
+#: pong/static/pong/js/pong_display_ingame.js:57
+msgid "back to menu"
+msgstr ""
+
+#: pong/static/pong/js/pong_practice.js:12
+msgid "Left Paddels: W S; Right Paddels: UP DOWN;"
+msgstr ""
+
+#: pong/static/pong/js/pong_practice.js:15
+#: pong/static/pong/js/pong_practice.js:187
+#: quiz/static/quiz/js/room_display.js:16
+msgid "Start Game"
+msgstr "Starta spelet"
+
+#: pong/static/pong/js/pong_practice.js:25
+#: pong/static/pong/js/pong_practice.js:29
+msgid "player"
+msgstr ""
+
+#: pong/static/pong/js/pong_practice.js:182
+#, fuzzy
+#| msgid "Start Game"
+msgid "Pause Game"
+msgstr "Starta spelet"
+
 #: quiz/static/quiz/js/quiz_logic.js:134 quiz/static/quiz/js/quiz_logic.js:149
 #: quiz/static/quiz/js/quiz_logic.js:153
 msgid "points"
@@ -174,10 +204,6 @@ msgstr "Du har anslutit dig till rummet!"
 msgid "Here you can start participating in the quiz."
 msgstr ""
 "Här kan du börja delta i frågesporten. (Varning: Frågesporten är på engelska)"
-
-#: quiz/static/quiz/js/room_display.js:16
-msgid "Start Game"
-msgstr "Starta spelet"
 
 #: quiz/static/quiz/js/room_display.js:20
 msgid "Leave Room"
