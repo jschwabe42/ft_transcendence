@@ -89,7 +89,6 @@ class BlockManagerTest(TestCase):
 			BlockedUsers.objects.filter(blocker=self.user1, blockee=self.user2).exists()
 		)
 		self.assertTrue(
-			Block_Manager.is_blocked(self.user2),
 			Block_Manager.is_blocked_by(blockee=self.user2, blocker=self.user1),
 		)
 		self.assertTrue(
