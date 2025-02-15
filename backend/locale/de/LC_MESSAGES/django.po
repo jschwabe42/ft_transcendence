@@ -56,39 +56,39 @@ msgstr "Deutsch"
 
 #: user_management/friends.py:29
 msgid "You cannot befriend yourself!"
-msgstr ""
+msgstr "Du kannst nicht dich selbst befreunden!"
 
 #: user_management/friends.py:34
 msgid "Friend request pending approval."
-msgstr ""
+msgstr "Es ist bereits eine Freundschaftsanfrage im gange."
 
 #: user_management/friends.py:36
 msgid "You are already friends!"
-msgstr ""
+msgstr "Ihr seid schon befreundet!"
 
 #: user_management/friends.py:50
 msgid "you did not send the friend request, you can only deny it!"
-msgstr ""
+msgstr "Du hast die Freundschaftsanfrage nicht gestellt, du kannst sie nur ablehnen!"
 
 #: user_management/friends.py:60
 msgid "There is no request to deny"
-msgstr ""
+msgstr "Es gibt keine Freundschaftsanfrage an dich."
 
 #: user_management/friends.py:64
 msgid "you sent the friend request, you can only cancel it!"
-msgstr ""
+msgstr "Du hast die Freundschaftsanfrage gestellt und kannst sie nur abbrechen!"
 
 #: user_management/friends.py:76
 msgid "the request you are trying to accept does not exist"
-msgstr ""
+msgstr "Die abzulehnende Freundschaftsanfrage existiert nicht."
 
 #: user_management/friends.py:91
 msgid "The target user does not exist!"
-msgstr ""
+msgstr "Dieser Nutzer existiert nicht!"
 
 #: user_management/friends.py:98
 msgid "the friendship you are trying to delete does not exist"
-msgstr ""
+msgstr "Es gibt keine Freundschaft zwischen euch!"
 
 #: user_management/friends_api.py:65
 #, fuzzy
@@ -98,7 +98,7 @@ msgstr "Profil erfolgreich aktualisiert."
 
 #: user_management/friends_api.py:77
 msgid "Friend request cancelled."
-msgstr ""
+msgstr "Freundschaftsanfrage abgebrochen."
 
 #: user_management/friends_api.py:89
 #, fuzzy
@@ -114,7 +114,7 @@ msgstr "Ungültige Anforderungsmethode."
 
 #: user_management/friends_api.py:113
 msgid "Friendship ended."
-msgstr ""
+msgstr "Freundschaft beendet."
 
 #: user_management/views.py:38
 #, fuzzy

@@ -307,7 +307,7 @@ msgstr "Anmelden"
 
 #: user_management/static/users/js/login.js:28
 msgid "OAuth2 using 42"
-msgstr ""
+msgstr "OAuth mit 42"
 
 #: user_management/static/users/js/login.js:32
 #: user_management/static/users/js/logout.js:17
@@ -329,11 +329,11 @@ msgstr "Hast du schon ein Benutzerkonto?"
 
 #: user_management/static/users/js/oauth.js:24
 msgid "OAuth Error"
-msgstr ""
+msgstr "OAuth fehler"
 
 #: user_management/static/users/js/oauth.js:27
 msgid "Back to Login"
-msgstr ""
+msgstr "zurück zum Login"
 
 #: user_management/static/users/js/register.js:12
 msgid "Join Today"
