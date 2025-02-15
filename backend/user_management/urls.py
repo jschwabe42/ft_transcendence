@@ -27,6 +27,8 @@ friends_urls = [
 ]
 
 urlpatterns = [
+	# Add the custom verification of jwt url
+	path('api/verify-jwt/', views.test_hybrid_auth, name='verify-jwt'),
 	path('api/oauth/', OauthView.as_view(), name='oauth'),
 	path('api/oauth-callback/', OauthCallBackView.as_view(), name='api-callback'),
 	path('api/blocked/', views.blocked_users, name='blocked_users'),

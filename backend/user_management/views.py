@@ -31,7 +31,7 @@ User = get_user_model()
 @hybrid_login_required
 def test_hybrid_auth(request):
 	return JsonResponse({
-		'message': 'hybrid_login_required is working!',
+		'message': 'JWT TOKEN VALID!!',
 		'user': {
 			'username': request.user.username,
 			'email': request.user.email,
@@ -168,9 +168,17 @@ def logout_view(request):
 	if request.method == 'POST':
 		logout(request)
 		new_csrf_token = get_token(request)
-		return JsonResponse(
+
+		response = JsonResponse(
 			{'success': True, 'message': _('Logout successful.'), 'csrf_token': new_csrf_token}
 		)
+
+		# Clear cookies
+		response.delete_cookie('access_token')
+		response.delete_cookie('refresh_token')
+	
+		
+		return response
 	else:
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 

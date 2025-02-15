@@ -8,29 +8,33 @@ export function login_user() {
 	const userAppContent = document.getElementById('user-app-content');
 
 	userAppContent.innerHTML = `
-	<form id="login-form" class="form">
-		<fieldset class="form-group">
-			<legend class="border-bottom mb-4" id="login-headline">${gettext("Login")}</legend>
-			<div class="form-group">
-				<label for="id_username">${gettext("Username:")}</label>
-				<input type="text" name="username" id="id_username" class="form-control">
-				<div id="username-errors" class="text-danger"></div>
-			</div>
+		<form id="login-form" class="form">
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4" id="login-headline">${gettext("Login")}</legend>
+				<div class="form-group">
+					<label for="id_username">${gettext("Username:")}</label>
+					<input type="text" name="username" id="id_username" class="form-control">
+					<div id="username-errors" class="text-danger"></div>
+				</div>
 
-			<div class="form-group">
-				<label for="id_password">${gettext("Password:")}</label>
-				<input type="password" name="password" id="id_password" class="form-control">
-				<div id="password-errors" class="text-danger"></div>
-			</div>
+				<div class="form-group">
+					<label for="id_password">${gettext("Password:")}</label>
+					<input type="password" name="password" id="id_password" class="form-control">
+					<div id="password-errors" class="text-danger"></div>
+				</div>
 
-			<button class="btn btn-outline-info" id="login-signin-button" type="submit">${gettext("Sign In")}</button>
-		</fieldset>
-		<button class="btn btn-outline-info" id="oauth-authenticate">${gettext("OAuth2 using 42")}</button>
-		<div id="message-container"></div>
-		<div class="border-top pt-3">
-			<small class="text-muted" id="register-link-container">
-				${gettext("Want to create an Account?")} <span class="ml-2 register-link" id="account-register-link">${gettext("Register")}</span>
-			</small>
+				<button class="btn btn-outline-info" id="login-signin-button" type="submit">${gettext("Sign In")}</button>
+			</fieldset>
+			<button class="btn btn-outline-info" id="oauth-authenticate">${gettext("OAuth2 using 42")}</button>
+			<div id="message-container"></div>
+			<div class="border-top pt-3">
+				<small class="text-muted" id="register-link-container">
+					${gettext("Want to create an Account?")} <span class="ml-2 register-link" id="account-register-link">${gettext("Register")}</span>
+				</small>
+			</div>
+		</form>
+		<div id="loading-overlay" class="loading-overlay" style="display: none;">
+			<div class="loading-spinner"></div>
 		</div>
 	`;
 
@@ -51,6 +55,9 @@ function add_login_form_listener() {
 		const form = event.target;
 		const formData = new FormData(form);
 
+		// Show the loading screen
+		document.getElementById('loading-overlay').style.display = 'flex';
+
 		document.querySelectorAll('.text-danger').forEach(el => el.innerHTML = '');
 		document.querySelectorAll('.form-control').forEach(el => el.classList.remove('is-invalid'));
 
@@ -69,8 +76,10 @@ function add_login_form_listener() {
 		}
 
 		if (!valid) {
+			document.getElementById('loading-overlay').style.display = 'none';
 			return;
 		}
+
 		const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 		const response = await fetch('/users/api/login/', {
 			method: 'POST',
@@ -84,6 +93,9 @@ function add_login_form_listener() {
 		const data = await response.json();
 		const messageContainer = document.getElementById('message-container');
 		messageContainer.innerHTML = '';
+
+		document.getElementById('loading-overlay').style.display = 'none';
+
 		if (data.success) {
 			messageContainer.innerHTML = '<p>' + data.message + '</p>';
 			form.reset();
@@ -93,17 +105,24 @@ function add_login_form_listener() {
 			update_navbar();
 			router.navigateTo('/dashboard/');
 		} else {
-			for (const [field, errors] of Object.entries(data.errors)) {
-				const errorList = document.createElement('ul');
-				errors.forEach(error => {
-					const errorItem = document.createElement('li');
-					errorItem.textContent = error.message;
-					errorList.appendChild(errorItem);
-				});
-				const fieldContainer = document.getElementById(field + '-errors');
-				fieldContainer.innerHTML = '';
-				fieldContainer.appendChild(errorList);
-				document.getElementById('id_' + field).classList.add('is-invalid');
+			// Check if data.errors exists
+			if (data.errors) {
+				for (const [field, errors] of Object.entries(data.errors)) {
+					const errorList = document.createElement('ul');
+					errors.forEach(error => {
+						const errorItem = document.createElement('li');
+						errorItem.textContent = error.message;
+						errorList.appendChild(errorItem);
+					});
+					const fieldContainer = document.getElementById(field + '-errors');
+					fieldContainer.innerHTML = '';
+					fieldContainer.appendChild(errorList);
+					document.getElementById('id_' + field).classList.add('is-invalid');
+				}
+			} else {
+				// Handle cases where data.errors is missing
+				document.getElementById('username-errors').innerHTML = `${gettext(data.message || 'An unknown error occurred.')}`;
+				document.getElementById('id_username').classList.add('is-invalid');
 			}
 		}
 	});
