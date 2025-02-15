@@ -78,3 +78,9 @@
 	font-size: 16px;
 	padding: 2px;
 }
+
+#pv-profile-second-div {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+}

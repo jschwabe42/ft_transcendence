@@ -7,9 +7,13 @@ export function loadProfile(username) {
 		<img id="pv-profile-picture"></img>
 		<h3 id="pv-profile-name"></h3>
 	</div>
-	<div id="pv-profile-settings-content" style="visibility: hidden;">
-		<button id="pv-show-blocked-users" class="btn btn-primary">${gettext("Blocked Users")}</button>
-		<div id="pv-blocked-users-list" style="visibility: hidden;"></div>
+	<div id="pv-profile-second-div">
+		<div id="pv-profile-settings-content" style="visibility: hidden;">
+			<button id="pv-show-blocked-users" class="btn btn-primary">${gettext("Blocked Users")}</button>
+			<div id="pv-blocked-users-list" style="visibility: hidden;"></div>
+		</div>
+		<div id="pv-profile-friends-content">
+		</div>
 	</div>
 	<div id="pv-profile-content">
 		<div id="pv-quiz-stats">
