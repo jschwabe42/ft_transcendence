@@ -273,12 +273,6 @@ msgstr "Upprepa nytt lösenord"
 msgid "Save"
 msgstr "Spara"
 
-#: user_management/static/users/js/account.js:73
-#, fuzzy
-#| msgid "'s Profile"
-msgid "'s profile"
-msgstr "'s Profil"
-
 #: user_management/static/users/js/account.js:101
 msgid "Password is required."
 msgstr "Lösenord krävs"

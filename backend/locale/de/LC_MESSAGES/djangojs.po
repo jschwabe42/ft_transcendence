@@ -274,12 +274,6 @@ msgstr "Neues Passwort wiederholen"
 msgid "Save"
 msgstr "Speichern"
 
-#: user_management/static/users/js/account.js:73
-#, fuzzy
-#| msgid "'s Profile"
-msgid "'s profile"
-msgstr "s Profil"
-
 #: user_management/static/users/js/account.js:101
 msgid "Password is required."
 msgstr "Passwort ist erforderlich."
