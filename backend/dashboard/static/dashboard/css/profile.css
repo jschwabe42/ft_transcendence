@@ -99,10 +99,43 @@
 	padding: 2px;
 	cursor: pointer;
 	border: 1px solid #1c4f73;
-	margin-right: auto;
 }
 
 .pv-friend-item:hover {
+	background-color: #f0f0f0;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border: 1px solid #1c4f73;
+}
+
+#pv-friends-list {
+	display: flex;
+	flex-direction: column;
+	align-items: right;
+	width: 100%;
+	align-self: flex-start;
+}
+
+#pv-show-friend-requests-button {
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+#pv-profile-friends-content {
+	display: flex;
+	flex-direction: column;
+}
+
+.pv-friend-request-got-item,
+.pv-friend-request-sent-item {
+	margin-top: 5px;
+	margin-bottom: 2px;
+	padding: 2px;
+	cursor: pointer;
+	border: 1px solid #1c4f73;
+}
+
+.pv-friend-request-got-item,
+.pv-friend-request-sent-item:hover {
 	background-color: #f0f0f0;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	border: 1px solid #1c4f73;

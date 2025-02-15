@@ -15,6 +15,8 @@ export function loadProfile(username) {
 		<div id="pv-profile-friends-content">
 			<button id="pv-show-friends-button" class="btn btn-primary">${gettext("Friends")}</button>
 			<div id="pv-friends-list" style="visibility: hidden;"></div>
+			<button id="pv-show-friend-requests-button" class="btn btn-primary" style="visibility: hidden;">${gettext("Friend Requests")}</button>
+			<div id="pv-friend-request-list" style="visibility: hidden;"></div>
 		</div>
 	</div>
 	<div id="pv-profile-content">
@@ -94,6 +96,7 @@ function displayProfile(profile) {
 	} else {
 		addSettingsButton();
 		document.getElementById('pv-profile-settings-content').style.visibility = 'visible';
+		addShowFriendRequestsButton(profile);
 	}
 
 	addFriendsButton(profile);
@@ -493,5 +496,68 @@ function addFriendsButton(profile) {
 		} else {
 			friendsList.style.visibility = 'hidden';
 		}
+	};
+}
+
+function addShowFriendRequestsButton(profile) {
+	const showFriendRequestsButton = document.getElementById('pv-show-friend-requests-button');
+	showFriendRequestsButton.style.visibility = 'visible';
+
+	showFriendRequestsButton.onclick = function () {
+		const friendRequestList = document.getElementById('pv-friend-request-list');
+		friendRequestList.innerHTML = '';
+		if (friendRequestList.style.visibility === 'visible') {
+			friendRequestList.style.visibility = 'hidden';
+			return;
+		}
+		friendRequestList.style.visibility = 'visible';
+		fetch(`/users/api/friends/inactive/`)
+		.then(response => response.json())
+		.then(data => {
+			if (data.success) {
+				console.log('Friend requests:', data);
+				const receivedRequestsHeader = document.createElement('h5');
+				receivedRequestsHeader.textContent = gettext('Received Friend Requests:');
+				friendRequestList.appendChild(receivedRequestsHeader);
+				if (data.received.length === 0) {
+					const noReceivedRequests = document.createElement('p');
+					noReceivedRequests.textContent = gettext('No friend requests');
+					friendRequestList.appendChild(noReceivedRequests);
+				} else {
+					data.received.forEach(username => {
+						const requestItem = document.createElement('div');
+						requestItem.className = 'pv-friend-request-got-item';
+						requestItem.innerHTML = `
+						<span>${username}</span>
+						`;
+						requestItem.onclick = function () {
+							router.navigateTo(`/dashboard/${username}/`);
+						};
+						friendRequestList.appendChild(requestItem);
+					});
+				}
+
+				const sentRequestsHeader = document.createElement('h5');
+				sentRequestsHeader.textContent = gettext('Sent Friend Requests:');
+				friendRequestList.appendChild(sentRequestsHeader);
+				if (data.sent.length === 0) {
+					const noSentRequests = document.createElement('p');
+					noSentRequests.textContent = gettext('No sent friend requests');
+					friendRequestList.appendChild(noSentRequests);
+				} else {
+					data.sent.forEach(username => {
+						const requestItem = document.createElement('div');
+						requestItem.className = 'pv-friend-request-sent-item';
+						requestItem.innerHTML = `
+						<span>${username}</span>
+						`;
+						requestItem.onclick = function () {
+							router.navigateTo(`/dashboard/${username}/`);
+						};
+						friendRequestList.appendChild(requestItem);
+					});
+				}
+			}
+		});
 	};
 }
