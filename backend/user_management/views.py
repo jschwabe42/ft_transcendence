@@ -83,7 +83,9 @@ def register(request):
 		password2 = request.POST.get('password2')
 
 		if password1 != password2:
-			return JsonResponse({'success': False, 'type': 'password', 'message': _('Passwords do not match.')})
+			return JsonResponse(
+				{'success': False, 'type': 'password', 'message': _('Passwords do not match.')}
+			)
 		validation_response = validate_data(username, email)
 		if validation_response:
 			return validation_response
@@ -187,23 +189,33 @@ def validate_data(username, email, current_user=None):
 		try:
 			validate_email(email)
 		except ValidationError:
-			return JsonResponse({'success': False, 'type': 'mail', 'message': _('Invalid email address.')})
+			return JsonResponse(
+				{'success': False, 'type': 'mail', 'message': _('Invalid email address.')}
+			)
 		if current_user:
 			if User.objects.filter(email=email).exclude(id=current_user.id).exists():
 				return JsonResponse(
-					{'success': False, 'type': 'mail', 'message': _('An Account with this email already exists.')}
+					{
+						'success': False,
+						'type': 'mail',
+						'message': _('An Account with this email already exists.'),
+					}
 				)
 		else:
 			if User.objects.filter(email=email).exists():
 				return JsonResponse(
-					{'success': False, 'type': 'mail', 'message': _('An Account with this email already exists.')}
+					{
+						'success': False,
+						'type': 'mail',
+						'message': _('An Account with this email already exists.'),
+					}
 				)
 	if username:
 		if len(username.strip()) == 0 or not re.match(r'^\w+$', username):
 			return JsonResponse(
 				{
 					'success': False,
-					'type': 'username', 
+					'type': 'username',
 					'message': _(
 						'Invalid username. Username must contain only letters, numbers, and underscores, and cannot be empty or contain only whitespace.'
 					),
@@ -211,10 +223,14 @@ def validate_data(username, email, current_user=None):
 			)
 		if current_user:
 			if User.objects.filter(username=username).exclude(id=current_user.id).exists():
-				return JsonResponse({'success': False, 'type': 'username', 'message': _('Username already taken.')})
+				return JsonResponse(
+					{'success': False, 'type': 'username', 'message': _('Username already taken.')}
+				)
 		else:
 			if User.objects.filter(username=username).exists():
-				return JsonResponse({'success': False, 'type': 'username', 'message': _('Username already taken.')})
+				return JsonResponse(
+					{'success': False, 'type': 'username', 'message': _('Username already taken.')}
+				)
 	return None
 
 

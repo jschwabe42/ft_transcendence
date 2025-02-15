@@ -4,18 +4,15 @@ export function PongPractice() {
 	const contentElement = document.getElementById('pong-app-content');
 
 	if (contentElement) {
-		const title = "Practice Game";
-		const description = "Left Paddels: W S; Right Paddels UP DOWN";
-		
 		contentElement.innerHTML = `
 			<main role="main" class="container">
 				<div class="ready-bar">
 					<div>
-						<h1 style="color: white;">${title}</h1>
-						<p style="color: white;">${description}</p>
+						<h1 style="color: white;">${gettext("Practice Game")}</h1>
+						<p style="color: white;">${gettext("Left Paddels: W S; Right Paddels: UP DOWN;")}</p>
 					</div>
 					<div>
-						<button id="start-game">Start Game</button>
+						<button id="start-game">${gettext("Start Game")}</button>
 					</div>
 				</div>
 
@@ -25,11 +22,11 @@ export function PongPractice() {
 
 				<div class="score">
 					<div class="player">
-						<p>player1</p>
+						<p>${gettext("player")}1</p>
 						<p id="player1">0</p>
 					</div>
 					<div class="player">
-						<p>player2</p>
+						<p>${gettext("player")}2</p>
 						<p id="player2">0</p>
 					</div>
 				</div>
@@ -106,10 +103,10 @@ function RenderPracticeGame() {
 		ctx.closePath();
 	}
 
-	
+
 	function updatePaddles() {
 		const speed = 10; // paddle speed
-		
+
 		if (keys.w && leftpong.y > 0) {
 			leftpong.y -= speed;
 		}
@@ -162,7 +159,7 @@ function RenderPracticeGame() {
 			resetBall();
 		}
 		if (ball.speed <= 5)
-		ball.speed += 0.005;
+			ball.speed += 0.005;
 	}
 
 	function resetBall() {
@@ -182,12 +179,12 @@ function RenderPracticeGame() {
 	document.getElementById("start-game").addEventListener("click", () => {
 		if (!game_is_running) {
 			game_is_running = true;
-			document.getElementById("start-game").innerText = "Pause Game";
+			document.getElementById("start-game").innerText = gettext("Pause Game");
 			gameLoop();
 		}
 		else {
 			game_is_running = false;
-			document.getElementById("start-game").innerText = "Start Game";
+			document.getElementById("start-game").innerText = gettext("Start Game");
 		}
 	});
 	document.addEventListener("keydown", (event) => {
