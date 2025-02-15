@@ -36,6 +36,14 @@ class Friends_Manager:
 		return (False, None)
 
 	@staticmethod
+	def count_friends(user):
+		"""User instance: returns the number of friends the user has"""
+		return Friends.objects.filter(
+			models.Q(origin=user) | models.Q(target=user),
+			accepted=True
+		).count()
+
+	@staticmethod
 	# send a friend request
 	def request(origin, target_username):
 		"""User instance, target username"""

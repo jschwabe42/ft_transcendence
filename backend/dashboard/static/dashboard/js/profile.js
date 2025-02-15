@@ -13,6 +13,8 @@ export function loadProfile(username) {
 			<div id="pv-blocked-users-list" style="visibility: hidden;"></div>
 		</div>
 		<div id="pv-profile-friends-content">
+			<button id="pv-show-friends-button" class="btn btn-primary">${gettext("Friends")}</button>
+			<div id="pv-friends-list" style="visibility: hidden;"></div>
 		</div>
 	</div>
 	<div id="pv-profile-content">
@@ -92,6 +94,8 @@ function displayProfile(profile) {
 		addSettingsButton();
 		document.getElementById('pv-profile-settings-content').style.visibility = 'visible';
 	}
+
+	addFriendsButton(profile);
 
 	const quizStatsList = document.getElementById('pv-quiz-stats-list');
 	quizStatsList.innerHTML = `
@@ -239,6 +243,9 @@ function addBlockedUsersList(profile) {
 						<span>${username}</span>
 						<button class="btn btn-danger pv-unblock-button" data-username="${username}">${gettext("Unblock")}</button>
 					`;
+					userItem.onclick = function () {
+						router.navigateTo(`/dashboard/${username}/`);
+					};
 					blockedUsersList.appendChild(userItem);
 				});
 			}
@@ -294,4 +301,49 @@ function addBlockedUsersList(profile) {
 			});
 		}
 	});
+}
+
+function addFriendsButton(profile) {
+	const showFriendsButton = document.getElementById('pv-show-friends-button');
+	showFriendsButton.textContent = `${profile.friend_count} ${gettext("Friends")}`;
+
+	showFriendsButton.onclick = function () {
+		const friendsList = document.getElementById('pv-friends-list');
+		friendsList.innerHTML = '';
+		if (friendsList.style.visibility === 'hidden') {
+			fetch(`/users/api/friends/active/${profile.username}/`)
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					console.log('Friends:', data.friends_users);
+					if (data.friends_users.length === 0) {
+						const noFriends = document.createElement('p');
+						noFriends.textContent = gettext('No friends');
+						friendsList.appendChild(noFriends);
+					} else {
+						data.friends_users.forEach(friend => {
+							const friendItem = document.createElement('div');
+							friendItem.className = 'pv-friend-item';
+							friendItem.innerHTML = `
+							<img src="${friend.image_url}" alt="${friend.username}${gettext("'s profile picture")}">
+							<span>${friend.username}</span>
+							`;
+							friendItem.onclick = function () {
+								router.navigateTo(`/dashboard/${friend.username}/`);
+							};
+							friendsList.appendChild(friendItem);
+						});
+					}
+				} else {
+					console.error('Failed to fetch friends');
+					const noFriends = document.createElement('p');
+					noFriends.textContent = gettext('Fetching friends failed');
+					friendsList.appendChild(noFriends);
+				}
+			});
+			friendsList.style.visibility = 'visible';
+		} else {
+			friendsList.style.visibility = 'hidden';
+		}
+	};
 }
