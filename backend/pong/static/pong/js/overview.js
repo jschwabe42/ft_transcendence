@@ -27,16 +27,20 @@ export function PongOverview() {
 				`).join('');
 
 			const pendingGames = games
-				.filter(game => game.pending)
+				.filter(game => game.pending && (game.player1 === userName || game.player2 === userName))
 				.map(game => `
 					<button class="ChatButtonBackground navigate-button" data-path="/pong/${game.game_id}">
 						${game.player1} vs ${game.player2} 
-						(${game.tournament_id !== 0 ? 'pending Tournament game' : 'pending'})
+						(${game.tournament_id !== 0 ? `pending Tournament game #${game.tournament_id}` : 'pending'})
 					</button>
 				`).join('');
 
 			document.getElementById('pong-app-content').innerHTML = `
-				<h2>Recent Games</h2>
+				<div class="header-container">
+					<h2>Recent Games</h2>
+					<button class="navigate-button" data-path="/pong/practice/">Practice Game</button>
+				</div>
+				<button id="refresh-button">Refresh</button>
 				<div>${recentGames || '<p>No games have been played yet.</p>'}</div>
 
 				<h2>Pending Games</h2>
@@ -55,8 +59,6 @@ export function PongOverview() {
 				<form id="create-tournament-form">
 					<button class="add_user" type="submit">Create Tournament</button>
 				</form>
-
-				<button class="navigate-button" data-path="/pong/page2">Go to Page 2</button>
 			`;
 
 			document.getElementById("create-game-form").addEventListener("submit", function (event) {
@@ -68,6 +70,26 @@ export function PongOverview() {
 				event.preventDefault();
 				CreateTournament(event, socket);
 			});
+			document.getElementById("refresh-button").addEventListener("click", () => {
+				PongOverview();
+			});
+			return fetch('/pong/api/tournament_data/');
+		})
+		.then(response => response.json())
+		.then(tournaments => {
+			console.log(tournaments);
+	
+			const openTournaments = tournaments
+				.filter(tournament => tournament.openTournament == true || tournament.host === userName)
+				.map(tournament => `
+					<button class="ChatButtonBackground navigate-button" data-path="/pong/tournament/${tournament.tournament_id}">
+						Join Open Tournament #${tournament.tournament_id}
+					</button>
+				`).join('');
+	
+			document.getElementById('pendingTournamentsContainer').innerHTML = `
+				<div>${openTournaments || '<p>No open tournaments.</p>'}</div>
+			`;
 		})
 		.catch(error => console.error("Fehler beim Laden der Daten:", error));
 

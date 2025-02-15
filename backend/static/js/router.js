@@ -7,12 +7,14 @@ import { register_user } from '/static/users/js/register.js';
 import { login_user } from '/static/users/js/login.js';
 import { logout_user } from '/static/users/js/logout.js';
 import { display_account } from '/static/users/js/account.js';
+import { UsersApiHandler } from '/static/users/js/users_api.js';
 
 import { PongOverview } from '/static/pong/js/overview.js';
 import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
 import { PongResult } from '/static/pong/js/pong_result.js';
 import { DisplayTournament } from '/static/pong/js/tournament_display.js';
-import { UsersApiHandler } from '/static/users/js/users_api.js';
+import { PongPractice } from '/static/pong/js/pong_practice.js';
+import { oauth_flow, oauth_callback } from '/static/users/js/oauth.js';
 
 class Router {
 	constructor() {
@@ -67,8 +69,22 @@ class Router {
 		const pongDetailsPathRegex = /^\/pong\/game-details\/([^\/]+)\/?$/;
 		const tournamentPathRegex = /^\/pong\/tournament\/([^\/]+)\/?$/;
 		const usersApiPathRegex = /^\/users\/api\/(.*)$/;
+		const oauthCallbackRegex = /^\/users\/oauth-callback\/?(\?(.*))?$/;
+		const oauthAuthorizeRegex = /^\/users\/oauth\/?$/;
+		let match = path.match(oauthAuthorizeRegex);
+		if (match) {
+			console.warn("OAuth authorize: ", match);
+			oauth_flow();
+			return;
+		}
 
-		let match = path.match(quizPathRegex);
+		match = path.match(oauthCallbackRegex);
+		if (match) {
+			oauth_callback();
+			return;
+		}
+
+		match = path.match(quizPathRegex);
 		if (match) {
 			const roomName = match[1];
 			const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
@@ -163,6 +179,11 @@ router.addRoute('/quiz/', loadRoomList);
  * The main view of the pong app
  */
 router.addRoute('/pong/', PongOverview);
+
+/**
+ * Pong Practice
+ */
+router.addRoute('/pong/practice/', PongPractice);
 
 /**
  * The Homepage

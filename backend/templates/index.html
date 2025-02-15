@@ -31,6 +31,7 @@
 	<!-- CSS files of the pong game -->
 	<link rel="stylesheet" href="/static/chat/chat.css">
 	<link rel="stylesheet" href="/static/pong/css/game.css">
+	<link rel="stylesheet" href="/static/pong/css/tournement.css">
 
 	<!-- CSS files of the users -->
 	<link href="{% static 'users/css/account.css' %}" rel="stylesheet">
@@ -104,6 +105,7 @@
 	<!-- The content of the Pong app -->
 	 <!-- THIS IS REDUNDANT. REPLACE WITH THE ONE ABOVE -->
 	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+	<!-- <div id="username" data-username="{{ user.username }}"></div> -->
 
 	<div class="container mt-5" id="pong-app-content"></div>
 	<!-- The content of the user app -->

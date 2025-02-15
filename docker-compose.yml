@@ -3,9 +3,10 @@ secrets:
     file: ./secrets/postgres_password
   pgadmin_password:
     file: ./secrets/pgadmin_password
+  oauth_api_secret:
+    file: ./secrets/oauth_api_secret
 
-x-global-env:
-  &default-env
+x-global-env: &default-env
   env_file:
     - ./secrets/.env
 
@@ -23,7 +24,7 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres || exit 1"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres || exit 1" ]
       interval: 20s
       timeout: 30s
       retries: 5
@@ -35,13 +36,17 @@ services:
       - 8080:8080
   backend:
     build: ./backend
+    <<: *default-env
     volumes:
       - ./backend:/code
     secrets:
       - postgres_password
+      - oauth_api_secret
+    environment:
+      - container=docker
     ports:
       - "8000:8000"
-    restart: always
+    restart: no
     entrypoint: /code/django.sh
     # depends_on:
     #   postgres:

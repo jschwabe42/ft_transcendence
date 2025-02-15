@@ -1,5 +1,7 @@
 import router from '/static/js/router.js';
-import { CreateTournamentPongGames } from './tournament_api.js';
+import { CreateTournamentGames } from './tournament_api.js';
+import { CreateFinalGame } from './tournament_api.js';
+
 
 export function DisplayTournament(params) {
 	let tournamentModel = {}
@@ -16,17 +18,37 @@ export function DisplayTournament(params) {
 			document.getElementById('pong-app-content').innerHTML = `
 				<h1 id="header">Welcome to Tournament ${params.tournament_id}</h1>
 
-				<p id="host"><strong>Host	:</strong> ${model.host}</p>
-				<p id="player1"><strong >Player1:</strong> ${model.player1}</p>
-				<p id="player2"><strong>Player2:</strong> ${model.player2}</p>
-				<p id="player3"><strong>Player3:</strong> ${model.player3}</p>
-				<p id="playerNum"><strong></strong> ${model.playernum}</p>
+				<div class="bracket-container">
+					<div class="round-quarter-finals">
+						<div class="round round-1">
+							<div id="host" class="player1">${model.host}</div>
+							<div id="player1" class="player2">${model.player1}</div>
+						</div>
 
-				<h1 id='winner1'></h1>
-				<h1 id='winner2'></h1>
+						<div class="round round-2">
+							<div id="player2" class="player3">${model.player2}</div>
+							<div id="player3" class="player4">${model.player3}</div>
+						</div>
+					</div>
+
+					<div class="finals">
+						<div class="round round-3">
+							<div id='winner1' class="semifinalist1">${model.winner1}</div>
+							<div id='winner2' class="semifinalist2">${model.winner2}</div>
+						</div>
+					</div>
+					<div class="annouce-winner">
+						<div id='finalWinner' class="finalist">${model.finalWinner}</div>
+					</div>
+				</div>
+				
 
 				<form id="create-tournament-games" style="display: none;" >
 					<button class="add_user" type="submit">Play Tournament Games +</button>
+				</form>
+
+				<form id="create-final" style="display: none;" >
+					<button class="add_user" type="submit">Start Final Game</button>
 				</form>
 
 				<button class="navigate-button" data-path="/pong/">Go to Menu</button>
@@ -34,8 +56,15 @@ export function DisplayTournament(params) {
 			renderTournamentData(tournamentSocket, tournamentModel);
 			document.getElementById("create-tournament-games").addEventListener("submit", function (event) {
 				event.preventDefault();
-				CreateTournamentPongGames(event, tournamentSocket, tournamentModel, tournament_id)
+				CreateTournamentGames(event, tournamentSocket, tournamentModel, tournament_id)
 				document.getElementById("create-tournament-games").style.display = "none";
+			});
+			document.getElementById("create-final").addEventListener("submit", function (event) {
+				event.preventDefault();
+				let error = 'test'
+				error = CreateFinalGame(event, tournamentSocket, tournamentModel, tournament_id)
+				if (error == "error")
+					document.getElementById("create-final").style.display = "none";
 			});
 		})
 		.catch(error => {
@@ -66,15 +95,15 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 		if (data.use == "join") {
 			tournamentModel[data.field] = data.username
 			document.getElementById(data.field).innerHTML = `<strong>${data.field.replace("player", "Player ")}:</strong> ${data.username}`;
-			document.getElementById("playerNum").innerHTML = data.playerNum
 		}
 		if (data.playerNum == 4 && user == tournamentModel.host && data.winner1 == "" && data.winner2 == "") {
-			document.getElementById("header").style.color = "green";
 			document.getElementById("create-tournament-games").style.display = "block";
 		}
+		if (data.winner1 != "" && data.winner2 != "" && user == tournamentModel.host && data.finalWinner == "") {
+			document.getElementById("create-final").style.display = "block";
+		}
 		if (data.use === "sync") {
-			console.log(data)
-			updateUIWithTournamentData(data);
+			updateUIWithTournamentData(data, tournamentModel);
 		}
 		if (data.use === "createGames" && data.data?.games) {
 			const gameDetails = data.data.games.map((game, index) => ({
@@ -92,6 +121,14 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 				router.navigateTo(path)
 			}
 		}
+		if (data.use == 'createFinal')
+		{
+			console.log(data.player1, data.player2)
+			if (user == data.player1 || user == data.player2) {
+				let path = '/pong/' + data.game_id
+				router.navigateTo(path)
+			}
+		}
 	};
 
 	tournamentSocket.onclose = function (e) {
@@ -103,18 +140,20 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 	};
 }
 
-function updateUIWithTournamentData(data) {
-	document.getElementById("host").innerHTML = `<strong>Host:</strong> ${data.host}`;
-	document.getElementById("player1").innerHTML = `<strong>Player1:</strong> ${data.player1}`;
-	document.getElementById("player2").innerHTML = `<strong>Player2:</strong> ${data.player2}`;
-	document.getElementById("player3").innerHTML = `<strong>Player3:</strong> ${data.player3}`;
-	document.getElementById("playerNum").innerHTML = data.playerNum;
-
-	if (data.winner1 && data.winner1 != "") {
-		document.getElementById("winner1").innerText = data.winner1;
-		if (data.winner2 && data.winner2 != "")
-			document.getElementById("winner2").innerText = data.winner2;
-		if (data.playerNum === 4)
-			document.getElementById("header").style.color = "green";
-	}
+function updateUIWithTournamentData(data, tournamentModel) {
+	tournamentModel.winner1 = data.winner1
+	tournamentModel.winner2 = data.winner2
+	tournamentModel.finalWinner = data.finalWinner
+	console.log("sync")
+	console.log(data)
+	document.getElementById("host").innerHTML = ` ${data.host}`;
+	document.getElementById("player1").innerHTML = ` ${data.player1}`;
+	document.getElementById("player2").innerHTML = ` ${data.player2}`;
+	document.getElementById("player3").innerHTML = ` ${data.player3}`;
+	document.getElementById("winner1").innerText = ` ${data.winner1}`;
+	document.getElementById("winner2").innerText = ` ${data.winner2}`;
+	document.getElementById("finalWinner").innerText =` ${data.finalWinner}`;
+		
+	if (data.playerNum === 4)
+		document.getElementById("header").style.color = "green";
 }

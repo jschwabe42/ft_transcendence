@@ -23,8 +23,9 @@ export function login_user() {
 				<div id="password-errors" class="text-danger"></div>
 			</div>
 
-			<button class="btn btn-outline-info" type="submit">${gettext("Sign In")}</button>
+			<button class="btn btn-outline-info" id="login-signin-button" type="submit">${gettext("Sign In")}</button>
 		</fieldset>
+		<button class="btn btn-outline-info" id="oauth-authenticate">${gettext("OAuth2 using 42")}</button>
 		<div id="message-container"></div>
 		<div class="border-top pt-3">
 			<small class="text-muted" id="register-link-container">
@@ -33,6 +34,10 @@ export function login_user() {
 		</div>
 	`;
 
+	document.getElementById('oauth-authenticate').addEventListener('click', function (event) {
+		event.preventDefault();
+		router.navigateTo('/users/oauth/');
+	});
 	add_login_form_listener();
 
 	document.querySelector('.register-link').addEventListener('click', function () {

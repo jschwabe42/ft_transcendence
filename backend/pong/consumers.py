@@ -278,6 +278,7 @@ class TournamentConsumer(AsyncWebsocketConsumer):
 				'playerNum': self.tournament.playernum,
 				'winner1': self.tournament.winner1,
 				'winner2': self.tournament.winner2,
+				'finalWinner': self.tournament.finalWinner,
 			}
 			await self.channel_layer.group_send(
 				self.group_name, {'type': 'broadcast_create_games', 'response': tournament_data}
@@ -294,8 +295,10 @@ class TournamentConsumer(AsyncWebsocketConsumer):
 			await self.channel_layer.group_send(
 				self.group_name, {'type': 'broadcast_create_games', 'response': response_data}
 			)
-			print('\n\n\nCreated Games and sent to all clients\n\n\n')
-			sys.stdout.flush()
+		elif action == 'createFinal':
+			await self.channel_layer.group_send(
+				self.group_name, {'type': 'broadcast_create_games', 'response': data}
+			)
 
 	async def broadcast_create_games(self, event):
 		await self.send(text_data=json.dumps(event['response']))
