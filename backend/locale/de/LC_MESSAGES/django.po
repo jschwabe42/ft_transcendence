@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-12 12:08+0000\n"
+"POT-Creation-Date: 2025-02-15 14:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,98 +18,160 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/index.html:55 templates/index.html:64
+#: templates/index.html:56 templates/index.html:65
 msgid "Transcendence"
 msgstr "Transcendence"
 
-#: templates/index.html:71
+#: templates/index.html:72
 msgid "Home"
 msgstr "Startseite"
 
-#: templates/index.html:72
+#: templates/index.html:73
 msgid "Chat"
 msgstr "Chat"
 
-#: templates/index.html:74
+#: templates/index.html:75
 msgid "Quiz"
 msgstr "Quiz"
 
-#: templates/index.html:75
+#: templates/index.html:76
 msgid "Pong"
 msgstr "Pong"
 
-#: templates/index.html:76
+#: templates/index.html:77
 msgid "Dashboard"
 msgstr "Benutzerübersicht"
 
-#: transcendence/settings.py:191
+#: transcendence/settings.py:220
 msgid "English"
 msgstr "Englisch"
 
-#: transcendence/settings.py:192
+#: transcendence/settings.py:221
 msgid "Swedish"
 msgstr "Schwedisch"
 
-#: transcendence/settings.py:193
+#: transcendence/settings.py:222
 msgid "German"
 msgstr "Deutsch"
 
-#: user_management/views.py:40
+#: user_management/friends.py:29
+msgid "You cannot befriend yourself!"
+msgstr ""
+
+#: user_management/friends.py:34
+msgid "Friend request pending approval."
+msgstr ""
+
+#: user_management/friends.py:36
+msgid "You are already friends!"
+msgstr ""
+
+#: user_management/friends.py:50
+msgid "you did not send the friend request, you can only deny it!"
+msgstr ""
+
+#: user_management/friends.py:60
+msgid "There is no request to deny"
+msgstr ""
+
+#: user_management/friends.py:64
+msgid "you sent the friend request, you can only cancel it!"
+msgstr ""
+
+#: user_management/friends.py:76
+msgid "the request you are trying to accept does not exist"
+msgstr ""
+
+#: user_management/friends.py:91
+msgid "The target user does not exist!"
+msgstr ""
+
+#: user_management/friends.py:98
+msgid "the friendship you are trying to delete does not exist"
+msgstr ""
+
+#: user_management/friends_api.py:65
+#, fuzzy
+#| msgid "Profile updated successfully."
+msgid "Friend request sent successfully."
+msgstr "Profil erfolgreich aktualisiert."
+
+#: user_management/friends_api.py:77
+msgid "Friend request cancelled."
+msgstr ""
+
+#: user_management/friends_api.py:89
+#, fuzzy
+#| msgid "Invalid request method."
+msgid "Friend request accepted."
+msgstr "Ungültige Anforderungsmethode."
+
+#: user_management/friends_api.py:101
+#, fuzzy
+#| msgid "Invalid request method."
+msgid "Friend request denied."
+msgstr "Ungültige Anforderungsmethode."
+
+#: user_management/friends_api.py:113
+msgid "Friendship ended."
+msgstr ""
+
+#: user_management/views.py:38
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "User blocked successfully."
 msgstr "Benutzer wurde erfolgreich blockiert."
 
-#: user_management/views.py:42 user_management/views.py:56
-#: user_management/views.py:99 user_management/views.py:121
-#: user_management/views.py:136 user_management/views.py:157
-#: user_management/views.py:190 user_management/views.py:263
+#: user_management/views.py:40 user_management/views.py:54
+#: user_management/views.py:95 user_management/views.py:117
+#: user_management/views.py:132 user_management/views.py:152
+#: user_management/views.py:182 user_management/views.py:240
 msgid "Invalid request method."
 msgstr "Ungültige Anforderungsmethode."
 
-#: user_management/views.py:54
+#: user_management/views.py:52
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "User unblocked successfully."
 msgstr "Benutzer ist nun nicht mehr blockiert."
 
-#: user_management/views.py:88
+#: user_management/views.py:86
 msgid "Passwords do not match."
 msgstr "Passwörter stimmen nicht überein."
 
-#: user_management/views.py:97
+#: user_management/views.py:93
 msgid "Account created successfully."
 msgstr "Benutzerkonto wurde erfolgreich erstellt."
 
-#: user_management/views.py:116
+#: user_management/views.py:112
 msgid "Login successful."
 msgstr "Anmeldung war erfolgreich."
 
-#: user_management/views.py:119
+#: user_management/views.py:115
 msgid "Invalid username or password!"
 msgstr "Ungülter Benutzername or Passwort!"
 
-#: user_management/views.py:133
+#: user_management/views.py:129
 msgid "Logout successful."
 msgstr "Abmeldung war erfolgreich."
 
-#: user_management/views.py:179
+#: user_management/views.py:173
 msgid "Invalid password."
 msgstr "Ungültiges Passwort."
 
-#: user_management/views.py:189
+#: user_management/views.py:181
 msgid "Profile updated successfully."
 msgstr "Profil erfolgreich aktualisiert."
 
-#: user_management/views.py:198
+#: user_management/views.py:190
 msgid "Invalid email address."
 msgstr "Ungültige E-Mail Addresse"
 
-#: user_management/views.py:202 user_management/views.py:207
+#: user_management/views.py:194 user_management/views.py:199
 msgid "An Account with this email already exists."
 msgstr "Ein Benutzerkonto mit dieser E-Mail existiert bereits."
 
-#: user_management/views.py:215
+#: user_management/views.py:208
 msgid ""
 "Invalid username. Username must contain only letters, numbers, and "
 "underscores, and cannot be empty or contain only whitespace."
@@ -118,14 +180,14 @@ msgstr ""
 "Unterstriche enthalten und darf nicht leer sein oder nur Leerzeichen "
 "enthalten."
 
-#: user_management/views.py:221 user_management/views.py:224
+#: user_management/views.py:214 user_management/views.py:217
 msgid "Username already taken."
 msgstr "Benutzername schon vergeben."
 
-#: user_management/views.py:257
+#: user_management/views.py:234
 msgid "Invalid current password."
 msgstr "Ungültiges aktuelles Passwort."
 
-#: user_management/views.py:262
+#: user_management/views.py:239
 msgid "Password changed successfully."
 msgstr "Passwort wurde erfolgreich geändert."

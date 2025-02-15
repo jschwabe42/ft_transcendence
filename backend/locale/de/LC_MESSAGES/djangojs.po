@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-12 12:08+0000\n"
+"POT-Creation-Date: 2025-02-15 14:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -161,7 +161,7 @@ msgid "Enter room name"
 msgstr "Gib den Raumnamen ein"
 
 #: quiz/static/quiz/js/room_list.js:25
-#: user_management/static/users/js/account.js:42
+#: user_management/static/users/js/account.js:38
 msgid "Submit"
 msgstr "Erstellen"
 
@@ -214,16 +214,16 @@ msgstr "Abmelden"
 msgid "Login"
 msgstr "Anmelden"
 
-#: static/js/navbar.js:89 user_management/static/users/js/login.js:31
+#: static/js/navbar.js:89 user_management/static/users/js/login.js:32
 #: user_management/static/users/js/logout.js:17
 msgid "Register"
 msgstr "Registrieren"
 
-#: static/js/router.js:35
+#: static/js/router.js:37
 msgid "Page not found!"
 msgstr "Seite konnte nicht gefunden werden!"
 
-#: static/js/router.js:36
+#: static/js/router.js:38
 msgid "Please ensure the current URL is correct."
 msgstr "Bitte stelle sicher, dass die aktuelle URL korrekt ist."
 
@@ -246,57 +246,57 @@ msgstr "Benutzername:"
 msgid "Email:"
 msgstr "E-Mail:"
 
-#: user_management/static/users/js/account.js:39
+#: user_management/static/users/js/account.js:35
 msgid "Update Profile Data"
 msgstr "Profildaten aktualisieren"
 
-#: user_management/static/users/js/account.js:41
+#: user_management/static/users/js/account.js:37
 msgid "Enter your password"
 msgstr "Bitte gib dein Passwort ein"
 
-#: user_management/static/users/js/account.js:46
+#: user_management/static/users/js/account.js:42
 msgid "Change Password"
 msgstr "Passwort ändern"
 
-#: user_management/static/users/js/account.js:48
+#: user_management/static/users/js/account.js:44
 msgid "Current Password"
 msgstr "Aktuelles Passwort"
 
-#: user_management/static/users/js/account.js:49
+#: user_management/static/users/js/account.js:45
 msgid "New Password"
 msgstr "Neues Passwort"
 
-#: user_management/static/users/js/account.js:50
+#: user_management/static/users/js/account.js:46
 msgid "Repeat New Password"
 msgstr "Neues Passwort wiederholen"
 
-#: user_management/static/users/js/account.js:51
+#: user_management/static/users/js/account.js:47
 msgid "Save"
 msgstr "Speichern"
 
-#: user_management/static/users/js/account.js:77
+#: user_management/static/users/js/account.js:73
 #, fuzzy
 #| msgid "'s Profile"
 msgid "'s profile"
 msgstr "s Profil"
 
-#: user_management/static/users/js/account.js:110
+#: user_management/static/users/js/account.js:101
 msgid "Password is required."
 msgstr "Passwort ist erforderlich."
 
-#: user_management/static/users/js/account.js:137
+#: user_management/static/users/js/account.js:127
 msgid "No changes detected."
 msgstr "Keine Änderungen gefunden."
 
-#: user_management/static/users/js/account.js:141
+#: user_management/static/users/js/account.js:131
 msgid "Password is required to update profile data."
 msgstr "Das Passwort ist notwendig um die Profildaten zu ändern."
 
-#: user_management/static/users/js/account.js:212
+#: user_management/static/users/js/account.js:200
 msgid "All fields are required."
 msgstr "Alle Felder müssen ausgefüllt sein."
 
-#: user_management/static/users/js/account.js:216
+#: user_management/static/users/js/account.js:204
 msgid "New password and repeat password do not match."
 msgstr "Neues Passwort und Passwortwiederholung stimmen nicht überein."
 
@@ -311,16 +311,20 @@ msgstr "Passwort:"
 msgid "Sign In"
 msgstr "Anmelden"
 
-#: user_management/static/users/js/login.js:31
+#: user_management/static/users/js/login.js:28
+msgid "OAuth2 using 42"
+msgstr ""
+
+#: user_management/static/users/js/login.js:32
 #: user_management/static/users/js/logout.js:17
 msgid "Want to create an Account?"
 msgstr "Willst du ein Benutzerkonto erstellen?"
 
-#: user_management/static/users/js/login.js:55
+#: user_management/static/users/js/login.js:60
 msgid "Username is required"
 msgstr "Benutzername ist notwendig"
 
-#: user_management/static/users/js/login.js:61
+#: user_management/static/users/js/login.js:66
 msgid "Password is required"
 msgstr "Passwort ist notwendig"
 
@@ -328,6 +332,14 @@ msgstr "Passwort ist notwendig"
 #: user_management/static/users/js/register.js:39
 msgid "Already have an account?"
 msgstr "Hast du schon ein Benutzerkonto?"
+
+#: user_management/static/users/js/oauth.js:24
+msgid "OAuth Error"
+msgstr ""
+
+#: user_management/static/users/js/oauth.js:27
+msgid "Back to Login"
+msgstr ""
 
 #: user_management/static/users/js/register.js:12
 msgid "Join Today"
