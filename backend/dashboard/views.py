@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from user_management.models import CustomUser
 from user_management.blocked_users import Block_Manager
 from transcendence.decorators import login_required_redirect
-from user_management.friends import Friends, Friends_Manager
+from user_management.friends import Friends_Manager
 
 def profile_list(request):
 	"""
