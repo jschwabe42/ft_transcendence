@@ -457,7 +457,12 @@ function addBlockedUsersList(profile) {
 
 function addFriendsButton(profile) {
 	const showFriendsButton = document.getElementById('pv-show-friends-button');
-	showFriendsButton.textContent = `${profile.friend_count} ${gettext("Friends")}`;
+
+	if (profile.friend_count === 1) {
+		showFriendsButton.textContent = `${profile.friend_count} ${gettext("Friend")}`;
+	} else {
+		showFriendsButton.textContent = `${profile.friend_count} ${gettext("Friends")}`;
+	}
 
 	showFriendsButton.onclick = function () {
 		const friendsList = document.getElementById('pv-friends-list');
@@ -468,11 +473,18 @@ function addFriendsButton(profile) {
 			.then(data => {
 				if (data.success) {
 					console.log('Friends:', data.friends_users);
+					showFriendsButton.textContent = `0 ${gettext("Friends")}`;
 					if (data.friends_users.length === 0) {
 						const noFriends = document.createElement('p');
 						noFriends.textContent = gettext('No friends');
 						friendsList.appendChild(noFriends);
 					} else {
+						const new_length = data.friends_users.length;
+						if (new_length === 1) {
+							showFriendsButton.textContent = `${new_length} ${gettext("Friend")}`;
+						} else {
+							showFriendsButton.textContent = `${new_length} ${gettext("Friends")}`;
+						}
 						data.friends_users.forEach(friend => {
 							const friendItem = document.createElement('div');
 							friendItem.className = 'pv-friend-item';
