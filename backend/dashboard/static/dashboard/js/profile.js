@@ -540,10 +540,18 @@ function addShowFriendRequestsButton(profile) {
 						const requestItem = document.createElement('div');
 						requestItem.className = 'pv-friend-request-got-item';
 						requestItem.innerHTML = `
-						<span>${username}</span>
+						<span class="pv-fr-list-username">${username}</span>
+						<button class="btn btn-primary pv-fr-list-accept-button">${gettext('Accept')}</button>
+						<button class="btn btn-danger pv-fr-list-deny-button">${gettext('Deny')}</button>
 						`;
-						requestItem.onclick = function () {
+						requestItem.querySelector('.pv-fr-list-username').onclick = function () {
 							router.navigateTo(`/dashboard/${username}/`);
+						};
+						requestItem.querySelector('.pv-fr-list-accept-button').onclick = function () {
+							acceptFRFriendRequest(username, requestItem);
+						};
+						requestItem.querySelector('.pv-fr-list-deny-button').onclick = function () {
+							denyFRFriendRequest(username, requestItem);
 						};
 						friendRequestList.appendChild(requestItem);
 					});
@@ -561,10 +569,14 @@ function addShowFriendRequestsButton(profile) {
 						const requestItem = document.createElement('div');
 						requestItem.className = 'pv-friend-request-sent-item';
 						requestItem.innerHTML = `
-						<span>${username}</span>
+						<span class="pv-fr-list-username">${username}</span>
+						<button class="btn btn-danger pv-fr-list-cancel-request-button">${gettext('Remove')}</button>
 						`;
-						requestItem.onclick = function () {
+						requestItem.querySelector('.pv-fr-list-username').onclick = function () {
 							router.navigateTo(`/dashboard/${username}/`);
+						};
+						requestItem.querySelector('.pv-fr-list-cancel-request-button').onclick = function () {
+							cancelFRFriendRequest(username, requestItem);
 						};
 						friendRequestList.appendChild(requestItem);
 					});
@@ -572,4 +584,70 @@ function addShowFriendRequestsButton(profile) {
 			}
 		});
 	};
+}
+
+function acceptFRFriendRequest(username, requestItem) {
+	const csftToken = document.querySelector('meta[name="csrf-token"]').content;
+
+	fetch(`/users/api/friends/accept/${username}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': csftToken,
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+		alert(data.message);
+		if (data.success) {
+			console.log('Friend request accepted');
+			requestItem.remove();
+		} else {
+			console.error('Failed to accept friend request');
+		}
+	});
+}
+
+function denyFRFriendRequest(username, requestItem) {
+	const csftToken = document.querySelector('meta[name="csrf-token"]').content;
+
+	fetch(`/users/api/friends/deny/${username}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': csftToken,
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+		alert(data.message);
+		if (data.success) {
+			console.log('Friend request denied');
+			requestItem.remove();
+		} else {
+			console.error('Failed to deny friend request');
+		}
+	});
+}
+
+function cancelFRFriendRequest(username, requestItem) {
+	const csftToken = document.querySelector('meta[name="csrf-token"]').content;
+
+	fetch(`/users/api/friends/cancel/${username}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': csftToken,
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+		alert(data.message);
+		if (data.success) {
+			console.log('Friend request cancelled');
+			requestItem.remove();
+		} else {
+			console.error('Failed to cancel friend request');
+		}
+	});
 }
