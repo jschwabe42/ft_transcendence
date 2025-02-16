@@ -90,6 +90,9 @@ function add_login_form_listener() {
 			if (data.csrf_token) {
 				document.querySelector('meta[name="csrf-token"]').content = data.csrf_token;
 			}
+			if (data.username) {
+				document.querySelector('meta[name="username-token"]').content = data.username;
+			}
 			update_navbar();
 			router.navigateTo('/dashboard/');
 		} else {
