@@ -47,6 +47,31 @@ export function display_account() {
 				<button id="update-password" class="btn btn-primary">${gettext("Save")}</button>
 			</div>
 		</div>
+		<div id="profile-two-fact">
+			<h3 id="two-fact-info-head">${gettext("Two-Factor Authentication (2FA):")}</h3>
+			<div id="two-fact-status">
+				<p>${gettext("Status:")} <span id="two-fact-status-text">${gettext("Disabled")}</span></p>
+			</div>
+			<button id="toggle-two-fact" class="btn btn-primary">${gettext("Enable 2FA")}</button>
+
+			<!-- Add disable confirmation section -->
+			<div id="two-fact-disable" style="display: none;">
+				<p>${gettext("Enter your 2FA code to disable:")}</p>
+				<input type="text" id="two-fact-disable-code" class="form-control" placeholder="${gettext("Enter 2FA Code")}">
+				<div class="mt-2">
+					<button id="confirm-disable-two-fact" class="btn btn-danger">${gettext("Confirm Disable")}</button>
+					<button id="cancel-disable-two-fact" class="btn btn-secondary">${gettext("Cancel")}</button>
+				</div>
+			</div>
+			<div id="two-fact-setup" style="display: none;">
+				<p>${gettext("Scan the QR code below with your authenticator app:")}</p>
+				<img id="two-fact-qr-code" src="" alt="QR Code">
+				<p>${gettext("Or enter this code manually:")} <span id="two-fact-secret"></span></p>
+				<p>${gettext("Enter the code from your authenticator app to enable 2FA:")}</p>
+				<input type="text" id="two-fact-code" class="form-control" placeholder="${gettext("Enter 2FA Code")}">
+				<button id="confirm-two-fact" class="btn btn-primary">${gettext("Confirm")}</button>
+			</div>
+		</div>
 	</div>
 	`;
 
@@ -58,6 +83,134 @@ export function display_account() {
 	document.getElementById('image-upload').addEventListener('change', upload_image);
 
 	change_password();
+	setup_2fa();
+}
+
+
+function setup_2fa() {
+	const toggle2faButton = document.getElementById('toggle-two-fact');
+	const confirm2faButton = document.getElementById('confirm-two-fact');
+	const confirmDisable2faButton = document.getElementById('confirm-disable-two-fact');
+	const cancelDisable2faButton = document.getElementById('cancel-disable-two-fact');
+	const twoFactorSetup = document.getElementById('two-fact-setup');
+	const twoFactorDisable = document.getElementById('two-fact-disable');
+	const twoFactorStatus = document.getElementById('two-fact-status-text');
+
+	// Fetch 2FA status from the backend
+	fetch('/users/api/2fa/status/'
+		, {
+		}
+	)
+		.then(response => response.json())
+		.then(data => {
+			if (data.enabled) {
+				twoFactorStatus.textContent = gettext("Enabled");
+				toggle2faButton.textContent = gettext("Disable 2FA");
+			} else {
+				twoFactorStatus.textContent = gettext("Disabled");
+				toggle2faButton.textContent = gettext("Enable 2FA");
+			}
+		});
+
+	// Toggle 2FA setup
+	toggle2faButton.addEventListener('click', () => {
+		if (twoFactorStatus.textContent === gettext("Enabled")) {
+			// Disable 2FA
+			twoFactorDisable.style.display = 'block';
+			twoFactorSetup.style.display = 'none';
+		} else {
+			// Enable 2FA
+			twoFactorDisable.style.display = 'none';
+			fetch('/users/api/2fa/enable/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Requested-With': 'XMLHttpRequest',
+					'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content,
+				},
+					credentials: 'include',
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						document.getElementById('two-fact-qr-code').src = data.qr_code_url;
+						document.getElementById('two-fact-secret').textContent = data.secret;
+						twoFactorSetup.style.display = 'block';
+					} else {
+						alert(data.message);
+					}
+				});
+		}
+	});
+
+	// Handle disable confirmation
+	confirmDisable2faButton.addEventListener('click', () => {
+		const code = document.getElementById('two-fact-disable-code').value;
+		
+		if (!code || code.length !== 6) {
+			alert(gettext("Please enter a valid 6-digit code"));
+			return;
+		}
+
+		fetch('/users/api/2fa/disable/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Requested-With': 'XMLHttpRequest',
+				'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content,
+			},
+			credentials: 'include',
+			body: JSON.stringify({ code: code }),
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (data.success) {
+				twoFactorStatus.textContent = gettext("Disabled");
+				toggle2faButton.textContent = gettext("Enable 2FA");
+				twoFactorDisable.style.display = 'none';
+				alert(data.message);
+			} else {
+				alert(data.message);
+			}
+			document.getElementById('two-fact-disable-code').value = '';
+		});
+	});
+
+	// Handle cancel disable
+	cancelDisable2faButton.addEventListener('click', () => {
+		twoFactorDisable.style.display = 'none';
+		document.getElementById('two-fact-disable-code').value = '';
+	});
+
+	// Confirm 2FA setup
+	confirm2faButton.addEventListener('click', () => {
+		const code = document.getElementById('two-fact-code').value;
+		if (!code) {
+			alert(gettext("Please enter the 2FA code."));
+			return;
+		}
+
+		fetch('/users/api/2fa/confirm/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content,
+			},
+			credentials: 'include',
+			body: JSON.stringify({ code: code }),
+		})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					twoFactorStatus.textContent = gettext("Enabled");
+					toggle2faButton.textContent = gettext("Disable 2FA");
+					twoFactorSetup.style.display = 'none';
+					alert(data.message);
+				} else {
+					alert(data.message);
+				}
+			});
+	});
 }
 
 function get_account_details() {

@@ -30,6 +30,10 @@ DEBUG = True
 SESSION_COOKIE_SECURE = False  # Allow session cookies over HTTP
 CSRF_COOKIE_SECURE = False     # Allow CSRF cookies over HTTP
 
+#2FA NEEDED
+TOTP_ISSUER_NAME = "FT_TRANSENDENCE"  # App name for QR code
+
+
 ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1"]
 
 INTERNAL_IPS = [
@@ -228,13 +232,14 @@ REST_FRAMEWORK = {
 	),
 	'DEFAULT_AUTHENTICATION_CLASSES': (
 		'rest_framework_simplejwt.authentication.JWTAuthentication',
+		'rest_framework.authentication.SessionAuthentication',
 	),
 
 }
 
 # Setting for JWT
 SIMPLE_JWT = {
-	'ACCESS_TOKEN_LIFETIME': timedelta(seconds=10),  # Customize token lifetime
+	'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
 	'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 	'ROTATE_REFRESH_TOKENS': True,
 	'BLACKLIST_AFTER_ROTATION': True,

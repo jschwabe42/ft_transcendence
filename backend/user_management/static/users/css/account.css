@@ -134,3 +134,37 @@
 .bi bi-pencil-square {
 	color: #1c4f73;
 }
+
+/* two-fact Section */
+#profile-two-fact {
+	margin-top: 20px;
+}
+
+#two-fact-info-head {
+	color: #1c4f73;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+#two-fact-status {
+	margin-bottom: 10px;
+}
+
+#two-fact-status-text {
+	font-weight: bold;
+}
+
+#two-fact-setup {
+	margin-top: 10px;
+}
+
+#two-fact-qr-code {
+	width: 200px;
+	height: 200px;
+	margin-bottom: 10px;
+}
+
+#two-fact-code {
+	width: 300px;
+	margin-bottom: 10px;
+}

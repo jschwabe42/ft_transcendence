@@ -109,9 +109,18 @@ def register(request):
 
 
 
+from django.contrib.auth import authenticate, login
+from django.http import JsonResponse
+from django.utils.translation import gettext as _
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.exceptions import TokenError
+import pyotp
+from datetime import timedelta
+from .models import CustomUser  # Import your CustomUser model
+
 def login_view(request):
 	"""
-	Login a user and return JWT tokens.
+	Login a user with 2FA support.
 	API Endpoint: /users/api/login/
 	"""
 	if request.method == 'POST':
@@ -121,40 +130,43 @@ def login_view(request):
 		# Authenticate the user
 		user = authenticate(request, username=username, password=password)
 		if user is not None:
-			# Log the user in (creates a session)
-			login(request, user)
-
-			# Generate JWT tokens
-			refresh = RefreshToken.for_user(user)
-			access_token = str(refresh.access_token)
-			refresh_token = str(refresh)
-
-			# Set JWT tokens in HTTP-only cookies
-			response = JsonResponse({
-				'success': True,
-				'message': _('Login successful.'),
-				'csrf_token': get_token(request),
-				'access_token': access_token,  # Optional: Include in response for frontend
-				'refresh_token': refresh_token,  # Optional: Include in response for frontend
-			})
-
-			# Set cookies
-			response.set_cookie(
-				key='access_token',
-				value=access_token,
-				httponly=True,
-				secure=False,  # Set to True in production (HTTPS only)
-				samesite='Lax'
-			)
-			response.set_cookie(
-				key='refresh_token',
-				value=refresh_token,
-				httponly=True,
-				secure=False,  # Set to True in production (HTTPS only)
-				samesite='Lax'
-			)
-
-			return response
+			# Check if 2FA is enabled
+			if user.two_factor_enabled:
+				refresh = RefreshToken.for_user(user)
+				refresh.set_exp(lifetime=timedelta(minutes=5))
+				
+				return JsonResponse({
+					'success': True,
+					'requires_2fa': True,
+					'pre_auth_token': str(refresh.access_token),
+					'message': _('2FA required. Please enter your code.')
+				})
+			else:
+				# No 2FA required - proceed with normal login
+				login(request, user)
+				refresh = RefreshToken.for_user(user)
+				response = JsonResponse({
+					'success': True,
+					'message': _('Login successful.'),
+					'access_token': str(refresh.access_token),
+					'refresh_token': str(refresh),
+				})
+				
+				response.set_cookie(
+					key='access_token',
+					value=str(refresh.access_token),
+					httponly=True,
+					secure=False,  # Set to True in production
+					samesite='Lax'
+				)
+				response.set_cookie(
+					key='refresh_token',
+					value=str(refresh),
+					httponly=True,
+					secure=False,  # Set to True in production
+					samesite='Lax'
+				)
+				return response
 		else:
 			return JsonResponse({'success': False, 'message': _('Invalid username or password!')})
 	else:
