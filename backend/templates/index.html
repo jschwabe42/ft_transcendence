@@ -44,14 +44,6 @@
 	<script type="module" src="{% static 'js/navbar.js' %}"></script>
 	<script type="module" src="{% static 'js/router.js' %}"></script>
 
-	<!-- NEEDS TO BE REMOVED -->
-	<script type="module" src="{% static 'pong/js/pong_display_ingame.js' %}"></script>
-	<script type="module" src="{% static 'pong/js/overview.js' %}"></script>
-	<script type="module" src="{% static 'pong/js/pong_result.js' %}"></script>
-	<script type="module" src="{% static 'pong/js/tournament_display.js' %}"></script>
-
-
-
 	<meta name="csrf-token" content="{{ csrf_token }}">
 	<meta name="username-token" content="{{ user.username }}">
 	<title>{% trans "Transcendence" %}</title>
