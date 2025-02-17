@@ -173,8 +173,7 @@ function renderGameData() {
 
 	async function sendGameScores(score1, score2, game_id) {
 		console.log("Access API Scores");
-		// let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-		let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 		try {
 			const response = await fetch('/pong/api/get-score/', {
 				method: 'POST',
@@ -332,7 +331,7 @@ function renderGameData() {
 	document.getElementById("ws").addEventListener("click", async function (event) {
 		console.log("Access API");
 		event.preventDefault();
-		let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
 		try {
 			const response = await fetch('/pong/api/get-gameControl/', {
@@ -362,7 +361,7 @@ function renderGameData() {
 	document.getElementById("up_down").addEventListener("click", async function (event) {
 		console.log("Access API");
 		event.preventDefault();
-		let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
 		try {
 			const response = await fetch('/pong/api/get-gameControl/', {
