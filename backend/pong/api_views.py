@@ -114,7 +114,13 @@ class ControlKeySetting(APIView):
 		game_id = request.data.get('game_id')
 		username = request.data.get('username')
 
-
+		if game_id:
+			game_id = game_id.strip()
+		if username:
+			username = username.strip()
+		
+		printf(game_id)
+		printf(username)
 
 		if username:
 			user = User.objects.filter(username=username)
@@ -159,6 +165,7 @@ class CreateTournament(APIView):
 
 	def post(self, request):
 		username = request.data.get('username')
+
 
 		try:
 			User.objects.get(username=username)
