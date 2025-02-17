@@ -4,7 +4,7 @@ import { CreateTournament } from './tournament_api.js';
 
 export function PongOverview() {
 	const socket = new WebSocket("ws://localhost:8000/ws/pong/");
-	const userName = document.getElementById('username').getAttribute('data-username');
+	const userName = document.querySelector('meta[name="username-token"]').content;
 
 	// open socket
 	socket.onopen = () => {

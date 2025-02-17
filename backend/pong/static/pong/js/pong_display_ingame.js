@@ -74,7 +74,7 @@ export function DisplayPong(params) {
 }
 
 function renderGameData() {
-	const user = document.getElementById('username').getAttribute('data-username');
+	const user = document.querySelector('meta[name="username-token"]').content;
 	let game_is_running = false;
 
 	const player1 = gameModel.player1;
