@@ -1,24 +1,3 @@
-.btn-outline-info {
-	/* background-color: #1c4f73 !important; */
-	font-family: 'Fredoka', sans-serif !important;
-	color: #1c4f73 !important;
-	font-weight: bold !important;
-	border-radius: 10px !important;
-	border-color: #1c4f73 !important;
-}
-
-.btn-outline-info:hover {
-	background-color: #163d5a !important;
-	border-color: #163d5a !important;
-	color: white !important;
-}
-
-.btn-outline-info:focus {
-	outline: none !important;
-	box-shadow: none !important;
-	border-color: #1c4f73 !important;
-}
-
 #id_password,
 #id_username {
 	color:#1c4f73 !important;
@@ -38,25 +17,4 @@
 	color: #1c4f73;
 	font-size: 2em;
 	font-weight: bold;
-}
-
-#account-register-link {
-	color: #7ab5e0;
-	text-decoration: underline;
-	font-weight: bold;
-}
-
-#account-register-link:hover {
-	color: #163d5a;
-	text-decoration: underline;
-	cursor: pointer;
-}
-
-#register-link-container {
-	font-size: 16px;
-}
-
-#login-signin-button {
-	margin-top: 10px;
-	margin-bottom: 10px;
 }
