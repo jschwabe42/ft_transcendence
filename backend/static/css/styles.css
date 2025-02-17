@@ -126,3 +126,15 @@
 #register-sign-up-button {
 	margin-top: 10px;
 }
+
+/* A standart href decorator */
+.index-base-link {
+	color: #1c4f73;
+	text-decoration: none;
+}
+
+.index-base-link:hover {
+	color: #7ab5e0;
+	text-decoration: none;
+	cursor: pointer;
+}

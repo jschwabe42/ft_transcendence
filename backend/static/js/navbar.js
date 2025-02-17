@@ -68,6 +68,21 @@ export function home_view() {
 	home.innerHTML = `
 	<h2>${gettext("Welcome to the Transcendence Webpage")}</h2>
 	<p>${gettext("This is a webpage created for the Transcendence project.")}</p>
+	<br>
+	<h3>${gettext("Features:")}</h3>
+	<p>Add all done modules here in the future!</p>
+	<br>
+	<h3>${gettext("About:")}</h3>
+	<p>${gettext("This project is part of the core curriculum of 42 and serves as its final project.")}<br>${gettext("This is our take on it.")}</p>
+	<a class="index-base-link" href="https://github.com/transcendence-inc/ft_transcendence" target="_blank">${gettext("Our Projects GitHub Repository")}</a><br><br>
+	<h3>${gettext("The team:")}</h3>
+	<ul id="home-team-list">
+		<li><a class="index-base-link" href="https://github.com/Jonstep101010" target="_blank">Jonstep</a></li>
+		<li><a class="index-base-link" href="https://github.com/Jano844" target="_blank">Jano</a></li>
+		<li><a class="index-base-link" href="https://github.com/aceauses" target="_blank">Aceauses</a></li>
+		<li><a class="index-base-link" href="https://github.com/mben-has" target="_blank">mben-has</a></li>
+		<li><a class="index-base-link" href="https://github.com/itseugen" target="_blank">Eugen</a></li>
+	</ul>
 	`;
 }
 
