@@ -46,7 +46,7 @@ services:
       - container=docker
     ports:
       - "8000:8000"
-    restart: no
+    restart: always
     entrypoint: /code/django.sh
     # depends_on:
     #   postgres:
