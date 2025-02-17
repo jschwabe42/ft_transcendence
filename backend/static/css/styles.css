@@ -1,3 +1,23 @@
+/* Imports the other stylesheets. Should we want to, we could dynamically load them at some point. */
+
+/* The quiz stylesheets: */
+@import url('/static/quiz/css/room_list.css');
+@import url('/static/quiz/css/room_display.css');
+@import url('/static/quiz/css/quiz_game.css');
+
+/* The dashboard stylesheets: */
+@import url('/static/dashboard/css/dashboard.css');
+@import url('/static/dashboard/css/profile.css');
+
+/* The pong game stylesheets: */
+@import url('/static/pong/css/game.css');
+@import url('/static/pong/css/tournement.css');
+
+/* The user_management stylesheets: */
+@import url('/static/users/css/account.css');
+@import url('/static/users/css/login.css');
+@import url('/static/users/css/register.css');
+
 /* Overwrites the danger buttons design */
 .btn-danger {
 	font-family: 'Fredoka', sans-serif !important;

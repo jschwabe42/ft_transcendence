@@ -23,36 +23,21 @@
 	<!-- If wanted, we can make the stylesheets load on use, if we add them either to the router, or to a urls specifics function -->
 	<link href="{% static 'css/styles.css' %}" rel="stylesheet">
 
-	<!-- The CSS files of the quiz app.-->
-	<link href="{% static 'quiz/css/room_list.css' %}" rel="stylesheet">
-	<link href="{% static 'quiz/css/room_display.css' %}" rel="stylesheet">
-	<link href="{% static 'quiz/css/quiz_game.css' %}" rel="stylesheet">
-
-	<!-- CSS files of the dashboard -->
-	<link href="{% static 'dashboard/css/dashboard.css' %}" rel="stylesheet">
-	<link href="{% static 'dashboard/css/profile.css' %}" rel="stylesheet">
-
-	<!-- CSS files of the pong game -->
-	<link href="/static/chat/chat.css" rel="stylesheet">
-	<link href="/static/pong/css/game.css" rel="stylesheet">
-	<link href="/static/pong/css/tournement.css" rel="stylesheet">
-
-	<!-- CSS files of the users -->
-	<link href="{% static 'users/css/account.css' %}" rel="stylesheet">
-	<link href="{% static 'users/css/login.css' %}" rel="stylesheet">
-	<link href="{% static 'users/css/register.css' %}" rel="stylesheet">
-
-	<!-- The files needed to run the index.html. -->
+	<!-- The stylesheets for the navbar and fonts. Seperate from the above because they affect this file directly. -->
 	<link href="{% static 'css/navbar.css' %}" rel="stylesheet">
 	<link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
+
+	<!-- The files needed to run the index.html. -->
 	<script type="module" src="{% static 'js/navbar.js' %}"></script>
 	<script type="module" src="{% static 'js/router.js' %}"></script>
 
 	<!-- The javascript for the online status. -->
 	 <script type="module" src="{% static 'users/js/OnlineStatusWebSocket.js' %}"></script>
 
+	<!-- The CSRF token and username for the javascript. -->
 	<meta name="csrf-token" content="{{ csrf_token }}">
 	<meta name="username-token" content="{{ user.username }}">
+
 	<title>{% trans "Transcendence" %}</title>
 </head>
 
