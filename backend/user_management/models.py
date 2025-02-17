@@ -1,7 +1,6 @@
 from typing import Optional
 
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from PIL import Image
 
@@ -9,18 +8,6 @@ from PIL import Image
 class CustomUser(AbstractUser):
 	image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 	online = models.BooleanField(default=False)
-	# display_name is used for tournaments @follow-up
-	display_name = models.CharField(
-		'display_name',
-		max_length=150,
-		unique=True,
-		help_text=('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
-		validators=[UnicodeUsernameValidator()],
-		error_messages={
-			'unique': 'A user with that display name already exists.',
-		},
-		blank=True,  # this will be initialized in the signal
-	)
 	# for storing oauth identity
 	oauth_id: Optional[str] = models.CharField(max_length=150, blank=True, null=True)
 

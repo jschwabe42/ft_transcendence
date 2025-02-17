@@ -68,7 +68,6 @@
 	margin-bottom: 20px;
 }
 
-#edit-text-display_name,
 #edit-text-email,
 #edit-text-username {
 	width: 300px;
@@ -76,13 +75,12 @@
 }
 
 #username,
-#email,
-#display_name {
+#email {
 	margin-right: 5px;
 }
 
 .form-control {
-	color:#1c4f73 !important;
+	color: #1c4f73 !important;
 	border: 1px solid #1c4f73 !important;
 	border-radius: 10px !important;
 }
