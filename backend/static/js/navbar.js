@@ -70,8 +70,8 @@ export function home_view() {
 	<p>${gettext("This is a webpage created for the Transcendence project.")}</p>
 	<br>
 	<h3>${gettext("Features:")}</h3>
-	<p>15/19 points. (Minor Module = 1 point, Major Module = 2 points!)</p>
-	<p>14 points is sufficient for the basic requirements with 19 giving 125%!</p>
+	<p>15/19 ${gettext("points. (Minor Module = 1 point, Major Module = 2 points!)")}<br>
+	${gettext("14 points are sufficient for the basic requirements with 19 giving 125%!")}</p>
 	<h5>${gettext("Minimal Requirements (no points, all need to be fullfilled):")}</h5>
 	<ul>
 		<li>${gettext("Your website must be a single page application, the Back and Forward buttons of the browser need to work.")} ✅</li>
@@ -82,6 +82,7 @@ export function home_view() {
 		<li>${gettext("HTTPS must be enabled and WSS needs to be used instead of ws.")} ❗❗</li>
 		<li>${gettext("A pong game needs to be implemented. (See issues).")} ❗❗</li>
 	</ul>
+	<br>
 	<h5>${gettext("Modules:")}</h5>
 	<ul>
 		<li>${gettext("Major: Use a Framwork as backend. 2 points!")} ✅</li>
@@ -118,9 +119,24 @@ export function home_view() {
 	<ul id="home-ressources-list">
 		<li>The timer inside the quiz app is a modified version of <a class="index-base-link" href="https://www.youtube.com/watch?v=LSJm-oS827M" target="_blank">this tutorial</a>.</li>
 		<li>The quiz app uses the <a class="index-base-link" href="https://opentdb.com/" target="_blank">open trivia database</a> to fetch quiz questions and answers.</li>
-		<li>Most Icons used are from <a class="index-base-link" href="https://icons.getbootstrap.com/" target="_blank">bootstrap icons.</a></li>
-		<li>For the frontend <a class="index-base-link" href="https://getbootstrap.com/" target="_blank">bootstrap toolkit</a> was used.</li>
-		<li>For the backend <a class="index-base-link" href="https://www.djangoproject.com/" target="_blank">Django</a> was used.</li>
+		<li>Most Icons used are from <a class="index-base-link" href="https://icons.getbootstrap.com/" target="_blank">bootstrap icons</a>.</li>
+		<li>For the frontend <a class="index-base-link" href="https://getbootstrap.com/" target="_blank">bootstrap toolkit</a> is used.</li>
+		<li>For the backend <a class="index-base-link" href="https://www.djangoproject.com/" target="_blank">Django</a> is used.</li>
+		<li>The database uses <a class="index-base-link" href="https://www.postgresql.org/" target="_blank">PostgresSQL</a>.</li>
+		<li>For translations <a class="index-base-link" href="https://www.gnu.org/software/gettext/" target="_blank">gettext</a> is used.</li>
+	</ul>
+	<br>
+	<h3>${gettext("Libraries used:")}</h3>
+	<ul id="home-ressources-list">
+		<li><a class="index-base-link" href="https://www.psycopg.org/" target="_blank">Psycopg</a></li>
+		<li><a class="index-base-link" href="https://django-debug-toolbar.readthedocs.io/en/latest/" target="_blank">Django Debug Toolbar</a></li>
+		<li><a class="index-base-link" href="https://pypi.org/project/pillow/" target="_blank">Pillow</a></li>
+		<li><a class="index-base-link" href="https://pypi.org/project/crispy-bootstrap4/" target="_blank">crispy-bootstrap4</a></li>
+		<li><a class="index-base-link" href="https://django-crispy-forms.readthedocs.io/en/latest/" target="_blank">Django Crispy Forms</a></li>
+		<li><a class="index-base-link" href="https://channels.readthedocs.io/en/latest/" target="_blank">Django Channels</a></li>
+		<li><a class="index-base-link" href="https://github.com/django/daphne" target="_blank">Daphne</a></li>
+		<li><a class="index-base-link" href="https://www.django-rest-framework.org/" target="_blank">Django Rest Framework</a></li>
+		<li><a class="index-base-link" href="https://www.django-rest-framework.org/api-guide/requests/#requests" target="_blank">Requests</a></li>
 	</ul>
 	`;
 }
