@@ -70,7 +70,29 @@ export function home_view() {
 	<p>${gettext("This is a webpage created for the Transcendence project.")}</p>
 	<br>
 	<h3>${gettext("Features:")}</h3>
-	<p>Add all done modules here in the future!</p>
+	<p>13/19 points. (Minor Module = 1 point, Major Module = 2 points!)</p>
+	<h5>${gettext("Minimal Requirements (no points, all need to be fullfilled):")}</h5>
+	<ul>
+		<li>${gettext("Your website must be a single page application, the Back and Forward buttons of the browser need to work.")} ✅</li>
+		<li>${gettext("Your website must be compatible with the latest version of Google Chrome.")} ✅</li>
+		<li>${gettext("Everything needs to be launched with a single command line. (make)")} ✅</li>
+		<li>${gettext("Any password stored in the database must be hashed.")} ✅</li>
+		<li>${gettext("Your website must be protected against SQL injections/XSS.")} ❗❓</li>
+		<li>${gettext("HTTPS must be enabled and WSS needs to be used instead of ws.")} ❗❗</li>
+	</ul>
+	<h5>${gettext("Modules:")}</h5>
+	<ul>
+		<li>${gettext("Major: Use a Framwork as backend. 2 points!")} ✅</li>
+		<li>${gettext("Minor: Use a frontend framework or toolkit. 1 point!")} ✅</li>
+		<li>${gettext("Minor: Use a database for the backend. 1 point!")} ✅</li>
+		<li>${gettext("Major: User Management. Pong Match history and Online status missing!")} ❗</li>
+		<li>${gettext("Major: Remote authentication. 2 points!")} ✅</li>
+		<li>${gettext("Major: Remote players. 2 points!")} ✅</li>
+		<li>${gettext("Major: Multiple players. 2 points! (Technically, since it isn't 100% specified which game)")} ✅</li>
+		<li>${gettext("Major: Add another game with user history and matchmaking. 2 points!")} ✅</li>
+		<li>${gettext("Minor: Game Customization options. 1 point!")} ✅</li>
+		<li>${gettext("Major: Live Chat. Not yet implemented!")} ❗</li>
+		</ul>
 	<br>
 	<h3>${gettext("About:")}</h3>
 	<p>${gettext("This project is part of the core curriculum of 42 and serves as its final project.")}<br>${gettext("This is our take on it.")}</p>
