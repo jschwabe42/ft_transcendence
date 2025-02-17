@@ -223,7 +223,7 @@ function get_account_details() {
 			return response.json();
 		})
 		.then(data => {
-			document.getElementById('account-username-head').textContent = `${data.username}${gettext("'s profile")}`;
+			document.getElementById('account-username-head').textContent = `${data.username}`;
 			document.getElementById('account-email-head').textContent = data.email;
 			document.getElementById('account-image').src = data.image_url;
 

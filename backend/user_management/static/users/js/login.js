@@ -116,11 +116,16 @@ function add_login_form_listener() {
 			} else {
 				handleLoginError(data);
 			}
-		} catch (error) {
-			document.getElementById('loading-overlay').style.display = 'none';
-			document.getElementById('message-container').innerHTML = `
-				<p class="text-danger">${gettext("Network error. Please try again.")}</p>
-			`;
+			if (data.username) {
+				document.querySelector('meta[name="username-token"]').content = data.username;
+			}
+			update_navbar();
+			router.navigateTo('/dashboard/');
+		} else {
+			document.getElementById('id_username').classList.add('is-invalid');
+			document.getElementById('username-errors').innerHTML = data.message;
+			document.getElementById('id_password').classList.add('is-invalid');
+			document.getElementById('password-errors').innerHTML = data.message;
 		}
 	});
 }
