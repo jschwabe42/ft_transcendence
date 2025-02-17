@@ -14,40 +14,40 @@ document.addEventListener('DOMContentLoaded', function() {
 		event.preventDefault();
 		router.navigateTo('/');
 	});
+
+	document.getElementById('pong-link').addEventListener('click', function(event) {
+		event.preventDefault();
+		router.navigateTo('/pong/');
+	});
 	
 	document.getElementById('quiz-link').addEventListener('click', function(event) {
 		event.preventDefault();
 		router.navigateTo('/quiz/');
 	});
-	
+
 	document.getElementById('dashboard-link').addEventListener('click', function(event) {
 		event.preventDefault();
 		router.navigateTo('/dashboard/');
 	});
-	
+
 	document.getElementById('register-link').addEventListener('click', function(event) {
 		event.preventDefault();
 		router.navigateTo('/register/');
 	});
-	
+
 	document.getElementById('login-link').addEventListener('click', function(event) {
 		event.preventDefault();
 		router.navigateTo('/login/');
 	});
-	
+
 	document.getElementById('logout-link').addEventListener('click', function(event) {
 		event.preventDefault();
 		router.navigateTo('/logout/');
 	});
-	
+
 	document.getElementById('account-link').addEventListener('click', function(event) {
 		event.preventDefault();
 		router.navigateTo('/account/');
-	});
-
-	document.getElementById('pong-link').addEventListener('click', function(event) {
-		event.preventDefault();
-		router.navigateTo('/pong/');
 	});
 });
 
