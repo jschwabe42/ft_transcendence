@@ -142,12 +142,16 @@ def get_account_details(request):
 	"""
 	if request.method == 'GET':
 		user = request.user
+		is_oauth = False
+		if user.oauth_id:
+			is_oauth = True
 		return JsonResponse(
 			{
 				'success': True,
 				'username': user.username,
 				'email': user.email,
 				'image_url': user.image.url,
+				'is_oauth': is_oauth,
 			}
 		)
 	else:
