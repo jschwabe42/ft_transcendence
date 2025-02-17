@@ -114,9 +114,7 @@ from django.http import JsonResponse
 from django.utils.translation import gettext as _
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
-import pyotp
 from datetime import timedelta
-from .models import CustomUser  # Import your CustomUser model
 
 def login_view(request):
 	"""
@@ -142,7 +140,7 @@ def login_view(request):
 					'message': _('2FA required. Please enter your code.')
 				})
 			else:
-				# No 2FA required - proceed with normal login
+				# No 2FA required
 				login(request, user)
 				refresh = RefreshToken.for_user(user)
 				response = JsonResponse({

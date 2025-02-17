@@ -1,7 +1,7 @@
 # users/decorators.py
 from functools import wraps
 from django.shortcuts import redirect
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
