@@ -83,6 +83,15 @@ export function home_view() {
 		<li><a class="index-base-link" href="https://github.com/mben-has" target="_blank">mben-has</a></li>
 		<li><a class="index-base-link" href="https://github.com/itseugen" target="_blank">Eugen</a></li>
 	</ul>
+	<br>
+	<h3>${gettext("Ressources used:")}</h3>
+	<ul id="home-ressources-list">
+		<li>The timer inside the quiz app is a modified version of <a class="index-base-link" href="https://www.youtube.com/watch?v=LSJm-oS827M" target="_blank">this tutorial</a>.</li>
+		<li>The quiz app uses the <a class="index-base-link" href="https://opentdb.com/" target="_blank">open trivia database</a> to fetch quiz questions and answers.</li>
+		<li>Most Icons used are from <a class="index-base-link" href="https://icons.getbootstrap.com/" target="_blank">bootstrap icons.</a></li>
+		<li>For the frontend <a class="index-base-link" href="https://getbootstrap.com/" target="_blank">bootstrap toolkit</a> was used.</li>
+		<li>For the backend <a class="index-base-link" href="https://www.djangoproject.com/" target="_blank">Django</a> was used.</li>
+	</ul>
 	`;
 }
 
