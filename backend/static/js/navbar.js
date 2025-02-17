@@ -70,7 +70,8 @@ export function home_view() {
 	<p>${gettext("This is a webpage created for the Transcendence project.")}</p>
 	<br>
 	<h3>${gettext("Features:")}</h3>
-	<p>13/19 points. (Minor Module = 1 point, Major Module = 2 points!)</p>
+	<p>15/19 points. (Minor Module = 1 point, Major Module = 2 points!)</p>
+	<p>14 points is sufficient for the basic requirements with 19 giving 125%!</p>
 	<h5>${gettext("Minimal Requirements (no points, all need to be fullfilled):")}</h5>
 	<ul>
 		<li>${gettext("Your website must be a single page application, the Back and Forward buttons of the browser need to work.")} ✅</li>
@@ -79,6 +80,7 @@ export function home_view() {
 		<li>${gettext("Any password stored in the database must be hashed.")} ✅</li>
 		<li>${gettext("Your website must be protected against SQL injections/XSS.")} ❗❓</li>
 		<li>${gettext("HTTPS must be enabled and WSS needs to be used instead of ws.")} ❗❗</li>
+		<li>${gettext("A pong game needs to be implemented. (See issues).")} ❗❗</li>
 	</ul>
 	<h5>${gettext("Modules:")}</h5>
 	<ul>
@@ -92,6 +94,12 @@ export function home_view() {
 		<li>${gettext("Major: Add another game with user history and matchmaking. 2 points!")} ✅</li>
 		<li>${gettext("Minor: Game Customization options. 1 point!")} ✅</li>
 		<li>${gettext("Major: Live Chat. Not yet implemented!")} ❗</li>
+		<li>${gettext("Minor: User and Game stats dashboard. A way to display pong game outcomes is missing. Pong/Tournament data needs to be added. A graph should be added (but i could argue that point if necessary)")} ❗</li>
+		<li>${gettext("Major: 2FA and JWT. The branch is not yet merged.")} ❗</li>
+		<li>${gettext("Minor: Expanding Browser Compability (Chrome, Edge, Firefox?). 1 point!")} ✅</li>
+		<li>${gettext("Minor: Multiple language support (Some things still need translations!). 1 point!")} ✅</li>
+		<li>${gettext("Major: Server side pong. Already implemented, as soon as the pong bugs are fixed, this can be marked done.")} ❗</li>
+		<li>${gettext("Major: Pong gameplay via CLI. Already implemented AFAIK, as soon as the pong bugs are fixed, this can be marked done.")} ❗</li>
 		</ul>
 	<br>
 	<h3>${gettext("About:")}</h3>
