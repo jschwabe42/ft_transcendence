@@ -144,13 +144,14 @@ def login_view(request):
 			else:
 				# No 2FA required
 				login(request, user)
-                new_csrf_token = get_token(request)
+				new_csrf_token = get_token(request)
 				refresh = RefreshToken.for_user(user)
 				response = JsonResponse({
 					'success': True,
 					'message': _('Login successful.'),
 					'access_token': str(refresh.access_token),
 					'refresh_token': str(refresh),
+					'csrf_token': new_csrf_token
 				})
 				
 				response.set_cookie(

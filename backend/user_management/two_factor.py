@@ -12,6 +12,7 @@ from django.conf import settings
 from rest_framework_simplejwt.exceptions import TokenError
 from django.contrib.auth import login
 from transcendence.decorators import login_required_redirect
+from django.middleware.csrf import get_token
 
 @login_required_redirect
 def get_2fa_status(request):
@@ -112,7 +113,6 @@ def disable_2fa(request):
 	return JsonResponse({'success': True, 'message': '2FA successfully disabled'})
 
 
-@login_required_redirect
 def verify_2fa(request):
 	if request.method != 'POST':
 		return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=400)
@@ -145,6 +145,7 @@ def verify_2fa(request):
 		refresh = RefreshToken.for_user(user)
 		access_token = str(refresh.access_token)
 		refresh_token = str(refresh)
+		new_csrf_token = get_token(request)
 
 		# Create response
 		response = JsonResponse({
@@ -152,6 +153,7 @@ def verify_2fa(request):
 			'message': 'Login successful',
 			'access_token': access_token,
 			'refresh_token': refresh_token,
+			'csrf_token': new_csrf_token
 		})
 
 		# Set secure cookies
