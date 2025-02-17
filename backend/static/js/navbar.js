@@ -44,6 +44,11 @@ document.addEventListener('DOMContentLoaded', function() {
 		event.preventDefault();
 		router.navigateTo('/account/');
 	});
+
+	document.getElementById('pong-link').addEventListener('click', function(event) {
+		event.preventDefault();
+		router.navigateTo('/pong/');
+	});
 });
 
 
@@ -62,6 +67,7 @@ export function home_view() {
 	const home = document.getElementById('home-content');
 	home.innerHTML = `
 	<h2>${gettext("Welcome to the Transcendence Webpage")}</h2>
+	<p>${gettext("This is a webpage created for the Transcendence project.")}</p>
 	`;
 }
 
