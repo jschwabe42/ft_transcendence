@@ -84,27 +84,34 @@ function get_account_details() {
 				edit_field('email', data.email);
 			};
 
-			document.getElementById('update-profile-data').onclick = () => {
-				const passwordInputContainer = document.getElementById('password-input-container');
-				const style = passwordInputContainer.style.visibility;
-				if (style === 'hidden' || style === '') {
-					passwordInputContainer.style.visibility = 'visible';
-				}
-				else {
+			if (data.is_oauth === false) {
+				document.getElementById('update-profile-data').onclick = () => {
+					const passwordInputContainer = document.getElementById('password-input-container');
+					const style = passwordInputContainer.style.visibility;
+					if (style === 'hidden' || style === '') {
+						passwordInputContainer.style.visibility = 'visible';
+					}
+					else {
+						passwordInputContainer.style.visibility = 'hidden';
+					}
+				};
+	
+				document.getElementById('submit-profile-update').addEventListener('click', () => {
+					const password = document.getElementById('profile-password-input').value;
+					if (!password) {
+						alert(`${gettext("Password is required.")}`);
+						return;
+					}
+					update_profile(data, password, false);
+					const passwordInputContainer = document.getElementById('password-input-container');
 					passwordInputContainer.style.visibility = 'hidden';
-				}
-			};
-
-			document.getElementById('submit-profile-update').addEventListener('click', () => {
-				const password = document.getElementById('profile-password-input').value;
-				if (!password) {
-					alert(`${gettext("Password is required.")}`);
-					return;
-				}
-				update_profile(data, password);
-				const passwordInputContainer = document.getElementById('password-input-container');
-				passwordInputContainer.style.visibility = 'hidden';
-			});
+				});
+			} else {
+				document.getElementById('profile-password').style.visibility = 'hidden';
+				document.getElementById('update-profile-data').onclick = () => {
+					update_profile(data, null, true);
+				};
+			}
 		});
 }
 
@@ -118,7 +125,7 @@ function edit_field(field, value) {
 	}
 }
 
-function update_profile(originalData, password) {
+function update_profile(originalData, password, isOAuthUser) {
 	const username = document.getElementById('edit-text-username') ? document.getElementById('edit-text-username').value : originalData.username;
 	const email = document.getElementById('edit-text-email') ? document.getElementById('edit-text-email').value : originalData.email;
 	const image = document.getElementById('image-upload').files[0];
@@ -127,15 +134,20 @@ function update_profile(originalData, password) {
 		alert(`${gettext("No changes detected.")}`);
 		return;
 	}
-	if (!password) {
-		alert(`${gettext("Password is required to update profile data.")}`);
-		return;
+
+	if (!isOAuthUser) {
+		if (!password) {
+			alert(`${gettext("Password is required to update profile data.")}`);
+			return;
+		}
 	}
 
 	const formData = new FormData();
 	formData.append('username', username);
 	formData.append('email', email);
-	formData.append('password', password);
+	if (!isOAuthUser) {
+		formData.append('password', password);
+	}
 	if (image) {
 		formData.append('image', image);
 	}
