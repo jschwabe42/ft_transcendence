@@ -28,8 +28,8 @@ django_application = get_asgi_application()
 
 application = ProtocolTypeRouter(
 	{
-		"http": ASGIStaticFilesHandler(django_application),
-		"websocket": AuthMiddlewareStack(
+		'http': ASGIStaticFilesHandler(django_application),
+		'websocket': AuthMiddlewareStack(
 			URLRouter(
 				chat_routing.websocket_urlpatterns
 				+ pong_routing.websocket_urlpatterns
