@@ -83,7 +83,7 @@ export function DisplayTournament(params) {
 }
 
 function renderTournamentData(tournamentSocket, tournamentModel) {
-	const user = document.getElementById('username').getAttribute('data-username');
+	const user = document.querySelector('meta[name="username-token"]').content;
 
 	tournamentSocket.onopen = function (e) {
 		console.log('WebSocket opend');

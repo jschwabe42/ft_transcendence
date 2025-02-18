@@ -51,3 +51,8 @@ ul {
 .dropdown-item.language-option {
 	font-size: 20px;
 }
+
+#home-ressources-list,
+#home-team-list {
+	list-style-type: disc;
+}

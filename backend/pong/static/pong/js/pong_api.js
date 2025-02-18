@@ -2,7 +2,7 @@ export function CreateGameForm(event, socket) {
 	event.preventDefault();
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 	const oppName = document.getElementById("opp_name").value.trim();
-	const userName = document.getElementById('username').getAttribute('data-username');
+	const userName = document.querySelector('meta[name="username-token"]').content;
 
 	if (oppName) {
 		console.log("Opponent Name:", oppName, "User Name:", userName);

@@ -34,6 +34,7 @@ def friendships(request, username=None):
 		}
 	)
 
+
 @login_required_redirect
 def requests(request):
 	"""
