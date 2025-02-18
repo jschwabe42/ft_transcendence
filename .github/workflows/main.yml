@@ -63,4 +63,4 @@ jobs:
           ruff check .
       - name: format using ruff
         run: |
-          ruff format .
+          ruff format --check .
