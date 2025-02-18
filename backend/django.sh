@@ -2,7 +2,6 @@
 
 export DJANGO_SETTINGS_MODULE=transcendence.settings
 # multiple languages support: compile *.po to *.mo
-# django-admin compilemessages
 python manage.py compilemessages
 
 python manage.py makemigrations
