@@ -12,16 +12,17 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'transcendence.settings')
 
 import django
+
 django.setup()
 
-from django.core.asgi import get_asgi_application
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from chat import routing as chat_routing
+from django.contrib.staticfiles.handlers import ASGIStaticFilesHandler
+from django.core.asgi import get_asgi_application
 from pong import routing as pong_routing
 from quiz import routing as quiz_routing
 from user_management import routing as user_status_routing
-from django.contrib.staticfiles.handlers import ASGIStaticFilesHandler
 
 django_application = get_asgi_application()
 
