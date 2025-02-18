@@ -7,11 +7,12 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<!-- For translations -->
+	<!-- For using the gettext inside our javascripts -->
 	<script src="/jsi18n/"></script>
 	<script type="text/javascript">
 		var gettext = window.gettext;
 	</script>
+
 	<!-- The bootstrap toolkit -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -19,40 +20,25 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-	<!-- The CSS files of the quiz app.-->
-	<link href="{% static 'quiz/css/room_list.css' %}" rel="stylesheet">
-	<link href="{% static 'quiz/css/room_display.css' %}" rel="stylesheet">
-	<link href="{% static 'quiz/css/quiz_game.css' %}" rel="stylesheet">
+	<!-- The one stylesheet -->
+	<!-- If wanted, we can make the stylesheets load on use, if we add them either to the router, or to a urls specifics function -->
+	<link href="{% static 'css/styles.css' %}" rel="stylesheet">
 
-	<!-- CSS files of the dashboard -->
-	<link href="{% static 'dashboard/css/dashboard.css' %}" rel="stylesheet">
-	<link href="{% static 'dashboard/css/profile.css' %}" rel="stylesheet">
-
-	<!-- CSS files of the pong game -->
-	<link rel="stylesheet" href="/static/chat/chat.css">
-	<link rel="stylesheet" href="/static/pong/css/game.css">
-	<link rel="stylesheet" href="/static/pong/css/tournement.css">
-
-	<!-- CSS files of the users -->
-	<link href="{% static 'users/css/account.css' %}" rel="stylesheet">
-	<link href="{% static 'users/css/login.css' %}" rel="stylesheet">
-	<link href="{% static 'users/css/register.css' %}" rel="stylesheet">
+	<!-- The stylesheets for the navbar and fonts. Seperate from the above because they affect this file directly. -->
+	<link href="{% static 'css/navbar.css' %}" rel="stylesheet">
+	<link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
 
 	<!-- The files needed to run the index.html. -->
-	<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-	<link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
 	<script type="module" src="{% static 'js/navbar.js' %}"></script>
 	<script type="module" src="{% static 'js/router.js' %}"></script>
 
-	<!-- NEEDS TO BE REMOVED -->
-	<script type="module" src="{% static 'pong/js/pong_display_ingame.js' %}"></script>
-	<script type="module" src="{% static 'pong/js/overview.js' %}"></script>
-	<script type="module" src="{% static 'pong/js/pong_result.js' %}"></script>
-	<script type="module" src="{% static 'pong/js/tournament_display.js' %}"></script>
+	<!-- The javascript for the online status. -->
+	 <script type="module" src="{% static 'users/js/OnlineStatusWebSocket.js' %}"></script>
 
-
-
+	<!-- The CSRF token and username for the javascript. -->
 	<meta name="csrf-token" content="{{ csrf_token }}">
+	<meta name="username-token" content="{{ user.username }}">
+
 	<title>{% trans "Transcendence" %}</title>
 </head>
 
@@ -73,7 +59,7 @@
 						<a class="nav-item nav-link" href="{% url 'chat' %}">{% trans "Chat" %}</a>
 						<!-- @follow-up implement about page -->
 						<a class="nav-item nav-link" href="/quiz/" id="quiz-link">{% trans "Quiz" %}</a>
-						<a class="nav-item nav-link" href="/pong/">{% trans "Pong" %}</a>
+						<a class="nav-item nav-link" href="/pong/" id="pong-link">{% trans "Pong" %}</a>
 						<a class="nav-item nav-link" href="/dashboard/" id="dashboard-link">{% trans "Dashboard" %}</a>
 					</div>
 					<!-- Navbar Right Side -->
@@ -103,10 +89,6 @@
 	<!-- The content of the quiz app -->
 	<div class="container mt-5" id="quiz-app-content"></div>
 	<!-- The content of the Pong app -->
-	 <!-- THIS IS REDUNDANT. REPLACE WITH THE ONE ABOVE -->
-	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-	<!-- <div id="username" data-username="{{ user.username }}"></div> -->
-
 	<div class="container mt-5" id="pong-app-content"></div>
 	<!-- The content of the user app -->
 	<div class="container mt-5" id="user-app-content"></div>

@@ -4,6 +4,7 @@ import sys
 
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
+from django.utils.translation import gettext as _
 
 from .models import PongGame, Tournament
 from .pong import PongInstance
@@ -183,6 +184,7 @@ class BasePageConsumer(AsyncWebsocketConsumer):
 
 	async def send_tournament_created(self, host, tournament_id):
 		sys.stdout.flush()
+		# translate the message? @follow-up
 		response = {'message': 'create_tournament', 'host': host, 'tournament_id': tournament_id}
 		await self.channel_layer.group_send(
 			self.group_name, {'type': 'create_tournament', 'message': response}
@@ -288,7 +290,7 @@ class TournamentConsumer(AsyncWebsocketConsumer):
 			response_data = {
 				'use': 'createGames',
 				'status': 'success',
-				'message': 'Games created successfully',
+				'message': _('Games created successfully'),
 				'data': data,
 			}
 

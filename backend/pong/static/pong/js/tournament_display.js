@@ -16,7 +16,7 @@ export function DisplayTournament(params) {
 			console.log(model);
 			tournamentModel = model;
 			document.getElementById('pong-app-content').innerHTML = `
-				<h1 id="header">Welcome to Tournament ${params.tournament_id}</h1>
+				<h1 id="header">${gettext("Welcome to Tournament")} ${params.tournament_id}</h1>
 
 				<div class="bracket-container">
 					<div class="round-quarter-finals">
@@ -44,14 +44,14 @@ export function DisplayTournament(params) {
 				
 
 				<form id="create-tournament-games" style="display: none;" >
-					<button class="add_user" type="submit">Play Tournament Games +</button>
+					<button class="add_user" type="submit">${gettext("Play Tournament Games +")}</button>
 				</form>
 
 				<form id="create-final" style="display: none;" >
-					<button class="add_user" type="submit">Start Final Game</button>
+					<button class="add_user" type="submit">${gettext("Start Final Game")}</button>
 				</form>
 
-				<button class="navigate-button" data-path="/pong/">Go to Menu</button>
+				<button class="navigate-button" data-path="/pong/">${gettext("Go to Menu")}</button>
 			`;
 			renderTournamentData(tournamentSocket, tournamentModel);
 			document.getElementById("create-tournament-games").addEventListener("submit", function (event) {
@@ -83,7 +83,7 @@ export function DisplayTournament(params) {
 }
 
 function renderTournamentData(tournamentSocket, tournamentModel) {
-	const user = document.getElementById('username').getAttribute('data-username');
+	const user = document.querySelector('meta[name="username-token"]').content;
 
 	tournamentSocket.onopen = function (e) {
 		console.log('WebSocket opend');
@@ -121,8 +121,7 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 				router.navigateTo(path)
 			}
 		}
-		if (data.use == 'createFinal')
-		{
+		if (data.use == 'createFinal') {
 			console.log(data.player1, data.player2)
 			if (user == data.player1 || user == data.player2) {
 				let path = '/pong/' + data.game_id
@@ -152,8 +151,8 @@ function updateUIWithTournamentData(data, tournamentModel) {
 	document.getElementById("player3").innerHTML = ` ${data.player3}`;
 	document.getElementById("winner1").innerText = ` ${data.winner1}`;
 	document.getElementById("winner2").innerText = ` ${data.winner2}`;
-	document.getElementById("finalWinner").innerText =` ${data.finalWinner}`;
-		
+	document.getElementById("finalWinner").innerText = ` ${data.finalWinner}`;
+
 	if (data.playerNum === 4)
 		document.getElementById("header").style.color = "green";
 }

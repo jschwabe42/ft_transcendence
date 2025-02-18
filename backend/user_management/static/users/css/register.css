@@ -23,24 +23,3 @@
 	box-shadow: none !important;
 	border-color: #1c4f73 !important;
 }
-
-
-#login-link-container {
-	font-size: 16px;
-}
-
-#sign-in-link {
-	color: #7ab5e0;
-	text-decoration: underline;
-	font-weight: bold;
-}
-
-#sign-in-link:hover {
-	color: #163d5a;
-	text-decoration: underline;
-	cursor: pointer;
-}
-
-#register-sign-up-button {
-	margin-top: 10px;
-}

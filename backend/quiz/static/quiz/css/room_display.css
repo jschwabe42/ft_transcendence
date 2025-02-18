@@ -1,15 +1,3 @@
-/* Overwrites the Leave room buttons design */
-.btn-danger {
-	font-family: 'Fredoka', sans-serif !important;
-	color: white !important;
-	font-weight: bold !important;
-	border-radius: 10px !important;
-}
-
-.btn-danger:focus {
-	outline: none !important;
-}
-
 /* Fixes the leave room button to the bottom right */
 #leave-room-button {
 	position: fixed;

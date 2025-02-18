@@ -196,6 +196,7 @@ STATICFILES_DIRS = [
 	BASE_DIR / 'quiz/static',
 	BASE_DIR / 'dashboard/static',
 	BASE_DIR / 'pong/static',
+	BASE_DIR / 'user_management/static',
 ]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'

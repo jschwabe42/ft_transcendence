@@ -1,8 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-from rest_framework import status
+from django.utils.translation import gettext as _
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.status import (
+	HTTP_200_OK,
+	HTTP_201_CREATED,
+	HTTP_400_BAD_REQUEST,
+	HTTP_403_FORBIDDEN,
+	HTTP_404_NOT_FOUND,
+)
 from rest_framework.views import APIView
 
 from .models import PongGame, Tournament
@@ -22,23 +29,24 @@ class CreateGameView(APIView):
 		tournament_id = request.data.get('tournament', 0)
 		if not opponent_username:
 			return Response(
-				{'error': 'Opponent username is required.'}, status=status.HTTP_400_BAD_REQUEST
+				{'error': _('Opponent username is required.')}, status=HTTP_400_BAD_REQUEST
 			)
 
 		if opponent_username == request.user.username and tournament_id == 0:
 			return Response(
-				{'error': 'You cannot play against yourself.'}, status=status.HTTP_400_BAD_REQUEST
+				{'error': _('You cannot play against yourself.')},
+				status=HTTP_400_BAD_REQUEST,
 			)
 
 		try:
 			opponent = User.objects.get(username=opponent_username)
 		except User.DoesNotExist:
-			return Response({'error': 'Opponent does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+			return Response({'error': _('Opponent does not exist.')}, status=HTTP_404_NOT_FOUND)
 
 		try:
 			player = User.objects.get(username=user_username)
 		except User.DoesNotExist:
-			return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+			return Response({'error': _('User does not exist.')}, status=HTTP_404_NOT_FOUND)
 
 		# Create the game
 		if tournament_id != 0:
@@ -54,8 +62,8 @@ class CreateGameView(APIView):
 		game.save()
 
 		return Response(
-			{'game_id': game.id, 'message': 'Game created successfully.'},
-			status=status.HTTP_201_CREATED,
+			{'game_id': game.id, 'message': _('Game created successfully.')},
+			status=HTTP_201_CREATED,
 		)
 
 
@@ -72,14 +80,14 @@ class ScoreBoardView(APIView):
 
 		if not game_id:
 			return Response(
-				{'error': 'game_id score1 and score2 are required'},
-				status=status.HTTP_400_BAD_REQUEST,
+				{'error': _('game_id score1 and score2 are required')},
+				status=HTTP_400_BAD_REQUEST,
 			)
 
 		try:
 			game = PongGame.objects.get(id=game_id)
 		except PongGame.DoesNotExist:
-			return Response({'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND)
+			return Response({'error': _('Game not found.')}, status=HTTP_404_NOT_FOUND)
 
 		game.score1 = int(score1)
 		game.score2 = int(score2)
@@ -104,7 +112,7 @@ class ScoreBoardView(APIView):
 
 		game.save()
 
-		return Response({'scores': 'Game successfully saved score.'}, status=status.HTTP_200_OK)
+		return Response({'scores': _('Game successfully saved score.')}, status=HTTP_200_OK)
 
 
 class ControlKeySetting(APIView):
@@ -135,14 +143,14 @@ class ControlKeySetting(APIView):
 
 		if not game_id or control1 is None or control2 is None:
 			return Response(
-				{'error': 'game_id, control1, and control2 are required.'},
-				status=status.HTTP_400_BAD_REQUEST,
+				{'error': _('game_id, control1, and control2 are required.')},
+				status=HTTP_400_BAD_REQUEST,
 			)
 
 		try:
 			game = PongGame.objects.get(id=game_id)
 		except PongGame.DoesNotExist:
-			return Response({'error': 'Game not found.'}, status=status.HTTP_404_NOT_FOUND)
+			return Response({'error': _('Game not found.')}, status=HTTP_404_NOT_FOUND)
 
 		if user == game.player1:
 			game.player1_control_settings = control1
@@ -150,14 +158,14 @@ class ControlKeySetting(APIView):
 			game.player2_control_settings = control2
 		else:
 			return Response(
-				{'error': 'You are not a player in 1this game.'}, status=status.HTTP_403_FORBIDDEN
+				{'error': _('You are not a player in this game.')}, status=HTTP_403_FORBIDDEN
 			)
 
 		game.save()
 
 		return Response(
-			{'message': f'Control settings successfully updated for user {user}.'},
-			status=status.HTTP_200_OK,
+			{'message': f'{_("Control settings successfully updated for user")} {user}.'},
+			status=HTTP_200_OK,
 		)
 
 
@@ -173,11 +181,11 @@ class CreateTournament(APIView):
 		try:
 			User.objects.get(username=username)
 		except User.DoesNotExist:
-			return Response({'error': 'user does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+			return Response({'error': _('user does not exist.')}, status=HTTP_404_NOT_FOUND)
 
 		tournament = Tournament.objects.create(host=username)
 		tournament.save()
 		return Response(
-			{'tournament_id': tournament.id, 'message': 'Tournament created successfully.'},
-			status=status.HTTP_201_CREATED,
+			{'tournament_id': tournament.id, 'message': _('Tournament created successfully.')},
+			status=HTTP_201_CREATED,
 		)

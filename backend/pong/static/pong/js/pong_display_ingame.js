@@ -13,7 +13,7 @@ export function DisplayPong(params) {
 			document.getElementById('pong-app-content').innerHTML = `
 				<main role="main" class="container">
 					<div class="ready-bar">
-						<button class="ready" type="button" id="user_ready">Ready</button>
+						<button class="ready" type="button" id="user_ready">${gettext("Ready")}</button>
 
 						<form id="w-s" method="POST">
 							{% csrf_token %}
@@ -29,7 +29,7 @@ export function DisplayPong(params) {
 							</button>
 						</form>
 
-						<p class="is_ready Text" id="is_ready_id">Ready:</p>
+						<p class="is_ready Text" id="is_ready_id">${gettext("Ready")}:</p>
 
 						<!-- Player 1 Status -->
 						<p class="is_ready" id="ready_player_one" style="display: ${model.player1_ready ? 'block' : 'none'};">${model.player1}</p>
@@ -54,7 +54,7 @@ export function DisplayPong(params) {
 					</div>
 					<button id="winner" class="navigate-button" style="display: none;" 
 						data-path="${model.tournament_id === 0 ? '/pong/' : '/pong/tournament/' + model.tournament_id}">
-						back to menu
+						${gettext("back to menu")}
 					</button>
 				</main>
 			`;
@@ -74,7 +74,7 @@ export function DisplayPong(params) {
 }
 
 function renderGameData() {
-	const user = document.getElementById('username').getAttribute('data-username');
+	const user = document.querySelector('meta[name="username-token"]').content;
 	let game_is_running = false;
 
 	const player1 = gameModel.player1;
@@ -173,8 +173,7 @@ function renderGameData() {
 
 	async function sendGameScores(score1, score2, game_id) {
 		console.log("Access API Scores");
-		// let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-		let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 		try {
 			const response = await fetch('/pong/api/get-score/', {
 				method: 'POST',
@@ -221,11 +220,11 @@ function renderGameData() {
 				document.getElementById("winner").style.display = "block";
 				console.log("Player1 Won");
 			}
-			if (state.winner.player2) {
-				document.getElementById("winner").style.display = "block";
-				document.getElementById("player2").style.backgroundColor = "green";
-				console.log("Player2 Won");
-			}
+		if (state.winner.player2) {
+			document.getElementById("winner").style.display = "block";
+			document.getElementById("player2").style.backgroundColor = "green";
+			console.log("Player2 Won");
+		}
 
 
 
@@ -332,7 +331,7 @@ function renderGameData() {
 	document.getElementById("ws").addEventListener("click", async function (event) {
 		console.log("Access API");
 		event.preventDefault();
-		let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
 		try {
 			const response = await fetch('/pong/api/get-gameControl/', {
@@ -362,7 +361,7 @@ function renderGameData() {
 	document.getElementById("up_down").addEventListener("click", async function (event) {
 		console.log("Access API");
 		event.preventDefault();
-		let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
 		try {
 			const response = await fetch('/pong/api/get-gameControl/', {
