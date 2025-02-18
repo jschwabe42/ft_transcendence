@@ -5,11 +5,11 @@ quote-style = "single"
 indent-style = "tab"
 docstring-code-format = true
 exclude = [
-"backend/dashboard/*",
-"backend/quiz/*",
-"**/migrations/*",
+	"backend/dashboard/*",
+	"backend/quiz/*",
+	"**/migrations/*",
+	"backend/transcendence/asgi.py",
 ]
 [tool.ruff.lint.per-file-ignores]
 "backend/transcendence/settings.py" = ["E402"]
-"backend/transcendence/asgi.py" = ["E402"]
 "**/migrations/*" = ["ALL"]  # Ignore all ruff rules for migration files
