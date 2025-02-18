@@ -226,6 +226,18 @@ ASGI_APPLICATION = 'transcendence.asgi.application'
 
 CHANNEL_LAYERS = {'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}}
 
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGES = [
+	('en', _('English')),
+	('sv', _('Swedish')),
+	('de', _('German')),
+]
+
+LOCALE_PATHS = [
+	BASE_DIR / 'locale',
+]
+
 # Setting for  REST Framework
 REST_FRAMEWORK = {
 	'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
