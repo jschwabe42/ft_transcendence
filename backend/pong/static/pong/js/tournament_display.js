@@ -8,7 +8,8 @@ export function DisplayTournament(params) {
 	let tournament_id = params.tournament_id
 	console.log(params.tournament_id)
 	console.log("Tournament: ID", params.tournament_id);
-	const tournamentSocket = new WebSocket('ws://' + window.location.host + '/tournament/' + params.tournament_id + '/');
+	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+	const tournamentSocket = new WebSocket(protocol + window.location.host + '/tournament/' + params.tournament_id + '/');
 
 	fetch(`/pong/api/tournament/?tournament_id=${params.tournament_id}`)
 		.then(response => response.json())
