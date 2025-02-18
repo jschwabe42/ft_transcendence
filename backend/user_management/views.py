@@ -111,7 +111,12 @@ def login_view(request):
 			login(request, user)
 			new_csrf_token = get_token(request)
 			return JsonResponse(
-				{'success': True, 'message': _('Login successful.'), 'csrf_token': new_csrf_token, 'username': username}
+				{
+					'success': True,
+					'message': _('Login successful.'),
+					'csrf_token': new_csrf_token,
+					'username': username,
+				}
 			)
 		else:
 			return JsonResponse({'success': False, 'message': _('Invalid username or password!')})
