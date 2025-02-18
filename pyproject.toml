@@ -11,4 +11,5 @@ exclude = [
 ]
 [tool.ruff.lint.per-file-ignores]
 "backend/transcendence/settings.py" = ["E402"]
+"backend/transcendence/asgi.py" = ["E402"]
 "**/migrations/*" = ["ALL"]  # Ignore all ruff rules for migration files
