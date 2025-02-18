@@ -1,0 +1,139 @@
+/* Imports the other stylesheets. Should we want to, we could dynamically load them at some point. */
+
+/* The quiz stylesheets: */
+@import url('/static/quiz/css/room_list.css');
+@import url('/static/quiz/css/room_display.css');
+@import url('/static/quiz/css/quiz_game.css');
+
+/* The dashboard stylesheets: */
+@import url('/static/dashboard/css/dashboard.css');
+@import url('/static/dashboard/css/profile.css');
+
+/* The pong game stylesheets: */
+@import url('/static/pong/css/game.css');
+@import url('/static/pong/css/tournement.css');
+
+/* The user_management stylesheets: */
+@import url('/static/users/css/account.css');
+@import url('/static/users/css/login.css');
+@import url('/static/users/css/register.css');
+
+/* Overwrites the danger buttons design */
+.btn-danger {
+	font-family: 'Fredoka', sans-serif !important;
+	color: white !important;
+	font-weight: bold !important;
+	border-radius: 10px !important;
+}
+
+.btn-danger:focus {
+	outline: none !important;
+}
+
+/* Overwrites the primary button */
+.btn-primary {
+	background-color: #1c4f73 !important;
+	font-family: 'Fredoka', sans-serif !important;
+	color: white !important;
+	font-weight: bold !important;
+	border-radius: 10px !important;
+	border-color: #1c4f73 !important;
+}
+
+.btn-primary:hover {
+	background-color: #163d5a !important;
+	border-color: #163d5a !important;
+}
+
+.btn-primary:focus {
+	outline: none !important;
+	box-shadow: none !important;
+	border-color: #1c4f73 !important;
+}
+
+/* Overwrites the success button from the bootstrap toolkit */
+.btn-success {
+	font-family: 'Fredoka', sans-serif !important;
+	color: white !important;
+	font-weight: bold !important;
+	border-radius: 10px !important;
+}
+
+.btn-success:focus {
+	outline: none !important;
+}
+
+/* Overwrites the outline button from the bootstrap toolkit */
+.btn-outline-info {
+	font-family: 'Fredoka', sans-serif !important;
+	color: #1c4f73 !important;
+	font-weight: bold !important;
+	border-radius: 10px !important;
+	border-color: #1c4f73 !important;
+}
+
+.btn-outline-info:hover {
+	background-color: #163d5a !important;
+	border-color: #163d5a !important;
+	color: white !important;
+}
+
+.btn-outline-info:focus {
+	outline: none !important;
+	box-shadow: none !important;
+	border-color: #1c4f73 !important;
+}
+
+/* The link to sign up / login shared between the different account forms */
+#account-register-link {
+	color: #7ab5e0;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+#account-register-link:hover {
+	color: #163d5a;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#register-link-container {
+	font-size: 16px;
+}
+
+#login-signin-button {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+
+#login-link-container {
+	font-size: 16px;
+}
+
+#sign-in-link {
+	color: #7ab5e0;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+#sign-in-link:hover {
+	color: #163d5a;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#register-sign-up-button {
+	margin-top: 10px;
+}
+
+/* A standart href decorator */
+.index-base-link {
+	color: #1c4f73;
+	text-decoration: underline;
+}
+
+.index-base-link:hover {
+	color: #7ab5e0;
+	cursor: pointer;
+}

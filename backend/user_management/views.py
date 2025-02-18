@@ -205,12 +205,16 @@ def get_account_details(request):
 	"""
 	if request.method == 'GET':
 		user = request.user
+		is_oauth = False
+		if user.oauth_id:
+			is_oauth = True
 		return JsonResponse(
 			{
 				'success': True,
 				'username': user.username,
 				'email': user.email,
 				'image_url': user.image.url,
+				'is_oauth': is_oauth,
 			}
 		)
 	else:
@@ -227,15 +231,17 @@ def update_profile(request):
 		user = request.user
 		username = request.POST.get('username')
 		email = request.POST.get('email')
-		password = request.POST.get('password')
+		if not user.oauth_id:
+			password = request.POST.get('password')
 		image = request.FILES.get('image')
 
 		validation_response = validate_data(username, email, user)
 		if validation_response:
 			return validation_response
 
-		if not authenticate(username=user.username, password=password):
-			return JsonResponse({'success': False, 'message': _('Invalid password.')})
+		if not user.oauth_id:
+			if not authenticate(username=user.username, password=password):
+				return JsonResponse({'success': False, 'message': _('Invalid password.')})
 		if username:
 			user.username = username
 		if email:

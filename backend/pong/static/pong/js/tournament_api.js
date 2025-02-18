@@ -86,7 +86,7 @@ function CreateGamesAPI(player1, player2, tour_id) {
 export function CreateTournament(event, socket) {
 	event.preventDefault();
 	const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-	const userName = document.getElementById('username').getAttribute('data-username');
+	const userName = document.querySelector('meta[name="username-token"]').content;
 
 	console.log("Create Tournemet")
 
