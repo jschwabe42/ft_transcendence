@@ -50,7 +50,7 @@ urlpatterns = [
 	path('api/update_profile/', views.update_profile, name='update-profile'),
 	path('api/change_password/', views.change_password, name='change-password'),
 	path('api/check_authentication/', views.check_authentication, name='check-authentication'),
-	#2FA APIS
+	# 2FA APIS
 	path('api/2fa/status/', get_2fa_status, name='get-2fa-status'),
 	path('api/2fa/enable/', enable_2fa, name='enable-2fa'),
 	path('api/2fa/confirm/', confirm_2fa, name='confirm-2fa'),

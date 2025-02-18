@@ -1,54 +1,59 @@
 # users/views.py
-from rest_framework.decorators import api_view
+import base64
+import json
+from io import BytesIO
+
 import pyotp
 import qrcode
-import base64
-from io import BytesIO
-import json
-from .models import CustomUser
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
-from django.http import JsonResponse
 from django.conf import settings
-from rest_framework_simplejwt.exceptions import TokenError
 from django.contrib.auth import login
-from transcendence.decorators import login_required_redirect
+from django.http import JsonResponse
 from django.middleware.csrf import get_token
+from rest_framework.decorators import api_view
+from rest_framework_simplejwt.exceptions import TokenError
+from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
+from transcendence.decorators import login_required_redirect
+
+from .models import CustomUser
+
 
 @login_required_redirect
 def get_2fa_status(request):
-	return JsonResponse({
-		'enabled': request.user.two_factor_enabled
-	})
+	return JsonResponse({'enabled': request.user.two_factor_enabled})
+
 
 @api_view(['POST'])
 @login_required_redirect
 def enable_2fa(request):
 	user = request.user
-	
+
 	# Generate new secret if none exists
 	if not user.two_factor_secret:
 		secret = pyotp.random_base32()
 		user.two_factor_secret = secret
 		user.save()
-	
+
 	# Generate QR code URI
 	totp = pyotp.TOTP(user.two_factor_secret)
 	uri = totp.provisioning_uri(
 		name=user.email,
-		issuer_name=settings.TOTP_ISSUER_NAME
+		issuer_name=settings.TOTP_ISSUER_NAME,
 	)
-	
+
 	# Generate QR code image
 	qr = qrcode.make(uri)
 	buffer = BytesIO()
 	qr.save(buffer)
 	qr_base64 = base64.b64encode(buffer.getvalue()).decode()
-	
-	return JsonResponse({
-		'success': True,
-		'secret': user.two_factor_secret,
-		'qr_code_url': f"data:image/png;base64,{qr_base64}"
-	})
+
+	return JsonResponse(
+		{
+			'success': True,
+			'secret': user.two_factor_secret,
+			'qr_code_url': f'data:image/png;base64,{qr_base64}',
+		}
+	)
+
 
 @login_required_redirect
 def confirm_2fa(request):
@@ -79,10 +84,7 @@ def confirm_2fa(request):
 	user.two_factor_enabled = True
 	user.save()
 
-	return JsonResponse({
-		'success': True,
-			'message': '2FA successfully enabled!'
-	})
+	return JsonResponse({'success': True, 'message': '2FA successfully enabled!'})
 
 
 @login_required_redirect
@@ -94,12 +96,14 @@ def disable_2fa(request):
 		return JsonResponse({'success': False, 'message': 'Invalid JSON'}, status=400)
 
 	user = request.user
-	
+
 	if not user.two_factor_enabled:
 		return JsonResponse({'success': False, 'message': '2FA is not enabled'}, status=400)
 
 	if not code or len(code) != 6:
-		return JsonResponse({'success': False, 'message': 'Valid 6-digit code required'}, status=400)
+		return JsonResponse(
+			{'success': False, 'message': 'Valid 6-digit code required'}, status=400
+		)
 
 	# Verify 2FA code
 	totp = pyotp.TOTP(user.two_factor_secret)
@@ -107,7 +111,7 @@ def disable_2fa(request):
 		return JsonResponse({'success': False, 'message': 'Invalid 2FA code'}, status=400)
 
 	user.two_factor_enabled = False
-	user.two_factor_secret = ""
+	user.two_factor_secret = ''
 	user.save()
 
 	return JsonResponse({'success': True, 'message': '2FA successfully disabled'})
@@ -116,7 +120,6 @@ def disable_2fa(request):
 def verify_2fa(request):
 	if request.method != 'POST':
 		return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=400)
-
 
 	try:
 		data = json.loads(request.body)
@@ -132,10 +135,10 @@ def verify_2fa(request):
 		# Validate pre-authentication token
 		validated_token = AccessToken(pre_auth_token)
 		user_id = validated_token['user_id']
-		
+
 		# Get user from database
 		user = CustomUser.objects.get(id=user_id)
-		
+
 		# Verify 2FA code
 		totp = pyotp.TOTP(user.two_factor_secret)
 		if not totp.verify(code):
@@ -148,13 +151,15 @@ def verify_2fa(request):
 		new_csrf_token = get_token(request)
 
 		# Create response
-		response = JsonResponse({
-			'success': True,
-			'message': 'Login successful',
-			'access_token': access_token,
-			'refresh_token': refresh_token,
-			'csrf_token': new_csrf_token
-		})
+		response = JsonResponse(
+			{
+				'success': True,
+				'message': 'Login successful',
+				'access_token': access_token,
+				'refresh_token': refresh_token,
+				'csrf_token': new_csrf_token,
+			}
+		)
 
 		# Set secure cookies
 		response.set_cookie(
@@ -162,14 +167,14 @@ def verify_2fa(request):
 			value=access_token,
 			httponly=True,
 			secure=False,  # Set to True in production
-			samesite='Lax'
+			samesite='Lax',
 		)
 		response.set_cookie(
 			key='refresh_token',
 			value=refresh_token,
 			httponly=True,
 			secure=False,  # Set to True in production
-			samesite='Lax'
+			samesite='Lax',
 		)
 
 		login(request, user)

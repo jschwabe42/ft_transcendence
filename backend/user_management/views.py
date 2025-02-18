@@ -1,5 +1,6 @@
 import json
 import re
+from datetime import timedelta
 
 from django.contrib.auth import (
 	authenticate,
@@ -16,13 +17,13 @@ from django.middleware.csrf import get_token
 from django.shortcuts import render
 from django.utils.translation import gettext as _
 from pong.models import PongGame
-from rest_framework_simplejwt.tokens import RefreshToken
 from pong.utils import win_to_loss_ratio
+from rest_framework_simplejwt.tokens import RefreshToken
 from transcendence.decorators import login_required_redirect
 
 from .blocked_users import Block_Manager, BlockedUsers
-
 from .decorators import hybrid_login_required
+
 # from .consumers import UserProfileConsumer
 
 User = get_user_model()
@@ -30,13 +31,16 @@ User = get_user_model()
 
 @hybrid_login_required
 def test_hybrid_auth(request):
-	return JsonResponse({
-		'message': 'JWT TOKEN VALID!!',
-		'user': {
-			'username': request.user.username,
-			'email': request.user.email,
+	return JsonResponse(
+		{
+			'message': 'JWT TOKEN VALID!!',
+			'user': {
+				'username': request.user.username,
+				'email': request.user.email,
+			},
 		}
-	})
+	)
+
 
 @login_required_redirect
 def block_user(request, username):
@@ -109,15 +113,6 @@ def register(request):
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
 
-
-
-from django.contrib.auth import authenticate, login
-from django.http import JsonResponse
-from django.utils.translation import gettext as _
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.exceptions import TokenError
-from datetime import timedelta
-
 def login_view(request):
 	"""
 	Login a user with 2FA support.
@@ -134,45 +129,50 @@ def login_view(request):
 			if user.two_factor_enabled:
 				refresh = RefreshToken.for_user(user)
 				refresh.set_exp(lifetime=timedelta(minutes=5))
-				
-				return JsonResponse({
-					'success': True,
-					'requires_2fa': True,
-					'pre_auth_token': str(refresh.access_token),
-					'message': _('2FA required. Please enter your code.')
-				})
+
+				return JsonResponse(
+					{
+						'success': True,
+						'requires_2fa': True,
+						'pre_auth_token': str(refresh.access_token),
+						'message': _('2FA required. Please enter your code.'),
+					}
+				)
 			else:
 				# No 2FA required
 				login(request, user)
 				new_csrf_token = get_token(request)
 				refresh = RefreshToken.for_user(user)
-				response = JsonResponse({
-					'success': True,
-					'message': _('Login successful.'),
-					'access_token': str(refresh.access_token),
-					'refresh_token': str(refresh),
-					'csrf_token': new_csrf_token
-				})
-				
+				response = JsonResponse(
+					{
+						'success': True,
+						'message': _('Login successful.'),
+						'access_token': str(refresh.access_token),
+						'refresh_token': str(refresh),
+						'csrf_token': new_csrf_token,
+					}
+				)
+
 				response.set_cookie(
 					key='access_token',
 					value=str(refresh.access_token),
 					httponly=True,
 					secure=False,  # Set to True in production
-					samesite='Lax'
+					samesite='Lax',
 				)
 				response.set_cookie(
 					key='refresh_token',
 					value=str(refresh),
 					httponly=True,
 					secure=False,  # Set to True in production
-					samesite='Lax'
+					samesite='Lax',
 				)
 				return response
 		else:
 			return JsonResponse({'success': False, 'message': _('Invalid username or password!')})
 	else:
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
+
 
 def logout_view(request):
 	"""
@@ -190,8 +190,7 @@ def logout_view(request):
 		# Clear cookies
 		response.delete_cookie('access_token')
 		response.delete_cookie('refresh_token')
-	
-		
+
 		return response
 	else:
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
