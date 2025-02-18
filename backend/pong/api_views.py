@@ -122,17 +122,14 @@ class ControlKeySetting(APIView):
 		game_id = request.data.get('game_id')
 		username = request.data.get('username')
 
-<<<<<<< HEAD
-		if game_id:
-			game_id = game_id.strip()
-		if username:
-			username = username.strip()
+		# if game_id:
+		# 	game_id = game_id.strip()
+		# if username:
+		# 	username = username.strip()
 		
-		printf(game_id)
-		printf(username)
+		# printf(game_id)
+		# printf(username)
 
-=======
->>>>>>> 741c1fd0f39a66b5a4632fe04c56110fa1ee7165
 		if username:
 			user = User.objects.filter(username=username)
 		else:
