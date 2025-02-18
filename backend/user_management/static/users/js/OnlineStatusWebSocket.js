@@ -1,4 +1,5 @@
-const OnlineStatusWebSocket = new WebSocket('ws://' + window.location.host + '/ws/online-status/');
+const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+const OnlineStatusWebSocket = new WebSocket(protocol + window.location.host + '/ws/online-status/');
 
 OnlineStatusWebSocket.onopen = function (e) {
 	console.log('WebSocket opened', e);

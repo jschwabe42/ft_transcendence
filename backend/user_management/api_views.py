@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 
 from user_management.models import CustomUser
 
-OAUTH_CALLBACK = 'http://localhost:8000/users/oauth-callback/'
+OAUTH_CALLBACK = 'https://localhost:8000/users/oauth-callback/'
 
 
 class OauthView(APIView):

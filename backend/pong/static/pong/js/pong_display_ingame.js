@@ -81,7 +81,8 @@ function renderGameData() {
 	const player2 = gameModel.player2;
 	const game_id = gameModel.game_id;
 
-	const gameSocket = new WebSocket('ws://' + window.location.host + '/pong/' + game_id + '/');
+	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+	const gameSocket = new WebSocket(protocol + window.location.host + '/pong/' + game_id + '/');
 
 	gameSocket.onclose = function (e) {
 		console.error('WebSocket geschlossen', e);

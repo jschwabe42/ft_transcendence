@@ -247,3 +247,14 @@ SIMPLE_JWT = {
 	'AUTH_HEADER_TYPES': ('Bearer',),  # Ensure Authorization headers use 'Bearer'
 	'SIGNING_KEY': SECRET_KEY,  # Use Django's secret key for signing
 }
+
+USE_I18N = True
+USE_L10N = True
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSFR_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_CONTENT_TYPE_NOSNIFF = True

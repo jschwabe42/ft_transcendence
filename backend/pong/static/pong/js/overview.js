@@ -3,7 +3,8 @@ import { CreateGameForm } from './pong_api.js';
 import { CreateTournament } from './tournament_api.js';
 
 export function PongOverview() {
-	const socket = new WebSocket("ws://localhost:8000/ws/pong/");
+	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+	const socket = new WebSocket(protocol + window.location.host + '/ws/pong/');
 	const userName = document.querySelector('meta[name="username-token"]').content;
 
 	// open socket

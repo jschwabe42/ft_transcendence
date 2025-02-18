@@ -79,7 +79,7 @@ export function home_view() {
 		<li>${gettext("Everything needs to be launched with a single command line. (make)")} ✅</li>
 		<li>${gettext("Any password stored in the database must be hashed.")} ✅</li>
 		<li>${gettext("Your website must be protected against SQL injections/XSS.")} ❗❓</li>
-		<li>${gettext("HTTPS must be enabled and WSS needs to be used instead of ws.")} ❗❗</li>
+		<li>${gettext("HTTPS must be enabled and WSS needs to be used instead of ws.")} ✅</li>
 		<li>${gettext("A pong game needs to be implemented. (See issues).")} ❗❗</li>
 	</ul>
 	<br>
