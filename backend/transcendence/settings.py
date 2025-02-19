@@ -34,7 +34,7 @@ CSRF_COOKIE_SECURE = False  # Allow CSRF cookies over HTTP
 TOTP_ISSUER_NAME = 'FT_TRANSENDENCE'  # App name for QR code
 
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 INTERNAL_IPS = [
 	'127.0.0.1',
@@ -239,13 +239,13 @@ LOCALE_PATHS = [
 ]
 
 # Setting for  REST Framework
-REST_FRAMEWORK = {
-	'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
-	'DEFAULT_AUTHENTICATION_CLASSES': (
-		'rest_framework_simplejwt.authentication.JWTAuthentication',
-		'rest_framework.authentication.SessionAuthentication',
-	),
-}
+# REST_FRAMEWORK = {
+# 	'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+# 	'DEFAULT_AUTHENTICATION_CLASSES': (
+# 		'rest_framework_simplejwt.authentication.JWTAuthentication',
+# 		'rest_framework.authentication.SessionAuthentication',
+# 	),
+# }
 
 # Setting for JWT
 SIMPLE_JWT = {
