@@ -102,28 +102,35 @@ export function PongOverview() {
 		const message = JSON.parse(event.data);
 		if (message.message === "game_created") {
 			if (userName == message.player1 || userName == message.player2) {
-				const newGameHTML = `
-					<button class="ChatButtonBackground navigate-button" data-path="/pong/${message.game_id}">
-						${message.player1} vs ${message.player2} (${gettext("pending")})
-					</button>
-				`;
 				const pendingGamesContainer = document.getElementById('pendingGamesContainer');
-				pendingGamesContainer.insertAdjacentHTML('afterbegin', newGameHTML);
+				if (!document.querySelector(`[data-path="/pong/${message.game_id}"]`)) {
+					const newGameHTML = `
+						<button class="ChatButtonBackground navigate-button" data-path="/pong/${message.game_id}">
+							${message.player1} vs ${message.player2} (${gettext("pending")})
+						</button>
+					`;
+					pendingGamesContainer.insertAdjacentHTML('afterbegin', newGameHTML);
+				}
 			}
 		}
 		if (message.message === "create_tournament") {
-			const newGameHTML = `
-				<button class="ChatButtonBackground navigate-button" data-path="/pong/tournament/${message.tournament_id}">
-					${gettext("Join Open Tournament")} id = ${message.tournament_id}
-				</button >
-			`;
-			const pendingGamesContainer = document.getElementById('pendingTournamentsContainer');
-			pendingGamesContainer.insertAdjacentHTML('afterbegin', newGameHTML);
-			let path = "/pong/tournament/" + message.tournament_id;
-
-			if (message.host == userName)
-				router.navigateTo(path)
+			const pendingTournamentsContainer = document.getElementById('pendingTournamentsContainer');
+		
+			if (!document.querySelector(`[data-path="/pong/tournament/${message.tournament_id}"]`)) {
+				const newTournamentHTML = `
+					<button class="ChatButtonBackground navigate-button" data-path="/pong/tournament/${message.tournament_id}">
+						${gettext("Join Open Tournament")} id = ${message.tournament_id}
+					</button>
+				`;
+				pendingTournamentsContainer.insertAdjacentHTML('afterbegin', newTournamentHTML);
+			}
+		
+			if (message.host == userName) {
+				let path = "/pong/tournament/" + message.tournament_id;
+				router.navigateTo(path);
+			}
 		}
+		
 	};
 
 	socket.onclose = () => {
