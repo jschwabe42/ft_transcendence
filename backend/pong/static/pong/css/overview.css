@@ -25,12 +25,6 @@
   }
   
   /* Contenedor del header */
-  .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
   
   /* Estilo para títulos principales */
   h2 {
@@ -120,3 +114,40 @@
       width: 100%;
     }
   }
+
+  #recent-games-container button {
+    display: block;
+    width: 50%;      /* Opcional: hace que el botón ocupe todo el ancho del contenedor */
+    margin-bottom: 10px;
+  }
+
+  #pendingGamesContainer button {
+    display: block;
+    width: 50%;      /* Opcional: hace que el botón ocupe todo el ancho del contenedor */
+    margin-bottom: 10px;
+  }
+  
+  #pendingTournamentsContainer button {
+    display: block;
+    width: 50%;      /* Opcional: hace que el botón ocupe todo el ancho del contenedor */
+    margin-bottom: 10px;
+  }
+  
+  #pending-games-header {
+    margin-top: 40px;  /* Ajusta este valor según lo que necesites */
+  }
+
+  #open-tournaments-header {
+    margin-top: 40px; /* Ajusta este valor según el espacio que necesites */
+  }
+
+  /* Contenedor para el botón Practice Game */
+.practice-game-container {
+    margin: 20px 0;  /* Espacio arriba y abajo */
+    text-align: center; /* (Opcional) para centrar el botón */
+  }
+  
+/* Modificar el ancho o margin del botón si lo deseas */
+.practice-game-container .navigate-button {
+width: 50%;      /* Opcional: se ajusta el ancho, puedes modificarlo */
+}

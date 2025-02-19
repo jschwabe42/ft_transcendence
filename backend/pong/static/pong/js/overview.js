@@ -37,20 +37,19 @@ export function PongOverview() {
 				`).join('');
 
 			document.getElementById('pong-app-content').innerHTML = `
-				<div class="header-container">
-					<div id="pg-recent-games">
-						<h2>Recent Games</h2>
-					</div>
+				<div class="practice-game-container">
 					<button class="navigate-button" data-path="/pong/practice/">${gettext("Practice Game")}</button>
 				</div>
+				<h2 id="recent-games-container">Recent Games</h2>
 				<button id="refresh-button">${gettext("Refresh")}</button>
-				<div>${recentGames || gettext("No games have been played yet.")
-				}</div >
+				<div id="recent-games-container">
+					${recentGames || gettext("No games have been played yet.")}
+				</div >
 
-				<h2>Pending Games</h2>
+				<h2 id="pending-games-header">Pending Games</h2>
 				<div id="pendingGamesContainer">${pendingGames || gettext("No pending games.")}</div>
 
-				<h2>${gettext("Open Tournaments")}</h2>
+				<h2 id="open-tournaments-header">${gettext("Open Tournaments")}</h2>
 				<div id="pendingTournamentsContainer"></div>
 
 				<h3>${gettext("Play new Game")}</h3>
