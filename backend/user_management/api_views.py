@@ -11,6 +11,7 @@ from user_management.models import CustomUser
 
 OAUTH_CALLBACK = 'https://localhost:8000/users/oauth-callback/'
 
+
 class OauthView(APIView):
 	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
 

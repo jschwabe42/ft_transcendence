@@ -13,7 +13,6 @@ from rest_framework.decorators import api_view
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from transcendence.decorators import login_required_redirect
-from rest_framework.authtoken.models import Token
 
 from .models import CustomUser
 
