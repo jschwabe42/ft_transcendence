@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-19 18:17+0100\n"
+"POT-Creation-Date: 2025-02-19 19:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,7 +73,7 @@ msgstr "Entblocken"
 #: dashboard/static/dashboard/js/profile.js:193
 #: dashboard/static/dashboard/js/profile.js:422
 msgid "Block"
-msgstr "Blocken"
+msgstr "Blockieren"
 
 #: dashboard/static/dashboard/js/profile.js:106
 msgid "Games Played:"
@@ -152,7 +152,7 @@ msgstr "Freund"
 
 #: dashboard/static/dashboard/js/profile.js:479
 msgid "No friends"
-msgstr "keine Freunde"
+msgstr "Keine Freunde"
 
 #: dashboard/static/dashboard/js/profile.js:503
 msgid "Fetching friends failed"
@@ -164,7 +164,7 @@ msgstr "erhaltene Freundschaftsanfragen"
 
 #: dashboard/static/dashboard/js/profile.js:536
 msgid "No friend requests"
-msgstr "keine Freundschaftsanfragen"
+msgstr "Keine Freundschaftsanfragen"
 
 #: dashboard/static/dashboard/js/profile.js:544
 msgid "Accept"
@@ -180,7 +180,7 @@ msgstr "gesendete Freundschaftsanfragen"
 
 #: dashboard/static/dashboard/js/profile.js:565
 msgid "No sent friend requests"
-msgstr "keine gesendeten Freundschaftsanfragen"
+msgstr "Keine gesendeten Freundschaftsanfragen"
 
 #: dashboard/static/dashboard/js/profile.js:573
 msgid "Remove"
@@ -190,14 +190,21 @@ msgstr "entfernen"
 msgid "pending Tournament game"
 msgstr "ausstehendes Spiel im Tournier"
 
+#: pong/static/pong/js/overview.js:41
+msgid "Recent Games"
+msgstr "Letzte Spiele"
+
 #: pong/static/pong/js/overview.js:42 pong/static/pong/js/pong_practice.js:11
-#, fuzzy
 msgid "Practice Game"
 msgstr "Übungspiel starten"
 
 #: pong/static/pong/js/overview.js:45
 msgid "No games have been played yet."
 msgstr "Bisher wurden keine Spiele gespielt."
+
+#: pong/static/pong/js/overview.js:47
+msgid "Pending Games"
+msgstr "Ausstehende Spiele."
 
 #: pong/static/pong/js/overview.js:48
 msgid "No pending games."
@@ -212,20 +219,16 @@ msgid "Play new Game"
 msgstr "Neues Spiel"
 
 #: pong/static/pong/js/overview.js:55
-#, fuzzy
-#| msgid "Enter room name"
-msgid "Enter opponent's Username"
-msgstr "Gib den Raumnamen ein"
+msgid "Enter opponent username"
+msgstr "Nutzername des Gegners eingeben"
 
 #: pong/static/pong/js/overview.js:56
 msgid "Play Game +"
 msgstr "Spiel Spielen +"
 
-#: pong/static/pong/js/overview.js:62
-#, fuzzy
-#| msgid "Create Room"
+#: pong/static/pong/js/overview.js:60 pong/static/pong/js/overview.js:62
 msgid "Create Tournament"
-msgstr "Raum erstellen"
+msgstr "Tournier erstellen"
 
 #: pong/static/pong/js/overview.js:88 pong/static/pong/js/overview.js:122
 msgid "Join Open Tournament"
@@ -245,9 +248,8 @@ msgid "Ready"
 msgstr "Bereit"
 
 #: pong/static/pong/js/pong_display_ingame.js:57
-#, fuzzy
 msgid "back to menu"
-msgstr "zurück zum Login"
+msgstr "zurück zum Menü"
 
 #: pong/static/pong/js/pong_practice.js:12
 msgid "Left Paddels: W S; Right Paddels: UP DOWN;"
@@ -265,26 +267,22 @@ msgid "player"
 msgstr "Spieler"
 
 #: pong/static/pong/js/pong_practice.js:188
-#, fuzzy
 msgid "Pause Game"
 msgstr "Spiel pausieren"
 
 #: pong/static/pong/js/tournament_display.js:20
-#, fuzzy
 msgid "Welcome to Tournament"
 msgstr "Willkommen zum Tournier"
 
 #: pong/static/pong/js/tournament_display.js:48
-#, fuzzy
 msgid "Play Tournament Games +"
-msgstr "Neues Spiel im Tournier"
+msgstr "Spiel im Tournier spielen +"
 
 #: pong/static/pong/js/tournament_display.js:52
 msgid "Start Final Game"
 msgstr "Finale starten"
 
 #: pong/static/pong/js/tournament_display.js:55
-#, fuzzy
 msgid "Go to Menu"
 msgstr "zurück zum Menü"
 
@@ -387,7 +385,7 @@ msgstr "Willkommen auf unserer Transcendence-Webseite"
 
 #: static/js/navbar.js:70
 msgid "This is a webpage created for the Transcendence project."
-msgstr ""
+msgstr "WebSeite für das Transcendence-Projekt"
 
 #: static/js/navbar.js:72
 msgid "Features:"
@@ -715,3 +713,8 @@ msgstr "Passwortwiederholung ist notwendig!"
 #: user_management/static/users/js/register.js:96
 msgid "Passwords do not match!"
 msgstr "Passwörter stimmen nicht überein!"
+
+#, fuzzy
+#~| msgid "Open Tournaments"
+#~ msgid "Create Tournaments"
+#~ msgstr "Offene Tourniere"

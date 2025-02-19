@@ -38,13 +38,13 @@ export function PongOverview() {
 
 			document.getElementById('pong-app-content').innerHTML = `
 				<div class="header-container">
-					<h2>Recent Games</h2>
+					<h2>${gettext("Recent Games")}</h2>
 					<button class="navigate-button" data-path="/pong/practice/">${gettext("Practice Game")}</button>
 				</div>
 				<button id="refresh-button">${gettext("Refresh")}</button>
 				<div>${recentGames || gettext("No games have been played yet.")}</div >
 
-				<h2>Pending Games</h2>
+				<h2>${gettext("Pending Games")}</h2>
 				<div id="pendingGamesContainer">${pendingGames || gettext("No pending games.")}</div>
 
 				<h2>${gettext("Open Tournaments")}</h2>
@@ -52,12 +52,12 @@ export function PongOverview() {
 
 				<h3>${gettext("Play new Game")}</h3>
 				<form id="create-game-form">
-					<input id="opp_name" type="text" name="opp_name" placeholder=${gettext("Enter opponent's Username")} />
+					<input id="opp_name" type="text" name="opp_name" placeholder=${gettext("Enter opponent username")} />
 					<button class="add_user" type="submit">${gettext("Play Game +")}</button>
 				</form>
 				<p id="game-creation-fail" class="pong-error-message"></p>
 
-				<h3>Create Tournament</h3>
+				<h3>${gettext("Create Tournament")}</h3>
 				<form id="create-tournament-form">
 					<button class="add_user" type="submit">${gettext("Create Tournament")}</button>
 				</form>
