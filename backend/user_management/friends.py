@@ -95,17 +95,22 @@ class Friends_Manager:
 			friendship.accepted = True
 			friendship.save()
 		else:
-			raise ValueError(gettext('the request you are trying to accept does not exist'))
+			raise ValidationError(gettext('the request you are trying to accept does not exist'))
 
 	# delete a friendship from either side
 	@staticmethod
 	def remove_friend(remover, target_username):
 		"""either User instance, other username: remove"""
 		target = Friends_Manager.__get_existing_user_instance(target_username)
-		Friends_Manager.__delete_instance(
-			friendship=Friends.objects.filter(origin=remover, target=target, accepted=True).first()
-			or Friends.objects.filter(origin=target, target=remover, accepted=True).first()
-		)
+		try:
+			Friends_Manager.__delete_instance(
+				friendship=Friends.objects.filter(
+					origin=remover, target=target, accepted=True
+				).first()
+				or Friends.objects.filter(origin=target, target=remover, accepted=True).first()
+			)
+		except ValueError:
+			raise ValidationError(gettext('the friendship you are trying to delete does not exist'))
 
 	# internal
 	def __get_existing_user_instance(string_target_friend):
