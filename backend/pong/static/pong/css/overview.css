@@ -1,11 +1,10 @@
-/* Reinicio básico */
+/* ========= Reinicio y estilos globales ========= */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
   
-  /* Estilos globales para el body */
   body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
@@ -14,19 +13,16 @@
     padding: 20px;
   }
   
-  /* Contenedor principal de la aplicación */
   #pong-app-content {
     max-width: 800px;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
     border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   
-  /* Contenedor del header */
-  
-  /* Estilo para títulos principales */
+  /* ========= Estilos de títulos ========= */
   h2 {
     font-size: 1.5rem;
     margin-bottom: 10px;
@@ -34,14 +30,13 @@
     padding-bottom: 5px;
   }
   
-  /* Estilo para subtítulos o secciones */
   h3 {
     margin-top: 20px;
     font-size: 1.2rem;
     color: #555;
   }
   
-  /* Estilos generales para botones */
+  /* ========= Estilos generales para botones ========= */
   button {
     background-color: #007BFF;
     border: none;
@@ -58,31 +53,28 @@
     background-color: #0056b3;
   }
   
-  /* Botones especiales con fondo verde */
+  /* Botones con fondo verde */
   .ChatButtonBackground {
     background-color: #28a745;
   }
-  
   .ChatButtonBackground:hover {
     background-color: #1e7e34;
   }
   
-  /* Botón de refresco con un color diferente */
+  /* Botón de refresco con un color distinto */
   #refresh-button {
     background-color: #ffc107;
     color: #333;
   }
-  
   #refresh-button:hover {
     background-color: #e0a800;
   }
   
-  /* Estilo adicional para botones de navegación */
   .navigate-button {
     outline: none;
   }
   
-  /* Formularios y campos de entrada */
+  /* ========= Formularios y campos ========= */
   form {
     margin-top: 10px;
     margin-bottom: 20px;
@@ -96,16 +88,7 @@
     border-radius: 4px;
   }
   
-  /* Botones para la acción "add_user" */
-  .add_user {
-    background-color: #17a2b8;
-  }
-  
-  .add_user:hover {
-    background-color: #138496;
-  }
-  
-  /* Opcional: Responsividad para dispositivos móviles */
+  /* ========= Responsividad ========= */
   @media (max-width: 600px) {
     #pong-app-content {
       padding: 10px;
@@ -114,40 +97,52 @@
       width: 100%;
     }
   }
-
-  #recent-games-container button {
-    display: block;
-    width: 50%;      /* Opcional: hace que el botón ocupe todo el ancho del contenedor */
-    margin-bottom: 10px;
-  }
-
-  #pendingGamesContainer button {
-    display: block;
-    width: 50%;      /* Opcional: hace que el botón ocupe todo el ancho del contenedor */
-    margin-bottom: 10px;
-  }
   
+  /* ========= Estilos para contenedores de botones en secciones ========= */
+  #recent-games-container button,
+  #pendingGamesContainer button,
   #pendingTournamentsContainer button {
     display: block;
-    width: 50%;      /* Opcional: hace que el botón ocupe todo el ancho del contenedor */
+    width: 100%;
     margin-bottom: 10px;
   }
   
   #pending-games-header {
-    margin-top: 40px;  /* Ajusta este valor según lo que necesites */
+    margin-top: 40px;
   }
-
   #open-tournaments-header {
-    margin-top: 40px; /* Ajusta este valor según el espacio que necesites */
-  }
-
-  /* Contenedor para el botón Practice Game */
-.practice-game-container {
-    margin: 20px 0;  /* Espacio arriba y abajo */
-    text-align: center; /* (Opcional) para centrar el botón */
+    margin-top: 40px;
   }
   
-/* Modificar el ancho o margin del botón si lo deseas */
-.practice-game-container .navigate-button {
-width: 50%;      /* Opcional: se ajusta el ancho, puedes modificarlo */
-}
+  /* ========= Menú Superior ========= */
+  /* Se asegura que los elementos se apilen sin espacio (pegados) y centrados */
+  .top-menu {
+    display: flex;
+    flex-direction: column;  /* Apila los elementos uno debajo del otro */
+    align-items: center;     /* Centra horizontalmente */
+    gap: 0;                  /* Sin espacio entre elementos */
+    margin-bottom: 20px;     /* Margen inferior para separar del resto del contenido */
+  }
+  
+  /* Cada elemento hijo directo del menú tendrá un ancho fijo sin margen */
+  .top-menu > * {
+    width: 300px;  /* Ajusta este valor según el ancho deseado */
+    margin: 0;
+  }
+  
+  /* Aseguramos que los botones ocupen el 100% del contenedor */
+  .top-menu button {
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* El input se adapta al contenedor sin sobresalir */
+  .top-menu input[type="text"] {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 0;
+  }

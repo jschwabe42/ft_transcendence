@@ -37,8 +37,17 @@ export function PongOverview() {
 				`).join('');
 
 			document.getElementById('pong-app-content').innerHTML = `
-				<div class="practice-game-container">
-					<button class="navigate-button" data-path="/pong/practice/">${gettext("Practice Game")}</button>
+				<div id="top-menu" class="top-menu">
+					<div class="practice-game-container">
+						<button class="navigate-button" data-path="/pong/practice/">${gettext("Practice Game")}</button>
+					</div>
+					<form id="create-tournament-form">
+						<button class="add_user" type="submit">${gettext("New Tournament")}</button>
+					</form>
+					<form id="create-game-form">
+						<button class="add_user" type="submit">${gettext("Play Game")}</button>
+						<input id="opp_name" type="text" name="opp_name" placeholder="${gettext("Enter opponent's Username")} "/>
+					</form>
 				</div>
 				<h2 id="recent-games-container">Recent Games</h2>
 				<button id="refresh-button">${gettext("Refresh")}</button>
@@ -52,16 +61,6 @@ export function PongOverview() {
 				<h2 id="open-tournaments-header">${gettext("Open Tournaments")}</h2>
 				<div id="pendingTournamentsContainer"></div>
 
-				<h3>${gettext("Play new Game")}</h3>
-				<form id="create-game-form">
-					<input id="opp_name" type="text" name="opp_name" placeholder=${gettext("Enter opponent's Username")} />
-					<button class="add_user" type="submit">${gettext("Play Game +")}</button>
-				</form>
-
-				<h3>Create Tournament</h3>
-				<form id="create-tournament-form">
-					<button class="add_user" type="submit">${gettext("Create Tournament")}</button>
-				</form>
 			`;
 
 			document.getElementById("create-game-form").addEventListener("submit", function (event) {
