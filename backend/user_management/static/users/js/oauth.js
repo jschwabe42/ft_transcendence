@@ -14,7 +14,7 @@ export async function oauth_flow() {
 		console.warn(data.location);
 		window.location.href = data.location;
 	} else {
-		console.error("Error during OAuth authorization");
+		console.error("Error during OAuth authorization: ");
 	}
 }
 

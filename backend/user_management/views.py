@@ -129,12 +129,14 @@ def login_view(request):
 			if user.two_factor_enabled:
 				refresh = RefreshToken.for_user(user)
 				refresh.set_exp(lifetime=timedelta(minutes=5))
+				new_csrf_token = get_token(request)
 
 				return JsonResponse(
 					{
 						'success': True,
 						'requires_2fa': True,
 						'pre_auth_token': str(refresh.access_token),
+						'csrf_token': new_csrf_token,
 						'message': _('2FA required. Please enter your code.'),
 					}
 				)
@@ -150,6 +152,7 @@ def login_view(request):
 						'access_token': str(refresh.access_token),
 						'refresh_token': str(refresh),
 						'csrf_token': new_csrf_token,
+						'username': username,
 					}
 				)
 
@@ -157,14 +160,14 @@ def login_view(request):
 					key='access_token',
 					value=str(refresh.access_token),
 					httponly=True,
-					secure=False,  # Set to True in production
+					secure=True,  # Set to True in production
 					samesite='Lax',
 				)
 				response.set_cookie(
 					key='refresh_token',
 					value=str(refresh),
 					httponly=True,
-					secure=False,  # Set to True in production
+					secure=True,  # Set to True in production
 					samesite='Lax',
 				)
 				return response

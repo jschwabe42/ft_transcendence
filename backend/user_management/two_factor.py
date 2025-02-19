@@ -13,6 +13,7 @@ from rest_framework.decorators import api_view
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from transcendence.decorators import login_required_redirect
+from rest_framework.authtoken.models import Token
 
 from .models import CustomUser
 
@@ -158,6 +159,7 @@ def verify_2fa(request):
 				'access_token': access_token,
 				'refresh_token': refresh_token,
 				'csrf_token': new_csrf_token,
+				'username': user.username,
 			}
 		)
 
@@ -166,14 +168,14 @@ def verify_2fa(request):
 			key='access_token',
 			value=access_token,
 			httponly=True,
-			secure=False,  # Set to True in production
+			secure=True,  # Set to True in production
 			samesite='Lax',
 		)
 		response.set_cookie(
 			key='refresh_token',
 			value=refresh_token,
 			httponly=True,
-			secure=False,  # Set to True in production
+			secure=True,  # Set to True in production
 			samesite='Lax',
 		)
 

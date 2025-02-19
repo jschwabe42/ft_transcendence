@@ -189,6 +189,13 @@ function handleLoginSuccess(data) {
 		document.cookie = `access_token=${data.access_token}; Path=/; HttpOnly; SameSite=Lax`;
 		document.cookie = `refresh_token=${data.refresh_token}; Path=/; HttpOnly; SameSite=Lax`;
 	}
+	if (data.csrf_token) {
+		document.querySelector('meta[name="csrf-token"]').content = data.csrf_token;
+	}
+	if (data.username)
+	{
+		document.querySelector('meta[name="username-token"]').content = data.username;
+	}
 
 	// Update UI and navigate
 	update_navbar();
