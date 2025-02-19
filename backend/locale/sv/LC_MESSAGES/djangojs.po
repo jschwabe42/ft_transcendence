@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-19 19:48+0100\n"
+"POT-Creation-Date: 2025-02-19 20:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -250,12 +250,12 @@ msgstr ""
 msgid "pending"
 msgstr ""
 
-#: pong/static/pong/js/pong_display_ingame.js:16
-#: pong/static/pong/js/pong_display_ingame.js:32
+#: pong/static/pong/js/pong_display_ingame.js:14
+#: pong/static/pong/js/pong_display_ingame.js:30
 msgid "Ready"
 msgstr ""
 
-#: pong/static/pong/js/pong_display_ingame.js:57
+#: pong/static/pong/js/pong_display_ingame.js:55
 msgid "back to menu"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-19 19:50+0100\n"
+"POT-Creation-Date: 2025-02-19 20:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -242,12 +242,12 @@ msgstr "Keine offenen Tourniere"
 msgid "pending"
 msgstr "ausstehend"
 
-#: pong/static/pong/js/pong_display_ingame.js:16
-#: pong/static/pong/js/pong_display_ingame.js:32
+#: pong/static/pong/js/pong_display_ingame.js:14
+#: pong/static/pong/js/pong_display_ingame.js:30
 msgid "Ready"
 msgstr "Bereit"
 
-#: pong/static/pong/js/pong_display_ingame.js:57
+#: pong/static/pong/js/pong_display_ingame.js:55
 msgid "back to menu"
 msgstr "zurück zum Menü"
 
@@ -713,8 +713,3 @@ msgstr "Passwortwiederholung ist notwendig!"
 #: user_management/static/users/js/register.js:96
 msgid "Passwords do not match!"
 msgstr "Passwörter stimmen nicht überein!"
-
-#, fuzzy
-#~| msgid "Open Tournaments"
-#~ msgid "Create Tournaments"
-#~ msgstr "Offene Tourniere"
