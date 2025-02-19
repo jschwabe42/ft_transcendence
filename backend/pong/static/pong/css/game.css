@@ -135,3 +135,10 @@ button.ready:active {
     transform: translateY(1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.pong-error-message {
+    color: #d32f2f;
+    font-weight: bold;
+    margin-top: 10px;
+    animation: fadeIn 0.3s ease-in-out;
+}

@@ -71,9 +71,10 @@ function RenderPracticeGame() {
 		radius: 10,
 		speed: 2,
 		color: "black",
-		vSpeed: 5,
-		hSpeed: 5,
+		vSpeed: 2,
+		hSpeed: 2,
 		angle: 110,
+		hitCooldown: 0,
 	}
 
 	let keys = {
@@ -134,21 +135,26 @@ function RenderPracticeGame() {
 	function updateBall() {
 		ball.x += ball.hSpeed * ball.speed;
 		ball.y += ball.vSpeed * ball.speed;
-
+	
 		if (ball.y - ball.radius <= 0 || ball.y + ball.radius >= canvas.height) {
 			ball.vSpeed *= -1;
 		}
-		if (
-			(ball.x - ball.radius <= leftpong.x + leftpong.width &&
-				ball.y >= leftpong.y &&
-				ball.y <= leftpong.y + leftpong.height) ||
-			(ball.x + ball.radius >= rightpong.x &&
-				ball.y >= rightpong.y &&
-				ball.y <= rightpong.y + rightpong.height)
-		) {
-			ball.hSpeed *= -1;
+	
+		if (ball.hitCooldown <= 0) {
+			if (
+				(ball.x - ball.radius <= leftpong.x + leftpong.width &&
+					ball.y >= leftpong.y &&
+					ball.y <= leftpong.y + leftpong.height) ||
+				(ball.x + ball.radius >= rightpong.x &&
+					ball.y >= rightpong.y &&
+					ball.y <= rightpong.y + rightpong.height)
+			) {
+				ball.hSpeed *= -1;
+				ball.hitCooldown = 10;
+			}
+		} else {
+			ball.hitCooldown--;
 		}
-
 		if (ball.x - ball.radius <= 0) {
 			scores.player2++;
 			document.getElementById("player2").innerText = scores.player2;
