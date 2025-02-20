@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 18:45+0100\n"
+"POT-Creation-Date: 2025-02-20 21:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,6 +76,12 @@ msgstr "Tournier erfolgreich erstellt."
 msgid "Games created successfully"
 msgstr "Spiele erfolgreich erstellt"
 
+#: pong/views.py:35 pong/views.py:66
+#, fuzzy
+#| msgid "Game not found."
+msgid "No Games Found"
+msgstr "Spiel wurde nicht gefunden."
+
 #: templates/index.html:42 templates/index.html:51
 msgid "Transcendence"
 msgstr "Transcendence"
@@ -85,30 +91,26 @@ msgid "Home"
 msgstr "Startseite"
 
 #: templates/index.html:59
-msgid "Chat"
-msgstr "Chat"
-
-#: templates/index.html:61
 msgid "Quiz"
 msgstr "Quiz"
 
-#: templates/index.html:62
+#: templates/index.html:60
 msgid "Pong"
 msgstr "Pong"
 
-#: templates/index.html:63
+#: templates/index.html:61
 msgid "Dashboard"
 msgstr "Benutzerübersicht"
 
-#: transcendence/settings.py:229
+#: transcendence/settings.py:228
 msgid "English"
 msgstr "Englisch"
 
-#: transcendence/settings.py:230
+#: transcendence/settings.py:229
 msgid "Swedish"
 msgstr "Schwedisch"
 
-#: transcendence/settings.py:231
+#: transcendence/settings.py:230
 msgid "German"
 msgstr "Deutsch"
 
@@ -243,3 +245,6 @@ msgstr "Ungültiges aktuelles Passwort."
 #: user_management/views.py:266
 msgid "Password changed successfully."
 msgstr "Passwort wurde erfolgreich geändert."
+
+#~ msgid "Chat"
+#~ msgstr "Chat"
