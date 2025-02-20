@@ -18,8 +18,9 @@ export function PongResult(params) {
 				console.error("Element mit ID 'pong-app-content' nicht gefunden.");
 				return;
 			}
-
+			contentElement.classList.add("active");
 			contentElement.innerHTML = `
+			<div class="pong-container">
 			<div class="profile-container" style="text-align: center;">
 				<h1>${model.score1} - ${model.score2}</h1>
 				<p class="profile-date" style="text-align: center;">
@@ -38,6 +39,7 @@ export function PongResult(params) {
 					</h3>
 				</div>
 			</div>
+		</div>
 		`;
 			document.getElementById('pong-result-player-one').addEventListener('click', function () {
 				router.navigateTo(`/dashboard/${model.player1}/`);

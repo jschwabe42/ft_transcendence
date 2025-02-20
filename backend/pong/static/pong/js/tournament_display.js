@@ -24,7 +24,9 @@ export function DisplayTournament(params) {
 		.then(model => {
 			console.log(model);
 			tournamentModel = model;
+			document.getElementById('pong-app-content').classList.add('active');
 			document.getElementById('pong-app-content').innerHTML = `
+			<div class="pong-container">
 				<h1 id="header">${gettext("Welcome to Tournament")} ${params.tournament_id}</h1>
 
 				<div class="bracket-container">
@@ -61,6 +63,7 @@ export function DisplayTournament(params) {
 				</form>
 
 				<button class="navigate-button" data-path="/pong/">${gettext("Go to Menu")}</button>
+			</div>
 			`;
 			renderTournamentData(tournamentSocket, tournamentModel);
 			document.getElementById("create-tournament-games").addEventListener("submit", function (event) {

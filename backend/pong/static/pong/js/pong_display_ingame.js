@@ -4,12 +4,15 @@ let gameModel = {};
 let gameSocket = null;
 
 export function DisplayPong(params) {
+	const pongContainer = document.getElementById('pong-app-content');
+    // Add the active class immediately
+    pongContainer.classList.add('active');
 
 	fetch(`/pong/api/ingame/?game_id=${params.game_id}`)
 		.then(response => response.json())
 		.then(model => {
 			gameModel = model;
-			document.getElementById('pong-app-content').innerHTML = `
+			pongContainer.innerHTML = `
 				<main role="main" class="container">
 					<div class="ready-bar">
 						<button class="ready" type="button" id="user_ready">${gettext("Ready")}</button>
@@ -56,12 +59,13 @@ export function DisplayPong(params) {
 						${gettext("back to menu")}
 					</button>
 				</main>
+			</div>
 			`;
 			renderGameData();
 		})
 		.catch(error => {
 		});
-	document.getElementById('pong-app-content').addEventListener('click', (event) => {
+		pongContainer.getElementById('pong-app-content').addEventListener('click', (event) => {
 		const button = event.target.closest('.navigate-button');
 		if (button && button.dataset.path) {
 			const path = button.dataset.path;

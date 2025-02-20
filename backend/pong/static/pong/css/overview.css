@@ -13,7 +13,7 @@
     padding: 20px;
   }
   
-  #pong-app-content {
+  #pong-app-content.active {
     max-width: 800px;
     margin: 0 auto;
     background-color: #fff;
@@ -90,7 +90,7 @@
   
   /* ========= Responsividad ========= */
   @media (max-width: 600px) {
-    #pong-app-content {
+    #pong-app-content.active {
       padding: 10px;
     }
     button {
