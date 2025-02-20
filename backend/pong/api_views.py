@@ -1,4 +1,3 @@
-import sys
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -30,7 +29,8 @@ class CreateGameView(APIView):
 		tournament_id = request.data.get('tournament', 0)
 		if not opponent_username:
 			return Response(
-				{'error': _('Opponent username is required.')}, status=HTTP_400_BAD_REQUEST
+				{'error': _('Opponent username is required.')},
+				status=HTTP_400_BAD_REQUEST,
 			)
 
 		if opponent_username == request.user.username and tournament_id == 0:
@@ -136,14 +136,15 @@ class ControlKeySetting(APIView):
 			game = PongGame.objects.get(id=game_id)
 		except PongGame.DoesNotExist:
 			return Response({'error': _('Game not found.')}, status=HTTP_404_NOT_FOUND)
-	
+
 		if username == game.player1.username:
 			game.player1_control_settings = control1
 		elif username == game.player2.username:
 			game.player2_control_settings = control2
 		else:
 			return Response(
-				{'error': _('You are not a player in this game.')}, status=HTTP_403_FORBIDDEN
+				{'error': _('You are not a player in this game.')},
+				status=HTTP_403_FORBIDDEN,
 			)
 
 		game.save()
@@ -170,6 +171,9 @@ class CreateTournament(APIView):
 		tournament = Tournament.objects.create(host=username)
 		tournament.save()
 		return Response(
-			{'tournament_id': tournament.id, 'message': _('Tournament created successfully.')},
+			{
+				'tournament_id': tournament.id,
+				'message': _('Tournament created successfully.'),
+			},
 			status=HTTP_201_CREATED,
 		)
