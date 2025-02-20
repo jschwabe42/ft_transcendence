@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 18:49+0100\n"
+"POT-Creation-Date: 2025-02-20 21:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,8 +24,8 @@ msgid "Refresh"
 msgstr "Aktualisieren"
 
 #: dashboard/static/dashboard/js/dashboard.js:28
-#: dashboard/static/dashboard/js/profile.js:72
-#: dashboard/static/dashboard/js/profile.js:119
+#: dashboard/static/dashboard/js/profile.js:80
+#: dashboard/static/dashboard/js/profile.js:136
 msgid "'s profile picture"
 msgstr "s Profilbild"
 
@@ -34,9 +34,9 @@ msgid "Blocked Users"
 msgstr "Geblockte Nutzer"
 
 #: dashboard/static/dashboard/js/profile.js:16
-#: dashboard/static/dashboard/js/profile.js:464
-#: dashboard/static/dashboard/js/profile.js:476
-#: dashboard/static/dashboard/js/profile.js:486
+#: dashboard/static/dashboard/js/profile.js:481
+#: dashboard/static/dashboard/js/profile.js:493
+#: dashboard/static/dashboard/js/profile.js:503
 msgid "Friends"
 msgstr "Freunde"
 
@@ -48,143 +48,165 @@ msgstr "Freundschaftsanfragen"
 msgid "Quiz Stats"
 msgstr "Quiz-Statistiken"
 
-#: dashboard/static/dashboard/js/profile.js:65
+#: dashboard/static/dashboard/js/profile.js:28
+msgid "Pong Stats"
+msgstr "Pong-Statistiken"
+
+#: dashboard/static/dashboard/js/profile.js:32
+msgid "Last Pong Games"
+msgstr "Letzte Pong Spiele."
+
+#: dashboard/static/dashboard/js/profile.js:73
 msgid "Error loading profile for"
 msgstr "Fehler beim Laden des Profils von"
 
-#: dashboard/static/dashboard/js/profile.js:74
-#: dashboard/static/dashboard/js/profile.js:121
+#: dashboard/static/dashboard/js/profile.js:82
+#: dashboard/static/dashboard/js/profile.js:138
 msgid "'s Profile"
 msgstr "s Profil"
 
-#: dashboard/static/dashboard/js/profile.js:84
-#: dashboard/static/dashboard/js/profile.js:137
-#: dashboard/static/dashboard/js/profile.js:167
-#: dashboard/static/dashboard/js/profile.js:395
-#: dashboard/static/dashboard/js/profile.js:408
-#: dashboard/static/dashboard/js/profile.js:443
+#: dashboard/static/dashboard/js/profile.js:92
+#: dashboard/static/dashboard/js/profile.js:154
+#: dashboard/static/dashboard/js/profile.js:184
+#: dashboard/static/dashboard/js/profile.js:412
+#: dashboard/static/dashboard/js/profile.js:425
+#: dashboard/static/dashboard/js/profile.js:460
 msgid "Unblock"
 msgstr "Entblocken"
 
-#: dashboard/static/dashboard/js/profile.js:86
-#: dashboard/static/dashboard/js/profile.js:89
-#: dashboard/static/dashboard/js/profile.js:139
-#: dashboard/static/dashboard/js/profile.js:142
-#: dashboard/static/dashboard/js/profile.js:193
-#: dashboard/static/dashboard/js/profile.js:422
+#: dashboard/static/dashboard/js/profile.js:94
+#: dashboard/static/dashboard/js/profile.js:97
+#: dashboard/static/dashboard/js/profile.js:156
+#: dashboard/static/dashboard/js/profile.js:159
+#: dashboard/static/dashboard/js/profile.js:210
+#: dashboard/static/dashboard/js/profile.js:439
 msgid "Block"
 msgstr "Blockieren"
 
-#: dashboard/static/dashboard/js/profile.js:106
+#: dashboard/static/dashboard/js/profile.js:114
+#: dashboard/static/dashboard/js/profile.js:124
 msgid "Games Played:"
 msgstr "Gespielte Partien:"
 
-#: dashboard/static/dashboard/js/profile.js:107
+#: dashboard/static/dashboard/js/profile.js:115
+#: dashboard/static/dashboard/js/profile.js:125
 msgid "Games Won:"
 msgstr "Gewonnene Partien:"
 
-#: dashboard/static/dashboard/js/profile.js:108
+#: dashboard/static/dashboard/js/profile.js:116
 msgid "Total Score:"
 msgstr "Gesamtpunktzahl:"
 
-#: dashboard/static/dashboard/js/profile.js:109
+#: dashboard/static/dashboard/js/profile.js:117
 msgid "High Score:"
 msgstr "Höchste Punktzahl:"
 
-#: dashboard/static/dashboard/js/profile.js:110
+#: dashboard/static/dashboard/js/profile.js:118
 msgid "Questions Asked:"
 msgstr "Gestellte Fragen:"
 
-#: dashboard/static/dashboard/js/profile.js:111
+#: dashboard/static/dashboard/js/profile.js:119
 msgid "Correct Answers:"
 msgstr "Richtige Antworten:"
 
+#: dashboard/static/dashboard/js/profile.js:126
+msgid "Games Lost:"
+msgstr "Verlorene Partien:"
+
 #: dashboard/static/dashboard/js/profile.js:127
+msgid "Win-Loss Ratio:"
+msgstr "Sieg-Niederlagen Verhältnis"
+
+#: dashboard/static/dashboard/js/profile.js:144
 msgid "This user has blocked you. You cannot view their profile."
 msgstr "Dieser Nutzer hat dich geblockt. Du kannst ihr Profil nicht ansehen."
 
-#: dashboard/static/dashboard/js/profile.js:211
+#: dashboard/static/dashboard/js/profile.js:228
 #: quiz/static/quiz/js/room_display.js:27
 #: quiz/static/quiz/js/room_display.js:32
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: dashboard/static/dashboard/js/profile.js:227
-#: dashboard/static/dashboard/js/profile.js:237
-#: dashboard/static/dashboard/js/profile.js:299
-#: dashboard/static/dashboard/js/profile.js:331
+#: dashboard/static/dashboard/js/profile.js:244
+#: dashboard/static/dashboard/js/profile.js:254
+#: dashboard/static/dashboard/js/profile.js:316
+#: dashboard/static/dashboard/js/profile.js:348
 msgid "Add Friend"
 msgstr "Freund hinzufügen"
 
-#: dashboard/static/dashboard/js/profile.js:229
-#: dashboard/static/dashboard/js/profile.js:239
-#: dashboard/static/dashboard/js/profile.js:357
+#: dashboard/static/dashboard/js/profile.js:246
+#: dashboard/static/dashboard/js/profile.js:256
+#: dashboard/static/dashboard/js/profile.js:374
 msgid "Remove Friend"
 msgstr "Freund entfernen"
 
-#: dashboard/static/dashboard/js/profile.js:231
-#: dashboard/static/dashboard/js/profile.js:241
-#: dashboard/static/dashboard/js/profile.js:267
+#: dashboard/static/dashboard/js/profile.js:248
+#: dashboard/static/dashboard/js/profile.js:258
+#: dashboard/static/dashboard/js/profile.js:284
 msgid "Cancel Request"
 msgstr "Freundschaftsanfrage abbrechen"
 
-#: dashboard/static/dashboard/js/profile.js:233
-#: dashboard/static/dashboard/js/profile.js:243
+#: dashboard/static/dashboard/js/profile.js:250
+#: dashboard/static/dashboard/js/profile.js:260
 msgid "Accept Request"
 msgstr "Freundschaftsanfrage annehmen"
 
-#: dashboard/static/dashboard/js/profile.js:280
+#: dashboard/static/dashboard/js/profile.js:297
 msgid "Are you sure you want to remove this friend?"
 msgstr "Willst du diesen Freund wirklich entfernen?"
 
-#: dashboard/static/dashboard/js/profile.js:312
+#: dashboard/static/dashboard/js/profile.js:329
 msgid "Are you sure you want to cancel this friend request?"
 msgstr "Willst du diese Freundschaftsanfrage abbrechen?"
 
-#: dashboard/static/dashboard/js/profile.js:386
+#: dashboard/static/dashboard/js/profile.js:403
 msgid "No blocked users"
 msgstr "Keine geblockten Nutzer"
 
-#: dashboard/static/dashboard/js/profile.js:462
-#: dashboard/static/dashboard/js/profile.js:484
+#: dashboard/static/dashboard/js/profile.js:479
+#: dashboard/static/dashboard/js/profile.js:501
 msgid "Friend"
 msgstr "Freund"
 
-#: dashboard/static/dashboard/js/profile.js:479
+#: dashboard/static/dashboard/js/profile.js:496
 msgid "No friends"
 msgstr "Keine Freunde"
 
-#: dashboard/static/dashboard/js/profile.js:503
+#: dashboard/static/dashboard/js/profile.js:520
 msgid "Fetching friends failed"
 msgstr "Beziehen der Freundschaften fehlgeschlagen"
 
-#: dashboard/static/dashboard/js/profile.js:532
+#: dashboard/static/dashboard/js/profile.js:549
 msgid "Received Friend Requests:"
 msgstr "erhaltene Freundschaftsanfragen"
 
-#: dashboard/static/dashboard/js/profile.js:536
+#: dashboard/static/dashboard/js/profile.js:553
 msgid "No friend requests"
 msgstr "Keine Freundschaftsanfragen"
 
-#: dashboard/static/dashboard/js/profile.js:544
+#: dashboard/static/dashboard/js/profile.js:561
 msgid "Accept"
 msgstr "Annehmen"
 
-#: dashboard/static/dashboard/js/profile.js:545
+#: dashboard/static/dashboard/js/profile.js:562
 msgid "Deny"
 msgstr "Ablehnen"
 
-#: dashboard/static/dashboard/js/profile.js:561
+#: dashboard/static/dashboard/js/profile.js:578
 msgid "Sent Friend Requests:"
 msgstr "gesendete Freundschaftsanfragen"
 
-#: dashboard/static/dashboard/js/profile.js:565
+#: dashboard/static/dashboard/js/profile.js:582
 msgid "No sent friend requests"
 msgstr "Keine gesendeten Freundschaftsanfragen"
 
-#: dashboard/static/dashboard/js/profile.js:573
+#: dashboard/static/dashboard/js/profile.js:590
 msgid "Remove"
 msgstr "entfernen"
+
+#: dashboard/static/dashboard/js/profile.js:696
+msgid "No recent games."
+msgstr "Keine abgeschlossenen Spiele."
 
 #: pong/static/pong/js/overview.js:36
 msgid "pending Tournament game"
@@ -484,47 +506,43 @@ msgid "Minor: Game Customization options. 1 point!"
 msgstr ""
 
 #: static/js/navbar.js:97
-msgid "Major: Live Chat. Not yet implemented!"
-msgstr ""
-
-#: static/js/navbar.js:98
 msgid ""
 "Minor: User and Game stats dashboard. A way to display pong game outcomes is "
 "missing. Pong/Tournament data needs to be added. A graph should be added "
 "(but i could argue that point if necessary)"
 msgstr ""
 
-#: static/js/navbar.js:99
+#: static/js/navbar.js:98
 msgid "Major: 2FA and JWT. The branch is not yet merged."
 msgstr ""
 
-#: static/js/navbar.js:100
+#: static/js/navbar.js:99
 msgid "Minor: Expanding Browser Compability (Chrome, Edge, Firefox?). 1 point!"
 msgstr ""
 
-#: static/js/navbar.js:101
+#: static/js/navbar.js:100
 msgid ""
 "Minor: Multiple language support (Some things still need translations!). 1 "
 "point!"
 msgstr ""
 
-#: static/js/navbar.js:102
+#: static/js/navbar.js:101
 msgid ""
 "Major: Server side pong. Already implemented, as soon as the pong bugs are "
 "fixed, this can be marked done."
 msgstr ""
 
-#: static/js/navbar.js:103
+#: static/js/navbar.js:102
 msgid ""
 "Major: Pong gameplay via CLI. Already implemented AFAIK, as soon as the pong "
 "bugs are fixed, this can be marked done."
 msgstr ""
 
-#: static/js/navbar.js:106
+#: static/js/navbar.js:105
 msgid "About:"
 msgstr ""
 
-#: static/js/navbar.js:107
+#: static/js/navbar.js:106
 msgid ""
 "This project is part of the core curriculum of 42 and serves as its final "
 "project."
@@ -532,39 +550,39 @@ msgstr ""
 "Das Projekt ist ein Teil des Grundstudienplans der 42 und ist das finale "
 "Projekt."
 
-#: static/js/navbar.js:107
+#: static/js/navbar.js:106
 msgid "This is our take on it."
 msgstr "Das ist unsere Version."
 
-#: static/js/navbar.js:108
+#: static/js/navbar.js:107
 msgid "Our Projects GitHub Repository"
 msgstr "Das GitHub Repository unseres Projektes"
 
-#: static/js/navbar.js:109
+#: static/js/navbar.js:108
 msgid "The team:"
 msgstr "Teammitglieder"
 
-#: static/js/navbar.js:118
+#: static/js/navbar.js:117
 msgid "Ressources used:"
 msgstr "genutzte Ressourcen"
 
-#: static/js/navbar.js:131
+#: static/js/navbar.js:130
 msgid "Libraries used:"
 msgstr "genutzte Bibliotheken:"
 
-#: static/js/navbar.js:155
+#: static/js/navbar.js:154
 msgid "Account"
 msgstr "Benutzerkonto"
 
-#: static/js/navbar.js:156 user_management/static/users/js/logout.js:12
+#: static/js/navbar.js:155 user_management/static/users/js/logout.js:12
 msgid "Logout"
 msgstr "Abmelden"
 
-#: static/js/navbar.js:172 user_management/static/users/js/login.js:13
+#: static/js/navbar.js:171 user_management/static/users/js/login.js:13
 msgid "Login"
 msgstr "Anmelden"
 
-#: static/js/navbar.js:173 user_management/static/users/js/login.js:32
+#: static/js/navbar.js:172 user_management/static/users/js/login.js:32
 #: user_management/static/users/js/logout.js:17
 msgid "Register"
 msgstr "Registrieren"
@@ -720,27 +738,3 @@ msgstr "Passwortwiederholung ist notwendig!"
 #: user_management/static/users/js/register.js:96
 msgid "Passwords do not match!"
 msgstr "Passwörter stimmen nicht überein!"
-
-#, fuzzy
-#~| msgid "Quiz Stats"
-#~ msgid "Pong Stats"
-#~ msgstr "Quiz-Statistiken"
-
-#, fuzzy
-#~| msgid "Pending Games"
-#~ msgid "Last Pong Games"
-#~ msgstr "Ausstehende Spiele."
-
-#, fuzzy
-#~| msgid "Games Won:"
-#~ msgid "Games Lost:"
-#~ msgstr "Gewonnene Partien:"
-
-#~ msgid "Win-Loss Ratio:"
-#~ msgstr "Sieg-Niederlagen Verhältnis"
-
-#~ msgid "Play new Game"
-#~ msgstr "Neues Spiel"
-
-#~ msgid "Create Tournament"
-#~ msgstr "Tournier erstellen"
