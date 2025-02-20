@@ -77,6 +77,8 @@ def get_profile(request, username):
 		'is_user_blocked_by_requester': is_user_blocked_by_requester,
 		'friend_count': friend_count,
 		'friend_status': friend_status,
+		'pong_matches_won': user.matches_won,
+		'pong_matches_lost': user.matches_lost,
 	}
 	return JsonResponse({
 		'success': True,

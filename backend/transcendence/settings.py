@@ -37,7 +37,6 @@ INTERNAL_IPS = [
 INSTALLED_APPS = [
 	'quiz.apps.QuizConfig',
 	'pong.apps.PongConfig',
-	'chat.apps.ChatConfig',
 	'dashboard.apps.DashboardConfig',
 	'channels',
 	'daphne',

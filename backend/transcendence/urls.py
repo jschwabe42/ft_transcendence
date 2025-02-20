@@ -30,7 +30,6 @@ urlpatterns = [
 	path('users/', include('user_management.urls')),
 	path('pong/', include('pong.urls')),
 	path('admin/', admin.site.urls),
-	path('chat/', include('chat.urls')),
 	path('quiz/', include('quiz.urls')),
 	path('dashboard/', include('dashboard.urls')),
 	path('i18n/', include('django.conf.urls.i18n')),
