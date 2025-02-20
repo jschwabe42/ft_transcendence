@@ -58,6 +58,7 @@ export function clear_containers() {
 	document.getElementById('about-content').innerHTML = '';
 	document.getElementById('quiz-app-content').innerHTML = '';
 	document.getElementById('pong-app-content').innerHTML = '';
+	document.getElementById('pong-app-content').classList.remove('active');
 	document.getElementById('user-app-content').innerHTML = '';
 	document.getElementById('error-content').innerHTML = '';
 	document.getElementById('dashboard-app-content').innerHTML = '';
