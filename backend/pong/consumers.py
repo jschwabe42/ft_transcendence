@@ -1,6 +1,5 @@
 import asyncio
 import json
-import sys
 
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
@@ -13,20 +12,35 @@ games = {}
 
 
 class GameConsumer(AsyncWebsocketConsumer):
+	connected_users = {}
+
 	async def connect(self):
 		self.game_id = self.scope['url_route']['kwargs']['game_id']
 		self.room_group_name = f'game_{self.game_id}'
 
-		# Stelle sicher, dass ein zentrales Spiel verwendet wird
 		if self.game_id not in games:
 			games[self.game_id] = PongInstance('player1', 'player2')
 		self.game = games[self.game_id]
 
-		# Gruppe hinzufügen
+		if self.game_id not in self.connected_users:
+			self.connected_users[self.game_id] = 0
+		self.connected_users[self.game_id] += 1
+
 		await self.channel_layer.group_add(self.room_group_name, self.channel_name)
 		await self.accept()
 
 	async def disconnect(self, close_code):
+		if self.game_id in self.connected_users:
+			self.connected_users[self.game_id] -= 1
+
+			if self.connected_users[self.game_id] <= 0:
+				game = await sync_to_async(PongGame.objects.get)(id=self.game_id)
+				if game.player1_ready and game.player1_ready:
+					game.pending = False
+					await sync_to_async(game.save)()
+					del games[self.game_id]
+					del self.connected_users[self.game_id]
+
 		await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
 	async def receive(self, text_data):
@@ -183,9 +197,12 @@ class BasePageConsumer(AsyncWebsocketConsumer):
 		)
 
 	async def send_tournament_created(self, host, tournament_id):
-		sys.stdout.flush()
 		# translate the message? @follow-up
-		response = {'message': 'create_tournament', 'host': host, 'tournament_id': tournament_id}
+		response = {
+			'message': 'create_tournament',
+			'host': host,
+			'tournament_id': tournament_id,
+		}
 		await self.channel_layer.group_send(
 			self.group_name, {'type': 'create_tournament', 'message': response}
 		)
@@ -254,7 +271,6 @@ class TournamentConsumer(AsyncWebsocketConsumer):
 
 	async def player_joined(self, event):
 		print('Event received in player_joined:', event)
-		sys.stdout.flush()
 		await self.send(
 			text_data=json.dumps(
 				{
@@ -283,7 +299,8 @@ class TournamentConsumer(AsyncWebsocketConsumer):
 				'finalWinner': self.tournament.finalWinner,
 			}
 			await self.channel_layer.group_send(
-				self.group_name, {'type': 'broadcast_create_games', 'response': tournament_data}
+				self.group_name,
+				{'type': 'broadcast_create_games', 'response': tournament_data},
 			)
 
 		elif action == 'createGames':
@@ -295,7 +312,8 @@ class TournamentConsumer(AsyncWebsocketConsumer):
 			}
 
 			await self.channel_layer.group_send(
-				self.group_name, {'type': 'broadcast_create_games', 'response': response_data}
+				self.group_name,
+				{'type': 'broadcast_create_games', 'response': response_data},
 			)
 		elif action == 'createFinal':
 			await self.channel_layer.group_send(
