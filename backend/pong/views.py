@@ -1,4 +1,6 @@
+from django.db.models import Q
 from django.http import JsonResponse
+from django.utils.translation import gettext as _
 
 from .models import PongGame, Tournament
 
@@ -29,7 +31,38 @@ def game_data(request):
 		return JsonResponse(data, safe=False)
 
 	except PongGame.DoesNotExist:
-		return JsonResponse({'error': 'No Games Found'}, status=404)
+		return JsonResponse({'error': _('No Games Found')}, status=404)
+
+
+def personal_game_data(request, username):
+	"""
+	Api call that returns the last 10 games played by the user.
+	API URL: api/personal-game-data/<str:username>
+	"""
+	try:
+		games = PongGame.objects.filter(
+			Q(player1__username=username) | Q(player2__username=username)
+		).order_by('-played_at')[:10]
+
+		data = []
+
+		for game in games:
+			game_data = {
+				'player1': str(game.player1),  # Convert to string if it's a ForeignKey
+				'player2': str(game.player2),
+				'score1': game.score1,
+				'score2': game.score2,
+				'started_at': game.started_at.isoformat() if game.started_at else None,
+				'played_at': game.played_at.isoformat() if game.played_at else None,
+				'game_id': game.id,
+				'tournament_id': game.tournament_id,
+			}
+			data.append(game_data)
+
+		return JsonResponse(data, safe=False)
+
+	except PongGame.DoesNotExist:
+		return JsonResponse({'error': _('No Games Found')})
 
 
 def ingame(request):
