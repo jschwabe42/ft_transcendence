@@ -1,6 +1,7 @@
 import router from '/static/js/router.js';
 
 let gameModel = {};
+let gameSocket = null;
 
 export function DisplayPong(params) {
 
@@ -50,7 +51,7 @@ export function DisplayPong(params) {
 							<p id="player2">${model.score2}</p>
 						</div>
 					</div>
-					<button id="winner" class="navigate-button" style="display: none;" 
+					<button id="winner" class="navigate-button"" 
 						data-path="${model.tournament_id === 0 ? '/pong/' : '/pong/tournament/' + model.tournament_id}">
 						${gettext("back to menu")}
 					</button>
@@ -64,7 +65,7 @@ export function DisplayPong(params) {
 		const button = event.target.closest('.navigate-button');
 		if (button && button.dataset.path) {
 			const path = button.dataset.path;
-			router.navigateTo(path);
+			closeWebSocketNavigateTo(path);
 		}
 	});
 }
@@ -78,7 +79,7 @@ function renderGameData() {
 	const game_id = gameModel.game_id;
 
 	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-	const gameSocket = new WebSocket(protocol + window.location.host + '/pong/' + game_id + '/');
+	gameSocket = new WebSocket(protocol + window.location.host + '/pong/' + game_id + '/');
 
 	gameSocket.onclose = function (e) {
 	};
@@ -318,7 +319,8 @@ function renderGameData() {
 	document.getElementById("ws").addEventListener("click", async function (event) {
 		event.preventDefault();
 		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
+		let username = document.querySelector('meta[name="username-token"]').content;
+		console.log(username)
 		try {
 			const response = await fetch('/pong/api/get-gameControl/', {
 				method: 'POST',
@@ -328,6 +330,7 @@ function renderGameData() {
 				},
 				body: JSON.stringify({
 					'game_id': gameModel.game_id,
+					'username': username,
 					'control1': 'w_s',
 					'control2': 'w_s',
 				}),
@@ -344,7 +347,7 @@ function renderGameData() {
 	document.getElementById("up_down").addEventListener("click", async function (event) {
 		event.preventDefault();
 		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
+		let username = document.querySelector('meta[name="username-token"]').content;
 		try {
 			const response = await fetch('/pong/api/get-gameControl/', {
 				method: 'POST',
@@ -354,6 +357,7 @@ function renderGameData() {
 				},
 				body: JSON.stringify({
 					'game_id': gameModel.game_id,
+					'username': username,
 					'control1': 'up down',
 					'control2': 'up down',
 				}),
@@ -366,4 +370,16 @@ function renderGameData() {
 		} catch (error) {
 		}
 	});
+}
+
+function closeWebSocketNavigateTo(path) {
+	if (gameSocket) {
+		console.log("close socket");
+		gameSocket.close();
+		gameSocket = null;
+
+		setTimeout(function() {
+			router.navigateTo(path);
+		}, 200);
+	}
 }

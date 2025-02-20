@@ -2,15 +2,16 @@ import router from '/static/js/router.js';
 import { CreateGameForm } from './pong_api.js';
 import { CreateTournament } from './tournament_api.js';
 
+let socket = null;
+
 export function PongOverview() {
 	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-	const socket = new WebSocket(protocol + window.location.host + '/ws/pong/');
+	socket = new WebSocket(protocol + window.location.host + '/ws/pong/');
 	const userName = document.querySelector('meta[name="username-token"]').content;
 
 	// open socket
 	socket.onopen = () => {
-		console.log("WebSocket-Verbindung hergestellt.");
-		socket.send(JSON.stringify({ message: "Hallo, Server!" }));
+		console.log("WebSocket Connected");
 	};
 
 	console.log("WebSocket-basierte Base Page");
@@ -127,18 +128,14 @@ export function PongOverview() {
 		
 			if (message.host == userName) {
 				let path = "/pong/tournament/" + message.tournament_id;
-				router.navigateTo(path);
+				closeWebSocketNavigateTo(path);
 			}
 		}
 		
 	};
 
 	socket.onclose = () => {
-		console.log("WebSocket-Verbindung geschlossen.");
-	};
-
-	socket.onerror = (error) => {
-		console.error("WebSocket-Fehler:", error);
+		console.log("WebSocket disconnected");
 	};
 
 	document.getElementById('pong-app-content').addEventListener('click', (event) => {
@@ -146,7 +143,19 @@ export function PongOverview() {
 		if (button && button.dataset.path) {
 			const path = button.dataset.path;
 			console.log("Navigating to:", path);
-			router.navigateTo(path);
+			closeWebSocketNavigateTo(path);
 		}
 	});
+}
+
+function closeWebSocketNavigateTo(path) {
+	if (socket) {
+		console.log("close socket");
+		socket.close();
+		socket = null;
+
+		setTimeout(function() {
+			router.navigateTo(path);
+		}, 200);
+	}
 }
