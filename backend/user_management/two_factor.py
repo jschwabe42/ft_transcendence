@@ -6,13 +6,14 @@ from io import BytesIO
 import pyotp
 import qrcode
 from django.conf import settings
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from transcendence.decorators import login_required_redirect
+from rest_framework.authtoken.models import Token
 
 from .models import CustomUser
 
@@ -133,11 +134,18 @@ def verify_2fa(request):
 
 	try:
 		# Validate pre-authentication token
-		validated_token = AccessToken(pre_auth_token)
-		user_id = validated_token['user_id']
+		access_token = AccessToken(pre_auth_token)
+		try:
+			access_token.verify()
+		except TokenError:
+			return JsonResponse({'success': False, 'message': 'Invalid token'}, status=401)
+		
+		
+		username = data.get('username')
 
+		User = get_user_model()
 		# Get user from database
-		user = CustomUser.objects.get(id=user_id)
+		user = User.objects.get(username=username)
 
 		# Verify 2FA code
 		totp = pyotp.TOTP(user.two_factor_secret)
@@ -145,10 +153,11 @@ def verify_2fa(request):
 			return JsonResponse({'success': False, 'message': 'Invalid 2FA code'}, status=400)
 
 		# Generate final tokens
+		login(request, user)
 		refresh = RefreshToken.for_user(user)
 		access_token = str(refresh.access_token)
 		refresh_token = str(refresh)
-		new_csrf_token = get_token(request)
+		new_csrf_token = get_token(request)  # Changed this line
 
 		# Create response
 		response = JsonResponse(
@@ -177,8 +186,6 @@ def verify_2fa(request):
 			secure=True,  # Set to True in production
 			samesite='Lax',
 		)
-
-		login(request, user)
 
 		return response
 

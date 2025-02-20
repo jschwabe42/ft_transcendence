@@ -108,7 +108,7 @@ function add_login_form_listener() {
 			if (data.success) {
 				if (data.requires_2fa) {
 					// Show 2FA verification form
-					show2FAForm(data.pre_auth_token);
+					show2FAForm(data.pre_auth_token, data.username);
 				} else {
 					// Normal login success
 					handleLoginSuccess(data);
@@ -125,7 +125,7 @@ function add_login_form_listener() {
 	});
 }
 
-function show2FAForm(preAuthToken) {
+function show2FAForm(preAuthToken, username) {
 	// Hide login form and show 2FA verification
 	document.getElementById('login-form').style.display = 'none';
 	const twoFaSection = document.getElementById('2fa-verification');
@@ -153,7 +153,8 @@ function show2FAForm(preAuthToken) {
 				},
 				body: JSON.stringify({
 					code: code,
-					pre_auth_token: preAuthToken
+					pre_auth_token: preAuthToken,
+					username: username
 				}),
 			});
 

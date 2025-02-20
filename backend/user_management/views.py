@@ -136,7 +136,7 @@ def login_view(request):
 						'success': True,
 						'requires_2fa': True,
 						'pre_auth_token': str(refresh.access_token),
-						'csrf_token': new_csrf_token,
+						'username': username,
 						'message': _('2FA required. Please enter your code.'),
 					}
 				)
