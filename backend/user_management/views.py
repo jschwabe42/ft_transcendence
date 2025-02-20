@@ -19,7 +19,7 @@ from pong.models import PongGame
 from pong.utils import win_to_loss_ratio
 from transcendence.decorators import login_required_redirect
 
-from .blocked_users import Block_Manager, BlockedUsers
+from .friends_blocked_users import Block_Manager, BlockedUsers
 
 # from .consumers import UserProfileConsumer
 
