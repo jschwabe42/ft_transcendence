@@ -138,7 +138,6 @@ def verify_2fa(request):
 			access_token.verify()
 		except TokenError:
 			return JsonResponse({'success': False, 'message': 'Invalid token'}, status=401)
-		
 
 		username = data.get('username')
 

@@ -82,7 +82,7 @@ class OauthCallBackView(APIView):
 			bearer_token_response.raise_for_status()
 			bearer_token_response = bearer_token_response.json()
 			BEARER_TOKEN = bearer_token_response['access_token']
-			
+
 			if not BEARER_TOKEN:
 				return JsonResponse({'success': False, 'error': 'bearer token invalid/not found'})
 
@@ -94,9 +94,11 @@ class OauthCallBackView(APIView):
 				},
 			)
 			jsonresponse = response.json()
-			
+
 			if not response.ok or not jsonresponse['login']:
-				return JsonResponse({'success': False, 'error': 'could not obtain username from token'})
+				return JsonResponse(
+					{'success': False, 'error': 'could not obtain username from token'}
+				)
 
 			user_instance = OauthCallBackView.__get_or_create_oauth(jsonresponse)
 
@@ -105,30 +107,34 @@ class OauthCallBackView(APIView):
 				# Generate short-lived token for 2FA verification
 				refresh = RefreshToken.for_user(user_instance)
 				refresh.set_exp(lifetime=timedelta(minutes=5))
-				
-				return JsonResponse({
-					'success': True,
-					'requires_2fa': True,
-					'pre_auth_token': str(refresh.access_token),
-					'username': user_instance.username,
-					'message': _('2FA required. Please enter your code.'),
-					'oauth': True  # Flag to indicate this is OAuth flow
-				})
+
+				return JsonResponse(
+					{
+						'success': True,
+						'requires_2fa': True,
+						'pre_auth_token': str(refresh.access_token),
+						'username': user_instance.username,
+						'message': _('2FA required. Please enter your code.'),
+						'oauth': True,  # Flag to indicate this is OAuth flow
+					}
+				)
 			else:
 				# No 2FA required - proceed with login
 				login(request, user=user_instance)
 				refresh = RefreshToken.for_user(user_instance)
 				new_csrf_token = get_token(request)
-				
-				response = JsonResponse({
-					'success': True,
-					'message': _('Login successful.'),
-					'access_token': str(refresh.access_token),
-					'refresh_token': str(refresh),
-					'csrf_token': new_csrf_token,
-					'username': user_instance.username,
-					'oauth': True
-				})
+
+				response = JsonResponse(
+					{
+						'success': True,
+						'message': _('Login successful.'),
+						'access_token': str(refresh.access_token),
+						'refresh_token': str(refresh),
+						'csrf_token': new_csrf_token,
+						'username': user_instance.username,
+						'oauth': True,
+					}
+				)
 
 				# Set secure cookies
 				response.set_cookie(
@@ -145,7 +151,7 @@ class OauthCallBackView(APIView):
 					secure=True,
 					samesite='Lax',
 				)
-				
+
 				return response
 
 		except requests.exceptions.RequestException:

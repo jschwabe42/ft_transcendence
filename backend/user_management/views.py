@@ -310,54 +310,57 @@ def validate_data(username, email, current_user=None):
 
 @login_required_redirect
 def change_password(request):
-    """Change password with 2FA verification if enabled"""
-    if request.method != 'POST':
-        return JsonResponse({'success': False, 'message': _('Invalid request method.')})
-    
-    data = json.loads(request.body)
-    user = request.user
-    current_password = data.get('current_password')
-    new_password = data.get('new_password')
-    two_fa_code = data.get('two_fa_code')
-    change_id = data.get('change_id')
-    
-    # Verify current password
-    if not two_fa_code and not user.check_password(current_password):
-        return JsonResponse({'success': False, 'message': _('Invalid current password.')})
+	"""Change password with 2FA verification if enabled"""
+	if request.method != 'POST':
+		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
-    # Handle 2FA if enabled
-    if user.two_factor_enabled:
-        cache_key = f"pwd_change_{user.id}_{change_id}" if change_id else None
-        
-        # Initial request - store pending change and require 2FA
-        if not two_fa_code:
-            change_id = str(uuid.uuid4())
-            cache.set(f"pwd_change_{user.id}_{change_id}", new_password, timeout=300)
-            return JsonResponse({
-                'requires_2fa': True,
-                'change_id': change_id,
-                'message': _('2FA verification required')
-            })
-            
-        # 2FA verification step
-        pending_pwd = cache.get(cache_key)
-        if not pending_pwd:
-            return JsonResponse({'success': False, 'message': _('Invalid or expired request')})
-            
-        # Verify 2FA code
-        totp = pyotp.TOTP(user.two_factor_secret)
-        if not totp.verify(two_fa_code):
-            return JsonResponse({'success': False, 'message': _('Invalid 2FA code')})
-            
-        # Use the cached password from the initial request
-        new_password = pending_pwd
-        cache.delete(cache_key)
-    
-    # Change password and maintain session
-    user.set_password(new_password)
-    user.save()
-    update_session_auth_hash(request, user)
-    return JsonResponse({'success': True, 'message': _('Password changed successfully.')})
+	data = json.loads(request.body)
+	user = request.user
+	current_password = data.get('current_password')
+	new_password = data.get('new_password')
+	two_fa_code = data.get('two_fa_code')
+	change_id = data.get('change_id')
+
+	# Verify current password
+	if not two_fa_code and not user.check_password(current_password):
+		return JsonResponse({'success': False, 'message': _('Invalid current password.')})
+
+	# Handle 2FA if enabled
+	if user.two_factor_enabled:
+		cache_key = f'pwd_change_{user.id}_{change_id}' if change_id else None
+
+		# Initial request - store pending change and require 2FA
+		if not two_fa_code:
+			change_id = str(uuid.uuid4())
+			cache.set(f'pwd_change_{user.id}_{change_id}', new_password, timeout=300)
+			return JsonResponse(
+				{
+					'requires_2fa': True,
+					'change_id': change_id,
+					'message': _('2FA verification required'),
+				}
+			)
+
+		# 2FA verification step
+		pending_pwd = cache.get(cache_key)
+		if not pending_pwd:
+			return JsonResponse({'success': False, 'message': _('Invalid or expired request')})
+
+		# Verify 2FA code
+		totp = pyotp.TOTP(user.two_factor_secret)
+		if not totp.verify(two_fa_code):
+			return JsonResponse({'success': False, 'message': _('Invalid 2FA code')})
+
+		# Use the cached password from the initial request
+		new_password = pending_pwd
+		cache.delete(cache_key)
+
+	# Change password and maintain session
+	user.set_password(new_password)
+	user.save()
+	update_session_auth_hash(request, user)
+	return JsonResponse({'success': True, 'message': _('Password changed successfully.')})
+
 
 def check_authentication(request):
 	"""
