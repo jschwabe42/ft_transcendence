@@ -28,6 +28,10 @@ export function loadProfile(username) {
 			<h4>${gettext("Pong Stats")}</h4>
 			<ul id="pv-pong-stats-list"></ul>
 		</div>
+		<div id="pv-pong-games">
+			<h4>${gettext("Last Pong Games")}</h4>
+			<ul id="pv-pong-games-list"></ul>
+		</div>
 	</div>
 	`;
 	fetchData(username);
@@ -122,6 +126,7 @@ function displayProfile(profile) {
 		<li>${gettext("Games Lost:")} ${profile.pong_matches_lost}</li>
 		<li>${gettext("Win-Loss Ratio:")} ${profile.pong_matches_won / profile.pong_matches_lost}</li>
 	`;
+	addPongGameData(profile);
 }
 
 function displayBlockedProfile(data) {
@@ -661,5 +666,33 @@ function cancelFRFriendRequest(username, requestItem) {
 		} else {
 			console.error('Failed to cancel friend request');
 		}
+	});
+}
+
+function addPongGameData(profile) {
+	const username = profile.username;
+	fetch(`/pong/api/personal-game-data/${username}/`)
+	.then(response => response.json())
+	.then(data => {
+		console.log('Pong data:', data);
+		const gamesList = document.getElementById('pv-pong-games-list');
+		gamesList.innerHTML = '';
+
+		data.forEach(game => {
+			const listItem = document.createElement('li');
+			const button = document.createElement('button');
+			button.className = 'btn btn-primary';
+			button.textContent = `${game.player1} vs ${game.player2} - ${game.score1}:${game.score2}`;
+			button.onclick = function () {
+				router.navigateTo(`/pong/game-details/${game.game_id}/`);
+			};
+			listItem.appendChild(button);
+			gamesList.appendChild(listItem);
+		});
+	})
+	.catch(error => {
+		console.log('Error:', error);
+		console.log('No recent games');
+		document.getElementById('pv-pong-games-list').innerHTML = `<p>${gettext("No recent games.")}</p>`;
 	});
 }

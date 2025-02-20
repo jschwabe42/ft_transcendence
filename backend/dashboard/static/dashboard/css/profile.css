@@ -30,6 +30,7 @@
 	align-items: flex-start;
 }
 
+#pv-pong-games,
 #pv-pong-stats,
 #pv-quiz-stats {
 	display: inline-block;
@@ -39,10 +40,12 @@
 	margin: left;
 }
 
+#pv-pong-stats,
 #pv-quiz-stats {
 	margin-right: 10px;
 }
 
+#pv-pong-games:hover,
 #pv-pong-stats:hover,
 #pv-quiz-stats:hover {
 	background-color: #f0f0f0;
@@ -50,6 +53,7 @@
 	border: 1px solid #1c4f73;
 }
 
+#pv-pong-games h4,
 #pv-pong-stats h4,
 #pv-quiz-stats h4 {
 	font-weight: bold;
@@ -57,12 +61,14 @@
 	margin-bottom: 10px;
 }
 
+#pv-pong-games-list,
 #pv-pong-stats-list,
 #pv-quiz-stats-list {
 	list-style-type: none;
 	padding: 0;
 }
 
+#pv-pong-games-list li,
 #pv-pong-stats-list li,
 #pv-quiz-stats-list li {
 	margin-bottom: 5px;
