@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 17:22+0100\n"
+"POT-Creation-Date: 2025-02-20 18:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -190,7 +190,7 @@ msgstr "entfernen"
 msgid "pending Tournament game"
 msgstr "ausstehendes Spiel im Tournier"
 
-#: pong/static/pong/js/overview.js:36 pong/static/pong/js/overview.js:111
+#: pong/static/pong/js/overview.js:36 pong/static/pong/js/overview.js:114
 msgid "pending"
 msgstr "ausstehend"
 
@@ -222,7 +222,7 @@ msgstr "Bisher wurden keine Spiele gespielt."
 msgid "Pending Games"
 msgstr "Ausstehende Spiele."
 
-#: pong/static/pong/js/overview.js:61
+#: pong/static/pong/js/overview.js:61 pong/static/pong/js/overview.js:108
 msgid "No pending games."
 msgstr "Kein ausstehendes Spiel."
 
@@ -230,7 +230,7 @@ msgstr "Kein ausstehendes Spiel."
 msgid "Open Tournaments"
 msgstr "Offene Tourniere"
 
-#: pong/static/pong/js/overview.js:90 pong/static/pong/js/overview.js:124
+#: pong/static/pong/js/overview.js:90 pong/static/pong/js/overview.js:127
 msgid "Join Open Tournament"
 msgstr "Offenem Tournier beitreten"
 
@@ -393,20 +393,21 @@ msgstr "WebSeite für das Transcendence-Projekt"
 
 #: static/js/navbar.js:72
 msgid "Features:"
-msgstr ""
+msgstr "Funktionen:"
 
 #: static/js/navbar.js:73
 msgid "points. (Minor Module = 1 point, Major Module = 2 points!)"
-msgstr ""
+msgstr "Punkte. (Kleines Modul = 1 Punkt, Hauptmodul = 2 Punkte!)"
 
 #: static/js/navbar.js:74
 msgid ""
 "14 points are sufficient for the basic requirements with 19 giving 125%!"
 msgstr ""
+"14 Punkte reichen für die Grundanforderungen aus, 19 Punkte ergeben 125%!"
 
 #: static/js/navbar.js:75
 msgid "Minimal Requirements (no points, all need to be fullfilled):"
-msgstr ""
+msgstr "Minimale Anforderungen (keine Punkte, alle müssen erfüllt sein):"
 
 #: static/js/navbar.js:77
 msgid ""
@@ -528,14 +529,16 @@ msgid ""
 "This project is part of the core curriculum of 42 and serves as its final "
 "project."
 msgstr ""
+"Das Projekt ist ein Teil des Grundstudienplans der 42 und ist das finale "
+"Projekt."
 
 #: static/js/navbar.js:107
 msgid "This is our take on it."
-msgstr ""
+msgstr "Das ist unsere Version."
 
 #: static/js/navbar.js:108
 msgid "Our Projects GitHub Repository"
-msgstr ""
+msgstr "Das GitHub Repository unseres Projektes"
 
 #: static/js/navbar.js:109
 msgid "The team:"
@@ -717,6 +720,24 @@ msgstr "Passwortwiederholung ist notwendig!"
 #: user_management/static/users/js/register.js:96
 msgid "Passwords do not match!"
 msgstr "Passwörter stimmen nicht überein!"
+
+#, fuzzy
+#~| msgid "Quiz Stats"
+#~ msgid "Pong Stats"
+#~ msgstr "Quiz-Statistiken"
+
+#, fuzzy
+#~| msgid "Pending Games"
+#~ msgid "Last Pong Games"
+#~ msgstr "Ausstehende Spiele."
+
+#, fuzzy
+#~| msgid "Games Won:"
+#~ msgid "Games Lost:"
+#~ msgstr "Gewonnene Partien:"
+
+#~ msgid "Win-Loss Ratio:"
+#~ msgstr "Sieg-Niederlagen Verhältnis"
 
 #~ msgid "Play new Game"
 #~ msgstr "Neues Spiel"
