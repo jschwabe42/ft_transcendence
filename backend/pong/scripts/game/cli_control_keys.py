@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 import requests
 
+
 def update_score(api_url, token, username, control1, control2, game_id):
 	print('Test')
 
@@ -22,22 +23,25 @@ def update_score(api_url, token, username, control1, control2, game_id):
 		else:
 			try:
 				json_response = response.json()
-				print("Respuesta JSON:", json_response)
-				error_message = json_response.get('error', json_response.get('detail', 'Something went wrong.'))
+				print('JSON response:', json_response)
+				error_message = json_response.get(
+					'error', json_response.get('detail', 'Something went wrong.')
+				)
 				print(f'Error: {error_message}')
 			except ValueError:
 				# If parsing fails, print the raw text.
-				print("Error: No se pudo parsear la respuesta como JSON.")
-				print("Contenido de la respuesta:", response.text)
+				print('Error: failed to parse json.')
+				print('Contents of response:', response.text)
 	except requests.exceptions.RequestException as e:
 		print(f'Failed to connect to the API: {e}')
+
 
 def main():
 	parser = ArgumentParser(description='CLI tool to create a game using the CreateGame API.')
 	parser.add_argument(
 		'--url',
 		required=True,
-		help='The API endpoint URL (e.g., http://localhost:8000/pong/api/get-gameControl/).'
+		help='The API endpoint URL (e.g., http://localhost:8000/pong/api/get-gameControl/).',
 	)
 	parser.add_argument('--token', required=True, help='Your API authentication token.')
 	parser.add_argument('--username', required=True, help='user to change the control')
@@ -47,7 +51,10 @@ def main():
 
 	args = parser.parse_args()
 
-	update_score(args.url, args.token, args.username.strip(), args.control1, args.control2, args.game_id)
+	update_score(
+		args.url, args.token, args.username.strip(), args.control1, args.control2, args.game_id
+	)
+
 
 if __name__ == '__main__':
 	main()

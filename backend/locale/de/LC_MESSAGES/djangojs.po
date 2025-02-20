@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 16:35+0100\n"
+"POT-Creation-Date: 2025-02-20 17:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -545,23 +545,23 @@ msgstr "Teammitglieder"
 msgid "Ressources used:"
 msgstr "genutzte Ressourcen"
 
-#: static/js/navbar.js:129
+#: static/js/navbar.js:131
 msgid "Libraries used:"
 msgstr "genutzte Bibliotheken:"
 
-#: static/js/navbar.js:153
+#: static/js/navbar.js:155
 msgid "Account"
 msgstr "Benutzerkonto"
 
-#: static/js/navbar.js:154 user_management/static/users/js/logout.js:12
+#: static/js/navbar.js:156 user_management/static/users/js/logout.js:12
 msgid "Logout"
 msgstr "Abmelden"
 
-#: static/js/navbar.js:170 user_management/static/users/js/login.js:13
+#: static/js/navbar.js:172 user_management/static/users/js/login.js:13
 msgid "Login"
 msgstr "Anmelden"
 
-#: static/js/navbar.js:171 user_management/static/users/js/login.js:32
+#: static/js/navbar.js:173 user_management/static/users/js/login.js:32
 #: user_management/static/users/js/logout.js:17
 msgid "Register"
 msgstr "Registrieren"
