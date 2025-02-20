@@ -105,6 +105,9 @@ export function PongOverview() {
 		if (message.message === "game_created") {
 			if (userName == message.player1 || userName == message.player2) {
 				const pendingGamesContainer = document.getElementById('pendingGamesContainer');
+				if (pendingGamesContainer.textContent.trim() === gettext("No pending games.")) {
+					pendingGamesContainer.innerHTML = "";
+				}
 				if (!document.querySelector(`[data-path="/pong/${message.game_id}"]`)) {
 					const newGameHTML = `
 						<button class="ChatButtonBackground navigate-button" data-path="/pong/${message.game_id}">
