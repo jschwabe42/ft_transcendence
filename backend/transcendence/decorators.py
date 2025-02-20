@@ -4,11 +4,6 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
-import logging
-
-logger = logging.getLogger(__name__)
-
-logger = logging.getLogger(__name__)
 
 
 def login_required_redirect(view_func):
@@ -48,8 +43,7 @@ def login_required_redirect(view_func):
 				request.user = user
 				return view_func(request, *args, **kwargs)
 
-			except (InvalidToken, TokenError) as e:
-				logger.debug(f'Access token validation failed: {str(e)}')
+			except (InvalidToken, TokenError):
 				print('NEW ACCESS TOKEN', flush=True)
 				if refresh_token:
 					try:
@@ -60,8 +54,7 @@ def login_required_redirect(view_func):
 						set_secure_cookie(response, 'access_token', new_access_token)
 						return response
 
-					except (InvalidToken, TokenError) as e:
-						logger.warning(f'Refresh token validation failed: {str(e)}')
+					except (InvalidToken, TokenError):
 						return create_unauthorized_response()
 				return create_unauthorized_response()
 
@@ -75,8 +68,7 @@ def login_required_redirect(view_func):
 				set_secure_cookie(response, 'refresh_token', str(refresh))
 
 				return response
-			except Exception as e:
-				logger.error(f'Error generating tokens: {str(e)}')
+			except Exception:
 				return create_unauthorized_response()
 
 		return create_unauthorized_response()
