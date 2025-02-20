@@ -13,7 +13,6 @@ from rest_framework.decorators import api_view
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from transcendence.decorators import login_required_redirect
-from rest_framework.authtoken.models import Token
 
 from .models import CustomUser
 
@@ -140,7 +139,7 @@ def verify_2fa(request):
 		except TokenError:
 			return JsonResponse({'success': False, 'message': 'Invalid token'}, status=401)
 		
-		
+
 		username = data.get('username')
 
 		User = get_user_model()
