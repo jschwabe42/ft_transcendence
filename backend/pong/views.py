@@ -1,5 +1,6 @@
-from django.http import JsonResponse
 from django.db.models import Q
+from django.http import JsonResponse
+from django.utils.translation import gettext as _
 
 from .models import PongGame, Tournament
 
@@ -30,7 +31,8 @@ def game_data(request):
 		return JsonResponse(data, safe=False)
 
 	except PongGame.DoesNotExist:
-		return JsonResponse({'error': 'No Games Found'}, status=404)
+		return JsonResponse({'error': _('No Games Found')}, status=404)
+
 
 def personal_game_data(request, username):
 	"""
@@ -60,7 +62,7 @@ def personal_game_data(request, username):
 		return JsonResponse(data, safe=False)
 
 	except PongGame.DoesNotExist:
-		return JsonResponse({'error': 'No Games Found'})
+		return JsonResponse({'error': _('No Games Found')})
 
 
 def ingame(request):
