@@ -829,25 +829,6 @@ function cancelPasswordChange2FA() {
 	state.pendingPasswordChange = null;
 }
 
-/**
- * Verify a 2FA code
- * @returns {Promise<boolean>} True if verification successful
- */
-function verify2FACode(code) {
-	const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
-
-	return fetch(ENDPOINTS.TWO_FA.VERIFY, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-Requested-With': 'XMLHttpRequest',
-			'X-CSRFToken': csrfToken,
-		},
-		body: JSON.stringify({ code }),
-	})
-		.then(response => response.json())
-		.then(data => data.success);
-}
 
 /**
  * Toggle password input visibility for profile update

@@ -25,24 +25,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from transcendence.decorators import login_required_redirect
 
 from .blocked_users import Block_Manager, BlockedUsers
-from .decorators import hybrid_login_required
 
 # from .consumers import UserProfileConsumer
 
 User = get_user_model()
-
-
-@hybrid_login_required
-def test_hybrid_auth(request):
-	return JsonResponse(
-		{
-			'message': 'JWT TOKEN VALID!!',
-			'user': {
-				'username': request.user.username,
-				'email': request.user.email,
-			},
-		}
-	)
 
 
 @login_required_redirect
@@ -180,6 +166,7 @@ def login_view(request):
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
 
+@login_required_redirect
 def logout_view(request):
 	"""
 	Logout a user.
