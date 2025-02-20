@@ -49,16 +49,12 @@ msgid "Quiz Stats"
 msgstr "Quiz-Statistiken"
 
 #: dashboard/static/dashboard/js/profile.js:28
-#, fuzzy
-#| msgid "Quiz Stats"
 msgid "Pong Stats"
-msgstr "Quiz-Statistiken"
+msgstr "Pong-Statistiken"
 
 #: dashboard/static/dashboard/js/profile.js:32
-#, fuzzy
-#| msgid "Pending Games"
 msgid "Last Pong Games"
-msgstr "Ausstehende Spiele."
+msgstr "Letzte Pong Spiele."
 
 #: dashboard/static/dashboard/js/profile.js:73
 msgid "Error loading profile for"
@@ -114,10 +110,8 @@ msgid "Correct Answers:"
 msgstr "Richtige Antworten:"
 
 #: dashboard/static/dashboard/js/profile.js:126
-#, fuzzy
-#| msgid "Games Won:"
 msgid "Games Lost:"
-msgstr "Gewonnene Partien:"
+msgstr "Verlorene Partien:"
 
 #: dashboard/static/dashboard/js/profile.js:127
 msgid "Win-Loss Ratio:"
@@ -211,10 +205,8 @@ msgid "Remove"
 msgstr "entfernen"
 
 #: dashboard/static/dashboard/js/profile.js:696
-#, fuzzy
-#| msgid "No pending games."
 msgid "No recent games."
-msgstr "Kein ausstehendes Spiel."
+msgstr "Keine abgeschlossenen Spiele."
 
 #: pong/static/pong/js/overview.js:36
 msgid "pending Tournament game"
@@ -746,9 +738,3 @@ msgstr "Passwortwiederholung ist notwendig!"
 #: user_management/static/users/js/register.js:96
 msgid "Passwords do not match!"
 msgstr "Passwörter stimmen nicht überein!"
-
-#~ msgid "Play new Game"
-#~ msgstr "Neues Spiel"
-
-#~ msgid "Create Tournament"
-#~ msgstr "Tournier erstellen"
