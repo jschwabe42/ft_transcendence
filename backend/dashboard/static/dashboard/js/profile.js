@@ -24,6 +24,10 @@ export function loadProfile(username) {
 			<h4>${gettext("Quiz Stats")}</h4>
 			<ul id="pv-quiz-stats-list"></ul>
 		</div>
+		<div id="pv-pong-stats">
+			<h4>${gettext("Pong Stats")}</h4>
+			<ul id="pv-pong-stats-list"></ul>
+		</div>
 	</div>
 	`;
 	fetchData(username);
@@ -109,6 +113,14 @@ function displayProfile(profile) {
 		<li>${gettext("High Score:")} ${profile.quiz_high_score}</li>
 		<li>${gettext("Questions Asked:")} ${profile.quiz_questions_asked}</li>
 		<li>${gettext("Correct Answers:")} ${profile.quiz_correct_answers}</li>
+	`;
+
+	const pongStatsList = document.getElementById('pv-pong-stats-list');
+	pongStatsList.innerHTML = `
+		<li>${gettext("Games Played:")} ${profile.pong_matches_won + profile.pong_matches_lost}</li>
+		<li>${gettext("Games Won:")} ${profile.pong_matches_won}</li>
+		<li>${gettext("Games Lost:")} ${profile.pong_matches_lost}</li>
+		<li>${gettext("Win-Loss Ratio:")} ${profile.pong_matches_won / profile.pong_matches_lost}</li>
 	`;
 }
 

@@ -26,10 +26,11 @@
 
 #pv-profile-content {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: flex-start;
 }
 
+#pv-pong-stats,
 #pv-quiz-stats {
 	display: inline-block;
 	border: 1px solid #1c4f73;
@@ -38,23 +39,31 @@
 	margin: left;
 }
 
+#pv-quiz-stats {
+	margin-right: 10px;
+}
+
+#pv-pong-stats:hover,
 #pv-quiz-stats:hover {
 	background-color: #f0f0f0;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	border: 1px solid #1c4f73;
 }
 
+#pv-pong-stats h4,
 #pv-quiz-stats h4 {
 	font-weight: bold;
 	font-size: 24px;
 	margin-bottom: 10px;
 }
 
+#pv-pong-stats-list,
 #pv-quiz-stats-list {
 	list-style-type: none;
 	padding: 0;
 }
 
+#pv-pong-stats-list li,
 #pv-quiz-stats-list li {
 	margin-bottom: 5px;
 	font-size: 16px;
