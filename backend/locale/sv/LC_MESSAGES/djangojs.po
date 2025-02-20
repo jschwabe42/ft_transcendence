@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-19 20:02+0100\n"
+"POT-Creation-Date: 2025-02-20 16:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,13 +19,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: dashboard/static/dashboard/js/dashboard.js:6
-#: pong/static/pong/js/overview.js:44
+#: pong/static/pong/js/overview.js:45
 msgid "Refresh"
 msgstr "Uppdatera"
 
 #: dashboard/static/dashboard/js/dashboard.js:28
-#: dashboard/static/dashboard/js/profile.js:72
-#: dashboard/static/dashboard/js/profile.js:119
+#: dashboard/static/dashboard/js/profile.js:80
+#: dashboard/static/dashboard/js/profile.js:136
 msgid "'s profile picture"
 msgstr "'s profilbild"
 
@@ -34,234 +34,262 @@ msgid "Blocked Users"
 msgstr "Blockerade användare"
 
 #: dashboard/static/dashboard/js/profile.js:16
-#: dashboard/static/dashboard/js/profile.js:464
-#: dashboard/static/dashboard/js/profile.js:476
-#: dashboard/static/dashboard/js/profile.js:486
+#: dashboard/static/dashboard/js/profile.js:481
+#: dashboard/static/dashboard/js/profile.js:493
+#: dashboard/static/dashboard/js/profile.js:503
 msgid "Friends"
-msgstr ""
+msgstr "Vänner"
 
 #: dashboard/static/dashboard/js/profile.js:18
 msgid "Friend Requests"
-msgstr ""
+msgstr "Förfrågningar om vänner"
 
 #: dashboard/static/dashboard/js/profile.js:24
 msgid "Quiz Stats"
 msgstr "Statistik för frågesport"
 
-#: dashboard/static/dashboard/js/profile.js:65
+#: dashboard/static/dashboard/js/profile.js:28
+#, fuzzy
+#| msgid "Quiz Stats"
+msgid "Pong Stats"
+msgstr "Statistik för frågesport"
+
+#: dashboard/static/dashboard/js/profile.js:32
+#, fuzzy
+#| msgid "Start Game"
+msgid "Last Pong Games"
+msgstr "Starta spelet"
+
+#: dashboard/static/dashboard/js/profile.js:73
 msgid "Error loading profile for"
 msgstr "Fel vid inläsning av profil för"
 
-#: dashboard/static/dashboard/js/profile.js:74
-#: dashboard/static/dashboard/js/profile.js:121
+#: dashboard/static/dashboard/js/profile.js:82
+#: dashboard/static/dashboard/js/profile.js:138
 msgid "'s Profile"
 msgstr "'s Profil"
 
-#: dashboard/static/dashboard/js/profile.js:84
-#: dashboard/static/dashboard/js/profile.js:137
-#: dashboard/static/dashboard/js/profile.js:167
-#: dashboard/static/dashboard/js/profile.js:395
-#: dashboard/static/dashboard/js/profile.js:408
-#: dashboard/static/dashboard/js/profile.js:443
+#: dashboard/static/dashboard/js/profile.js:92
+#: dashboard/static/dashboard/js/profile.js:154
+#: dashboard/static/dashboard/js/profile.js:184
+#: dashboard/static/dashboard/js/profile.js:412
+#: dashboard/static/dashboard/js/profile.js:425
+#: dashboard/static/dashboard/js/profile.js:460
 msgid "Unblock"
 msgstr "Avblockera"
 
-#: dashboard/static/dashboard/js/profile.js:86
-#: dashboard/static/dashboard/js/profile.js:89
-#: dashboard/static/dashboard/js/profile.js:139
-#: dashboard/static/dashboard/js/profile.js:142
-#: dashboard/static/dashboard/js/profile.js:193
-#: dashboard/static/dashboard/js/profile.js:422
+#: dashboard/static/dashboard/js/profile.js:94
+#: dashboard/static/dashboard/js/profile.js:97
+#: dashboard/static/dashboard/js/profile.js:156
+#: dashboard/static/dashboard/js/profile.js:159
+#: dashboard/static/dashboard/js/profile.js:210
+#: dashboard/static/dashboard/js/profile.js:439
 msgid "Block"
 msgstr "Block"
 
-#: dashboard/static/dashboard/js/profile.js:106
+#: dashboard/static/dashboard/js/profile.js:114
+#: dashboard/static/dashboard/js/profile.js:124
 msgid "Games Played:"
 msgstr "Spelade matcher:"
 
-#: dashboard/static/dashboard/js/profile.js:107
+#: dashboard/static/dashboard/js/profile.js:115
+#: dashboard/static/dashboard/js/profile.js:125
 msgid "Games Won:"
 msgstr "Vunna matcher:"
 
-#: dashboard/static/dashboard/js/profile.js:108
+#: dashboard/static/dashboard/js/profile.js:116
 msgid "Total Score:"
 msgstr "Total poäng:"
 
-#: dashboard/static/dashboard/js/profile.js:109
+#: dashboard/static/dashboard/js/profile.js:117
 msgid "High Score:"
 msgstr "Högsta poäng:"
 
-#: dashboard/static/dashboard/js/profile.js:110
+#: dashboard/static/dashboard/js/profile.js:118
 msgid "Questions Asked:"
 msgstr "Frågor som ställts:"
 
-#: dashboard/static/dashboard/js/profile.js:111
+#: dashboard/static/dashboard/js/profile.js:119
 msgid "Correct Answers:"
 msgstr "Korrekta svar:"
 
+#: dashboard/static/dashboard/js/profile.js:126
+#, fuzzy
+#| msgid "Games Won:"
+msgid "Games Lost:"
+msgstr "Vunna matcher:"
+
 #: dashboard/static/dashboard/js/profile.js:127
+msgid "Win-Loss Ratio:"
+msgstr "Förhållande mellan vinst och förlust:"
+
+#: dashboard/static/dashboard/js/profile.js:144
 msgid "This user has blocked you. You cannot view their profile."
 msgstr "Den här användaren har blockerat dig. Du kan inte se deras profil."
 
-#: dashboard/static/dashboard/js/profile.js:211
+#: dashboard/static/dashboard/js/profile.js:228
 #: quiz/static/quiz/js/room_display.js:27
 #: quiz/static/quiz/js/room_display.js:32
 msgid "Settings"
 msgstr "Inställningar"
 
-#: dashboard/static/dashboard/js/profile.js:227
-#: dashboard/static/dashboard/js/profile.js:237
-#: dashboard/static/dashboard/js/profile.js:299
-#: dashboard/static/dashboard/js/profile.js:331
+#: dashboard/static/dashboard/js/profile.js:244
+#: dashboard/static/dashboard/js/profile.js:254
+#: dashboard/static/dashboard/js/profile.js:316
+#: dashboard/static/dashboard/js/profile.js:348
 msgid "Add Friend"
-msgstr ""
+msgstr "Lägg till vän"
 
-#: dashboard/static/dashboard/js/profile.js:229
-#: dashboard/static/dashboard/js/profile.js:239
-#: dashboard/static/dashboard/js/profile.js:357
+#: dashboard/static/dashboard/js/profile.js:246
+#: dashboard/static/dashboard/js/profile.js:256
+#: dashboard/static/dashboard/js/profile.js:374
 msgid "Remove Friend"
-msgstr ""
+msgstr "Ta bort vän"
 
-#: dashboard/static/dashboard/js/profile.js:231
-#: dashboard/static/dashboard/js/profile.js:241
-#: dashboard/static/dashboard/js/profile.js:267
+#: dashboard/static/dashboard/js/profile.js:248
+#: dashboard/static/dashboard/js/profile.js:258
+#: dashboard/static/dashboard/js/profile.js:284
 msgid "Cancel Request"
-msgstr ""
+msgstr "Avbryt förfrågan"
 
-#: dashboard/static/dashboard/js/profile.js:233
-#: dashboard/static/dashboard/js/profile.js:243
+#: dashboard/static/dashboard/js/profile.js:250
+#: dashboard/static/dashboard/js/profile.js:260
 msgid "Accept Request"
-msgstr ""
+msgstr "Acceptera förfrågan"
 
-#: dashboard/static/dashboard/js/profile.js:280
+#: dashboard/static/dashboard/js/profile.js:297
 msgid "Are you sure you want to remove this friend?"
-msgstr ""
+msgstr "Är du säker på att du vill ta bort den här vännen?"
 
-#: dashboard/static/dashboard/js/profile.js:312
+#: dashboard/static/dashboard/js/profile.js:329
 msgid "Are you sure you want to cancel this friend request?"
-msgstr ""
+msgstr "Är du säker på att du vill ta bort den här vännen?"
 
-#: dashboard/static/dashboard/js/profile.js:386
+#: dashboard/static/dashboard/js/profile.js:403
 msgid "No blocked users"
 msgstr "Inga blockerade användare"
 
-#: dashboard/static/dashboard/js/profile.js:462
-#: dashboard/static/dashboard/js/profile.js:484
-msgid "Friend"
-msgstr ""
-
 #: dashboard/static/dashboard/js/profile.js:479
+#: dashboard/static/dashboard/js/profile.js:501
+msgid "Friend"
+msgstr "Vän"
+
+#: dashboard/static/dashboard/js/profile.js:496
 msgid "No friends"
-msgstr ""
+msgstr "Inga vänner"
 
-#: dashboard/static/dashboard/js/profile.js:503
+#: dashboard/static/dashboard/js/profile.js:520
 msgid "Fetching friends failed"
-msgstr ""
+msgstr "Hämtning av vänner misslyckades"
 
-#: dashboard/static/dashboard/js/profile.js:532
+#: dashboard/static/dashboard/js/profile.js:549
 msgid "Received Friend Requests:"
-msgstr ""
+msgstr "Mottagit vänförfrågningar:"
 
-#: dashboard/static/dashboard/js/profile.js:536
+#: dashboard/static/dashboard/js/profile.js:553
 msgid "No friend requests"
-msgstr ""
-
-#: dashboard/static/dashboard/js/profile.js:544
-msgid "Accept"
-msgstr ""
-
-#: dashboard/static/dashboard/js/profile.js:545
-msgid "Deny"
-msgstr ""
+msgstr "Inga vänförfrågningar"
 
 #: dashboard/static/dashboard/js/profile.js:561
+msgid "Accept"
+msgstr "Acceptera"
+
+#: dashboard/static/dashboard/js/profile.js:562
+msgid "Deny"
+msgstr "Förneka"
+
+#: dashboard/static/dashboard/js/profile.js:578
 msgid "Sent Friend Requests:"
-msgstr ""
+msgstr "Skickade vänförfrågningar:"
 
-#: dashboard/static/dashboard/js/profile.js:565
+#: dashboard/static/dashboard/js/profile.js:582
 msgid "No sent friend requests"
-msgstr ""
+msgstr "Inga skickade vänförfrågningar"
 
-#: dashboard/static/dashboard/js/profile.js:573
+#: dashboard/static/dashboard/js/profile.js:590
 msgid "Remove"
-msgstr ""
+msgstr "Ta bort"
 
-#: pong/static/pong/js/overview.js:35
+#: dashboard/static/dashboard/js/profile.js:696
+msgid "No recent games."
+msgstr "Inga senaste spelen."
+
+#: pong/static/pong/js/overview.js:36
 msgid "pending Tournament game"
-msgstr ""
+msgstr "i väntan på turnering gam"
 
-#: pong/static/pong/js/overview.js:41
+#: pong/static/pong/js/overview.js:42
 msgid "Recent Games"
-msgstr ""
+msgstr "Senaste spelen"
 
-#: pong/static/pong/js/overview.js:42 pong/static/pong/js/pong_practice.js:11
+#: pong/static/pong/js/overview.js:43 pong/static/pong/js/pong_practice.js:11
 #, fuzzy
 #| msgid "Start Game"
 msgid "Practice Game"
 msgstr "Starta spelet"
 
-#: pong/static/pong/js/overview.js:45
+#: pong/static/pong/js/overview.js:46
 msgid "No games have been played yet."
-msgstr ""
+msgstr "Inga matcher har spelats ännu."
 
-#: pong/static/pong/js/overview.js:47
+#: pong/static/pong/js/overview.js:48
 #, fuzzy
 #| msgid "Start Game"
 msgid "Pending Games"
 msgstr "Starta spelet"
 
-#: pong/static/pong/js/overview.js:48
+#: pong/static/pong/js/overview.js:49
 msgid "No pending games."
-msgstr ""
+msgstr "Inga pågående spel."
 
-#: pong/static/pong/js/overview.js:50
+#: pong/static/pong/js/overview.js:51
 msgid "Open Tournaments"
-msgstr ""
+msgstr "Öppna turneringar"
 
-#: pong/static/pong/js/overview.js:53
+#: pong/static/pong/js/overview.js:54
 msgid "Play new Game"
-msgstr ""
+msgstr "Spela nytt spel"
 
-#: pong/static/pong/js/overview.js:55
+#: pong/static/pong/js/overview.js:56
 #, fuzzy
 #| msgid "Enter room name"
 msgid "Enter opponent username"
 msgstr "Ange nytt rumsnamn"
 
-#: pong/static/pong/js/overview.js:56
+#: pong/static/pong/js/overview.js:57
 msgid "Play Game +"
-msgstr ""
+msgstr "Spela Spel"
 
-#: pong/static/pong/js/overview.js:60 pong/static/pong/js/overview.js:62
+#: pong/static/pong/js/overview.js:61 pong/static/pong/js/overview.js:63
 #, fuzzy
 #| msgid "Welcome to Tournament"
 msgid "Create Tournament"
 msgstr "Skapa rum"
 
-#: pong/static/pong/js/overview.js:88 pong/static/pong/js/overview.js:122
+#: pong/static/pong/js/overview.js:89 pong/static/pong/js/overview.js:123
 msgid "Join Open Tournament"
-msgstr ""
+msgstr "Delta i öppen turnering"
 
-#: pong/static/pong/js/overview.js:93
+#: pong/static/pong/js/overview.js:94
 msgid "No open tournaments."
-msgstr ""
+msgstr "Inga öppna turneringar."
 
-#: pong/static/pong/js/overview.js:109
+#: pong/static/pong/js/overview.js:110
 msgid "pending"
-msgstr ""
+msgstr "pending"
 
-#: pong/static/pong/js/pong_display_ingame.js:14
-#: pong/static/pong/js/pong_display_ingame.js:30
+#: pong/static/pong/js/pong_display_ingame.js:15
+#: pong/static/pong/js/pong_display_ingame.js:31
 msgid "Ready"
-msgstr ""
+msgstr "Redo"
 
-#: pong/static/pong/js/pong_display_ingame.js:55
+#: pong/static/pong/js/pong_display_ingame.js:56
 msgid "back to menu"
-msgstr ""
+msgstr "Tillbaka till menyn"
 
 #: pong/static/pong/js/pong_practice.js:12
 msgid "Left Paddels: W S; Right Paddels: UP DOWN;"
-msgstr ""
+msgstr "Vänster paddel: W S; Höger paddel: UPP NER;"
 
 #: pong/static/pong/js/pong_practice.js:15
 #: pong/static/pong/js/pong_practice.js:193
@@ -272,7 +300,7 @@ msgstr "Starta spelet"
 #: pong/static/pong/js/pong_practice.js:25
 #: pong/static/pong/js/pong_practice.js:29
 msgid "player"
-msgstr ""
+msgstr "spelare"
 
 #: pong/static/pong/js/pong_practice.js:188
 #, fuzzy
@@ -280,23 +308,23 @@ msgstr ""
 msgid "Pause Game"
 msgstr "Starta spelet"
 
-#: pong/static/pong/js/tournament_display.js:20
+#: pong/static/pong/js/tournament_display.js:21
 msgid "Welcome to Tournament"
 msgstr "Skapa rum"
 
-#: pong/static/pong/js/tournament_display.js:48
+#: pong/static/pong/js/tournament_display.js:49
 #, fuzzy
 msgid "Play Tournament Games +"
 msgstr "Skapa rum"
 
-#: pong/static/pong/js/tournament_display.js:52
+#: pong/static/pong/js/tournament_display.js:53
 #, fuzzy
 msgid "Start Final Game"
 msgstr "Starta spelet"
 
-#: pong/static/pong/js/tournament_display.js:55
+#: pong/static/pong/js/tournament_display.js:56
 msgid "Go to Menu"
-msgstr ""
+msgstr "Gå till menyn"
 
 #: quiz/static/quiz/js/quiz_logic.js:134 quiz/static/quiz/js/quiz_logic.js:149
 #: quiz/static/quiz/js/quiz_logic.js:153
@@ -314,8 +342,7 @@ msgstr "Du har anslutit dig till rummet!"
 
 #: quiz/static/quiz/js/room_display.js:15
 msgid "Here you can start participating in the quiz."
-msgstr ""
-"Här kan du börja delta i frågesporten. (Varning: Frågesporten är på engelska)"
+msgstr "Här kan du börja delta i frågesporten. (Varning: Frågesporten är på engelska)"
 
 #: quiz/static/quiz/js/room_display.js:20
 msgid "Leave Room"
@@ -396,20 +423,20 @@ msgstr "Välkommen till vår Transcendence-webbsida"
 
 #: static/js/navbar.js:70
 msgid "This is a webpage created for the Transcendence project."
-msgstr ""
+msgstr "Detta är en webbsida som skapats för Transcendence-projektet."
 
 #: static/js/navbar.js:72
 msgid "Features:"
-msgstr ""
+msgstr "Egenskaper:"
 
 #: static/js/navbar.js:73
 msgid "points. (Minor Module = 1 point, Major Module = 2 points!)"
-msgstr ""
+msgstr "poäng. (Mindre modul = 1 poäng, större modul = 2 poäng!)"
 
 #: static/js/navbar.js:74
 msgid ""
 "14 points are sufficient for the basic requirements with 19 giving 125%!"
-msgstr ""
+msgstr "14 poäng är tillräckligt för de grundläggande kraven och 19 ger 125%!"
 
 #: static/js/navbar.js:75
 msgid "Minimal Requirements (no points, all need to be fullfilled):"
@@ -490,85 +517,81 @@ msgid "Minor: Game Customization options. 1 point!"
 msgstr ""
 
 #: static/js/navbar.js:97
-msgid "Major: Live Chat. Not yet implemented!"
-msgstr ""
-
-#: static/js/navbar.js:98
 msgid ""
 "Minor: User and Game stats dashboard. A way to display pong game outcomes is "
 "missing. Pong/Tournament data needs to be added. A graph should be added "
 "(but i could argue that point if necessary)"
 msgstr ""
 
-#: static/js/navbar.js:99
+#: static/js/navbar.js:98
 msgid "Major: 2FA and JWT. The branch is not yet merged."
 msgstr ""
 
-#: static/js/navbar.js:100
+#: static/js/navbar.js:99
 msgid "Minor: Expanding Browser Compability (Chrome, Edge, Firefox?). 1 point!"
 msgstr ""
 
-#: static/js/navbar.js:101
+#: static/js/navbar.js:100
 msgid ""
 "Minor: Multiple language support (Some things still need translations!). 1 "
 "point!"
 msgstr ""
 
-#: static/js/navbar.js:102
+#: static/js/navbar.js:101
 msgid ""
 "Major: Server side pong. Already implemented, as soon as the pong bugs are "
 "fixed, this can be marked done."
 msgstr ""
 
-#: static/js/navbar.js:103
+#: static/js/navbar.js:102
 msgid ""
 "Major: Pong gameplay via CLI. Already implemented AFAIK, as soon as the pong "
 "bugs are fixed, this can be marked done."
 msgstr ""
 
-#: static/js/navbar.js:106
+#: static/js/navbar.js:105
 msgid "About:"
-msgstr ""
+msgstr "Om:"
 
-#: static/js/navbar.js:107
+#: static/js/navbar.js:106
 msgid ""
 "This project is part of the core curriculum of 42 and serves as its final "
 "project."
-msgstr ""
+msgstr "Detta projekt ingår i kärnämnet 42 och fungerar som dess slutprojekt"
+
+#: static/js/navbar.js:106
+msgid "This is our take on it."
+msgstr "Detta är vår syn på saken"
 
 #: static/js/navbar.js:107
-msgid "This is our take on it."
-msgstr ""
+msgid "Our Projects GitHub Repository"
+msgstr "Våra projekt GitHub Repository"
 
 #: static/js/navbar.js:108
-msgid "Our Projects GitHub Repository"
-msgstr ""
-
-#: static/js/navbar.js:109
 msgid "The team:"
-msgstr ""
+msgstr "Teamet:"
 
-#: static/js/navbar.js:118
+#: static/js/navbar.js:117
 msgid "Ressources used:"
-msgstr ""
+msgstr "Använda resurser:"
 
-#: static/js/navbar.js:129
+#: static/js/navbar.js:128
 msgid "Libraries used:"
-msgstr ""
+msgstr "Använda bibliotek:"
 
-#: static/js/navbar.js:153
+#: static/js/navbar.js:152
 msgid "Account"
 msgstr "Användarkonto"
 
-#: static/js/navbar.js:154 user_management/static/users/js/logout.js:12
+#: static/js/navbar.js:153 user_management/static/users/js/logout.js:12
 msgid "Logout"
 msgstr "Logga ut"
 
-#: static/js/navbar.js:170 user_management/static/users/js/login.js:13
+#: static/js/navbar.js:169 user_management/static/users/js/login.js:13
 msgid "Login"
 msgstr "Logga in"
 
-#: static/js/navbar.js:171 user_management/static/users/js/login.js:32
+#: static/js/navbar.js:170 user_management/static/users/js/login.js:32
 #: user_management/static/users/js/logout.js:17
 msgid "Register"
 msgstr "Registrera"
@@ -661,7 +684,7 @@ msgstr "Logga in"
 
 #: user_management/static/users/js/login.js:28
 msgid "OAuth2 using 42"
-msgstr ""
+msgstr "OAuth2 med 42"
 
 #: user_management/static/users/js/login.js:32
 #: user_management/static/users/js/logout.js:17
@@ -683,11 +706,11 @@ msgstr "Har du redan ett konto?"
 
 #: user_management/static/users/js/oauth.js:24
 msgid "OAuth Error"
-msgstr ""
+msgstr "OAuth-fel"
 
 #: user_management/static/users/js/oauth.js:27
 msgid "Back to Login"
-msgstr ""
+msgstr "Tillbaka till Logga in"
 
 #: user_management/static/users/js/register.js:12
 msgid "Join Today"
