@@ -3,6 +3,13 @@ import { CreateTournamentGames } from './tournament_api.js';
 import { CreateFinalGame } from './tournament_api.js';
 
 let tournamentSocket = null;
+// Define the waiting GIF (ensure the image is accessible at this location)
+const waitingGif = `<img src="/static/pong/img/waiting.gif" alt="waiting..." class="waiting-gif">`;
+
+// Helper function to check if a string is empty
+function isEmpty(text) {
+  return !text || text.trim() === "";
+}
 
 export function DisplayTournament(params) {
 	let tournamentModel = {}
@@ -142,22 +149,31 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 }
 
 function updateUIWithTournamentData(data, tournamentModel) {
-	tournamentModel.winner1 = data.winner1
-	tournamentModel.winner2 = data.winner2
-	tournamentModel.finalWinner = data.finalWinner
-	console.log("sync")
-	console.log(data)
-	document.getElementById("host").innerHTML = ` ${data.host}`;
-	document.getElementById("player1").innerHTML = ` ${data.player1}`;
-	document.getElementById("player2").innerHTML = ` ${data.player2}`;
-	document.getElementById("player3").innerHTML = ` ${data.player3}`;
-	document.getElementById("winner1").innerText = ` ${data.winner1}`;
-	document.getElementById("winner2").innerText = ` ${data.winner2}`;
-	document.getElementById("finalWinner").innerText = ` ${data.finalWinner}`;
-
-	if (data.playerNum === 4)
-		document.getElementById("header").style.color = "green";
-}
+	tournamentModel.winner1 = data.winner1;
+	tournamentModel.winner2 = data.winner2;
+	tournamentModel.finalWinner = data.finalWinner;
+	console.log("Sync data:", data);
+  
+	// Update UI elements with either the player data or the waiting GIF
+	document.getElementById("host").innerHTML =
+	  !isEmpty(data.host) ? data.host : waitingGif;
+	document.getElementById("player1").innerHTML =
+	  !isEmpty(data.player1) ? data.player1 : waitingGif;
+	document.getElementById("player2").innerHTML =
+	  !isEmpty(data.player2) ? data.player2 : waitingGif;
+	document.getElementById("player3").innerHTML =
+	  !isEmpty(data.player3) ? data.player3 : waitingGif;
+	document.getElementById("winner1").innerHTML =
+	  !isEmpty(data.winner1) ? data.winner1 : waitingGif;
+	document.getElementById("winner2").innerHTML =
+	  !isEmpty(data.winner2) ? data.winner2 : waitingGif;
+	document.getElementById("finalWinner").innerHTML =
+	  !isEmpty(data.finalWinner) ? data.finalWinner : waitingGif;
+  
+	if (data.playerNum === 4) {
+	  document.getElementById("header").style.color = "green";
+	}
+  }
 
 function closeWebSocketNavigateTo(path) {
 	if (tournamentSocket) {

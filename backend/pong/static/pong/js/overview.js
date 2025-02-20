@@ -33,35 +33,36 @@ export function PongOverview() {
 				.map(game => `
 					<button class="ChatButtonBackground navigate-button" data-path="/pong/${game.game_id}">
 						${game.player1} vs ${game.player2} 
-						(${game.tournament_id !== 0 ? `${gettext("pending Tournament game")} #${game.tournament_id}` : 'pending'})
+						(${game.tournament_id !== 0 ? `${gettext("pending Tournament game")} #${game.tournament_id}` : gettext("pending")})
 					</button>
 				`).join('');
 
 			document.getElementById('pong-app-content').innerHTML = `
-				<div class="header-container">
-					<h2>${gettext("Recent Games")}</h2>
-					<button class="navigate-button" data-path="/pong/practice/">${gettext("Practice Game")}</button>
+				<div id="top-menu" class="top-menu">
+					<div class="practice-game-container">
+						<button class="navigate-button" data-path="/pong/practice/">${gettext("Practice Game")}</button>
+					</div>
+					<form id="create-tournament-form">
+						<button class="add_user" type="submit">${gettext("New Tournament")}</button>
+					</form>
+					<form id="create-game-form">
+						<button class="add_user" type="submit">${gettext("Play Game")}</button>
+						<input id="opp_name" type="text" name="opp_name" placeholder="${gettext("Enter opponent Username")} "/>
+					</form>
+					<p class="pong-error-message" id="game-creation-fail"><p>
 				</div>
+				<h2 id="recent-games-container">${gettext("Recent Games")}</h2>
 				<button id="refresh-button">${gettext("Refresh")}</button>
-				<div>${recentGames || gettext("No games have been played yet.")}</div >
+				<div id="recent-games-container">
+					${recentGames || gettext("No games have been played yet.")}
+				</div >
 
-				<h2>${gettext("Pending Games")}</h2>
+				<h2 id="pending-games-header">${gettext("Pending Games")}</h2>
 				<div id="pendingGamesContainer">${pendingGames || gettext("No pending games.")}</div>
 
-				<h2>${gettext("Open Tournaments")}</h2>
+				<h2 id="open-tournaments-header">${gettext("Open Tournaments")}</h2>
 				<div id="pendingTournamentsContainer"></div>
 
-				<h3>${gettext("Play new Game")}</h3>
-				<form id="create-game-form">
-					<input id="opp_name" type="text" name="opp_name" placeholder=${gettext("Enter opponent username")} />
-					<button class="add_user" type="submit">${gettext("Play Game +")}</button>
-				</form>
-				<p id="game-creation-fail" class="pong-error-message"></p>
-
-				<h3>${gettext("Create Tournament")}</h3>
-				<form id="create-tournament-form">
-					<button class="add_user" type="submit">${gettext("Create Tournament")}</button>
-				</form>
 			`;
 
 			document.getElementById("create-game-form").addEventListener("submit", function (event) {
@@ -104,6 +105,9 @@ export function PongOverview() {
 		if (message.message === "game_created") {
 			if (userName == message.player1 || userName == message.player2) {
 				const pendingGamesContainer = document.getElementById('pendingGamesContainer');
+				if (pendingGamesContainer.textContent.trim() === gettext("No pending games.")) {
+					pendingGamesContainer.innerHTML = "";
+				}
 				if (!document.querySelector(`[data-path="/pong/${message.game_id}"]`)) {
 					const newGameHTML = `
 						<button class="ChatButtonBackground navigate-button" data-path="/pong/${message.game_id}">

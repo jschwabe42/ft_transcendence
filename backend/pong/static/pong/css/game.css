@@ -141,4 +141,5 @@ button.ready:active {
     font-weight: bold;
     margin-top: 10px;
     animation: fadeIn 0.3s ease-in-out;
+    align-items: center;
 }
