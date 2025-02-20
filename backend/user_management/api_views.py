@@ -1,14 +1,14 @@
-from urllib.parse import urlencode
 from datetime import timedelta
+from urllib.parse import urlencode
 
 import requests
 from django.contrib.auth import login
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
+from django.utils.translation import gettext as _
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.utils.translation import gettext as _
 
 from user_management.models import CustomUser
 

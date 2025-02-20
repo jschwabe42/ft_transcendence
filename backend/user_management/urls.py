@@ -11,7 +11,6 @@ from .friends_api import (
 	requests,
 	send_request,
 )
-
 from .two_factor import (
 	confirm_2fa,
 	disable_2fa,

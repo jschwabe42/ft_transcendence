@@ -1,8 +1,7 @@
 import json
 import re
-from datetime import timedelta
 import uuid
-import pyotp
+from datetime import timedelta
 
 from django.contrib.auth import (
 	authenticate,
@@ -11,8 +10,8 @@ from django.contrib.auth import (
 	logout,
 	update_session_auth_hash,
 )
-from django.core.exceptions import ValidationError
 from django.core.cache import cache
+from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db.models import F
 from django.http import JsonResponse
@@ -21,6 +20,7 @@ from django.shortcuts import render
 from django.utils.translation import gettext as _
 from pong.models import PongGame
 from pong.utils import win_to_loss_ratio
+from pyotp import TOTP
 from rest_framework_simplejwt.tokens import RefreshToken
 from transcendence.decorators import login_required_redirect
 
@@ -334,7 +334,7 @@ def change_password(request):
 			return JsonResponse({'success': False, 'message': _('Invalid or expired request')})
 
 		# Verify 2FA code
-		totp = pyotp.TOTP(user.two_factor_secret)
+		totp = TOTP(user.two_factor_secret)
 		if not totp.verify(two_fa_code):
 			return JsonResponse({'success': False, 'message': _('Invalid 2FA code')})
 

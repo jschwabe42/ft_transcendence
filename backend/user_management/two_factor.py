@@ -3,12 +3,12 @@ import base64
 import json
 from io import BytesIO
 
-import pyotp
-import qrcode
 from django.conf import settings
-from django.contrib.auth import login, get_user_model
+from django.contrib.auth import login
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
+from pyotp import TOTP, random_base32
+from qrcode import make as qrcode_make
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
@@ -29,19 +29,19 @@ def enable_2fa(request):
 
 	# Generate new secret if none exists
 	if not user.two_factor_secret:
-		secret = pyotp.random_base32()
+		secret = random_base32()
 		user.two_factor_secret = secret
 		user.save()
 
 	# Generate QR code URI
-	totp = pyotp.TOTP(user.two_factor_secret)
+	totp = TOTP(user.two_factor_secret)
 	uri = totp.provisioning_uri(
 		name=user.email,
 		issuer_name=settings.TOTP_ISSUER_NAME,
 	)
 
 	# Generate QR code image
-	qr = qrcode.make(uri)
+	qr = qrcode_make(uri)
 	buffer = BytesIO()
 	qr.save(buffer)
 	qr_base64 = base64.b64encode(buffer.getvalue()).decode()
@@ -76,7 +76,7 @@ def confirm_2fa(request):
 		return JsonResponse({'success': False, 'message': '2FA not initialized'}, status=400)
 
 	# Verify TOTP code
-	totp = pyotp.TOTP(user.two_factor_secret)
+	totp = TOTP(user.two_factor_secret)
 	if not totp.verify(code):
 		return JsonResponse({'success': False, 'message': 'Invalid 2FA code'}, status=400)
 
@@ -106,7 +106,7 @@ def disable_2fa(request):
 		)
 
 	# Verify 2FA code
-	totp = pyotp.TOTP(user.two_factor_secret)
+	totp = TOTP(user.two_factor_secret)
 	if not totp.verify(code):
 		return JsonResponse({'success': False, 'message': 'Invalid 2FA code'}, status=400)
 
@@ -141,12 +141,11 @@ def verify_2fa(request):
 
 		username = data.get('username')
 
-		User = get_user_model()
 		# Get user from database
-		user = User.objects.get(username=username)
+		user = CustomUser.objects.get(username=username)
 
 		# Verify 2FA code
-		totp = pyotp.TOTP(user.two_factor_secret)
+		totp = TOTP(user.two_factor_secret)
 		if not totp.verify(code):
 			return JsonResponse({'success': False, 'message': 'Invalid 2FA code'}, status=400)
 

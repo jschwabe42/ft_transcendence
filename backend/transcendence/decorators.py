@@ -1,9 +1,10 @@
 from functools import wraps
+
+from django.conf import settings
 from django.http import JsonResponse
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.conf import settings
 
 
 def login_required_redirect(view_func):
