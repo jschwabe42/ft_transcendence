@@ -26,12 +26,9 @@ SECRET_KEY = 'django-insecure-_0@qbs8*u@@s(#=4@e8yol-y4spd)%ymko!-ja^#fs=jofyf!)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-# Cookie settings
-SESSION_COOKIE_SECURE = False  # Allow session cookies over HTTP
-CSRF_COOKIE_SECURE = False  # Allow CSRF cookies over HTTP
 
 # 2FA NEEDED
-TOTP_ISSUER_NAME = 'FT_TRANSENDENCE'  # App name for QR code
+TOTP_ISSUER_NAME = 'FT_TRANSENDENCE'
 
 
 ALLOWED_HOSTS = []
@@ -72,7 +69,6 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	# 'user_management.middleware.JWTAuthMiddleware',
 ]
 
 
@@ -246,13 +242,13 @@ LOCALE_PATHS = [
 ]
 
 # Setting for  REST Framework
-# REST_FRAMEWORK = {
-# 	'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
-# 	'DEFAULT_AUTHENTICATION_CLASSES': (
-# 		'rest_framework_simplejwt.authentication.JWTAuthentication',
-# 		'rest_framework.authentication.SessionAuthentication',
-# 	),
-# }
+REST_FRAMEWORK = {
+	'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+	'DEFAULT_AUTHENTICATION_CLASSES': (
+		'rest_framework_simplejwt.authentication.JWTAuthentication',
+		'rest_framework.authentication.SessionAuthentication',
+	),
+}
 
 # Setting for JWT
 SIMPLE_JWT = {

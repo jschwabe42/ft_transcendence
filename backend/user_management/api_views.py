@@ -18,6 +18,9 @@ OAUTH_CALLBACK = 'https://localhost:8000/users/oauth-callback/'
 class OauthView(APIView):
 	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
 
+	permission_classes = [AllowAny]
+	authentication_classes = []
+
 	def post(self, request):
 		"""provide user with generated link for login on API endpoint: `/users/api/oauth/`"""
 		params = {
@@ -33,6 +36,7 @@ class OauthView(APIView):
 
 class OauthCallBackView(APIView):
 	permission_classes = [AllowAny]
+	authentication_classes = []
 	from transcendence.settings import CLIENT_ID, REMOTE_OAUTH_SECRET, SECRET_STATE
 
 	def __get_or_create_oauth(jsonresponse):

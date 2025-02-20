@@ -350,6 +350,7 @@ function setupProfileEditing(data) {
 
 	if (data.is_oauth) {
 		updateBtn.onclick = () => updateProfile(data, null, true);
+
 	} else {
 		updateBtn.onclick = togglePasswordInput;
 		submitBtn.addEventListener('click', () => {
