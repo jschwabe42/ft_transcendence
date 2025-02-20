@@ -2,9 +2,11 @@
 
 export function PongPractice() {
 	const contentElement = document.getElementById('pong-app-content');
+	contentElement.classList.add("active");
 
 	if (contentElement) {
 		contentElement.innerHTML = `
+			<div class="pong-container">
 			<main role="main" class="container">
 				<div class="ready-bar">
 					<div>
@@ -31,6 +33,7 @@ export function PongPractice() {
 					</div>
 				</div>
 			</main>
+		</div>
 		`;
 		RenderPracticeGame();
 	}

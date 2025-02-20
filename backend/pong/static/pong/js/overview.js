@@ -37,7 +37,9 @@ export function PongOverview() {
 					</button>
 				`).join('');
 
+			document.getElementById('pong-app-content').classList.add('active');
 			document.getElementById('pong-app-content').innerHTML = `
+			<div class="pong-container">
 				<div id="top-menu" class="top-menu">
 					<div class="practice-game-container">
 						<button class="navigate-button" data-path="/pong/practice/">${gettext("Practice Game")}</button>
@@ -62,7 +64,7 @@ export function PongOverview() {
 
 				<h2 id="open-tournaments-header">${gettext("Open Tournaments")}</h2>
 				<div id="pendingTournamentsContainer"></div>
-
+			</div>
 			`;
 
 			document.getElementById("create-game-form").addEventListener("submit", function (event) {
