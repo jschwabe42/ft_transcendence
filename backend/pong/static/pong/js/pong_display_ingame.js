@@ -319,7 +319,8 @@ function renderGameData() {
 	document.getElementById("ws").addEventListener("click", async function (event) {
 		event.preventDefault();
 		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
+		let username = document.querySelector('meta[name="username-token"]').content;
+		console.log(username)
 		try {
 			const response = await fetch('/pong/api/get-gameControl/', {
 				method: 'POST',
@@ -329,6 +330,7 @@ function renderGameData() {
 				},
 				body: JSON.stringify({
 					'game_id': gameModel.game_id,
+					'username': username,
 					'control1': 'w_s',
 					'control2': 'w_s',
 				}),
@@ -345,7 +347,7 @@ function renderGameData() {
 	document.getElementById("up_down").addEventListener("click", async function (event) {
 		event.preventDefault();
 		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
+		let username = document.querySelector('meta[name="username-token"]').content;
 		try {
 			const response = await fetch('/pong/api/get-gameControl/', {
 				method: 'POST',
@@ -355,6 +357,7 @@ function renderGameData() {
 				},
 				body: JSON.stringify({
 					'game_id': gameModel.game_id,
+					'username': username,
 					'control1': 'up down',
 					'control2': 'up down',
 				}),

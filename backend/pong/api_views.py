@@ -1,3 +1,4 @@
+import sys
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -116,16 +117,11 @@ class ScoreBoardView(APIView):
 
 
 class ControlKeySetting(APIView):
-	# permission_classes = [IsAuthenticated]
+	permission_classes = [IsAuthenticated]
 
 	def post(self, request):
 		game_id = request.data.get('game_id')
 		username = request.data.get('username')
-
-		if username:
-			user = User.objects.filter(username=username)
-		else:
-			user = User.objects.filter(username=request.user.username)
 
 		control1 = request.data.get('control1')
 		control2 = request.data.get('control2')
@@ -140,10 +136,10 @@ class ControlKeySetting(APIView):
 			game = PongGame.objects.get(id=game_id)
 		except PongGame.DoesNotExist:
 			return Response({'error': _('Game not found.')}, status=HTTP_404_NOT_FOUND)
-
-		if user == game.player1:
+	
+		if username == game.player1.username:
 			game.player1_control_settings = control1
-		elif user == game.player2:
+		elif username == game.player2.username:
 			game.player2_control_settings = control2
 		else:
 			return Response(
@@ -153,7 +149,7 @@ class ControlKeySetting(APIView):
 		game.save()
 
 		return Response(
-			{'message': f'{_("Control settings successfully updated for user")} {user}.'},
+			{'message': f'{_("Control settings successfully updated for user")} {username}.'},
 			status=HTTP_200_OK,
 		)
 
