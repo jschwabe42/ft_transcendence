@@ -4,6 +4,12 @@ export function CreateGameForm(event, socket) {
 	const oppName = document.getElementById("opp_name").value.trim();
 	const userName = document.querySelector('meta[name="username-token"]').content;
 
+	if (userName == oppName) {
+		document.getElementById('game-creation-fail').innerText = "Error, you can not play against yourself!!";
+		return ;
+	}
+	document.getElementById('game-creation-fail').innerText = "";
+
 	if (oppName) {
 		console.log("Opponent Name:", oppName, "User Name:", userName);
 
@@ -28,7 +34,7 @@ export function CreateGameForm(event, socket) {
 					socket.send(JSON.stringify(all_game_data));
 					console.log("sended Game info")
 				} else {
-					console.error("Createing game failed");
+					document.getElementById('game-creation-fail').innerText = gettext("Error, enter a valid Username!!");
 				}
 			})
 			.catch(error => {
@@ -36,6 +42,6 @@ export function CreateGameForm(event, socket) {
 			});
 
 	} else {
-		alert("Please Enter Opponent name");
+		document.getElementById('game-creation-fail').innerText = gettext("Error, enter a Username!!");
 	}
 }

@@ -2,6 +2,7 @@ import router from '/static/js/router.js';
 import { CreateTournamentGames } from './tournament_api.js';
 import { CreateFinalGame } from './tournament_api.js';
 
+let tournamentSocket = null;
 // Define the waiting GIF (ensure the image is accessible at this location)
 const waitingGif = `<img src="/static/pong/img/waiting.gif" alt="waiting..." class="waiting-gif">`;
 
@@ -16,7 +17,7 @@ export function DisplayTournament(params) {
 	console.log(params.tournament_id)
 	console.log("Tournament: ID", params.tournament_id);
 	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-	const tournamentSocket = new WebSocket(protocol + window.location.host + '/tournament/' + params.tournament_id + '/');
+	tournamentSocket = new WebSocket(protocol + window.location.host + '/tournament/' + params.tournament_id + '/');
 
 	fetch(`/pong/api/tournament/?tournament_id=${params.tournament_id}`)
 		.then(response => response.json())
@@ -85,7 +86,7 @@ export function DisplayTournament(params) {
 		if (button && button.dataset.path) {
 			const path = button.dataset.path;
 			console.log("Navigating to:", path);
-			router.navigateTo(path);
+			closeWebSocketNavigateTo(path);
 		}
 	});
 }
@@ -122,18 +123,18 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 			// redirect Users to Games
 			if (user == gameDetails[0].player1 || user == gameDetails[0].player2) {
 				let path = '/pong/' + gameDetails[0].gameid
-				router.navigateTo(path)
+				closeWebSocketNavigateTo(path)
 			}
 			if (user == gameDetails[1].player1 || user == gameDetails[1].player2) {
 				let path = '/pong/' + gameDetails[1].gameid
-				router.navigateTo(path)
+				closeWebSocketNavigateTo(path)
 			}
 		}
 		if (data.use == 'createFinal') {
 			console.log(data.player1, data.player2)
 			if (user == data.player1 || user == data.player2) {
 				let path = '/pong/' + data.game_id
-				router.navigateTo(path)
+				closeWebSocketNavigateTo(path)
 			}
 		}
 	};
@@ -173,3 +174,15 @@ function updateUIWithTournamentData(data, tournamentModel) {
 	  document.getElementById("header").style.color = "green";
 	}
   }
+
+function closeWebSocketNavigateTo(path) {
+	if (tournamentSocket) {
+		console.log("close socket");
+		tournamentSocket.close();
+		tournamentSocket = null;
+
+		setTimeout(function() {
+			router.navigateTo(path);
+		}, 200);
+	}
+}

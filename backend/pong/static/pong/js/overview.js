@@ -2,15 +2,16 @@ import router from '/static/js/router.js';
 import { CreateGameForm } from './pong_api.js';
 import { CreateTournament } from './tournament_api.js';
 
+let socket = null;
+
 export function PongOverview() {
 	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-	const socket = new WebSocket(protocol + window.location.host + '/ws/pong/');
+	socket = new WebSocket(protocol + window.location.host + '/ws/pong/');
 	const userName = document.querySelector('meta[name="username-token"]').content;
 
 	// open socket
 	socket.onopen = () => {
-		console.log("WebSocket-Verbindung hergestellt.");
-		socket.send(JSON.stringify({ message: "Hallo, Server!" }));
+		console.log("WebSocket Connected");
 	};
 
 	console.log("WebSocket-basierte Base Page");
@@ -32,7 +33,7 @@ export function PongOverview() {
 				.map(game => `
 					<button class="ChatButtonBackground navigate-button" data-path="/pong/${game.game_id}">
 						${game.player1} vs ${game.player2} 
-						(${game.tournament_id !== 0 ? `${gettext("pending Tournament game")} #${game.tournament_id}` : 'pending'})
+						(${game.tournament_id !== 0 ? `${gettext("pending Tournament game")} #${game.tournament_id}` : gettext("pending")})
 					</button>
 				`).join('');
 
@@ -46,16 +47,17 @@ export function PongOverview() {
 					</form>
 					<form id="create-game-form">
 						<button class="add_user" type="submit">${gettext("Play Game")}</button>
-						<input id="opp_name" type="text" name="opp_name" placeholder="${gettext("Enter opponent's Username")} "/>
+						<input id="opp_name" type="text" name="opp_name" placeholder="${gettext("Enter opponent Username")} "/>
 					</form>
+					<p class="pong-error-message" id="game-creation-fail"><p>
 				</div>
-				<h2 id="recent-games-container">Recent Games</h2>
+				<h2 id="recent-games-container">${gettext("Recent Games")}</h2>
 				<button id="refresh-button">${gettext("Refresh")}</button>
 				<div id="recent-games-container">
 					${recentGames || gettext("No games have been played yet.")}
 				</div >
 
-				<h2 id="pending-games-header">Pending Games</h2>
+				<h2 id="pending-games-header">${gettext("Pending Games")}</h2>
 				<div id="pendingGamesContainer">${pendingGames || gettext("No pending games.")}</div>
 
 				<h2 id="open-tournaments-header">${gettext("Open Tournaments")}</h2>
@@ -84,13 +86,13 @@ export function PongOverview() {
 			const openTournaments = tournaments
 				.filter(tournament => tournament.openTournament == true || tournament.host === userName)
 				.map(tournament => `
-			<button class= "ChatButtonBackground navigate-button" data-path="/pong/tournament/${tournament.tournament_id}">
-				${gettext("Join Open Tournament")} #${tournament.tournament_id}
-			</button >
-			`).join('');
+					<button class="ChatButtonBackground navigate-button" data-path="/pong/tournament/${tournament.tournament_id}">
+						${gettext("Join Open Tournament")} #${tournament.tournament_id}
+					</button>
+				`).join('');
 
 			document.getElementById('pendingTournamentsContainer').innerHTML = `
-			<div> ${openTournaments || gettext("No open tournaments.")}</div>
+					<div> ${openTournaments || gettext("No open tournaments.")}</div>
 				`;
 		})
 		.catch(error => console.error("Fehler beim Laden der Daten:", error));
@@ -102,36 +104,39 @@ export function PongOverview() {
 		const message = JSON.parse(event.data);
 		if (message.message === "game_created") {
 			if (userName == message.player1 || userName == message.player2) {
-				const newGameHTML = `
-				<button class="ChatButtonBackground navigate-button" data-path="/pong/${message.game_id}">
-					${message.player1} vs ${message.player2} (${gettext("pending")})
-				</button >
-	`;
 				const pendingGamesContainer = document.getElementById('pendingGamesContainer');
-				pendingGamesContainer.insertAdjacentHTML('afterbegin', newGameHTML);
+				if (!document.querySelector(`[data-path="/pong/${message.game_id}"]`)) {
+					const newGameHTML = `
+						<button class="ChatButtonBackground navigate-button" data-path="/pong/${message.game_id}">
+							${message.player1} vs ${message.player2} (${gettext("pending")})
+						</button>
+					`;
+					pendingGamesContainer.insertAdjacentHTML('afterbegin', newGameHTML);
+				}
 			}
 		}
 		if (message.message === "create_tournament") {
-			const newGameHTML = `
-			<button class="ChatButtonBackground navigate-button" data-path="/pong/tournament/${message.tournament_id}">
-				${gettext("Join Open Tournament")} id = ${message.tournament_id}
-			</button>
-			`;
-			const pendingGamesContainer = document.getElementById('pendingTournamentsContainer');
-			pendingGamesContainer.insertAdjacentHTML('afterbegin', newGameHTML);
-			let path = "/pong/tournament/" + message.tournament_id;
-
-			if (message.host == userName)
-				router.navigateTo(path)
+			const pendingTournamentsContainer = document.getElementById('pendingTournamentsContainer');
+		
+			if (!document.querySelector(`[data-path="/pong/tournament/${message.tournament_id}"]`)) {
+				const newTournamentHTML = `
+					<button class="ChatButtonBackground navigate-button" data-path="/pong/tournament/${message.tournament_id}">
+						${gettext("Join Open Tournament")} id = ${message.tournament_id}
+					</button>
+				`;
+				pendingTournamentsContainer.insertAdjacentHTML('afterbegin', newTournamentHTML);
+			}
+		
+			if (message.host == userName) {
+				let path = "/pong/tournament/" + message.tournament_id;
+				closeWebSocketNavigateTo(path);
+			}
 		}
+		
 	};
 
 	socket.onclose = () => {
-		console.log("WebSocket-Verbindung geschlossen.");
-	};
-
-	socket.onerror = (error) => {
-		console.error("WebSocket-Fehler:", error);
+		console.log("WebSocket disconnected");
 	};
 
 	document.getElementById('pong-app-content').addEventListener('click', (event) => {
@@ -139,7 +144,19 @@ export function PongOverview() {
 		if (button && button.dataset.path) {
 			const path = button.dataset.path;
 			console.log("Navigating to:", path);
-			router.navigateTo(path);
+			closeWebSocketNavigateTo(path);
 		}
 	});
+}
+
+function closeWebSocketNavigateTo(path) {
+	if (socket) {
+		console.log("close socket");
+		socket.close();
+		socket = null;
+
+		setTimeout(function() {
+			router.navigateTo(path);
+		}, 200);
+	}
 }

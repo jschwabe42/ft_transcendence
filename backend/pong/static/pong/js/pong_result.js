@@ -1,3 +1,5 @@
+import router from '/static/js/router.js';
+
 export function PongResult(params) {
 	console.log("Game ID:", params.game_id);
 
@@ -27,20 +29,22 @@ export function PongResult(params) {
 			<div class="games-container" style="display: flex; justify-content: center;">
 				<div class="player-one" style="display: flex; justify-content: center; padding-right: 100px;">
 					<h3>
-						<a href="/users/user/${model.player1}">
-							${model.player1}
-						</a>
+						<p class="index-base-link" id="pong-result-player-one">${model.player1}</p>
 					</h3>
-				</div>
-				<div class="player-two" style="display: flex; justify-content: center; padding-left: 100px;">
+						</div>
+						<div class="player-two" style="display: flex; justify-content: center; padding-left: 100px;">
 					<h3>
-						<a href="/users/user/${model.player2}">
-							${model.player2}
-						</a>
+						<p class="index-base-link" id="pong-result-player-two">${model.player2}</p>
 					</h3>
 				</div>
 			</div>
 		`;
+			document.getElementById('pong-result-player-one').addEventListener('click', function () {
+				router.navigateTo(`/dashboard/${model.player1}/`);
+			});
+			document.getElementById('pong-result-player-two').addEventListener('click', function () {
+				router.navigateTo(`/dashboard/${model.player2}/`);
+			});
 		})
 		.catch(error => {
 			console.error("Fehler beim Laden der Daten:", error);

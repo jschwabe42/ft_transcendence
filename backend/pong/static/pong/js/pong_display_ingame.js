@@ -1,14 +1,13 @@
 import router from '/static/js/router.js';
 
 let gameModel = {};
+let gameSocket = null;
 
 export function DisplayPong(params) {
-	console.log("Game ID:", params.game_id);
 
 	fetch(`/pong/api/ingame/?game_id=${params.game_id}`)
 		.then(response => response.json())
 		.then(model => {
-			console.log(model);
 			gameModel = model;
 			document.getElementById('pong-app-content').innerHTML = `
 				<main role="main" class="container">
@@ -52,7 +51,7 @@ export function DisplayPong(params) {
 							<p id="player2">${model.score2}</p>
 						</div>
 					</div>
-					<button id="winner" class="navigate-button" style="display: none;" 
+					<button id="winner" class="navigate-button"" 
 						data-path="${model.tournament_id === 0 ? '/pong/' : '/pong/tournament/' + model.tournament_id}">
 						${gettext("back to menu")}
 					</button>
@@ -61,14 +60,12 @@ export function DisplayPong(params) {
 			renderGameData();
 		})
 		.catch(error => {
-			console.error("Fehler beim Laden der Daten:", error);
 		});
 	document.getElementById('pong-app-content').addEventListener('click', (event) => {
 		const button = event.target.closest('.navigate-button');
 		if (button && button.dataset.path) {
 			const path = button.dataset.path;
-			console.log("Navigating to:", path);
-			router.navigateTo(path);
+			closeWebSocketNavigateTo(path);
 		}
 	});
 }
@@ -82,20 +79,16 @@ function renderGameData() {
 	const game_id = gameModel.game_id;
 
 	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-	const gameSocket = new WebSocket(protocol + window.location.host + '/pong/' + game_id + '/');
+	gameSocket = new WebSocket(protocol + window.location.host + '/pong/' + game_id + '/');
 
 	gameSocket.onclose = function (e) {
-		console.error('WebSocket geschlossen', e);
 	};
 
 	gameSocket.onopen = function (e) {
-		console.log('WebSocket opend');
 	};
 
 	const readyButton = document.querySelector("#user_ready");
 	readyButton.addEventListener("click", function () {
-		console.log("Use: Ready Button got Pressed");
-		console.log("User: ", user);
 
 		gameSocket.send(JSON.stringify({
 			'use': 'ready_button',
@@ -173,7 +166,6 @@ function renderGameData() {
 	}
 
 	async function sendGameScores(score1, score2, game_id) {
-		console.log("Access API Scores");
 		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 		try {
 			const response = await fetch('/pong/api/get-score/', {
@@ -190,13 +182,10 @@ function renderGameData() {
 			});
 			if (response.ok) {
 				const data = await response.json();
-				console.log('Response data:', data);
 			} else {
 				const errorText = await response.text();
-				console.error('Error message:', errorText);
 			}
 		} catch (error) {
-			console.error('Request failed:', error);
 		}
 	}
 
@@ -219,12 +208,10 @@ function renderGameData() {
 			if (state.winner.player1) {
 				document.getElementById("player1").style.backgroundColor = "green";
 				document.getElementById("winner").style.display = "block";
-				console.log("Player1 Won");
 			}
 		if (state.winner.player2) {
 			document.getElementById("winner").style.display = "block";
 			document.getElementById("player2").style.backgroundColor = "green";
-			console.log("Player2 Won");
 		}
 
 
@@ -330,10 +317,10 @@ function renderGameData() {
 	});
 
 	document.getElementById("ws").addEventListener("click", async function (event) {
-		console.log("Access API");
 		event.preventDefault();
 		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
+		let username = document.querySelector('meta[name="username-token"]').content;
+		console.log(username)
 		try {
 			const response = await fetch('/pong/api/get-gameControl/', {
 				method: 'POST',
@@ -343,27 +330,24 @@ function renderGameData() {
 				},
 				body: JSON.stringify({
 					'game_id': gameModel.game_id,
+					'username': username,
 					'control1': 'w_s',
 					'control2': 'w_s',
 				}),
 			});
 			if (response.ok) {
 				const data = await response.json();
-				console.log('Response data:', data);
 			} else {
 				const errorText = await response.text();
-				console.error('Error message:', errorText);
 			}
 		} catch (error) {
-			console.error('Request failed:', error);
 		}
 	});
 
 	document.getElementById("up_down").addEventListener("click", async function (event) {
-		console.log("Access API");
 		event.preventDefault();
 		let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
+		let username = document.querySelector('meta[name="username-token"]').content;
 		try {
 			const response = await fetch('/pong/api/get-gameControl/', {
 				method: 'POST',
@@ -373,19 +357,29 @@ function renderGameData() {
 				},
 				body: JSON.stringify({
 					'game_id': gameModel.game_id,
+					'username': username,
 					'control1': 'up down',
 					'control2': 'up down',
 				}),
 			});
 			if (response.ok) {
 				const data = await response.json();
-				console.log('Response data:', data);
 			} else {
 				const errorText = await response.text();
-				console.error('Error message:', errorText);
 			}
 		} catch (error) {
-			console.error('Request failed:', error);
 		}
 	});
+}
+
+function closeWebSocketNavigateTo(path) {
+	if (gameSocket) {
+		console.log("close socket");
+		gameSocket.close();
+		gameSocket = null;
+
+		setTimeout(function() {
+			router.navigateTo(path);
+		}, 200);
+	}
 }

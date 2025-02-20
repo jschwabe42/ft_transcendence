@@ -29,7 +29,8 @@ class CreateGameView(APIView):
 		tournament_id = request.data.get('tournament', 0)
 		if not opponent_username:
 			return Response(
-				{'error': _('Opponent username is required.')}, status=HTTP_400_BAD_REQUEST
+				{'error': _('Opponent username is required.')},
+				status=HTTP_400_BAD_REQUEST,
 			)
 
 		if opponent_username == request.user.username and tournament_id == 0:
@@ -126,7 +127,7 @@ class ControlKeySetting(APIView):
 		# 	game_id = game_id.strip()
 		# if username:
 		# 	username = username.strip()
-		
+
 		# printf(game_id)
 		# printf(username)
 
@@ -149,19 +150,20 @@ class ControlKeySetting(APIView):
 		except PongGame.DoesNotExist:
 			return Response({'error': _('Game not found.')}, status=HTTP_404_NOT_FOUND)
 
-		if user == game.player1:
+		if username == game.player1.username:
 			game.player1_control_settings = control1
-		elif user == game.player2:
+		elif username == game.player2.username:
 			game.player2_control_settings = control2
 		else:
 			return Response(
-				{'error': _('You are not a player in this game.')}, status=HTTP_403_FORBIDDEN
+				{'error': _('You are not a player in this game.')},
+				status=HTTP_403_FORBIDDEN,
 			)
 
 		game.save()
 
 		return Response(
-			{'message': f'{_("Control settings successfully updated for user")} {user}.'},
+			{'message': f'{_("Control settings successfully updated for user")} {username}.'},
 			status=HTTP_200_OK,
 		)
 
@@ -174,7 +176,6 @@ class CreateTournament(APIView):
 	def post(self, request):
 		username = request.data.get('username')
 
-
 		try:
 			User.objects.get(username=username)
 		except User.DoesNotExist:
@@ -183,6 +184,9 @@ class CreateTournament(APIView):
 		tournament = Tournament.objects.create(host=username)
 		tournament.save()
 		return Response(
-			{'tournament_id': tournament.id, 'message': _('Tournament created successfully.')},
+			{
+				'tournament_id': tournament.id,
+				'message': _('Tournament created successfully.'),
+			},
 			status=HTTP_201_CREATED,
 		)

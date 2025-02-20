@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-15 15:16+0100\n"
+"POT-Creation-Date: 2025-02-19 18:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,101 +78,101 @@ msgstr "Turneringen har skapats framgångsrikt."
 msgid "Games created successfully"
 msgstr "Spel har skapats framgångsrikt."
 
-#: templates/index.html:56 templates/index.html:65
+#: templates/index.html:42 templates/index.html:51
 msgid "Transcendence"
 msgstr "Transcendence"
 
-#: templates/index.html:72
+#: templates/index.html:58
 msgid "Home"
 msgstr "Hem"
 
-#: templates/index.html:73
+#: templates/index.html:59
 msgid "Chat"
 msgstr "Chatt"
 
-#: templates/index.html:75
+#: templates/index.html:61
 msgid "Quiz"
 msgstr "Frågesport"
 
-#: templates/index.html:76
+#: templates/index.html:62
 msgid "Pong"
 msgstr "Pong"
 
-#: templates/index.html:77
+#: templates/index.html:63
 msgid "Dashboard"
 msgstr "Översikt"
 
-#: transcendence/settings.py:220
+#: transcendence/settings.py:221
 msgid "English"
 msgstr "Engelska"
 
-#: transcendence/settings.py:221
+#: transcendence/settings.py:222
 msgid "Swedish"
 msgstr "Svenska"
 
-#: transcendence/settings.py:222
+#: transcendence/settings.py:223
 msgid "German"
 msgstr "Tyska"
 
-#: user_management/friends.py:29
+#: user_management/friends.py:51
 msgid "You cannot befriend yourself!"
 msgstr ""
 
-#: user_management/friends.py:34
+#: user_management/friends.py:56
 msgid "Friend request pending approval."
 msgstr ""
 
-#: user_management/friends.py:36
+#: user_management/friends.py:58
 msgid "You are already friends!"
 msgstr ""
 
-#: user_management/friends.py:50
+#: user_management/friends.py:72
 msgid "you did not send the friend request, you can only deny it!"
 msgstr ""
 
-#: user_management/friends.py:60
+#: user_management/friends.py:82
 msgid "There is no request to deny"
 msgstr ""
 
-#: user_management/friends.py:64
+#: user_management/friends.py:86
 msgid "you sent the friend request, you can only cancel it!"
 msgstr ""
 
-#: user_management/friends.py:76
+#: user_management/friends.py:98
 msgid "the request you are trying to accept does not exist"
 msgstr ""
 
-#: user_management/friends.py:91
+#: user_management/friends.py:113
 msgid "The target user does not exist!"
 msgstr ""
 
-#: user_management/friends.py:98
+#: user_management/friends.py:120
 msgid "the friendship you are trying to delete does not exist"
 msgstr ""
 
-#: user_management/friends_api.py:65
+#: user_management/friends_api.py:71
 #, fuzzy
 #| msgid "Profile updated successfully."
 msgid "Friend request sent successfully."
 msgstr "Profilen uppdaterades framgångsrikt."
 
-#: user_management/friends_api.py:77
+#: user_management/friends_api.py:83
 msgid "Friend request cancelled."
 msgstr ""
 
-#: user_management/friends_api.py:89
+#: user_management/friends_api.py:95
 #, fuzzy
 #| msgid "Invalid request method."
 msgid "Friend request accepted."
 msgstr "Ogiltig metod för begäran."
 
-#: user_management/friends_api.py:101
+#: user_management/friends_api.py:107
 #, fuzzy
 #| msgid "Invalid request method."
 msgid "Friend request denied."
 msgstr "Ogiltig metod för begäran."
 
-#: user_management/friends_api.py:113
+#: user_management/friends_api.py:119
 msgid "Friendship ended."
 msgstr ""
 
@@ -183,9 +183,9 @@ msgid "User blocked successfully."
 msgstr "Användaren blockerades framgångsrikt."
 
 #: user_management/views.py:40 user_management/views.py:54
-#: user_management/views.py:97 user_management/views.py:119
-#: user_management/views.py:134 user_management/views.py:154
-#: user_management/views.py:184 user_management/views.py:256
+#: user_management/views.py:97 user_management/views.py:124
+#: user_management/views.py:139 user_management/views.py:163
+#: user_management/views.py:195 user_management/views.py:267
 msgid "Invalid request method."
 msgstr "Ogiltig metod för begäran."
 
@@ -203,35 +203,35 @@ msgstr "Lösenorden stämmer inte överens."
 msgid "Account created successfully."
 msgstr "Konto har skapats framgångsrikt."
 
-#: user_management/views.py:114
+#: user_management/views.py:116
 msgid "Login successful."
 msgstr "Inloggningen lyckades."
 
-#: user_management/views.py:117
+#: user_management/views.py:122
 msgid "Invalid username or password!"
 msgstr "Ogiltigt användarnamn eller lösenord!"
 
-#: user_management/views.py:131
+#: user_management/views.py:136
 msgid "Logout successful."
 msgstr "Utloggningen lyckades."
 
-#: user_management/views.py:175
+#: user_management/views.py:186
 msgid "Invalid password."
 msgstr "Ogiltigt lösenord."
 
-#: user_management/views.py:183
+#: user_management/views.py:194
 msgid "Profile updated successfully."
 msgstr "Profilen uppdaterades framgångsrikt."
 
-#: user_management/views.py:193
+#: user_management/views.py:204
 msgid "Invalid email address."
 msgstr "Ogiltig e-postadress."
 
-#: user_management/views.py:201 user_management/views.py:210
+#: user_management/views.py:212 user_management/views.py:221
 msgid "An Account with this email already exists."
 msgstr "Ett konto med den här e-postadressen finns redan."
 
-#: user_management/views.py:220
+#: user_management/views.py:231
 msgid ""
 "Invalid username. Username must contain only letters, numbers, and "
 "underscores, and cannot be empty or contain only whitespace."
@@ -240,14 +240,14 @@ msgstr ""
 "siffror och understreck och får inte vara tomt eller innehålla enbart "
 "blanksteg."
 
-#: user_management/views.py:227 user_management/views.py:232
+#: user_management/views.py:238 user_management/views.py:243
 msgid "Username already taken."
 msgstr "Användarnamn redan taget."
 
-#: user_management/views.py:250
+#: user_management/views.py:261
 msgid "Invalid current password."
 msgstr "Ogiltigt aktuellt lösenord."
 
-#: user_management/views.py:255
+#: user_management/views.py:266
 msgid "Password changed successfully."
 msgstr "Lösenordet har ändrats framgångsrikt."
