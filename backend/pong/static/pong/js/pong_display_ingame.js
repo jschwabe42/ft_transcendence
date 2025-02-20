@@ -1,6 +1,7 @@
 import router from '/static/js/router.js';
 
 let gameModel = {};
+let gameSocket = null;
 
 export function DisplayPong(params) {
 
@@ -64,7 +65,7 @@ export function DisplayPong(params) {
 		const button = event.target.closest('.navigate-button');
 		if (button && button.dataset.path) {
 			const path = button.dataset.path;
-			router.navigateTo(path);
+			closeWebSocketNavigateTo(path);
 		}
 	});
 }
@@ -78,7 +79,7 @@ function renderGameData() {
 	const game_id = gameModel.game_id;
 
 	const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-	const gameSocket = new WebSocket(protocol + window.location.host + '/pong/' + game_id + '/');
+	gameSocket = new WebSocket(protocol + window.location.host + '/pong/' + game_id + '/');
 
 	gameSocket.onclose = function (e) {
 	};
@@ -366,4 +367,16 @@ function renderGameData() {
 		} catch (error) {
 		}
 	});
+}
+
+function closeWebSocketNavigateTo(path) {
+	if (gameSocket) {
+		console.log("close socket");
+		gameSocket.close();
+		gameSocket = null;
+
+		setTimeout(function() {
+			router.navigateTo(path);
+		}, 200);
+	}
 }
