@@ -11,6 +11,7 @@
 
 /* The pong game stylesheets: */
 @import url('/static/pong/css/game.css');
+@import url('/static/pong/css/overview.css');
 @import url('/static/pong/css/tournement.css');
 
 /* The user_management stylesheets: */

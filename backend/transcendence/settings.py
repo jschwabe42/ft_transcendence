@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 	'channels',
 	'daphne',
 	'rest_framework',
+	'rest_framework.authtoken',
 	'crispy_forms',
 	'crispy_bootstrap4',
 	'django.contrib.admin',
@@ -63,6 +64,13 @@ MIDDLEWARE = [
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+REST_FRAMEWORK = {
+	'DEFAULT_AUTHENTICATION_CLASSES': [
+		'rest_framework.authentication.TokenAuthentication',
+		'rest_framework.authentication.SessionAuthentication',
+	],
+}
 import os
 import secrets
 import sys

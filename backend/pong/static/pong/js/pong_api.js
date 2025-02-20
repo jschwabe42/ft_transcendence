@@ -34,7 +34,7 @@ export function CreateGameForm(event, socket) {
 					socket.send(JSON.stringify(all_game_data));
 					console.log("sended Game info")
 				} else {
-					document.getElementById('game-creation-fail').innerText = "Error, enter a valid Username!!";
+					document.getElementById('game-creation-fail').innerText = gettext("Error, enter a valid Username!!");
 				}
 			})
 			.catch(error => {
@@ -42,6 +42,6 @@ export function CreateGameForm(event, socket) {
 			});
 
 	} else {
-		document.getElementById('game-creation-fail').innerText = "Error, enter a Username!!";
+		document.getElementById('game-creation-fail').innerText = gettext("Error, enter a Username!!");
 	}
 }

@@ -1,0 +1,9 @@
+>>> from django.contrib.auth import get_user_model
+>>> from rest_framework.authtoken.models import Token
+>>> User = get_user_model()
+>>> user = User.objects.get(username='bigben')
+>>> token, created = Token.objects.get_or_create(user=user)
+>>> print(token.key)
+58b5e93a4519b526f086da0d72f9e0f3f5ca8221
+
+/code/pong/scripts/game # python3 cli_control_keys.py --url http://localhost:8000/pong/api/get-gameControl/ --token 58b5e93a4519b526f086da0d72f9e0f3f5ca8221 --username bigben --control1 w_s --control2 w_s --game_id 4
