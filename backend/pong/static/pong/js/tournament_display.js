@@ -160,10 +160,10 @@ function updateUIWithTournamentData(data, tournamentModel) {
 }
 
 function closeWebSocketNavigateTo(path) {
-	if (gameSocket) {
+	if (tournamentSocket) {
 		console.log("close socket");
-		gameSocket.close();
-		gameSocket = null;
+		tournamentSocket.close();
+		tournamentSocket = null;
 
 		setTimeout(function() {
 			router.navigateTo(path);

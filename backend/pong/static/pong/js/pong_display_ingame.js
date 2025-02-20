@@ -51,7 +51,7 @@ export function DisplayPong(params) {
 							<p id="player2">${model.score2}</p>
 						</div>
 					</div>
-					<button id="winner" class="navigate-button" style="display: none;" 
+					<button id="winner" class="navigate-button"" 
 						data-path="${model.tournament_id === 0 ? '/pong/' : '/pong/tournament/' + model.tournament_id}">
 						${gettext("back to menu")}
 					</button>
