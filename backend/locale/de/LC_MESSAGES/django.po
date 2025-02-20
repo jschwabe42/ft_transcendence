@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 16:24+0000\n"
+"POT-Creation-Date: 2025-02-19 18:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,62 +22,66 @@ msgstr ""
 msgid "Opponent username is required."
 msgstr "Nutzername des Gegners wird benötigt."
 
-#: pong/api_views.py:38
+#: pong/api_views.py:37
 #, fuzzy
 #| msgid "You cannot befriend yourself!"
 msgid "You cannot play against yourself."
 msgstr "Du kannst nicht dich selbst befreunden!"
 
-#: pong/api_views.py:45
+#: pong/api_views.py:44
 #, fuzzy
 #| msgid "The target user does not exist!"
 msgid "Opponent does not exist."
 msgstr "Dieser Nutzer existiert nicht!"
 
-#: pong/api_views.py:50
+#: pong/api_views.py:49
 #, fuzzy
 #| msgid "The target user does not exist!"
 msgid "User does not exist."
 msgstr "Dieser Nutzer existiert nicht!"
 
-#: pong/api_views.py:66
+#: pong/api_views.py:65
 #, fuzzy
 #| msgid "Account created successfully."
 msgid "Game created successfully."
 msgstr "Benutzerkonto wurde erfolgreich erstellt."
 
-#: pong/api_views.py:84
+#: pong/api_views.py:83
 msgid "game_id score1 and score2 are required"
-msgstr "Game ID, Score 1 und Score 2 müssen eingegeben werden"
+msgstr ""
 
-#: pong/api_views.py:91 pong/api_views.py:138
+#: pong/api_views.py:90 pong/api_views.py:142
 msgid "Game not found."
 msgstr "Spiel wurde nicht gefunden."
 
-#: pong/api_views.py:116
+#: pong/api_views.py:115
 msgid "Game successfully saved score."
 msgstr "Spielstand erfolgreich gespeichert."
 
-#: pong/api_views.py:131
+#: pong/api_views.py:135
 msgid "game_id, control1, and control2 are required."
-msgstr "Game ID, Controler 1 und Controler 2 müssen eingegeben werden."
+msgstr ""
 
-#: pong/api_views.py:146
+#: pong/api_views.py:150
 msgid "You are not a player in this game."
 msgstr "Du bist kein Mitspieler in diesem Spiel."
 
-#: pong/api_views.py:169
+#: pong/api_views.py:156
+msgid "Control settings successfully updated for user"
+msgstr "Präferenzen für Eingabe erfolgreich aktualisiert"
+
+#: pong/api_views.py:172
 #, fuzzy
 #| msgid "The target user does not exist!"
 msgid "user does not exist."
 msgstr "Dieser Nutzer existiert nicht!"
 
-#: pong/api_views.py:176
+#: pong/api_views.py:177
 #, fuzzy
 msgid "Tournament created successfully."
 msgstr "Tournier erfolgreich erstellt."
 
-#: pong/consumers.py:310
+#: pong/consumers.py:293
 #, fuzzy
 msgid "Games created successfully"
 msgstr "Spiele erfolgreich erstellt"
@@ -91,26 +95,30 @@ msgid "Home"
 msgstr "Startseite"
 
 #: templates/index.html:59
+msgid "Chat"
+msgstr "Chat"
+
+#: templates/index.html:61
 msgid "Quiz"
 msgstr "Quiz"
 
-#: templates/index.html:60
+#: templates/index.html:62
 msgid "Pong"
 msgstr "Pong"
 
-#: templates/index.html:61
+#: templates/index.html:63
 msgid "Dashboard"
 msgstr "Benutzerübersicht"
 
-#: transcendence/settings.py:220
+#: transcendence/settings.py:221
 msgid "English"
 msgstr "Englisch"
 
-#: transcendence/settings.py:221
+#: transcendence/settings.py:222
 msgid "Swedish"
 msgstr "Schwedisch"
 
-#: transcendence/settings.py:222
+#: transcendence/settings.py:223
 msgid "German"
 msgstr "Deutsch"
 
@@ -144,13 +152,13 @@ msgstr ""
 msgid "the request you are trying to accept does not exist"
 msgstr "Die abzulehnende Freundschaftsanfrage existiert nicht."
 
-#: user_management/friends.py:113 user_management/friends.py:125
-msgid "the friendship you are trying to delete does not exist"
-msgstr "Es gibt keine Freundschaft zwischen euch!"
-
-#: user_management/friends.py:118
+#: user_management/friends.py:113
 msgid "The target user does not exist!"
 msgstr "Dieser Nutzer existiert nicht!"
+
+#: user_management/friends.py:120
+msgid "the friendship you are trying to delete does not exist"
+msgstr "Es gibt keine Freundschaft zwischen euch!"
 
 #: user_management/friends_api.py:71
 #, fuzzy
@@ -253,9 +261,3 @@ msgstr "Ungültiges aktuelles Passwort."
 #: user_management/views.py:266
 msgid "Password changed successfully."
 msgstr "Passwort wurde erfolgreich geändert."
-
-#~ msgid "Control settings successfully updated for user"
-#~ msgstr "Präferenzen für Eingabe erfolgreich aktualisiert"
-
-#~ msgid "Chat"
-#~ msgstr "Chat"

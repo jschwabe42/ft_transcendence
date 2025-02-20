@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 16:24+0000\n"
+"POT-Creation-Date: 2025-02-19 18:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,56 +20,60 @@ msgstr ""
 
 #: pong/api_views.py:32
 msgid "Opponent username is required."
-msgstr "Motståndarens användarnamn är obligatoriskt."
+msgstr ""
 
-#: pong/api_views.py:38
+#: pong/api_views.py:37
 msgid "You cannot play against yourself."
-msgstr "Du kan inte spela mot dig själv."
+msgstr ""
 
-#: pong/api_views.py:45
+#: pong/api_views.py:44
 msgid "Opponent does not exist."
-msgstr "Motståndaren existerar inte."
+msgstr ""
 
-#: pong/api_views.py:50
+#: pong/api_views.py:49
 msgid "User does not exist."
-msgstr "Användaren finns inte."
+msgstr ""
 
-#: pong/api_views.py:66
+#: pong/api_views.py:65
 #, fuzzy
 #| msgid "Account created successfully."
 msgid "Game created successfully."
 msgstr "Konto har skapats framgångsrikt."
 
-#: pong/api_views.py:84
+#: pong/api_views.py:83
 msgid "game_id score1 and score2 are required"
-msgstr "game_id score1 och score2 är obligatoriska"
+msgstr ""
 
-#: pong/api_views.py:91 pong/api_views.py:138
+#: pong/api_views.py:90 pong/api_views.py:142
 msgid "Game not found."
-msgstr "Spelet hittades inte."
+msgstr ""
 
-#: pong/api_views.py:116
+#: pong/api_views.py:115
 msgid "Game successfully saved score."
-msgstr "Spelet har framgångsrikt sparat poäng."
+msgstr ""
 
-#: pong/api_views.py:131
+#: pong/api_views.py:135
 msgid "game_id, control1, and control2 are required."
-msgstr "game_id, control1 och control2 är obligatoriska."
+msgstr ""
 
-#: pong/api_views.py:146
+#: pong/api_views.py:150
 msgid "You are not a player in this game."
-msgstr "Du är inte en spelare i det här spelet."
+msgstr ""
 
-#: pong/api_views.py:169
+#: pong/api_views.py:156
+msgid "Control settings successfully updated for user"
+msgstr ""
+
+#: pong/api_views.py:172
 msgid "user does not exist."
-msgstr "Användaren finns inte."
+msgstr ""
 
-#: pong/api_views.py:176
+#: pong/api_views.py:177
 #, fuzzy
 msgid "Tournament created successfully."
 msgstr "Turneringen har skapats framgångsrikt."
 
-#: pong/consumers.py:310
+#: pong/consumers.py:293
 #, fuzzy
 msgid "Games created successfully"
 msgstr "Spel har skapats framgångsrikt."
@@ -83,64 +87,68 @@ msgid "Home"
 msgstr "Hem"
 
 #: templates/index.html:59
+msgid "Chat"
+msgstr "Chatt"
+
+#: templates/index.html:61
 msgid "Quiz"
 msgstr "Frågesport"
 
-#: templates/index.html:60
+#: templates/index.html:62
 msgid "Pong"
 msgstr "Pong"
 
-#: templates/index.html:61
+#: templates/index.html:63
 msgid "Dashboard"
 msgstr "Översikt"
 
-#: transcendence/settings.py:220
+#: transcendence/settings.py:221
 msgid "English"
 msgstr "Engelska"
 
-#: transcendence/settings.py:221
+#: transcendence/settings.py:222
 msgid "Swedish"
 msgstr "Svenska"
 
-#: transcendence/settings.py:222
+#: transcendence/settings.py:223
 msgid "German"
 msgstr "Tyska"
 
 #: user_management/friends.py:51
 msgid "You cannot befriend yourself!"
-msgstr "Du kan inte bli vän med dig själv!"
+msgstr ""
 
 #: user_management/friends.py:56
 msgid "Friend request pending approval."
-msgstr "Vänförfrågan väntar på godkännande."
+msgstr ""
 
 #: user_management/friends.py:58
 msgid "You are already friends!"
-msgstr "Ni är redan vänner!"
+msgstr ""
 
 #: user_management/friends.py:72
 msgid "you did not send the friend request, you can only deny it!"
-msgstr "du skickade inte vänförfrågan, du kan bara neka till den!"
+msgstr ""
 
 #: user_management/friends.py:82
 msgid "There is no request to deny"
-msgstr "Det finns ingen begäran om att neka"
+msgstr ""
 
 #: user_management/friends.py:86
 msgid "you sent the friend request, you can only cancel it!"
-msgstr "du skickade vänförfrågan, kan du bara avbryta den!"
+msgstr ""
 
 #: user_management/friends.py:98
 msgid "the request you are trying to accept does not exist"
-msgstr "den begäran du försöker acceptera finns inte"
+msgstr ""
 
-#: user_management/friends.py:113 user_management/friends.py:125
-msgid "the friendship you are trying to delete does not exist"
-msgstr "den vänskap du försöker ta bort finns inte"
-
-#: user_management/friends.py:118
+#: user_management/friends.py:113
 msgid "The target user does not exist!"
-msgstr "Målanvändaren finns inte"
+msgstr ""
+
+#: user_management/friends.py:120
+msgid "the friendship you are trying to delete does not exist"
+msgstr ""
 
 #: user_management/friends_api.py:71
 #, fuzzy
@@ -150,7 +158,7 @@ msgstr "Profilen uppdaterades framgångsrikt."
 
 #: user_management/friends_api.py:83
 msgid "Friend request cancelled."
-msgstr "Vänförfrågan avbruten."
+msgstr ""
 
 #: user_management/friends_api.py:95
 #, fuzzy
@@ -166,7 +174,7 @@ msgstr "Ogiltig metod för begäran."
 
 #: user_management/friends_api.py:119
 msgid "Friendship ended."
-msgstr "Vänskapen upphörde."
+msgstr ""
 
 #: user_management/views.py:38
 #, fuzzy
@@ -243,6 +251,3 @@ msgstr "Ogiltigt aktuellt lösenord."
 #: user_management/views.py:266
 msgid "Password changed successfully."
 msgstr "Lösenordet har ändrats framgångsrikt."
-
-#~ msgid "Chat"
-#~ msgstr "Chatt"
