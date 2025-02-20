@@ -67,20 +67,16 @@ msgid "user does not exist."
 msgstr "Dieser Nutzer existiert nicht!"
 
 #: pong/api_views.py:176
-#, fuzzy
 msgid "Tournament created successfully."
 msgstr "Tournier erfolgreich erstellt."
 
 #: pong/consumers.py:310
-#, fuzzy
 msgid "Games created successfully"
 msgstr "Spiele erfolgreich erstellt"
 
 #: pong/views.py:35 pong/views.py:66
-#, fuzzy
-#| msgid "Game not found."
 msgid "No Games Found"
-msgstr "Spiel wurde nicht gefunden."
+msgstr "Keine Spiele gefunden."
 
 #: templates/index.html:42 templates/index.html:51
 msgid "Transcendence"
@@ -142,7 +138,7 @@ msgstr ""
 
 #: user_management/friends.py:98
 msgid "the request you are trying to accept does not exist"
-msgstr "Die abzulehnende Freundschaftsanfrage existiert nicht."
+msgstr "Die anzunehmende Freundschaftsanfrage existiert nicht."
 
 #: user_management/friends.py:113 user_management/friends.py:125
 msgid "the friendship you are trying to delete does not exist"
@@ -153,10 +149,8 @@ msgid "The target user does not exist!"
 msgstr "Dieser Nutzer existiert nicht!"
 
 #: user_management/friends_api.py:71
-#, fuzzy
-#| msgid "Profile updated successfully."
 msgid "Friend request sent successfully."
-msgstr "Profil erfolgreich aktualisiert."
+msgstr "Freundschaftsanfrage gesendet."
 
 #: user_management/friends_api.py:83
 msgid "Friend request cancelled."
@@ -245,6 +239,3 @@ msgstr "Ungültiges aktuelles Passwort."
 #: user_management/views.py:266
 msgid "Password changed successfully."
 msgstr "Passwort wurde erfolgreich geändert."
-
-#~ msgid "Chat"
-#~ msgstr "Chat"

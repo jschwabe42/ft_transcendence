@@ -179,8 +179,6 @@ msgid "Friendship ended."
 msgstr "Vänskapen upphörde."
 
 #: user_management/views.py:38
-#, fuzzy
-#| msgid "Password changed successfully."
 msgid "User blocked successfully."
 msgstr "Användaren blockerades framgångsrikt."
 
@@ -253,6 +251,3 @@ msgstr "Ogiltigt aktuellt lösenord."
 #: user_management/views.py:266
 msgid "Password changed successfully."
 msgstr "Lösenordet har ändrats framgångsrikt."
-
-#~ msgid "Chat"
-#~ msgstr "Chatt"
