@@ -124,6 +124,8 @@ export function home_view() {
 		<li>For the backend <a class="index-base-link" href="https://www.djangoproject.com/" target="_blank">Django</a> is used.</li>
 		<li>The database uses <a class="index-base-link" href="https://www.postgresql.org/" target="_blank">PostgresSQL</a>.</li>
 		<li>For translations <a class="index-base-link" href="https://www.gnu.org/software/gettext/" target="_blank">gettext</a> is used.</li>
+		<li>In the Pong Tournament this <a class="index-base-link" href="https://dribbble.com/shots/15810672-Looping-Ping-Pong-Animation" target="_blank">Gif</a> is used.</li>
+		
 	</ul>
 	<br>
 	<h3>${gettext("Libraries used:")}</h3>
