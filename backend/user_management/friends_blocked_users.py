@@ -49,6 +49,14 @@ class Friends_Manager:
 		target_friend = Friends_Manager.__get_existing_user_instance(target_username)
 		if target_friend == origin:
 			raise ValidationError(gettext('You cannot befriend yourself!'))
+		elif BlockedUsers.objects.filter(blocker=origin, blockee=target_friend).exists():
+			raise ValidationError(
+				gettext('You have blocked this user, you cannot send a friend request.')
+			)
+		elif BlockedUsers.objects.filter(blocker=target_friend, blockee=origin).exists():
+			raise ValidationError(
+				gettext('This user has blocked you, you cannot send a friend request.')
+			)
 		elif (
 			Friends.objects.filter(origin=target_friend, target=origin).exists()
 			or Friends.objects.filter(origin=origin, target=target_friend, accepted=False).exists()
@@ -162,6 +170,18 @@ class Block_Manager:
 			raise ValidationError('You cannot block yourself!')
 		if Block_Manager.is_blocked_by(blockee=target, blocker=blocker):
 			raise ValidationError('This user is already blocked')
+		# remove friendship with any state (accepted or pending)
+		(friendship, pending) = Friends_Manager.status(blocker, target)
+		if friendship:
+			Friends_Manager.remove_friend(remover=blocker, target_username=target_username)
+		elif pending is not None:
+			if pending:
+				Friends_Manager.cancel_request(origin=blocker, target_username=target_username)
+			else:
+				Friends_Manager.deny_request(target=blocker, origin_username=target_username)
+		else:
+			# if there is no friendship, just block
+			pass
 		BlockedUsers.objects.create(blocker=blocker, blockee=target)
 
 	@staticmethod
