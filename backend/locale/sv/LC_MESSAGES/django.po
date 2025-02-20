@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 18:44+0100\n"
+"POT-Creation-Date: 2025-02-20 21:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,6 +78,12 @@ msgstr "Turneringen har skapats framgångsrikt."
 msgid "Games created successfully"
 msgstr "Spel har skapats framgångsrikt."
 
+#: pong/views.py:35 pong/views.py:66
+#, fuzzy
+#| msgid "Game not found."
+msgid "No Games Found"
+msgstr "Spelet hittades inte."
+
 #: templates/index.html:42 templates/index.html:51
 msgid "Transcendence"
 msgstr "Transcendence"
@@ -87,30 +93,26 @@ msgid "Home"
 msgstr "Hem"
 
 #: templates/index.html:59
-msgid "Chat"
-msgstr "Chatt"
-
-#: templates/index.html:61
 msgid "Quiz"
 msgstr "Frågesport"
 
-#: templates/index.html:62
+#: templates/index.html:60
 msgid "Pong"
 msgstr "Pong"
 
-#: templates/index.html:63
+#: templates/index.html:61
 msgid "Dashboard"
 msgstr "Översikt"
 
-#: transcendence/settings.py:229
+#: transcendence/settings.py:228
 msgid "English"
 msgstr "Engelska"
 
-#: transcendence/settings.py:230
+#: transcendence/settings.py:229
 msgid "Swedish"
 msgstr "Svenska"
 
-#: transcendence/settings.py:231
+#: transcendence/settings.py:230
 msgid "German"
 msgstr "Tyska"
 
@@ -177,8 +179,6 @@ msgid "Friendship ended."
 msgstr "Vänskapen upphörde."
 
 #: user_management/views.py:38
-#, fuzzy
-#| msgid "Password changed successfully."
 msgid "User blocked successfully."
 msgstr "Användaren blockerades framgångsrikt."
 
