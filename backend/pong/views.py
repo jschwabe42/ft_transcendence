@@ -1,6 +1,5 @@
 from django.db.models import Q
 from django.http import JsonResponse
-from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils.translation import gettext as _
 
 from .models import PongGame, Tournament
@@ -141,8 +140,3 @@ def tournament_data(request):
 
 	except Exception as e:
 		return JsonResponse({'error': str(e)}, status=500)
-
-
-@ensure_csrf_cookie
-def get_csrf_token(request):
-	return JsonResponse({'detail': 'CSRF cookie set'})
