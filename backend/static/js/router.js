@@ -10,7 +10,7 @@ import { display_account } from '/static/users/js/account.js';
 import { UsersApiHandler } from '/static/users/js/users_api.js';
 
 import { PongOverview, closeRoomOverviewWebSocket } from '/static/pong/js/overview.js';
-import { DisplayPong } from '/static/pong/js/pong_display_ingame.js';
+import { DisplayPong, closePongInGameWebSocket } from '/static/pong/js/pong_display_ingame.js';
 import { PongResult } from '/static/pong/js/pong_result.js';
 import { DisplayTournament } from '/static/pong/js/tournament_display.js';
 import { PongPractice } from '/static/pong/js/pong_practice.js';
@@ -168,6 +168,11 @@ class Router {
 		}
 		if (newPath !== '/pong/') {
 			closeRoomOverviewWebSocket();
+		}
+
+		const pongPathPattern = /^\/pong\/\d+$/;
+		if (!pongPathPattern.test(newPath)) {
+			closePongInGameWebSocket();
 		}
 	}
 }

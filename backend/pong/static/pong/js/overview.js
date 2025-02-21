@@ -157,7 +157,6 @@ export function PongOverview() {
 
 function closeWebSocketNavigateTo(path) {
 	if (socket) {
-		console.log("close socket");
 		socket.close();
 		socket = null;
 

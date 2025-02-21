@@ -85,9 +85,11 @@ function renderGameData() {
 	gameSocket = new WebSocket(protocol + window.location.host + '/pong/' + game_id + '/');
 
 	gameSocket.onclose = function (e) {
+		console.log("Pong In-Game Websocket Closed");
 	};
 
 	gameSocket.onopen = function (e) {
+		console.log("Pong In-Game Websocket Connected");
 	};
 
 	const readyButton = document.querySelector("#user_ready");
@@ -377,12 +379,18 @@ function renderGameData() {
 
 function closeWebSocketNavigateTo(path) {
 	if (gameSocket) {
-		console.log("close socket");
 		gameSocket.close();
 		gameSocket = null;
 
 		setTimeout(function() {
 			router.navigateTo(path);
 		}, 200);
+	}
+}
+
+export function closePongInGameWebSocket() {
+	if (gameSocket) {
+		gameSocket.close();
+		gameSocket = null;
 	}
 }
