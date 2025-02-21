@@ -30,25 +30,33 @@ document.addEventListener('DOMContentLoaded', function() {
 		router.navigateTo('/dashboard/');
 	});
 
-	document.getElementById('register-link').addEventListener('click', function(event) {
-		event.preventDefault();
-		router.navigateTo('/register/');
-	});
+	if (document.getElementById('register-link')) {
+		document.getElementById('register-link').addEventListener('click', function(event) {
+			event.preventDefault();
+			router.navigateTo('/register/');
+		});
+	}
 
-	document.getElementById('login-link').addEventListener('click', function(event) {
-		event.preventDefault();
-		router.navigateTo('/login/');
-	});
+	if (document.getElementById('login-link')) {
+		document.getElementById('login-link').addEventListener('click', function(event) {
+			event.preventDefault();
+			router.navigateTo('/login/');
+		});
+	}
 
-	document.getElementById('logout-link').addEventListener('click', function(event) {
-		event.preventDefault();
-		router.navigateTo('/logout/');
-	});
+	if (document.getElementById('logout-link')) {
+		document.getElementById('logout-link').addEventListener('click', function(event) {
+			event.preventDefault();
+			router.navigateTo('/logout/');
+		});
+	}
 
-	document.getElementById('account-link').addEventListener('click', function(event) {
-		event.preventDefault();
-		router.navigateTo('/account/');
-	});
+	if (document.getElementById('account-link')) {
+		document.getElementById('account-link').addEventListener('click', function(event) {
+			event.preventDefault();
+			router.navigateTo('/account/');
+		});
+	}
 });
 
 
