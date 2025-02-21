@@ -1,7 +1,7 @@
 from django.urls import include, path
 
 from . import views
-from .api_views import OauthCallBackView, OauthView
+from .oauth import OauthCallBackView, OauthView
 from .friends_api import (
 	accept_request,
 	cancel_request,
@@ -33,6 +33,15 @@ friends_urls = [
 	path('remove/<str:username>/', remove, name='friends-remove'),
 ]
 
+# urls under `/users/api/2fa/`
+mfa_urls = [
+	path('status/', get_2fa_status, name='get-2fa-status'),
+	path('enable/', enable_2fa, name='enable-2fa'),
+	path('confirm/', confirm_2fa, name='confirm-2fa'),
+	path('disable/', disable_2fa, name='disable-2fa'),
+	path('verify/', verify_2fa, name='verify-2fa'),
+]
+
 urlpatterns = [
 	# Add the custom verification of jwt url
 	path('api/oauth/', OauthView.as_view(), name='oauth'),
@@ -49,11 +58,5 @@ urlpatterns = [
 	path('api/change_password/', views.change_password, name='change-password'),
 	path('api/check_authentication/', views.check_authentication, name='check-authentication'),
 	# 2FA APIS
-	path('api/2fa/status/', get_2fa_status, name='get-2fa-status'),
-	path('api/2fa/enable/', enable_2fa, name='enable-2fa'),
-	path('api/2fa/confirm/', confirm_2fa, name='confirm-2fa'),
-	path('api/2fa/disable/', disable_2fa, name='disable-2fa'),
-	path('api/2fa/verify/', verify_2fa, name='verify-2fa'),
-	# TODO: remove once dashboard is feature complete @follow-up
-	path('<str:query_user>', views.public_profile, name='public-profile'),
+	path('api/2fa/', include(mfa_urls)),
 ]

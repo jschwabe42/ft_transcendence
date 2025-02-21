@@ -80,7 +80,7 @@ export function PongOverview() {
 			document.getElementById("refresh-button").addEventListener("click", () => {
 				PongOverview();
 			});
-			return fetch('/pong/api/tournament_data/');
+			return fetch('/pong/api/tournament-data/');
 		})
 		.then(response => response.json())
 		.then(tournaments => {

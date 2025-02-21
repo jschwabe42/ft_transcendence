@@ -13,13 +13,9 @@ from django.contrib.auth import (
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
-from django.db.models import F
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
-from django.shortcuts import render
 from django.utils.translation import gettext as _
-from pong.models import PongGame
-from pong.utils import win_to_loss_ratio
 from pyotp import TOTP
 from rest_framework_simplejwt.tokens import RefreshToken
 from transcendence.decorators import login_required_redirect
@@ -355,33 +351,3 @@ def check_authentication(request):
 	API Endpoint: /users/api/check_authentication/
 	"""
 	return JsonResponse({'is_authenticated': request.user.is_authenticated})
-
-
-@login_required_redirect
-def public_profile(request, query_user):
-	query_user_instance = User.objects.get(username=query_user)
-	pong_games_finished = PongGame.objects.filter(
-		player1=query_user_instance, pending=False
-	) | PongGame.objects.filter(player2=query_user_instance, pending=False)
-	pong_games_won = pong_games_finished.filter(
-		player1=query_user_instance, score1__gt=F('score2')
-	) | pong_games_finished.filter(player2=query_user_instance, score2__gt=F('score1'))
-	pong_games_lost = [game for game in pong_games_finished if game not in pong_games_won]
-	pong_games_won = sorted(pong_games_won, key=lambda game: game.played_at, reverse=True)
-	pong_games_lost = sorted(pong_games_lost, key=lambda game: game.played_at, reverse=True)
-	pong_ratio = win_to_loss_ratio(
-		query_user_instance.matches_won, query_user_instance.matches_lost
-	)
-	return render(
-		request,
-		'users/public_profile.html',
-		{
-			'request_user': request.user,
-			'query_user': query_user_instance,
-			'pong_matches_lost': query_user_instance.matches_lost,
-			'pong_matches_won': query_user_instance.matches_won,
-			'pong_win_loss_ratio': pong_ratio,
-			'games_won': pong_games_won,
-			'games_lost': pong_games_lost,
-		},
-	)
