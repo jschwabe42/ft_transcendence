@@ -20,4 +20,7 @@ genenv:
 	cd secrets && touch pgadmin_password postgres_password oauth_api_secret
 	./genenv.sh
 
+secret:
+	@python3 -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key(), end="")' > ./secrets/django_secret_key
+
 re: clean run

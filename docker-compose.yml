@@ -5,6 +5,8 @@ secrets:
     file: ./secrets/certs/dev.crt
   ssl_key:
     file: ./secrets/certs/dev.key
+  SECRET_KEY:
+    file: ./secrets/django_secret_key
   # pgadmin_password:
   #   file: ./secrets/pgadmin_password
   oauth_api_secret:
@@ -42,6 +44,7 @@ services:
       - oauth_api_secret
       - ssl_cert
       - ssl_key
+      - SECRET_KEY
     environment:
       - container=docker
     ports:
