@@ -325,6 +325,8 @@ export function closePongInGameWebSocket() {
 }
 
 function handleKeyUp(event) {
+	const user = document.querySelector('meta[name="username-token"]').content;
+	const game_id = gameModel.game_id;
 	if (event.key === "ArrowUp") {
 		gameSocket.send(JSON.stringify({
 			'use': 'KeyboardEvent',
@@ -360,6 +362,8 @@ function handleKeyUp(event) {
 }
 
 function handleKeyDown(event) {
+	const user = document.querySelector('meta[name="username-token"]').content;
+	const game_id = gameModel.game_id;
 	if (event.key === "ArrowUp") {
 		gameSocket.send(JSON.stringify({
 			'use': 'KeyboardEvent',

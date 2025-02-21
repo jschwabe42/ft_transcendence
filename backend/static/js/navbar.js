@@ -103,7 +103,6 @@ export function home_view() {
 		<li>${gettext("Major: Multiple players. 2 points! (Technically, since it isn't 100% specified which game)")} ✅</li>
 		<li>${gettext("Major: Add another game with user history and matchmaking. 2 points!")} ✅</li>
 		<li>${gettext("Minor: Game Customization options. 1 point!")} ✅</li>
-		<li>${gettext("Minor: User and Game stats dashboard. A way to display pong game outcomes is missing. Pong/Tournament data needs to be added. A graph should be added (but i could argue that point if necessary)")} ❗</li>
 		<li>${gettext("Major: 2FA and JWT. 2 points.")} ✅</li>
 		<li>${gettext("Minor: Expanding Browser Compability (Chrome, Edge, Firefox?). 1 point!")} ✅</li>
 		<li>${gettext("Minor: Multiple language support (Some things still need translations!). 1 point!")} ✅</li>

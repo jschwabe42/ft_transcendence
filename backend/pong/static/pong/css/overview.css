@@ -12,6 +12,7 @@
 	padding: 20px;
 	border-radius: 6px;
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	
 } */
 
 /* ========= Estilos de títulos ========= */
@@ -47,16 +48,20 @@
 
 /* Botones con fondo verde */
 .ChatButtonBackground {
-	background-color: #28a745;
+	background-color: #28a745 !important;
 }
 .ChatButtonBackground:hover {
-	background-color: #1e7e34;
+	background-color: #1e7e34 !important;
 }
 
 /* Botón de refresco con un color distinto */
 #refresh-button {
 	background-color: #ffc107;
 	color: #333;
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	padding: 10px 20px;
 }
 #refresh-button:hover {
 	background-color: #e0a800;
@@ -67,11 +72,6 @@
 }
 
 /* ========= Formularios y campos ========= */
-#pong-app-content form {
-	margin-top: 10px;
-	margin-bottom: 20px;
-}
-
 #pong-app-content input[type="text"] {
 	width: 100%;
 	padding: 8px 10px;
