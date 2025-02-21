@@ -43,19 +43,19 @@ export function PongOverview() {
 			<div class="pong-container">
 				<div id="top-menu" class="top-menu">
 					<div class="practice-game-container">
-						<button class="navigate-button" data-path="/pong/practice/">${gettext("Practice Game")}</button>
+						<button class="btn btn-primary navigate-button" data-path="/pong/practice/">${gettext("Practice Game")}</button>
 					</div>
 					<form id="create-tournament-form">
-						<button class="add_user" type="submit">${gettext("New Tournament")}</button>
+						<button class="btn btn-primary add_user" type="submit">${gettext("New Tournament")}</button>
 					</form>
 					<form id="create-game-form">
-						<button class="add_user" type="submit">${gettext("Play Game")}</button>
+						<button class="btn btn-primary add_user" type="submit">${gettext("Play Game")}</button>
 						<input id="opp_name" type="text" name="opp_name" placeholder="${gettext("Enter opponent Username")} "/>
 					</form>
 					<p class="pong-error-message" id="game-creation-fail"><p>
 				</div>
 				<h2 id="recent-games-container">${gettext("Recent Games")}</h2>
-				<button id="refresh-button">${gettext("Refresh")}</button>
+				<button class="btn btn-primary" id="refresh-button">${gettext("Refresh")}</button>
 				<div id="recent-games-container">
 					${recentGames || gettext("No games have been played yet.")}
 				</div >
