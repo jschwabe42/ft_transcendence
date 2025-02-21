@@ -16,8 +16,14 @@ export function submitAnswer(roomId, question, answer) {
 		if (data.success) {
 			console.log('Answer submitted successfully');
 		} else {
-			console.error('Error submitting answer:', data.error);
+			if (data.invalid_jwt && data.is_logged === false) {
+				alert(gettext("Please login to do this action"));
+			}
+			else if (data.invalid_jwt && data.is_logged === true) {
+				alert(gettext("Invalid JWT Token, Please login again"));
+			}
 		}
+
 	})
 	.catch(error => {
 		console.error('An error occurred:', error);

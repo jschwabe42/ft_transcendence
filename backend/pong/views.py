@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.utils.translation import gettext as _
 
 from .models import PongGame, Tournament
+from transcendence.decorators import login_required_redirect
 
 
 def game_data(request):
@@ -91,6 +92,7 @@ def ingame(request):
 		return JsonResponse({'error': 'Game not found'}, status=404)
 
 
+@login_required_redirect
 def tournament(request):
 	tournament_id = request.GET.get('tournament_id')
 	if not tournament_id:
@@ -115,6 +117,7 @@ def tournament(request):
 		return JsonResponse({'error': 'Tournament not found'}, status=404)
 
 
+@login_required_redirect
 def tournament_data(request):
 	try:
 		tournaments = Tournament.objects.filter(finalWinner='').order_by('-created_at')[:10]

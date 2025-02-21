@@ -6,7 +6,7 @@ export function CreateGameForm(event, socket) {
 
 	if (userName == oppName) {
 		document.getElementById('game-creation-fail').innerText = "Error, you can not play against yourself!!";
-		return ;
+		return;
 	}
 	document.getElementById('game-creation-fail').innerText = "";
 
@@ -34,7 +34,13 @@ export function CreateGameForm(event, socket) {
 					socket.send(JSON.stringify(all_game_data));
 					console.log("sended Game info")
 				} else {
-					document.getElementById('game-creation-fail').innerText = gettext("Error, enter a valid Username!!");
+					if (data.invalid_jwt && data.is_logged === false) {
+						document.getElementById('game-creation-fail').innerText = gettext("Please login to do this action");
+					} else if (data.invalid_jwt && data.is_logged === true) {
+						document.getElementById('game-creation-fail').innerText = gettext("Invalid JWT, please login again");
+					} else {
+						document.getElementById('game-creation-fail').innerText = gettext("Error, enter a valid Username!!");
+					}
 				}
 			})
 			.catch(error => {

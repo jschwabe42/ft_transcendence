@@ -22,6 +22,15 @@ export function DisplayTournament(params) {
 	fetch(`/pong/api/tournament/?tournament_id=${params.tournament_id}`)
 		.then(response => response.json())
 		.then(model => {
+			if (model.invalid_jwt && model.is_logged === false) {
+				alert(gettext("Please login to do this action"));
+				router.navigateTo('/login/');
+				return;
+			} else if (model.invalid_jwt && model.is_logged === true) {
+				alert(gettext("Invalid JWT Token, Please login again"));
+				router.navigateTo('/pong/');
+				return;
+			}
 			console.log(model);
 			tournamentModel = model;
 			document.getElementById('pong-app-content').classList.add('active');

@@ -262,6 +262,17 @@ function fetchAccountDetails() {
 			if (!data) return;
 
 			state.userData = data;
+			if (data.invalid_jwt && !data.is_logged) {
+				showNotification(gettext("Please login to do this action"), 'error');
+				router.navigateTo('/login/');
+				return;
+			} else if (data.invalid_jwt && data.is_logged)
+			{
+				showNotification(gettext("Invalid JWT token"), 'error');
+				router.navigateTo('/logout/');
+				return;
+				
+			}
 			updateAccountUI(data);
 			setupProfileEditing(data);
 
@@ -519,12 +530,6 @@ function verifyPasswordChange2FA() {
 				state.pendingPasswordChange = null;
 			} else {
 				showNotification(data.message, 'error');
-
-				// If account is locked due to too many attempts
-				if (data.locked) {
-					document.getElementById(SELECTORS.PASSWORD_2FA.CONTAINER).style.display = 'none';
-					state.pendingPasswordChange = null;
-				}
 			}
 		})
 		.catch(error => {
@@ -639,7 +644,6 @@ function showNotification(message, type = 'info') {
 	notification.appendChild(icon);
 	notification.appendChild(textContainer);
 
-	// Safely get or create container
 	let container = document.getElementById('app-notification-container');
 	if (!container) {
 		container = document.createElement('div');
@@ -654,8 +658,6 @@ function showNotification(message, type = 'info') {
 	}
 
 	container.appendChild(notification);
-
-	// Use a WeakMap to store timeouts to prevent memory leaks
 	const timeouts = new WeakMap();
 
 	setTimeout(() => {

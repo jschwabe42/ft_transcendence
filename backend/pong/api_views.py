@@ -117,7 +117,7 @@ class ScoreBoardView(APIView):
 
 
 class ControlKeySetting(APIView):
-	permission_classes = [IsAuthenticated]
+	# permission_classes = [IsAuthenticated]
 
 	def post(self, request):
 		game_id = request.data.get('game_id')
