@@ -1,4 +1,4 @@
-/* Contenedor general del bracket */
+
 .bracket-container {
 	display: flex;
 	flex-direction: row;
@@ -9,21 +9,21 @@
 	margin: 20px auto;
 	font-family: Arial, sans-serif;
 	background-image: url('/static/pong/img/pong.gif');
-	background-repeat: no-repeat; /* Evita que el GIF se repita */
-	background-size: cover; /* Ajusta el GIF al tamaño del contenedor */
-	background-position: center; /* Centra el GIF dentro del contenedor */
+	background-repeat: no-repeat; 
+	background-size: cover;
+	background-position: center; 
 }
 
 
 
-/* Rondas generales */
+
 .round {
 	display: flex;
 	flex-direction: column;
 	margin: 0 20px;
 }
 
-/* Rondas específicas */
+
 .round.quarter {
 	border: 1px dashed #ccc;
 	padding: 10px;
@@ -39,7 +39,7 @@
 	border-radius: 5px;
 }
 
-/* Colores de ejemplo para distinguirlas */
+
 .round-1 {
 	margin-top: 20px;
 	background-color: #f0fff3;
@@ -52,31 +52,31 @@
 }
 
 .round-3 {
-	margin-top: 60px; /* Ajustado para bajar los semifinalistas */
+	margin-top: 60px; 
 	background-color: #f0fff3;
 	border: 1px solid #058824;
 }
 
-/* Jugadores */
+
 .player1, .player2, .player3, .player4 {
 	background-color: #f0f0f0;
 	border-radius: 0px;
 	margin: 5px 0;
 }
 
-/* Semifinalistas/Finalistas */
+
 .semifinalist1, .semifinalist2 {
 	background-color: #f0f0f0;
 	border-radius: 5px;
 	margin: 5px 0;
 }
 
-/* Sección de finales */
+
 .finals {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-top: 20px; /* Ajustado para bajar los semifinalistas */
+	margin-top: 20px; 
 }
 
 .finalist {
@@ -88,7 +88,7 @@
 .annouce-winner {
 	background-color: #f0fff3;
 	border: 1px solid #058824;
-	margin-top: 100px; /* Ajustado para subir el ganador */
+	margin-top: 100px; 
 	border-radius: 5px;
 	padding: 8px 12px;
 }
@@ -103,8 +103,8 @@
 	padding: 0;
 	margin: 0;
 	border: none;
-	width: 100px;  /* Ajusta el tamaño deseado */
-	height: 100px; /* Ajusta el tamaño deseado */
+	width: 100px; 
+	height: 100px; 
 	background-color: transparent;
 }
 
@@ -114,5 +114,5 @@
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	object-fit: cover; /* Si deseas que se recorte para llenar el espacio sin distorsiones */
+	object-fit: cover; 
 }
