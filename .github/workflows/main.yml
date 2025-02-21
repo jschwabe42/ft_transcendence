@@ -27,11 +27,12 @@ jobs:
       - uses: actions/checkout@v4
 
       # Runs a single command using the runners shell
-      - name: setup postgres, pgadmin passwords
+      - name: setup postgres password, other secrets
         run: |
           echo -n "$POSTGRES_PASS" >> ./secrets/postgres_password
           echo -n "$PGADMIN_PASS" >> ./secrets/pgadmin_password
           echo -n "$OAUTH_PASS" >> ./secrets/oauth_api_secret
+          echo -n "$DJANGO_SECRET_KEY" >> ./secrets/django_secret_key
       - name: setup ssl certificates
         run: |
           mkdir -p ./secrets/certs
