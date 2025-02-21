@@ -1,7 +1,14 @@
 from django.urls import path
-from .views import get_csrf_token
+
 from .api_views import ControlKeySetting, CreateGameView, CreateTournament, ScoreBoardView
-from .views import game_data, ingame, tournament, tournament_data, personal_game_data
+from .views import (
+	game_data,
+	get_csrf_token,
+	ingame,
+	personal_game_data,
+	tournament,
+	tournament_data,
+)
 
 app_name = 'pong'
 urlpatterns = [

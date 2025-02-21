@@ -1,7 +1,7 @@
 from django.urls import include, path
 
 from . import views
-from .api_views import OauthCallBackView, OauthView
+from .oauth import OauthCallBackView, OauthView
 from .friends_api import (
 	accept_request,
 	cancel_request,
