@@ -54,6 +54,4 @@ urlpatterns = [
 	path('api/2fa/confirm/', confirm_2fa, name='confirm-2fa'),
 	path('api/2fa/disable/', disable_2fa, name='disable-2fa'),
 	path('api/2fa/verify/', verify_2fa, name='verify-2fa'),
-	# TODO: remove once dashboard is feature complete @follow-up
-	path('<str:query_user>', views.public_profile, name='public-profile'),
 ]
