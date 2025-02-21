@@ -25,3 +25,28 @@ requires ruff and pre-commit, ruff extension for format on save
 - `django-admin compilemessages` <br> Compiles all the .po files into .mo files which then can be interpreted by the browser
 - `django-admin makemessages -d djangojs --all` To create the javascript .po files.
 - `find . -path "*/LC_MESSAGES/*.mo" -delete` remove compiled .mo files
+
+
+#### CLI curl commands
+
+game Creation
+curl -X POST https://localhost:8000/pong/api/create-game/ \
+   --cacert backend/certs/dev.crt \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer hash" \
+   -d '{"username": "Jsanger", "opponent": "NewUser"}'
+
+
+update score
+curl -X POST https://localhost:8000/pong/api/get-score/ \
+   --cacert backend/certs/dev.crt \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer hash" \
+   -d '{"score1": "1", "score2": "5", "game_id": "1"}'
+
+update key controlls
+curl -X POST https://localhost:8000/pong/api/get-gameControl/ \
+   --cacert backend/certs/dev.crt \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer hash" \
+   -d '{"control1": "w_s", "control2": "w_s", "game_id": "1", "username": "Jsanger"}'
