@@ -20,7 +20,9 @@ def login_required_redirect(view_func):
 		refresh_token = request.COOKIES.get('refresh_token')
 
 		def create_unauthorized_response():
-			is_logged = request.user.is_authenticated
+			is_logged = False
+			if (request.user is not None) and (request.user.is_authenticated):
+				is_logged = True
 			response = JsonResponse(
 				{
 					'message': _('Invalid JWT Token. Please Login'),
