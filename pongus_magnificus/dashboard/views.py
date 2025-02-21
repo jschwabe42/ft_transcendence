@@ -29,9 +29,7 @@ def get_profile(request, username):
 	Api call that returns a specific profile.
 	dashboard/api/get_profile/profilename is API endpoint.
 	"""
-	print(f"Username: {username}", flush=True)
 	user = get_object_or_404(CustomUser, username=username)
-	print(f"User: {user}", flush=True)
 
 	is_requests_profile = False
 	is_user_blocked_by_requester = False
