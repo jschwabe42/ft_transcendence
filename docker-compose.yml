@@ -1,8 +1,8 @@
 secrets:
   postgres_password:
     file: ./secrets/postgres_password
-  pgadmin_password:
-    file: ./secrets/pgadmin_password
+  # pgadmin_password:
+  #   file: ./secrets/pgadmin_password
   oauth_api_secret:
     file: ./secrets/oauth_api_secret
 
@@ -29,11 +29,11 @@ services:
       timeout: 30s
       retries: 5
       start_period: 15s
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
   backend:
     build: ./backend
     <<: *default-env
@@ -48,18 +48,18 @@ services:
       - "8000:8000"
     restart: "no"
     entrypoint: /code/django.sh
-    # depends_on:
-    #   postgres:
-    #     condition: service_healthy
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    <<: *default-env
-    environment:
-      PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/pgadmin_password
-    secrets:
-      - pgadmin_password
-    ports:
-      - 5050:80
+    depends_on:
+      postgres:
+        condition: service_healthy
+  # pgadmin:
+  #   image: dpage/pgadmin4:latest
+  #   <<: *default-env
+  #   environment:
+  #     PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/pgadmin_password
+  #   secrets:
+  #     - pgadmin_password
+  #   ports:
+  #     - 5050:80
 
 volumes:
   postgres:

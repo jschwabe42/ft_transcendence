@@ -1,7 +1,7 @@
 #!/bin/bash
 
 env_vars=(
-    "PGADMIN_DEFAULT_EMAIL"
+    # "PGADMIN_DEFAULT_EMAIL"
     "REMOTE_OAUTH_UID"
 )
 
