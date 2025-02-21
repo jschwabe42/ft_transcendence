@@ -22,8 +22,6 @@ from transcendence.decorators import login_required_redirect
 
 from .friends_blocked_users import Block_Manager, BlockedUsers
 
-# from .consumers import UserProfileConsumer
-
 User = get_user_model()
 
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-21 17:14+0100\n"
+"POT-Creation-Date: 2025-02-21 18:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,62 +180,62 @@ msgstr "Es gibt keine Freundschaft zwischen euch!"
 msgid "The target user does not exist!"
 msgstr "Dieser Nutzer existiert nicht!"
 
-#: user_management/oauth.py:121 user_management/views.py:125
+#: user_management/oauth.py:121 user_management/views.py:123
 msgid "2FA required. Please enter your code."
 msgstr "2FA benötigt. Bitte gib deinen code ein."
 
-#: user_management/oauth.py:134 user_management/views.py:136
+#: user_management/oauth.py:134 user_management/views.py:134
 msgid "Login successful."
 msgstr "Anmeldung war erfolgreich."
 
-#: user_management/views.py:39
+#: user_management/views.py:37
 msgid "User blocked successfully."
 msgstr "Benutzer wurde erfolgreich blockiert."
 
-#: user_management/views.py:41 user_management/views.py:55
-#: user_management/views.py:98 user_management/views.py:162
-#: user_management/views.py:185 user_management/views.py:209
-#: user_management/views.py:241 user_management/views.py:298
+#: user_management/views.py:39 user_management/views.py:53
+#: user_management/views.py:96 user_management/views.py:160
+#: user_management/views.py:183 user_management/views.py:207
+#: user_management/views.py:239 user_management/views.py:296
 msgid "Invalid request method."
 msgstr "Ungültige Anforderungsmethode."
 
-#: user_management/views.py:53
+#: user_management/views.py:51
 msgid "User unblocked successfully."
 msgstr "Benutzer ist nun nicht mehr blockiert."
 
-#: user_management/views.py:88
+#: user_management/views.py:86
 msgid "Passwords do not match."
 msgstr "Passwörter stimmen nicht überein."
 
-#: user_management/views.py:96
+#: user_management/views.py:94
 msgid "Account created successfully."
 msgstr "Benutzerkonto wurde erfolgreich erstellt."
 
-#: user_management/views.py:160
+#: user_management/views.py:158
 msgid "Invalid username or password!"
 msgstr "Ungülter Benutzername or Passwort!"
 
-#: user_management/views.py:176
+#: user_management/views.py:174
 msgid "Logout successful."
 msgstr "Abmeldung war erfolgreich."
 
-#: user_management/views.py:232
+#: user_management/views.py:230
 msgid "Invalid password."
 msgstr "Ungültiges Passwort."
 
-#: user_management/views.py:240
+#: user_management/views.py:238
 msgid "Profile updated successfully."
 msgstr "Profil erfolgreich aktualisiert."
 
-#: user_management/views.py:250
+#: user_management/views.py:248
 msgid "Invalid email address."
 msgstr "Ungültige E-Mail Addresse"
 
-#: user_management/views.py:258 user_management/views.py:267
+#: user_management/views.py:256 user_management/views.py:265
 msgid "An Account with this email already exists."
 msgstr "Ein Benutzerkonto mit dieser E-Mail existiert bereits."
 
-#: user_management/views.py:277
+#: user_management/views.py:275
 msgid ""
 "Invalid username. Username must contain only letters, numbers, and "
 "underscores, and cannot be empty or contain only whitespace."
@@ -244,26 +244,26 @@ msgstr ""
 "Unterstriche enthalten und darf nicht leer sein oder nur Leerzeichen "
 "enthalten."
 
-#: user_management/views.py:284 user_management/views.py:289
+#: user_management/views.py:282 user_management/views.py:287
 msgid "Username already taken."
 msgstr "Benutzername schon vergeben."
 
-#: user_management/views.py:309
+#: user_management/views.py:307
 msgid "Invalid current password."
 msgstr "Ungültiges aktuelles Passwort."
 
-#: user_management/views.py:323
+#: user_management/views.py:321
 msgid "2FA verification required"
 msgstr "2FA Verifizierung erforderlich"
 
-#: user_management/views.py:330
+#: user_management/views.py:328
 msgid "Invalid or expired request"
 msgstr "Ungültige Anforderungsmethode."
 
-#: user_management/views.py:335
+#: user_management/views.py:333
 msgid "Invalid 2FA code"
 msgstr "2FA code ungültig"
 
-#: user_management/views.py:345
+#: user_management/views.py:343
 msgid "Password changed successfully."
 msgstr "Passwort wurde erfolgreich geändert."

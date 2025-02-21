@@ -1,7 +1,7 @@
 #!/bin/bash
 
 env_vars=(
-    "PGADMIN_DEFAULT_EMAIL"
+    # "PGADMIN_DEFAULT_EMAIL"
     "REMOTE_OAUTH_UID"
 )
 
@@ -30,7 +30,7 @@ for key in "${env_vars[@]}"; do
     fi
 done
 
-certs_dir="backend/certs"
+certs_dir="secrets/certs"
 if [ ! -d "$certs_dir" ]; then
     mkdir -p "$certs_dir"
 fi
