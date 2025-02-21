@@ -1,8 +1,12 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from user_management.blocked_users import Block_Manager, BlockedUsers
-from user_management.friends import Friends, Friends_Manager
+from user_management.friends_blocked_users import (
+	Block_Manager,
+	BlockedUsers,
+	Friends,
+	Friends_Manager,
+)
 from user_management.models import CustomUser
 
 User = CustomUser

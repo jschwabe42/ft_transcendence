@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.utils.translation import gettext as _
 from transcendence.decorators import login_required_redirect
 
-from user_management.friends import Friends, Friends_Manager
+from user_management.friends_blocked_users import Friends, Friends_Manager
 
 User = get_user_model()
 

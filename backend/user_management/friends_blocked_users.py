@@ -49,6 +49,14 @@ class Friends_Manager:
 		target_friend = Friends_Manager.__get_existing_user_instance(target_username)
 		if target_friend == origin:
 			raise ValidationError(gettext('You cannot befriend yourself!'))
+		elif BlockedUsers.objects.filter(blocker=origin, blockee=target_friend).exists():
+			raise ValidationError(
+				gettext('You have blocked this user, you cannot send a friend request.')
+			)
+		elif BlockedUsers.objects.filter(blocker=target_friend, blockee=origin).exists():
+			raise ValidationError(
+				gettext('This user has blocked you, you cannot send a friend request.')
+			)
 		elif (
 			Friends.objects.filter(origin=target_friend, target=origin).exists()
 			or Friends.objects.filter(origin=origin, target=target_friend, accepted=False).exists()
@@ -123,3 +131,67 @@ class Friends_Manager:
 			friendship.delete()
 		else:
 			raise ValueError(gettext('the friendship you are trying to delete does not exist'))
+
+
+class BlockedUsers(models.Model):
+	blocker = models.ForeignKey(User, models.CASCADE)
+	blockee = models.ForeignKey(User, models.CASCADE, related_name='target_for_blocked_users')
+
+	def __hash__(self):
+		return hash((self.blocker, self.blockee))
+
+	def __eq__(self, other):
+		return (self.blocker, self.blockee) == (other.blocker, other.blockee)
+
+
+class Block_Manager:
+	@staticmethod
+	def is_blocked_by(blockee, blocker):
+		"""check for a specific block: blockee si blocked by blocker"""
+		return BlockedUsers.objects.filter(blocker=blocker, blockee=blockee).exists()
+
+	@staticmethod
+	def has_blocked(blocker, blockee):
+		"""check for a specific block: blocker has blocked blockee"""
+		return BlockedUsers.objects.filter(blocker=blocker, blockee=blockee).exists()
+
+	@staticmethod
+	def have_block(origin, target):
+		"""check if either user has blocked the other"""
+		return Block_Manager.is_blocked_by(
+			blockee=origin, blocker=target
+		) or Block_Manager.has_blocked(blocker=origin, blockee=target)
+
+	@staticmethod
+	def block_user(blocker, target_username):
+		"""block a user"""
+		target = Block_Manager.__get_existing_user_instance(target_username)
+		if blocker == target:
+			raise ValidationError('You cannot block yourself!')
+		if Block_Manager.is_blocked_by(blockee=target, blocker=blocker):
+			raise ValidationError('This user is already blocked')
+		# remove friendship with any state (accepted or pending)
+		(friendship, pending) = Friends_Manager.status(blocker, target)
+		if friendship:
+			Friends_Manager.remove_friend(remover=blocker, target_username=target_username)
+		elif pending is not None:
+			if pending:
+				Friends_Manager.cancel_request(origin=blocker, target_username=target_username)
+			else:
+				Friends_Manager.deny_request(target=blocker, origin_username=target_username)
+		else:
+			# if there is no friendship, just block
+			pass
+		BlockedUsers.objects.create(blocker=blocker, blockee=target)
+
+	@staticmethod
+	def unblock_user(origin, target_username):
+		"""unblock a user"""
+		target = Block_Manager.__get_existing_user_instance(target_username)
+		BlockedUsers.objects.filter(blocker=origin, blockee=target).delete()
+
+	# internal
+	def __get_existing_user_instance(string_target_friend):
+		if not User.objects.filter(username=string_target_friend).exists():
+			raise ValidationError('The target user does not exist!')
+		return User.objects.get(username=string_target_friend)
