@@ -15,12 +15,12 @@ Including another URLconf
 	2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.i18n import JavaScriptCatalog
+from django.views.static import serve
 
 from . import views
 
@@ -34,17 +34,21 @@ urlpatterns = [
 	path('dashboard/', include('dashboard.urls')),
 	path('i18n/', include('django.conf.urls.i18n')),
 	path('jsi18n/', JavaScriptCatalog.as_view(), name='js_catalog'),
+	re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
 if not settings.TESTING:
 	urlpatterns = [
 		*urlpatterns,
-	] + debug_toolbar_urls()
+	]
 
 
 # we do not know how this has to be implemented for release
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += [
 	re_path(r'^.*$', views.index, name='index'),

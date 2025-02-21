@@ -85,10 +85,8 @@ TESTING = 'test' in sys.argv
 if not TESTING:
 	INSTALLED_APPS = [
 		*INSTALLED_APPS,
-		'debug_toolbar',
 	]
 	MIDDLEWARE = [
-		'debug_toolbar.middleware.DebugToolbarMiddleware',  # early, but after encoding response content
 		*MIDDLEWARE,
 	]
 
