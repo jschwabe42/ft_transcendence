@@ -30,7 +30,7 @@ for key in "${env_vars[@]}"; do
     fi
 done
 
-certs_dir="pongus_magnificus/certs"
+certs_dir="secrets/certs"
 if [ ! -d "$certs_dir" ]; then
     mkdir -p "$certs_dir"
 fi

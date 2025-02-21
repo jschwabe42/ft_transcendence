@@ -9,4 +9,4 @@ python manage.py migrate
 
 python manage.py collectstatic --noinput
 
-daphne -e ssl:8000:privateKey=certs/dev.key:certKey=certs/dev.crt transcendence.asgi:application
+daphne -e ssl:8000:privateKey=/run/secrets/ssl_key:certKey=/run/secrets/ssl_cert transcendence.asgi:application

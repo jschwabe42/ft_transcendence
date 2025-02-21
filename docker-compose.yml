@@ -1,6 +1,10 @@
 secrets:
   postgres_password:
     file: ./secrets/postgres_password
+  ssl_cert:
+    file: ./secrets/certs/dev.crt
+  ssl_key:
+    file: ./secrets/certs/dev.key
   # pgadmin_password:
   #   file: ./secrets/pgadmin_password
   oauth_api_secret:
@@ -42,6 +46,8 @@ services:
     secrets:
       - postgres_password
       - oauth_api_secret
+      - ssl_cert
+      - ssl_key
     environment:
       - container=docker
     ports:
