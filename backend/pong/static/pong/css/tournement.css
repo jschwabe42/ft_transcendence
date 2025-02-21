@@ -97,22 +97,22 @@
 	width: 100px;
 	height: 24px;
 	object-fit: cover;
-  }
+}
 
 .button-full {
-  padding: 0;
-  margin: 0;
-  border: none;
-  width: 100px;  /* Ajusta el tamaño deseado */
-  height: 100px; /* Ajusta el tamaño deseado */
-  background-color: transparent;
+	padding: 0;
+	margin: 0;
+	border: none;
+	width: 100px;  /* Ajusta el tamaño deseado */
+	height: 100px; /* Ajusta el tamaño deseado */
+	background-color: transparent;
 }
 
 .full-btn-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  object-fit: cover; /* Si deseas que se recorte para llenar el espacio sin distorsiones */
+	display: block;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	object-fit: cover; /* Si deseas que se recorte para llenar el espacio sin distorsiones */
 }

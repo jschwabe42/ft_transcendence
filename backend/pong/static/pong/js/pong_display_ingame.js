@@ -6,71 +6,70 @@ let gameSocket = null;
 export function DisplayPong(params) {
 	const pongContainer = document.getElementById('pong-app-content');
     // Add the active class immediately
-    pongContainer.classList.add('active');
+    // pongContainer.classList.add('active');
 
 	fetch(`/pong/api/ingame/?game_id=${params.game_id}`)
 		.then(response => response.json())
 		.then(model => {
-			gameModel = model;
-			pongContainer.innerHTML = `
-				<main role="main" class="container">
-					<div class="ready-bar">
-						<button class="ready" type="button" id="user_ready">${gettext("Ready")}</button>
+		gameModel = model;
+		pongContainer.innerHTML = `
+			<main role="main" class="container">
+				<div class="ready-bar">
+					<button class="ready" type="button" id="user_ready">${gettext("Ready")}</button>
 
-						<form id="w-s" method="POST">
-							{% csrf_token %}
-							<button class="ready" type="submit" id="ws">
-								<span class="vertical-text">WS</span>
-							</button>
-						</form>
+					<form id="w-s" method="POST">
+						{% csrf_token %}
+						<button class="ready" type="submit" id="ws">
+							<span class="vertical-text">WS</span>
+						</button>
+					</form>
 
-						<form id="up-down" method="POST">
-							{% csrf_token %}
-							<button class="ready" type="button" id="up_down">
-								<span class="vertical-text">▲<br>▼</span>
-							</button>
-						</form>
+					<form id="up-down" method="POST">
+						{% csrf_token %}
+						<button class="ready" type="button" id="up_down">
+							<span class="vertical-text">▲<br>▼</span>
+						</button>
+					</form>
 
-						<p class="is_ready Text" id="is_ready_id">${gettext("Ready")}:</p>
+					<p class="is_ready Text" id="is_ready_id">${gettext("Ready")}:</p>
 
-						<!-- Player 1 Status -->
-						<p class="is_ready" id="ready_player_one" style="display: ${model.player1_ready ? 'block' : 'none'};">${model.player1}</p>
-						
-						<!-- Player 2 Status -->
-						<p class="is_ready" id="ready_player_two" style="display: ${model.player2_ready ? 'block' : 'none'};">${model.player2}</p>
+					<!-- Player 1 Status -->
+					<p class="is_ready" id="ready_player_one" style="display: ${model.player1_ready ? 'block' : 'none'};">${model.player1}</p>
+					
+					<!-- Player 2 Status -->
+					<p class="is_ready" id="ready_player_two" style="display: ${model.player2_ready ? 'block' : 'none'};">${model.player2}</p>
+				</div>
+
+				<div id="gameContainer">
+					<canvas class="gameCanvas" id="game_Canvas" width="800" height="600"></canvas>
+				</div>
+
+				<div class="score">
+					<div class="player">
+						<p>${model.player1}</p>
+						<p id="player1">${model.score1}</p>
 					</div>
-
-					<div id="gameContainer">
-						<canvas class="gameCanvas" id="game_Canvas" width="800" height="600"></canvas>
+					<div class="player">
+						<p>${model.player2}</p>
+						<p id="player2">${model.score2}</p>
 					</div>
-
-					<div class="score">
-						<div class="player">
-							<p>${model.player1}</p>
-							<p id="player1">${model.score1}</p>
-						</div>
-						<div class="player">
-							<p>${model.player2}</p>
-							<p id="player2">${model.score2}</p>
-						</div>
-					</div>
-					<button id="winner" class="navigate-button"" 
-						data-path="${model.tournament_id === 0 ? '/pong/' : '/pong/tournament/' + model.tournament_id}">
-						${gettext("back to menu")}
-					</button>
-				</main>
-			</div>
-			`;
-			renderGameData();
-		})
-		.catch(error => {
-		});
-		pongContainer.getElementById('pong-app-content').addEventListener('click', (event) => {
-		const button = event.target.closest('.navigate-button');
-		if (button && button.dataset.path) {
-			const path = button.dataset.path;
-			closeWebSocketNavigateTo(path);
-		}
+				</div>
+				<button id="winner" class="navigate-button"" 
+					data-path="${model.tournament_id === 0 ? '/pong/' : '/pong/tournament/' + model.tournament_id}">
+					${gettext("Back to Menu")}
+				</button>
+			</main>
+		</div>
+		`;
+		const backToMenuButton = document.getElementById('winner');
+		backToMenuButton.onclick = () => {
+			if (backToMenuButton.dataset.path) {
+				closeWebSocketNavigateTo(backToMenuButton.dataset.path);
+			}
+		};
+		renderGameData();
+	})
+	.catch(error => {
 	});
 }
 
@@ -86,9 +85,11 @@ function renderGameData() {
 	gameSocket = new WebSocket(protocol + window.location.host + '/pong/' + game_id + '/');
 
 	gameSocket.onclose = function (e) {
+		console.log("Pong In-Game Websocket Closed");
 	};
 
 	gameSocket.onopen = function (e) {
+		console.log("Pong In-Game Websocket Connected");
 	};
 
 	const readyButton = document.querySelector("#user_ready");
@@ -246,79 +247,8 @@ function renderGameData() {
 	}
 
 	// Keyboard listener arrows:
-	document.addEventListener('keydown', (event) => {
-		if (event.key === "ArrowUp") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyDownArrowUp"
-			}));
-		}
-		if (event.key === "ArrowDown") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyDownArrowDown"
-			}));
-		}
-	});
-	document.addEventListener('keyup', (event) => {
-		if (event.key === "ArrowUp") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyUpArrowUp"
-			}));
-		}
-		if (event.key === "ArrowDown") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyUpArrowDown"
-			}));
-		}
-	});
-	// w s
-	document.addEventListener('keydown', (event) => {
-		if (event.key === "w") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyDownW"
-			}));
-		}
-		if (event.key === "s") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyDownS"
-			}));
-		}
-	});
-	document.addEventListener('keyup', (event) => {
-		if (event.key === "w") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyUpW"
-			}));
-		}
-		if (event.key === "s") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyUpS"
-			}));
-		}
-	});
+	document.addEventListener("keydown", handleKeyDown);
+	document.addEventListener("keyup", handleKeyUp);
 
 	document.getElementById("ws").addEventListener("click", async function (event) {
 		event.preventDefault();
@@ -378,7 +308,6 @@ function renderGameData() {
 
 function closeWebSocketNavigateTo(path) {
 	if (gameSocket) {
-		console.log("close socket");
 		gameSocket.close();
 		gameSocket = null;
 
@@ -386,4 +315,86 @@ function closeWebSocketNavigateTo(path) {
 			router.navigateTo(path);
 		}, 200);
 	}
+}
+
+export function closePongInGameWebSocket() {
+	if (gameSocket) {
+		gameSocket.close();
+		gameSocket = null;
+	}
+}
+
+function handleKeyUp(event) {
+	if (event.key === "ArrowUp") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyUpArrowUp"
+		}));
+	}
+	if (event.key === "ArrowDown") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyUpArrowDown"
+		}));
+	}
+	if (event.key === "w") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyUpW"
+		}));
+	}
+	if (event.key === "s") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyUpS"
+		}));
+	}
+}
+
+function handleKeyDown(event) {
+	if (event.key === "ArrowUp") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyDownArrowUp"
+		}));
+	}
+	if (event.key === "ArrowDown") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyDownArrowDown"
+		}));
+	}
+	if (event.key === "w") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyDownW"
+		}));
+	}
+	if (event.key === "s") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyDownS"
+		}));
+	}
+}
+
+export function removeKeyEventListener() {
+	document.removeEventListener("keydown", handleKeyDown);
+	document.removeEventListener("keyup", handleKeyUp);
 }

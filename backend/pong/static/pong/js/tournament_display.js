@@ -98,7 +98,7 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 	const user = document.querySelector('meta[name="username-token"]').content;
 
 	tournamentSocket.onopen = function (e) {
-		console.log('WebSocket opend');
+		console.log('Tournament WebSocket connected');
 		tournamentSocket.send(JSON.stringify({ "use": "sync" }));
 	};
 
@@ -142,8 +142,8 @@ function renderTournamentData(tournamentSocket, tournamentModel) {
 		}
 	};
 
-	tournamentSocket.onclose = function (e) {
-		console.error('WebSocket geschlossen:', e);
+	tournamentSocket.onclose = () => {
+		console.log('Tourament WebSocket disconnected');
 	};
 
 	tournamentSocket.onerror = function (e) {
@@ -187,5 +187,12 @@ function closeWebSocketNavigateTo(path) {
 		setTimeout(function() {
 			router.navigateTo(path);
 		}, 200);
+	}
+}
+
+export function closeTournamentWebSocket() {
+	if (tournamentSocket) {
+		tournamentSocket.close();
+		tournamentSocket = null;
 	}
 }
