@@ -34,11 +34,11 @@ services:
   #   restart: always
   #   ports:
   #     - 8080:8080
-  backend:
-    build: ./backend
+  pongus_magnificus:
+    build: ./pongus_magnificus
     <<: *default-env
     volumes:
-      - ./backend:/code
+      - ./pongus_magnificus:/code
     secrets:
       - postgres_password
       - oauth_api_secret
