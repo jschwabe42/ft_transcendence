@@ -1,7 +1,7 @@
 # only requires secrets/.env, secrets/postgres_password to exist
 # dev:
-# 	docker compose build backend
-# 	docker compose up --remove-orphans -d backend
+# 	docker compose build pongus_magnificus
+# 	docker compose up --remove-orphans -d pongus_magnificus
 
 # requires envars, pgadmin_password (see main.yml)
 run:
