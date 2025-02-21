@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-21 01:13+0100\n"
+"POT-Creation-Date: 2025-02-21 13:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,10 +58,6 @@ msgstr "Game ID, Controler 1 und Controler 2 müssen eingegeben werden."
 msgid "You are not a player in this game."
 msgstr "Du bist kein Mitspieler in diesem Spiel."
 
-#: pong/api_views.py:153
-msgid "Control settings successfully updated for user"
-msgstr "Präferenzen für Eingabe erfolgreich aktualisiert"
-
 #: pong/api_views.py:169
 msgid "user does not exist."
 msgstr "Dieser Nutzer existiert nicht!"
@@ -98,15 +94,15 @@ msgstr "Pong"
 msgid "Dashboard"
 msgstr "Benutzerübersicht"
 
-#: transcendence/settings.py:234
+#: transcendence/settings.py:238
 msgid "English"
 msgstr "Englisch"
 
-#: transcendence/settings.py:235
+#: transcendence/settings.py:239
 msgid "Swedish"
 msgstr "Schwedisch"
 
-#: transcendence/settings.py:236
+#: transcendence/settings.py:240
 msgid "German"
 msgstr "Deutsch"
 
@@ -117,44 +113,6 @@ msgstr "2FA benötigt. Bitte gib deinen code ein."
 #: user_management/api_views.py:134 user_management/views.py:140
 msgid "Login successful."
 msgstr "Anmeldung war erfolgreich."
-
-#: user_management/friends.py:51
-msgid "You cannot befriend yourself!"
-msgstr "Du kannst nicht dich selbst befreunden!"
-
-#: user_management/friends.py:56
-msgid "Friend request pending approval."
-msgstr "Es ist bereits eine Freundschaftsanfrage im gange."
-
-#: user_management/friends.py:58
-msgid "You are already friends!"
-msgstr "Ihr seid schon befreundet!"
-
-#: user_management/friends.py:72
-msgid "you did not send the friend request, you can only deny it!"
-msgstr ""
-"Du hast die Freundschaftsanfrage nicht gestellt, du kannst sie nur ablehnen!"
-
-#: user_management/friends.py:82
-msgid "There is no request to deny"
-msgstr "Es gibt keine Freundschaftsanfrage an dich."
-
-#: user_management/friends.py:86
-msgid "you sent the friend request, you can only cancel it!"
-msgstr ""
-"Du hast die Freundschaftsanfrage gestellt und kannst sie nur abbrechen!"
-
-#: user_management/friends.py:98
-msgid "the request you are trying to accept does not exist"
-msgstr "Die anzunehmende Freundschaftsanfrage existiert nicht."
-
-#: user_management/friends.py:113 user_management/friends.py:125
-msgid "the friendship you are trying to delete does not exist"
-msgstr "Es gibt keine Freundschaft zwischen euch!"
-
-#: user_management/friends.py:118
-msgid "The target user does not exist!"
-msgstr "Dieser Nutzer existiert nicht!"
 
 #: user_management/friends_api.py:71
 msgid "Friend request sent successfully."
@@ -175,6 +133,53 @@ msgstr "Freundschaftsanfrage abgelehnt."
 #: user_management/friends_api.py:119
 msgid "Friendship ended."
 msgstr "Freundschaft beendet."
+
+#: user_management/friends_blocked_users.py:51
+msgid "You cannot befriend yourself!"
+msgstr "Du kannst nicht dich selbst befreunden!"
+
+#: user_management/friends_blocked_users.py:54
+msgid "You have blocked this user, you cannot send a friend request."
+msgstr "Du hast diesen Nutzer blockiert, du kannst keine Freundschaftsanfrage senden."
+
+#: user_management/friends_blocked_users.py:58
+msgid "This user has blocked you, you cannot send a friend request."
+msgstr "Dieser Nutzer hat dich blockiert, du kannst ihm keine Freundschaftsanfrage senden."
+
+#: user_management/friends_blocked_users.py:64
+msgid "Friend request pending approval."
+msgstr "Es ist bereits eine Freundschaftsanfrage im gange."
+
+#: user_management/friends_blocked_users.py:66
+msgid "You are already friends!"
+msgstr "Ihr seid schon befreundet!"
+
+#: user_management/friends_blocked_users.py:80
+msgid "you did not send the friend request, you can only deny it!"
+msgstr ""
+"Du hast die Freundschaftsanfrage nicht gestellt, du kannst sie nur ablehnen!"
+
+#: user_management/friends_blocked_users.py:90
+msgid "There is no request to deny"
+msgstr "Es gibt keine Freundschaftsanfrage an dich."
+
+#: user_management/friends_blocked_users.py:94
+msgid "you sent the friend request, you can only cancel it!"
+msgstr ""
+"Du hast die Freundschaftsanfrage gestellt und kannst sie nur abbrechen!"
+
+#: user_management/friends_blocked_users.py:106
+msgid "the request you are trying to accept does not exist"
+msgstr "Die anzunehmende Freundschaftsanfrage existiert nicht."
+
+#: user_management/friends_blocked_users.py:121
+#: user_management/friends_blocked_users.py:133
+msgid "the friendship you are trying to delete does not exist"
+msgstr "Es gibt keine Freundschaft zwischen euch!"
+
+#: user_management/friends_blocked_users.py:126
+msgid "The target user does not exist!"
+msgstr "Dieser Nutzer existiert nicht!"
 
 #: user_management/views.py:43
 msgid "User blocked successfully."
@@ -255,3 +260,6 @@ msgstr "2FA code ungültig"
 #: user_management/views.py:349
 msgid "Password changed successfully."
 msgstr "Passwort wurde erfolgreich geändert."
+
+#~ msgid "Control settings successfully updated for user"
+#~ msgstr "Präferenzen für Eingabe erfolgreich aktualisiert"
