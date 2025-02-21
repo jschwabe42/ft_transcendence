@@ -1,5 +1,4 @@
 import json
-import time
 from datetime import timezone
 
 from asgiref.sync import async_to_sync
