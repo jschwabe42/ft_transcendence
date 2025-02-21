@@ -11,8 +11,9 @@ export function PongOverview() {
 
 	// open socket
 	socket.onopen = () => {
-		console.log("WebSocket Connected");
+		console.log("Pong Overview WebSocket Connected");
 	};
+
 
 	console.log("WebSocket-basierte Base Page");
 
@@ -141,7 +142,7 @@ export function PongOverview() {
 	};
 
 	socket.onclose = () => {
-		console.log("WebSocket disconnected");
+		console.log("Pong Overview WebSocket disconnected");
 	};
 
 	document.getElementById('pong-app-content').addEventListener('click', (event) => {
@@ -163,5 +164,12 @@ function closeWebSocketNavigateTo(path) {
 		setTimeout(function() {
 			router.navigateTo(path);
 		}, 200);
+	}
+}
+
+export function closeRoomOverviewWebSocket() {
+	if (socket) {
+		socket.close();
+		socket = null;
 	}
 }
