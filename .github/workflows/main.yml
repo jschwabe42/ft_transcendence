@@ -45,7 +45,7 @@ jobs:
           docker compose up -d
       - name: check settings.py for exceptions
         run: |
-          docker compose exec backend python transcendence/settings.py
+          docker compose exec pongus_magnificus python transcendence/settings.py
   check:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
