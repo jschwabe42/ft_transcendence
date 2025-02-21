@@ -10,9 +10,9 @@ import { display_account } from '/static/users/js/account.js';
 import { UsersApiHandler } from '/static/users/js/users_api.js';
 
 import { PongOverview, closeRoomOverviewWebSocket } from '/static/pong/js/overview.js';
-import { DisplayPong, closePongInGameWebSocket } from '/static/pong/js/pong_display_ingame.js';
+import { DisplayPong, closePongInGameWebSocket, removeKeyEventListener } from '/static/pong/js/pong_display_ingame.js';
 import { PongResult } from '/static/pong/js/pong_result.js';
-import { DisplayTournament } from '/static/pong/js/tournament_display.js';
+import { DisplayTournament, closeTournamentWebSocket } from '/static/pong/js/tournament_display.js';
 import { PongPractice } from '/static/pong/js/pong_practice.js';
 import { oauth_flow, oauth_callback } from '/static/users/js/oauth.js';
 
@@ -172,7 +172,13 @@ class Router {
 
 		const pongPathPattern = /^\/pong\/\d+$/;
 		if (!pongPathPattern.test(newPath)) {
+			removeKeyEventListener();
 			closePongInGameWebSocket();
+		}
+		
+		const tournamentPathPattern = /^\/pong\/tournament\/\d+$/;
+		if (!tournamentPathPattern.test(newPath)) {
+			closeTournamentWebSocket();
 		}
 	}
 }

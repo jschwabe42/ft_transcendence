@@ -247,79 +247,8 @@ function renderGameData() {
 	}
 
 	// Keyboard listener arrows:
-	document.addEventListener('keydown', (event) => {
-		if (event.key === "ArrowUp") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyDownArrowUp"
-			}));
-		}
-		if (event.key === "ArrowDown") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyDownArrowDown"
-			}));
-		}
-	});
-	document.addEventListener('keyup', (event) => {
-		if (event.key === "ArrowUp") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyUpArrowUp"
-			}));
-		}
-		if (event.key === "ArrowDown") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyUpArrowDown"
-			}));
-		}
-	});
-	// w s
-	document.addEventListener('keydown', (event) => {
-		if (event.key === "w") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyDownW"
-			}));
-		}
-		if (event.key === "s") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyDownS"
-			}));
-		}
-	});
-	document.addEventListener('keyup', (event) => {
-		if (event.key === "w") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyUpW"
-			}));
-		}
-		if (event.key === "s") {
-			gameSocket.send(JSON.stringify({
-				'use': 'KeyboardEvent',
-				'user': user,
-				'game_id': game_id,
-				'key': "KeyUpS"
-			}));
-		}
-	});
+	document.addEventListener("keydown", handleKeyDown);
+	document.addEventListener("keyup", handleKeyUp);
 
 	document.getElementById("ws").addEventListener("click", async function (event) {
 		event.preventDefault();
@@ -393,4 +322,79 @@ export function closePongInGameWebSocket() {
 		gameSocket.close();
 		gameSocket = null;
 	}
+}
+
+function handleKeyUp(event) {
+	if (event.key === "ArrowUp") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyUpArrowUp"
+		}));
+	}
+	if (event.key === "ArrowDown") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyUpArrowDown"
+		}));
+	}
+	if (event.key === "w") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyUpW"
+		}));
+	}
+	if (event.key === "s") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyUpS"
+		}));
+	}
+}
+
+function handleKeyDown(event) {
+	if (event.key === "ArrowUp") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyDownArrowUp"
+		}));
+	}
+	if (event.key === "ArrowDown") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyDownArrowDown"
+		}));
+	}
+	if (event.key === "w") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyDownW"
+		}));
+	}
+	if (event.key === "s") {
+		gameSocket.send(JSON.stringify({
+			'use': 'KeyboardEvent',
+			'user': user,
+			'game_id': game_id,
+			'key': "KeyDownS"
+		}));
+	}
+}
+
+export function removeKeyEventListener() {
+	document.removeEventListener("keydown", handleKeyDown);
+	document.removeEventListener("keyup", handleKeyUp);
 }
