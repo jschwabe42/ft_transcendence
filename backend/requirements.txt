@@ -12,3 +12,4 @@ djangorestframework
 requests
 pyotp
 qrcode
+whitenoise
