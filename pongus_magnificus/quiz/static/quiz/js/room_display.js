@@ -441,25 +441,24 @@ function listener() {
 	window.addEventListener('beforeunload', handleBeforeUnload);
 	window.addEventListener('load', handleLoad);
 }
+
 function handleBeforeUnload(event) {
 	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
+	console.log('Beforeunload event triggered');
 	if (currentRoom) {
 		leaveRoom(currentRoom.room_id);
 	}
 }
+
 function handleLoad(event) {
-	const currentRoom = JSON.parse(localStorage.getItem('currentRoom'));
-	if (currentRoom && currentRoom.room_name) {
-		joinRoom(currentRoom.room_id)
-		.catch(error => {
-			console.error('An error occurred:', error);
-			router.navigateTo('/quiz/');
-		});
-	} else {
+	const url = new URL(window.location.href);
+	const pathname = url.pathname;
+
+	const quizRoomPattern = /^\/quiz\/(.+?)\/$/;
+	if (quizRoomPattern.test(pathname)) {
 		router.navigateTo('/quiz/');
 	}
 }
-
 
 /**
  * Removes the event listeners to make sure they dont interfere with other functionality of the website.

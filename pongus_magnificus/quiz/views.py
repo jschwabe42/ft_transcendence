@@ -178,11 +178,8 @@ def leave_room(request, room_id):
 				room.save()
 			participant.delete()
 			if room.participants.count() == 0:
-				# This sleep may potentially cause severe issues! (server crash)
-				time.sleep(3)
-				if room.participants.count() == 0:
-					room.delete()
-					room_list_update()
+				room.delete()
+				room_list_update()
 			else:
 				room_member_update(room.id)
 		return JsonResponse({'success': True, 'message': 'Left room successfully!'})

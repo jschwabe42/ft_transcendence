@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-21 18:36+0100\n"
+"POT-Creation-Date: 2025-02-21 18:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,10 +58,6 @@ msgstr "Game ID, Controler 1 und Controler 2 müssen eingegeben werden."
 msgid "You are not a player in this game."
 msgstr "Du bist kein Mitspieler in diesem Spiel."
 
-#: pong/api_views.py:153
-msgid "Control settings successfully updated for user"
-msgstr "Präferenzen für Eingabe erfolgreich aktualisiert"
-
 #: pong/api_views.py:169
 msgid "user does not exist."
 msgstr "Dieser Nutzer existiert nicht!"
@@ -74,7 +70,7 @@ msgstr "Tournier erfolgreich erstellt."
 msgid "Games created successfully"
 msgstr "Spiele erfolgreich erstellt"
 
-#: pong/views.py:34 pong/views.py:65
+#: pong/views.py:35 pong/views.py:66
 msgid "No Games Found"
 msgstr "Keine Spiele gefunden."
 
@@ -97,6 +93,10 @@ msgstr "Pong"
 #: templates/index.html:61
 msgid "Dashboard"
 msgstr "Benutzerübersicht"
+
+#: transcendence/decorators.py:28
+msgid "Invalid JWT Token. Please Login"
+msgstr ""
 
 #: transcendence/settings.py:234
 msgid "English"
@@ -194,8 +194,8 @@ msgstr "Benutzer wurde erfolgreich blockiert."
 
 #: user_management/views.py:39 user_management/views.py:53
 #: user_management/views.py:96 user_management/views.py:160
-#: user_management/views.py:183 user_management/views.py:207
-#: user_management/views.py:239 user_management/views.py:296
+#: user_management/views.py:182 user_management/views.py:206
+#: user_management/views.py:238 user_management/views.py:295
 msgid "Invalid request method."
 msgstr "Ungültige Anforderungsmethode."
 
@@ -215,27 +215,27 @@ msgstr "Benutzerkonto wurde erfolgreich erstellt."
 msgid "Invalid username or password!"
 msgstr "Ungülter Benutzername or Passwort!"
 
-#: user_management/views.py:174
+#: user_management/views.py:173
 msgid "Logout successful."
 msgstr "Abmeldung war erfolgreich."
 
-#: user_management/views.py:230
+#: user_management/views.py:229
 msgid "Invalid password."
 msgstr "Ungültiges Passwort."
 
-#: user_management/views.py:238
+#: user_management/views.py:237
 msgid "Profile updated successfully."
 msgstr "Profil erfolgreich aktualisiert."
 
-#: user_management/views.py:248
+#: user_management/views.py:247
 msgid "Invalid email address."
 msgstr "Ungültige E-Mail Addresse"
 
-#: user_management/views.py:256 user_management/views.py:265
+#: user_management/views.py:255 user_management/views.py:264
 msgid "An Account with this email already exists."
 msgstr "Ein Benutzerkonto mit dieser E-Mail existiert bereits."
 
-#: user_management/views.py:275
+#: user_management/views.py:274
 msgid ""
 "Invalid username. Username must contain only letters, numbers, and "
 "underscores, and cannot be empty or contain only whitespace."
@@ -244,26 +244,29 @@ msgstr ""
 "Unterstriche enthalten und darf nicht leer sein oder nur Leerzeichen "
 "enthalten."
 
-#: user_management/views.py:282 user_management/views.py:287
+#: user_management/views.py:281 user_management/views.py:286
 msgid "Username already taken."
 msgstr "Benutzername schon vergeben."
 
-#: user_management/views.py:307
+#: user_management/views.py:306
 msgid "Invalid current password."
 msgstr "Ungültiges aktuelles Passwort."
 
-#: user_management/views.py:321
+#: user_management/views.py:320
 msgid "2FA verification required"
 msgstr "2FA Verifizierung erforderlich"
 
-#: user_management/views.py:328
+#: user_management/views.py:327
 msgid "Invalid or expired request"
 msgstr "Ungültige Anforderungsmethode."
 
-#: user_management/views.py:333
+#: user_management/views.py:332
 msgid "Invalid 2FA code"
 msgstr "2FA code ungültig"
 
-#: user_management/views.py:343
+#: user_management/views.py:342
 msgid "Password changed successfully."
 msgstr "Passwort wurde erfolgreich geändert."
+
+#~ msgid "Control settings successfully updated for user"
+#~ msgstr "Präferenzen für Eingabe erfolgreich aktualisiert"
