@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-21 18:36+0100\n"
+"POT-Creation-Date: 2025-02-21 18:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -60,10 +60,6 @@ msgstr "game_id, control1 och control2 är obligatoriska."
 msgid "You are not a player in this game."
 msgstr "Du är inte en spelare i det här spelet."
 
-#: pong/api_views.py:153
-msgid "Control settings successfully updated for user"
-msgstr ""
-
 #: pong/api_views.py:169
 msgid "user does not exist."
 msgstr "Användaren finns inte."
@@ -78,7 +74,7 @@ msgstr "Turneringen har skapats framgångsrikt."
 msgid "Games created successfully"
 msgstr "Spel har skapats framgångsrikt."
 
-#: pong/views.py:34 pong/views.py:65
+#: pong/views.py:35 pong/views.py:66
 #, fuzzy
 #| msgid "Game not found."
 msgid "No Games Found"
@@ -103,6 +99,10 @@ msgstr "Pong"
 #: templates/index.html:61
 msgid "Dashboard"
 msgstr "Översikt"
+
+#: transcendence/decorators.py:28
+msgid "Invalid JWT Token. Please Login"
+msgstr Ogiltig JWT-token. Logga in"
 
 #: transcendence/settings.py:234
 msgid "English"
@@ -203,8 +203,8 @@ msgstr "Användaren blockerades framgångsrikt."
 
 #: user_management/views.py:39 user_management/views.py:53
 #: user_management/views.py:96 user_management/views.py:160
-#: user_management/views.py:183 user_management/views.py:207
-#: user_management/views.py:239 user_management/views.py:296
+#: user_management/views.py:182 user_management/views.py:206
+#: user_management/views.py:238 user_management/views.py:295
 msgid "Invalid request method."
 msgstr "Ogiltig metod för begäran."
 
@@ -226,27 +226,27 @@ msgstr "Konto har skapats framgångsrikt."
 msgid "Invalid username or password!"
 msgstr "Ogiltigt användarnamn eller lösenord!"
 
-#: user_management/views.py:174
+#: user_management/views.py:173
 msgid "Logout successful."
 msgstr "Utloggningen lyckades."
 
-#: user_management/views.py:230
+#: user_management/views.py:229
 msgid "Invalid password."
 msgstr "Ogiltigt lösenord."
 
-#: user_management/views.py:238
+#: user_management/views.py:237
 msgid "Profile updated successfully."
 msgstr "Profilen uppdaterades framgångsrikt."
 
-#: user_management/views.py:248
+#: user_management/views.py:247
 msgid "Invalid email address."
 msgstr "Ogiltig e-postadress."
 
-#: user_management/views.py:256 user_management/views.py:265
+#: user_management/views.py:255 user_management/views.py:264
 msgid "An Account with this email already exists."
 msgstr "Ett konto med den här e-postadressen finns redan."
 
-#: user_management/views.py:275
+#: user_management/views.py:274
 msgid ""
 "Invalid username. Username must contain only letters, numbers, and "
 "underscores, and cannot be empty or contain only whitespace."
@@ -255,30 +255,30 @@ msgstr ""
 "siffror och understreck och får inte vara tomt eller innehålla enbart "
 "blanksteg."
 
-#: user_management/views.py:282 user_management/views.py:287
+#: user_management/views.py:281 user_management/views.py:286
 msgid "Username already taken."
 msgstr "Användarnamn redan taget."
 
-#: user_management/views.py:307
+#: user_management/views.py:306
 msgid "Invalid current password."
 msgstr "Ogiltigt aktuellt lösenord."
 
-#: user_management/views.py:321
+#: user_management/views.py:320
 msgid "2FA verification required"
 msgstr "2FA-verifiering krävs"
 
-#: user_management/views.py:328
+#: user_management/views.py:327
 #, fuzzy
 #| msgid "Invalid request method."
 msgid "Invalid or expired request"
 msgstr "Ogiltig metod för begäran."
 
-#: user_management/views.py:333
+#: user_management/views.py:332
 #, fuzzy
 #| msgid "Invalid password."
 msgid "Invalid 2FA code"
 msgstr "Ogiltigt lösenord."
 
-#: user_management/views.py:343
+#: user_management/views.py:342
 msgid "Password changed successfully."
 msgstr "Lösenordet har ändrats framgångsrikt."
