@@ -78,7 +78,13 @@ function initCreateRoomForm() {
 			// loadRoomView(data.room_name);
 			joinRoom(data.room_id);
 		} else {
-			feedbackDiv.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+			if (data.invalid_jwt && data.is_logged === false) {
+				feedbackDiv.innerHTML = `<div class="alert alert-danger">${gettext("Please login to do this action")}</div>`;
+			} else if (data.invalid_jwt && data.is_logged === true) {
+				feedbackDiv.innerHTML = `<div class="alert alert-danger">${gettext("Invalid JWT Token, Please login again")}</div>`;
+			} else {
+				feedbackDiv.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+			}
 		}
 	})
 	.catch(error => {
@@ -198,8 +204,11 @@ export function joinRoom(roomId) {
 			localStorage.setItem('currentRoom', JSON.stringify({ room_id, room_name, leader, participants, current_user, is_ingame }));
 			router.navigateTo(`/quiz/${room_name}/`);
 		} else {
-			alert(data.error);
-			throw new Error(data.error);
+			if (data.invalid_jwt && data.is_logged === false) {
+				alert(gettext("Please login to do this action"));
+			} else if (data.invalid_jwt && data.is_logged === true) {
+				alert(gettext("Invalid JWT Token, Please login again"));
+			}
 		}
 	})
 	.catch(error => {

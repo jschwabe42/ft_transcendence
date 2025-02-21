@@ -66,6 +66,14 @@ function fetchData(username) {
 				}
 			} else {
 				console.error('Failed to fetch profile');
+				if (data.invalid_jwt && data.is_logged === false) {
+					alert(gettext("Please log in to view this profile."));
+					router.navigateTo('/login/');
+				}
+				else if (data.invalid_jwt && data.is_logged === true) {
+					alert(gettext("Invalid JWT token. Please log in again."));
+					router.navigateTo('/logout/');
+				}
 			}
 		})
 		.catch(error => {

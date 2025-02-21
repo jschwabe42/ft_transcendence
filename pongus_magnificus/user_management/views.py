@@ -160,7 +160,6 @@ def login_view(request):
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
 
-@login_required_redirect
 def logout_view(request):
 	"""
 	Logout a user.

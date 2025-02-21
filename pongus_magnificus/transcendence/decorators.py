@@ -1,5 +1,5 @@
 from functools import wraps
-
+from django.utils.translation import gettext as _
 from django.conf import settings
 from django.http import JsonResponse
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -20,9 +20,18 @@ def login_required_redirect(view_func):
 		refresh_token = request.COOKIES.get('refresh_token')
 
 		def create_unauthorized_response():
-			response = JsonResponse({'error': 'Unauthorized'}, status=401)
-			response.delete_cookie('access_token', domain=settings.SESSION_COOKIE_DOMAIN)
-			response.delete_cookie('refresh_token', domain=settings.SESSION_COOKIE_DOMAIN)
+			is_logged = False
+			if (request.user is not None) and (request.user.is_authenticated):
+				is_logged = True
+			response = JsonResponse(
+				{
+					'message': _('Invalid JWT Token. Please Login'),
+					'invalid_jwt': True,
+					'redirected': True,
+					'is_logged': is_logged,
+				},
+				status=401,
+			)
 			return response
 
 		def set_secure_cookie(response, name, value):
@@ -57,19 +66,6 @@ def login_required_redirect(view_func):
 
 					except (InvalidToken, TokenError):
 						return create_unauthorized_response()
-				return create_unauthorized_response()
-
-		# If no JWT tokens but session auth exists
-		if request.user.is_authenticated:
-			try:
-				refresh = RefreshToken.for_user(request.user)
-				response = view_func(request, *args, **kwargs)
-
-				set_secure_cookie(response, 'access_token', str(refresh.access_token))
-				set_secure_cookie(response, 'refresh_token', str(refresh))
-
-				return response
-			except Exception:
 				return create_unauthorized_response()
 
 		return create_unauthorized_response()
