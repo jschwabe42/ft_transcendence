@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 21:44+0100\n"
+"POT-Creation-Date: 2025-02-21 01:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: dashboard/static/dashboard/js/dashboard.js:6
-#: pong/static/pong/js/overview.js:55
+#: pong/static/pong/js/overview.js:57
 msgid "Refresh"
 msgstr "Uppdatera"
 
@@ -218,61 +218,61 @@ msgstr "Inga senaste spelen."
 msgid "pending Tournament game"
 msgstr "i väntan på turnering gam"
 
-#: pong/static/pong/js/overview.js:36 pong/static/pong/js/overview.js:114
+#: pong/static/pong/js/overview.js:36 pong/static/pong/js/overview.js:116
 msgid "pending"
 msgstr "pending"
 
-#: pong/static/pong/js/overview.js:43 pong/static/pong/js/pong_practice.js:11
+#: pong/static/pong/js/overview.js:45 pong/static/pong/js/pong_practice.js:13
 #, fuzzy
 #| msgid "Start Game"
 msgid "Practice Game"
 msgstr "Starta spelet"
 
-#: pong/static/pong/js/overview.js:46
+#: pong/static/pong/js/overview.js:48
 #, fuzzy
 #| msgid "Open Tournaments"
 msgid "New Tournament"
 msgstr "Öppna turneringar"
 
-#: pong/static/pong/js/overview.js:49
+#: pong/static/pong/js/overview.js:51
 #, fuzzy
 #| msgid "Play Game +"
 msgid "Play Game"
 msgstr "Spela Spel"
 
-#: pong/static/pong/js/overview.js:50
+#: pong/static/pong/js/overview.js:52
 #, fuzzy
 #| msgid "Enter room name"
 msgid "Enter opponent Username"
 msgstr "Ange nytt rumsnamn"
 
-#: pong/static/pong/js/overview.js:54
+#: pong/static/pong/js/overview.js:56
 msgid "Recent Games"
 msgstr "Senaste spelen"
 
-#: pong/static/pong/js/overview.js:57
+#: pong/static/pong/js/overview.js:59
 msgid "No games have been played yet."
 msgstr "Inga matcher har spelats ännu."
 
-#: pong/static/pong/js/overview.js:60
+#: pong/static/pong/js/overview.js:62
 #, fuzzy
 #| msgid "Start Game"
 msgid "Pending Games"
 msgstr "Starta spelet"
 
-#: pong/static/pong/js/overview.js:61 pong/static/pong/js/overview.js:108
+#: pong/static/pong/js/overview.js:63 pong/static/pong/js/overview.js:110
 msgid "No pending games."
 msgstr "Inga pågående spel."
 
-#: pong/static/pong/js/overview.js:63
+#: pong/static/pong/js/overview.js:65
 msgid "Open Tournaments"
 msgstr "Öppna turneringar"
 
-#: pong/static/pong/js/overview.js:90 pong/static/pong/js/overview.js:127
+#: pong/static/pong/js/overview.js:92 pong/static/pong/js/overview.js:129
 msgid "Join Open Tournament"
 msgstr "Delta i öppen turnering"
 
-#: pong/static/pong/js/overview.js:95
+#: pong/static/pong/js/overview.js:97
 msgid "No open tournaments."
 msgstr "Inga öppna turneringar."
 
@@ -284,51 +284,51 @@ msgstr ""
 msgid "Error, enter a Username!!"
 msgstr ""
 
-#: pong/static/pong/js/pong_display_ingame.js:15
-#: pong/static/pong/js/pong_display_ingame.js:31
+#: pong/static/pong/js/pong_display_ingame.js:18
+#: pong/static/pong/js/pong_display_ingame.js:34
 msgid "Ready"
 msgstr "Redo"
 
-#: pong/static/pong/js/pong_display_ingame.js:56
+#: pong/static/pong/js/pong_display_ingame.js:59
 msgid "back to menu"
 msgstr "Tillbaka till menyn"
 
-#: pong/static/pong/js/pong_practice.js:12
+#: pong/static/pong/js/pong_practice.js:14
 msgid "Left Paddels: W S; Right Paddels: UP DOWN;"
 msgstr "Vänster paddel: W S; Höger paddel: UPP NER;"
 
-#: pong/static/pong/js/pong_practice.js:15
-#: pong/static/pong/js/pong_practice.js:193
+#: pong/static/pong/js/pong_practice.js:17
+#: pong/static/pong/js/pong_practice.js:196
 #: quiz/static/quiz/js/room_display.js:16
 msgid "Start Game"
 msgstr "Starta spelet"
 
-#: pong/static/pong/js/pong_practice.js:25
-#: pong/static/pong/js/pong_practice.js:29
+#: pong/static/pong/js/pong_practice.js:27
+#: pong/static/pong/js/pong_practice.js:31
 msgid "player"
 msgstr "spelare"
 
-#: pong/static/pong/js/pong_practice.js:188
+#: pong/static/pong/js/pong_practice.js:191
 #, fuzzy
 #| msgid "Start Game"
 msgid "Pause Game"
 msgstr "Starta spelet"
 
-#: pong/static/pong/js/tournament_display.js:28
+#: pong/static/pong/js/tournament_display.js:30
 msgid "Welcome to Tournament"
 msgstr "Skapa rum"
 
-#: pong/static/pong/js/tournament_display.js:56
+#: pong/static/pong/js/tournament_display.js:58
 #, fuzzy
 msgid "Play Tournament Games +"
 msgstr "Skapa rum"
 
-#: pong/static/pong/js/tournament_display.js:60
+#: pong/static/pong/js/tournament_display.js:62
 #, fuzzy
 msgid "Start Final Game"
 msgstr "Starta spelet"
 
-#: pong/static/pong/js/tournament_display.js:63
+#: pong/static/pong/js/tournament_display.js:65
 msgid "Go to Menu"
 msgstr "Gå till menyn"
 
@@ -388,7 +388,7 @@ msgid "Enter room name"
 msgstr "Ange nytt rumsnamn"
 
 #: quiz/static/quiz/js/room_list.js:25
-#: user_management/static/users/js/account.js:38
+#: user_management/static/users/js/account.js:123
 msgid "Submit"
 msgstr "Skapa"
 
@@ -424,181 +424,181 @@ msgstr "Sammanfoga rum"
 msgid "Available Rooms"
 msgstr "Tillgängliga rum"
 
-#: static/js/navbar.js:69
+#: static/js/navbar.js:70
 msgid "Welcome to the Transcendence Webpage"
 msgstr "Välkommen till vår Transcendence-webbsida"
 
-#: static/js/navbar.js:70
+#: static/js/navbar.js:71
 msgid "This is a webpage created for the Transcendence project."
 msgstr "Detta är en webbsida som skapats för Transcendence-projektet."
 
-#: static/js/navbar.js:72
+#: static/js/navbar.js:73
 msgid "Features:"
 msgstr "Egenskaper:"
 
-#: static/js/navbar.js:73
+#: static/js/navbar.js:74
 msgid "points. (Minor Module = 1 point, Major Module = 2 points!)"
 msgstr "poäng. (Mindre modul = 1 poäng, större modul = 2 poäng!)"
 
-#: static/js/navbar.js:74
+#: static/js/navbar.js:75
 msgid ""
 "14 points are sufficient for the basic requirements with 19 giving 125%!"
 msgstr "14 poäng är tillräckligt för de grundläggande kraven och 19 ger 125%!"
 
-#: static/js/navbar.js:75
+#: static/js/navbar.js:76
 msgid "Minimal Requirements (no points, all need to be fullfilled):"
 msgstr ""
 
-#: static/js/navbar.js:77
+#: static/js/navbar.js:78
 msgid ""
 "Your website must be a single page application, the Back and Forward buttons "
 "of the browser need to work."
 msgstr ""
 
-#: static/js/navbar.js:78
+#: static/js/navbar.js:79
 msgid ""
 "Your website must be compatible with the latest version of Google Chrome."
 msgstr ""
 
-#: static/js/navbar.js:79
+#: static/js/navbar.js:80
 msgid "Everything needs to be launched with a single command line. (make)"
 msgstr ""
 
-#: static/js/navbar.js:80
+#: static/js/navbar.js:81
 msgid "Any password stored in the database must be hashed."
 msgstr ""
 
-#: static/js/navbar.js:81
+#: static/js/navbar.js:82
 msgid "Your website must be protected against SQL injections/XSS."
 msgstr ""
 
-#: static/js/navbar.js:82
+#: static/js/navbar.js:83
 msgid "HTTPS must be enabled and WSS needs to be used instead of ws."
 msgstr ""
 
-#: static/js/navbar.js:83
+#: static/js/navbar.js:84
 msgid "A pong game needs to be implemented. (See issues)."
 msgstr ""
 
-#: static/js/navbar.js:86
+#: static/js/navbar.js:87
 msgid "Modules:"
 msgstr ""
 
-#: static/js/navbar.js:88
+#: static/js/navbar.js:89
 msgid "Major: Use a Framwork as backend. 2 points!"
 msgstr ""
 
-#: static/js/navbar.js:89
+#: static/js/navbar.js:90
 msgid "Minor: Use a frontend framework or toolkit. 1 point!"
 msgstr ""
 
-#: static/js/navbar.js:90
+#: static/js/navbar.js:91
 msgid "Minor: Use a database for the backend. 1 point!"
 msgstr ""
 
-#: static/js/navbar.js:91
+#: static/js/navbar.js:92
 msgid "Major: User Management. Pong Match history and Online status missing!"
 msgstr ""
 
-#: static/js/navbar.js:92
+#: static/js/navbar.js:93
 msgid "Major: Remote authentication. 2 points!"
 msgstr ""
 
-#: static/js/navbar.js:93
+#: static/js/navbar.js:94
 msgid "Major: Remote players. 2 points!"
 msgstr ""
 
-#: static/js/navbar.js:94
+#: static/js/navbar.js:95
 #, javascript-format
 msgid ""
 "Major: Multiple players. 2 points! (Technically, since it isn't "
 "100% specified which game)"
 msgstr ""
 
-#: static/js/navbar.js:95
+#: static/js/navbar.js:96
 msgid "Major: Add another game with user history and matchmaking. 2 points!"
 msgstr ""
 
-#: static/js/navbar.js:96
+#: static/js/navbar.js:97
 msgid "Minor: Game Customization options. 1 point!"
 msgstr ""
 
-#: static/js/navbar.js:97
+#: static/js/navbar.js:98
 msgid ""
 "Minor: User and Game stats dashboard. A way to display pong game outcomes is "
 "missing. Pong/Tournament data needs to be added. A graph should be added "
 "(but i could argue that point if necessary)"
 msgstr ""
 
-#: static/js/navbar.js:98
+#: static/js/navbar.js:99
 msgid "Major: 2FA and JWT. The branch is not yet merged."
 msgstr ""
 
-#: static/js/navbar.js:99
+#: static/js/navbar.js:100
 msgid "Minor: Expanding Browser Compability (Chrome, Edge, Firefox?). 1 point!"
 msgstr ""
 
-#: static/js/navbar.js:100
+#: static/js/navbar.js:101
 msgid ""
 "Minor: Multiple language support (Some things still need translations!). 1 "
 "point!"
 msgstr ""
 
-#: static/js/navbar.js:101
+#: static/js/navbar.js:102
 msgid ""
 "Major: Server side pong. Already implemented, as soon as the pong bugs are "
 "fixed, this can be marked done."
 msgstr ""
 
-#: static/js/navbar.js:102
+#: static/js/navbar.js:103
 msgid ""
 "Major: Pong gameplay via CLI. Already implemented AFAIK, as soon as the pong "
 "bugs are fixed, this can be marked done."
 msgstr ""
 
-#: static/js/navbar.js:105
+#: static/js/navbar.js:106
 msgid "About:"
 msgstr "Om:"
 
-#: static/js/navbar.js:106
+#: static/js/navbar.js:107
 msgid ""
 "This project is part of the core curriculum of 42 and serves as its final "
 "project."
 msgstr "Detta projekt ingår i kärnämnet 42 och fungerar som dess slutprojekt"
 
-#: static/js/navbar.js:106
+#: static/js/navbar.js:107
 msgid "This is our take on it."
 msgstr "Detta är vår syn på saken"
 
-#: static/js/navbar.js:107
+#: static/js/navbar.js:108
 msgid "Our Projects GitHub Repository"
 msgstr "Våra projekt GitHub Repository"
 
-#: static/js/navbar.js:108
+#: static/js/navbar.js:109
 msgid "The team:"
 msgstr "Teamet:"
 
-#: static/js/navbar.js:117
+#: static/js/navbar.js:118
 msgid "Ressources used:"
 msgstr "Använda resurser:"
 
-#: static/js/navbar.js:130
+#: static/js/navbar.js:131
 msgid "Libraries used:"
 msgstr "Använda bibliotek:"
 
-#: static/js/navbar.js:154
+#: static/js/navbar.js:155
 msgid "Account"
 msgstr "Användarkonto"
 
-#: static/js/navbar.js:155 user_management/static/users/js/logout.js:12
+#: static/js/navbar.js:156 user_management/static/users/js/logout.js:12
 msgid "Logout"
 msgstr "Logga ut"
 
-#: static/js/navbar.js:171 user_management/static/users/js/login.js:13
+#: static/js/navbar.js:172 user_management/static/users/js/login.js:56
 msgid "Login"
 msgstr "Logga in"
 
-#: static/js/navbar.js:172 user_management/static/users/js/login.js:32
+#: static/js/navbar.js:173 user_management/static/users/js/login.js:78
 #: user_management/static/users/js/logout.js:17
 msgid "Register"
 msgstr "Registrera"
@@ -611,113 +611,325 @@ msgstr "Sidan hittades inte!"
 msgid "Please ensure the current URL is correct."
 msgstr "Se till att den aktuella URL:en är korrekt."
 
-#: user_management/static/users/js/account.js:13
+#: user_management/static/users/js/account.js:95
 msgid "Your Profile Picture"
 msgstr "Din profilbild"
 
-#: user_management/static/users/js/account.js:25
+#: user_management/static/users/js/account.js:107
 msgid "Profile Info:"
 msgstr "Profilinfomation:"
 
-#: user_management/static/users/js/account.js:28
-#: user_management/static/users/js/login.js:15
+#: user_management/static/users/js/account.js:110
+#: user_management/static/users/js/login.js:58
 #: user_management/static/users/js/register.js:14
 msgid "Username:"
 msgstr "Användarnamn:"
 
-#: user_management/static/users/js/account.js:32
+#: user_management/static/users/js/account.js:115
 #: user_management/static/users/js/register.js:20
 msgid "Email:"
 msgstr "E-Post:"
 
-#: user_management/static/users/js/account.js:35
+#: user_management/static/users/js/account.js:119
 msgid "Update Profile Data"
 msgstr "Uppdatera profildata"
 
-#: user_management/static/users/js/account.js:37
+#: user_management/static/users/js/account.js:122
 msgid "Enter your password"
 msgstr "Ange lösenord"
 
-#: user_management/static/users/js/account.js:42
+#: user_management/static/users/js/account.js:128
 msgid "Change Password"
 msgstr "Ändra lösenord"
 
-#: user_management/static/users/js/account.js:44
+#: user_management/static/users/js/account.js:131
 msgid "Current Password"
 msgstr "Aktuellt lösenord"
 
-#: user_management/static/users/js/account.js:45
+#: user_management/static/users/js/account.js:133
 msgid "New Password"
 msgstr "Nytt lösenord"
 
-#: user_management/static/users/js/account.js:46
+#: user_management/static/users/js/account.js:135
 msgid "Repeat New Password"
 msgstr "Upprepa nytt lösenord"
 
-#: user_management/static/users/js/account.js:47
+#: user_management/static/users/js/account.js:136
 msgid "Save"
 msgstr "Spara"
 
-#: user_management/static/users/js/account.js:102
-msgid "Password is required."
+#: user_management/static/users/js/account.js:140
+msgid "Two-Factor Authentication Required"
+msgstr ""
+
+#: user_management/static/users/js/account.js:141
+msgid ""
+"Please enter your 2FA code to complete this security-sensitive operation:"
+msgstr ""
+
+#: user_management/static/users/js/account.js:143
+#: user_management/static/users/js/account.js:162
+#: user_management/static/users/js/account.js:176
+msgid "Enter 2FA Code"
+msgstr ""
+
+#: user_management/static/users/js/account.js:145
+#: user_management/static/users/js/login.js:91
+#: user_management/static/users/js/oauth.js:28
+msgid "Verify"
+msgstr ""
+
+#: user_management/static/users/js/account.js:146
+#: user_management/static/users/js/account.js:165
+#: user_management/static/users/js/login.js:92
+#: user_management/static/users/js/oauth.js:29
+#, fuzzy
+#| msgid "Cancel Request"
+msgid "Cancel"
+msgstr "Avbryt förfrågan"
+
+#: user_management/static/users/js/account.js:152
+msgid "Two-Factor Authentication (2FA):"
+msgstr ""
+
+#: user_management/static/users/js/account.js:154
+msgid "Status:"
+msgstr ""
+
+#: user_management/static/users/js/account.js:154
+#: user_management/static/users/js/account.js:329
+msgid "Disabled"
+msgstr ""
+
+#: user_management/static/users/js/account.js:156
+#: user_management/static/users/js/account.js:330
+msgid "Enable 2FA"
+msgstr ""
+
+#: user_management/static/users/js/account.js:160
+msgid "Enter your 2FA code to disable:"
+msgstr ""
+
+#: user_management/static/users/js/account.js:164
+msgid "Confirm Disable"
+msgstr ""
+
+#: user_management/static/users/js/account.js:171
+msgid "Scan the QR code below with your authenticator app:"
+msgstr ""
+
+#: user_management/static/users/js/account.js:173
+msgid "Or enter this code manually:"
+msgstr ""
+
+#: user_management/static/users/js/account.js:174
+msgid "Enter the code from your authenticator app to enable 2FA:"
+msgstr ""
+
+#: user_management/static/users/js/account.js:177
+msgid "Confirm"
+msgstr ""
+
+#: user_management/static/users/js/account.js:277
+msgid "Failed to load account details"
+msgstr ""
+
+#: user_management/static/users/js/account.js:326
+#: user_management/static/users/js/account.js:742
+msgid "Enabled"
+msgstr ""
+
+#: user_management/static/users/js/account.js:327
+msgid "Disable 2FA"
+msgstr ""
+
+#: user_management/static/users/js/account.js:359
+#: user_management/static/users/js/login.js:203
+msgid "Password is required"
 msgstr "Lösenord krävs"
 
-#: user_management/static/users/js/account.js:134
-msgid "No changes detected."
-msgstr "Inga förändringar upptäckta."
-
-#: user_management/static/users/js/account.js:140
-msgid "Password is required to update profile data."
-msgstr "Lösenord krävs för att uppdatera profildata."
-
-#: user_management/static/users/js/account.js:212
-msgid "All fields are required."
+#: user_management/static/users/js/account.js:419
+#, fuzzy
+#| msgid "All fields are required."
+msgid "All password fields are required"
 msgstr "Alla fält måste fyllas i."
 
-#: user_management/static/users/js/account.js:216
-msgid "New password and repeat password do not match."
-msgstr "Det nya lösenordet och det upprepade lösenordet stämmer inte överens."
+#: user_management/static/users/js/account.js:424
+#, fuzzy
+#| msgid "Passwords do not match!"
+msgid "New passwords do not match"
+msgstr "Lösenorden stämmer inte överens!"
 
-#: user_management/static/users/js/login.js:21
+#: user_management/static/users/js/account.js:469
+#: user_management/static/users/js/account.js:818
+#, fuzzy
+#| msgid "Change Password"
+msgid "Failed to change password"
+msgstr "Ändra lösenord"
+
+#: user_management/static/users/js/account.js:484
+#: user_management/static/users/js/account.js:952
+#: user_management/static/users/js/account.js:991
+#: user_management/static/users/js/login.js:269
+#: user_management/static/users/js/oauth.js:157
+msgid "Please enter a valid 6-digit code"
+msgstr ""
+
+#: user_management/static/users/js/account.js:489
+#, fuzzy
+#| msgid "No pending games."
+msgid "No pending password change"
+msgstr "Inga pågående spel."
+
+#: user_management/static/users/js/account.js:531
+msgid "Failed to verify and update password"
+msgstr ""
+
+#: user_management/static/users/js/account.js:725
+msgid "Please select an image file"
+msgstr ""
+
+#: user_management/static/users/js/account.js:782
+msgid "Failed to start 2FA setup"
+msgstr ""
+
+#: user_management/static/users/js/account.js:875
+#, fuzzy
+#| msgid "No changes detected."
+msgid "No changes detected"
+msgstr "Inga förändringar upptäckta."
+
+#: user_management/static/users/js/account.js:881
+#, fuzzy
+#| msgid "Password is required to update profile data."
+msgid "Password is required to update profile"
+msgstr "Lösenord krävs för att uppdatera profildata."
+
+#: user_management/static/users/js/account.js:979
+msgid "Failed to confirm 2FA setup"
+msgstr ""
+
+#: user_management/static/users/js/account.js:1020
+msgid "Failed to disable 2FA"
+msgstr ""
+
+#: user_management/static/users/js/login.js:65
 #: user_management/static/users/js/register.js:25
 msgid "Password:"
 msgstr "Lösenord:"
 
-#: user_management/static/users/js/login.js:26
+#: user_management/static/users/js/login.js:71
 #: user_management/static/users/js/logout.js:22
 #: user_management/static/users/js/register.js:39
 msgid "Sign In"
 msgstr "Logga in"
 
-#: user_management/static/users/js/login.js:28
+#: user_management/static/users/js/login.js:73
 msgid "OAuth2 using 42"
 msgstr "OAuth2 med 42"
 
-#: user_management/static/users/js/login.js:32
+#: user_management/static/users/js/login.js:77
 #: user_management/static/users/js/logout.js:17
 msgid "Want to create an Account?"
 msgstr "Vill du skapa ett konto?"
 
-#: user_management/static/users/js/login.js:60
+#: user_management/static/users/js/login.js:86
+#: user_management/static/users/js/oauth.js:23
+msgid "Two-Factor Authentication"
+msgstr ""
+
+#: user_management/static/users/js/login.js:87
+#: user_management/static/users/js/oauth.js:24
+msgid "Please enter your 2FA code:"
+msgstr ""
+
+#: user_management/static/users/js/login.js:89
+#: user_management/static/users/js/oauth.js:26
+msgid "6-digit code"
+msgstr ""
+
+#: user_management/static/users/js/login.js:174
+#, fuzzy
+#| msgid "Error loading rooms. Please try again later."
+msgid "Network error. Please try again."
+msgstr "Fel vid laddning av rum. Vänligen försök igen senare."
+
+#: user_management/static/users/js/login.js:196
 msgid "Username is required"
 msgstr "Användarnamn krävs"
 
-#: user_management/static/users/js/login.js:66
-msgid "Password is required"
-msgstr "Lösenord krävs"
+#: user_management/static/users/js/login.js:298
+#: user_management/static/users/js/oauth.js:186
+msgid "Invalid 2FA code"
+msgstr ""
+
+#: user_management/static/users/js/login.js:307
+msgid "Verification failed. Please try again."
+msgstr ""
+
+#: user_management/static/users/js/login.js:372
+msgid "Authentication failed"
+msgstr ""
 
 #: user_management/static/users/js/logout.js:22
 #: user_management/static/users/js/register.js:39
 msgid "Already have an account?"
 msgstr "Har du redan ett konto?"
 
-#: user_management/static/users/js/oauth.js:24
-msgid "OAuth Error"
-msgstr "OAuth-fel"
+#: user_management/static/users/js/oauth.js:18
+msgid "42 OAuth Authentication"
+msgstr ""
 
-#: user_management/static/users/js/oauth.js:27
+#: user_management/static/users/js/oauth.js:19
+msgid "Preparing authentication..."
+msgstr ""
+
+#: user_management/static/users/js/oauth.js:51
+msgid "Redirecting to 42's authentication service..."
+msgstr ""
+
+#: user_management/static/users/js/oauth.js:67
+msgid "OAuth initialization failed"
+msgstr ""
+
+#: user_management/static/users/js/oauth.js:73
+msgid "Failed to initialize OAuth:"
+msgstr ""
+
+#: user_management/static/users/js/oauth.js:75
+#: user_management/static/users/js/oauth.js:276
 msgid "Back to Login"
 msgstr "Tillbaka till Logga in"
+
+#: user_management/static/users/js/oauth.js:90
+msgid "Completing Authentication"
+msgstr ""
+
+#: user_management/static/users/js/oauth.js:91
+msgid "Verifying your authentication with 42..."
+msgstr ""
+
+#: user_management/static/users/js/oauth.js:105
+msgid "Missing required OAuth parameters"
+msgstr ""
+
+#: user_management/static/users/js/oauth.js:126
+msgid "OAuth authentication failed"
+msgstr ""
+
+#: user_management/static/users/js/oauth.js:196
+msgid "Verification failed:"
+msgstr ""
+
+#: user_management/static/users/js/oauth.js:250
+msgid "Login successful! Redirecting to dashboard..."
+msgstr ""
+
+#: user_management/static/users/js/oauth.js:273
+#, fuzzy
+#| msgid "OAuth Error"
+msgid "Authentication Error"
+msgstr "OAuth-fel"
 
 #: user_management/static/users/js/register.js:12
 msgid "Join Today"
@@ -754,6 +966,13 @@ msgstr "Bekräftelse av lösenord krävs!"
 #: user_management/static/users/js/register.js:96
 msgid "Passwords do not match!"
 msgstr "Lösenorden stämmer inte överens!"
+
+#~ msgid "Password is required."
+#~ msgstr "Lösenord krävs"
+
+#~ msgid "New password and repeat password do not match."
+#~ msgstr ""
+#~ "Det nya lösenordet och det upprepade lösenordet stämmer inte överens."
 
 #~ msgid "Play new Game"
 #~ msgstr "Spela nytt spel"
