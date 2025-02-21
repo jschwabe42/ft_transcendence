@@ -8,6 +8,11 @@ from PIL import Image
 class CustomUser(AbstractUser):
 	image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 	online = models.BooleanField(default=False)
+	# For storing 2FA secret key
+	two_factor_secret = models.CharField(max_length=16, blank=True, null=True)
+	# For storing 2FA status
+	two_factor_enabled = models.BooleanField(default=False)
+
 	# for storing oauth identity
 	oauth_id: Optional[str] = models.CharField(max_length=150, blank=True, null=True)
 

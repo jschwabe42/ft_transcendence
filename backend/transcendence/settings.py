@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,6 +25,10 @@ SECRET_KEY = 'django-insecure-_0@qbs8*u@@s(#=4@e8yol-y4spd)%ymko!-ja^#fs=jofyf!)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+# 2FA NEEDED
+TOTP_ISSUER_NAME = 'FT_TRANSENDENCE'
+
 
 ALLOWED_HOSTS = []
 
@@ -40,7 +45,6 @@ INSTALLED_APPS = [
 	'dashboard.apps.DashboardConfig',
 	'channels',
 	'daphne',
-	'rest_framework',
 	'rest_framework.authtoken',
 	'crispy_forms',
 	'crispy_bootstrap4',
@@ -51,6 +55,8 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	'rest_framework_simplejwt',
+	'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -233,6 +239,25 @@ LANGUAGES = [
 LOCALE_PATHS = [
 	BASE_DIR / 'locale',
 ]
+
+# Setting for  REST Framework
+REST_FRAMEWORK = {
+	'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+	'DEFAULT_AUTHENTICATION_CLASSES': (
+		'rest_framework_simplejwt.authentication.JWTAuthentication',
+		'rest_framework.authentication.SessionAuthentication',
+	),
+}
+
+# Setting for JWT
+SIMPLE_JWT = {
+	'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+	'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+	'ROTATE_REFRESH_TOKENS': True,
+	'BLACKLIST_AFTER_ROTATION': True,
+	'AUTH_HEADER_TYPES': ('Bearer',),  # Ensure Authorization headers use 'Bearer'
+	'SIGNING_KEY': SECRET_KEY,  # Use Django's secret key for signing
+}
 
 USE_I18N = True
 USE_L10N = True

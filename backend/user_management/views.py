@@ -1,5 +1,7 @@
 import json
 import re
+import uuid
+from datetime import timedelta
 
 from django.contrib.auth import (
 	authenticate,
@@ -8,6 +10,7 @@ from django.contrib.auth import (
 	logout,
 	update_session_auth_hash,
 )
+from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db.models import F
@@ -17,6 +20,8 @@ from django.shortcuts import render
 from django.utils.translation import gettext as _
 from pong.models import PongGame
 from pong.utils import win_to_loss_ratio
+from pyotp import TOTP
+from rest_framework_simplejwt.tokens import RefreshToken
 from transcendence.decorators import login_required_redirect
 
 from .friends_blocked_users import Block_Manager, BlockedUsers
@@ -99,31 +104,69 @@ def register(request):
 
 def login_view(request):
 	"""
-	Login a user.
+	Login a user with 2FA support.
 	API Endpoint: /users/api/login/
 	"""
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
 
+		# Authenticate the user
 		user = authenticate(request, username=username, password=password)
 		if user is not None:
-			login(request, user)
-			new_csrf_token = get_token(request)
-			return JsonResponse(
-				{
-					'success': True,
-					'message': _('Login successful.'),
-					'csrf_token': new_csrf_token,
-					'username': username,
-				}
-			)
+			# Check if 2FA is enabled
+			if user.two_factor_enabled:
+				refresh = RefreshToken.for_user(user)
+				refresh.set_exp(lifetime=timedelta(minutes=5))
+				new_csrf_token = get_token(request)
+
+				return JsonResponse(
+					{
+						'success': True,
+						'requires_2fa': True,
+						'pre_auth_token': str(refresh.access_token),
+						'username': username,
+						'message': _('2FA required. Please enter your code.'),
+					}
+				)
+			else:
+				# No 2FA required
+				login(request, user)
+				new_csrf_token = get_token(request)
+				refresh = RefreshToken.for_user(user)
+				response = JsonResponse(
+					{
+						'success': True,
+						'message': _('Login successful.'),
+						'access_token': str(refresh.access_token),
+						'refresh_token': str(refresh),
+						'csrf_token': new_csrf_token,
+						'username': username,
+					}
+				)
+
+				response.set_cookie(
+					key='access_token',
+					value=str(refresh.access_token),
+					httponly=True,
+					secure=True,  # Set to True in production
+					samesite='Lax',
+				)
+				response.set_cookie(
+					key='refresh_token',
+					value=str(refresh),
+					httponly=True,
+					secure=True,  # Set to True in production
+					samesite='Lax',
+				)
+				return response
 		else:
 			return JsonResponse({'success': False, 'message': _('Invalid username or password!')})
 	else:
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
 
+@login_required_redirect
 def logout_view(request):
 	"""
 	Logout a user.
@@ -132,9 +175,16 @@ def logout_view(request):
 	if request.method == 'POST':
 		logout(request)
 		new_csrf_token = get_token(request)
-		return JsonResponse(
+
+		response = JsonResponse(
 			{'success': True, 'message': _('Logout successful.'), 'csrf_token': new_csrf_token}
 		)
+
+		# Clear cookies
+		response.delete_cookie('access_token')
+		response.delete_cookie('refresh_token')
+
+		return response
 	else:
 		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
@@ -247,24 +297,56 @@ def validate_data(username, email, current_user=None):
 
 @login_required_redirect
 def change_password(request):
-	"""
-	Change the password of the logged in user.
-	"""
-	if request.method == 'POST':
-		data = json.loads(request.body)
-		current_password = data.get('current_password')
-		new_password = data.get('new_password')
+	"""Change password with 2FA verification if enabled"""
+	if request.method != 'POST':
+		return JsonResponse({'success': False, 'message': _('Invalid request method.')})
 
-		user = request.user
+	data = json.loads(request.body)
+	user = request.user
+	current_password = data.get('current_password')
+	new_password = data.get('new_password')
+	two_fa_code = data.get('two_fa_code')
+	change_id = data.get('change_id')
 
-		if not user.check_password(current_password):
-			return JsonResponse({'success': False, 'message': _('Invalid current password.')})
-		# If not done automatically, ensure passwords are checked for lenght etc
-		user.set_password(new_password)
-		user.save()
-		update_session_auth_hash(request, user)
-		return JsonResponse({'success': True, 'message': _('Password changed successfully.')})
-	return JsonResponse({'success': False, 'message': _('Invalid request method.')})
+	# Verify current password
+	if not two_fa_code and not user.check_password(current_password):
+		return JsonResponse({'success': False, 'message': _('Invalid current password.')})
+
+	# Handle 2FA if enabled
+	if user.two_factor_enabled:
+		cache_key = f'pwd_change_{user.id}_{change_id}' if change_id else None
+
+		# Initial request - store pending change and require 2FA
+		if not two_fa_code:
+			change_id = str(uuid.uuid4())
+			cache.set(f'pwd_change_{user.id}_{change_id}', new_password, timeout=300)
+			return JsonResponse(
+				{
+					'requires_2fa': True,
+					'change_id': change_id,
+					'message': _('2FA verification required'),
+				}
+			)
+
+		# 2FA verification step
+		pending_pwd = cache.get(cache_key)
+		if not pending_pwd:
+			return JsonResponse({'success': False, 'message': _('Invalid or expired request')})
+
+		# Verify 2FA code
+		totp = TOTP(user.two_factor_secret)
+		if not totp.verify(two_fa_code):
+			return JsonResponse({'success': False, 'message': _('Invalid 2FA code')})
+
+		# Use the cached password from the initial request
+		new_password = pending_pwd
+		cache.delete(cache_key)
+
+	# Change password and maintain session
+	user.set_password(new_password)
+	user.save()
+	update_session_auth_hash(request, user)
+	return JsonResponse({'success': True, 'message': _('Password changed successfully.')})
 
 
 def check_authentication(request):

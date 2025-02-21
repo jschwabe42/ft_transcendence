@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 21:44+0100\n"
+"POT-Creation-Date: 2025-02-21 01:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,17 +104,25 @@ msgstr "Pong"
 msgid "Dashboard"
 msgstr "Översikt"
 
-#: transcendence/settings.py:228
+#: transcendence/settings.py:234
 msgid "English"
 msgstr "Engelska"
 
-#: transcendence/settings.py:229
+#: transcendence/settings.py:235
 msgid "Swedish"
 msgstr "Svenska"
 
-#: transcendence/settings.py:230
+#: transcendence/settings.py:236
 msgid "German"
 msgstr "Tyska"
+
+#: user_management/api_views.py:121 user_management/views.py:129
+msgid "2FA required. Please enter your code."
+msgstr ""
+
+#: user_management/api_views.py:134 user_management/views.py:140
+msgid "Login successful."
+msgstr "Inloggningen lyckades."
 
 #: user_management/friends.py:51
 msgid "You cannot befriend yourself!"
@@ -178,60 +186,56 @@ msgstr "Ogiltig metod för begäran."
 msgid "Friendship ended."
 msgstr "Vänskapen upphörde."
 
-#: user_management/views.py:38
+#: user_management/views.py:43
 msgid "User blocked successfully."
 msgstr "Användaren blockerades framgångsrikt."
 
-#: user_management/views.py:40 user_management/views.py:54
-#: user_management/views.py:97 user_management/views.py:124
-#: user_management/views.py:139 user_management/views.py:163
-#: user_management/views.py:195 user_management/views.py:267
+#: user_management/views.py:45 user_management/views.py:59
+#: user_management/views.py:102 user_management/views.py:166
+#: user_management/views.py:189 user_management/views.py:213
+#: user_management/views.py:245 user_management/views.py:302
 msgid "Invalid request method."
 msgstr "Ogiltig metod för begäran."
 
-#: user_management/views.py:52
+#: user_management/views.py:57
 #, fuzzy
 #| msgid "Password changed successfully."
 msgid "User unblocked successfully."
 msgstr "Användaren avblockerades framgångsrikt."
 
-#: user_management/views.py:87
+#: user_management/views.py:92
 msgid "Passwords do not match."
 msgstr "Lösenorden stämmer inte överens."
 
-#: user_management/views.py:95
+#: user_management/views.py:100
 msgid "Account created successfully."
 msgstr "Konto har skapats framgångsrikt."
 
-#: user_management/views.py:116
-msgid "Login successful."
-msgstr "Inloggningen lyckades."
-
-#: user_management/views.py:122
+#: user_management/views.py:164
 msgid "Invalid username or password!"
 msgstr "Ogiltigt användarnamn eller lösenord!"
 
-#: user_management/views.py:136
+#: user_management/views.py:180
 msgid "Logout successful."
 msgstr "Utloggningen lyckades."
 
-#: user_management/views.py:186
+#: user_management/views.py:236
 msgid "Invalid password."
 msgstr "Ogiltigt lösenord."
 
-#: user_management/views.py:194
+#: user_management/views.py:244
 msgid "Profile updated successfully."
 msgstr "Profilen uppdaterades framgångsrikt."
 
-#: user_management/views.py:204
+#: user_management/views.py:254
 msgid "Invalid email address."
 msgstr "Ogiltig e-postadress."
 
-#: user_management/views.py:212 user_management/views.py:221
+#: user_management/views.py:262 user_management/views.py:271
 msgid "An Account with this email already exists."
 msgstr "Ett konto med den här e-postadressen finns redan."
 
-#: user_management/views.py:231
+#: user_management/views.py:281
 msgid ""
 "Invalid username. Username must contain only letters, numbers, and "
 "underscores, and cannot be empty or contain only whitespace."
@@ -240,14 +244,30 @@ msgstr ""
 "siffror och understreck och får inte vara tomt eller innehålla enbart "
 "blanksteg."
 
-#: user_management/views.py:238 user_management/views.py:243
+#: user_management/views.py:288 user_management/views.py:293
 msgid "Username already taken."
 msgstr "Användarnamn redan taget."
 
-#: user_management/views.py:261
+#: user_management/views.py:313
 msgid "Invalid current password."
 msgstr "Ogiltigt aktuellt lösenord."
 
-#: user_management/views.py:266
+#: user_management/views.py:327
+msgid "2FA verification required"
+msgstr ""
+
+#: user_management/views.py:334
+#, fuzzy
+#| msgid "Invalid request method."
+msgid "Invalid or expired request"
+msgstr "Ogiltig metod för begäran."
+
+#: user_management/views.py:339
+#, fuzzy
+#| msgid "Invalid password."
+msgid "Invalid 2FA code"
+msgstr "Ogiltigt lösenord."
+
+#: user_management/views.py:349
 msgid "Password changed successfully."
 msgstr "Lösenordet har ändrats framgångsrikt."
