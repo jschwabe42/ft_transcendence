@@ -79,7 +79,7 @@ export function home_view() {
 	<p>${gettext("This is a webpage created for the Transcendence project.")}</p>
 	<br>
 	<h3>${gettext("Features:")}</h3>
-	<p>17/19 ${gettext("points. (Minor Module = 1 point, Major Module = 2 points!)")}<br>
+	<p>19/19 ${gettext("points. (Minor Module = 1 point, Major Module = 2 points!)")}<br>
 	${gettext("14 points are sufficient for the basic requirements with 19 giving 125%!")}</p>
 	<h5>${gettext("Minimal Requirements (no points, all need to be fullfilled):")}</h5>
 	<ul>
@@ -87,7 +87,7 @@ export function home_view() {
 		<li>${gettext("Your website must be compatible with the latest version of Google Chrome.")} ✅</li>
 		<li>${gettext("Everything needs to be launched with a single command line. (make)")} ✅</li>
 		<li>${gettext("Any password stored in the database must be hashed.")} ✅</li>
-		<li>${gettext("Your website must be protected against SQL injections/XSS.")} ❗❓</li>
+		<li>${gettext("Your website must be protected against SQL injections/XSS.")} ✅</li>
 		<li>${gettext("HTTPS must be enabled and WSS needs to be used instead of ws.")} ✅</li>
 		<li>${gettext("A pong game needs to be implemented. (See issues).")} ✅</li>
 	</ul>
@@ -97,19 +97,18 @@ export function home_view() {
 		<li>${gettext("Major: Use a Framwork as backend. 2 points!")} ✅</li>
 		<li>${gettext("Minor: Use a frontend framework or toolkit. 1 point!")} ✅</li>
 		<li>${gettext("Minor: Use a database for the backend. 1 point!")} ✅</li>
-		<li>${gettext("Major: User Management. Pong Match history and Online status missing!")} ❗</li>
+		<li>${gettext("Major: User Management is done, but a online status isn't implemented.")} </li>
 		<li>${gettext("Major: Remote authentication. 2 points!")} ✅</li>
 		<li>${gettext("Major: Remote players. 2 points!")} ✅</li>
 		<li>${gettext("Major: Multiple players. 2 points! (Technically, since it isn't 100% specified which game)")} ✅</li>
 		<li>${gettext("Major: Add another game with user history and matchmaking. 2 points!")} ✅</li>
 		<li>${gettext("Minor: Game Customization options. 1 point!")} ✅</li>
 		<li>${gettext("Minor: User and Game stats dashboard. A way to display pong game outcomes is missing. Pong/Tournament data needs to be added. A graph should be added (but i could argue that point if necessary)")} ❗</li>
-		<li>${gettext("Major: 2FA and JWT. The branch is not yet merged.")} ❗</li>
+		<li>${gettext("Major: 2FA and JWT. 2 points.")} ✅</li>
 		<li>${gettext("Minor: Expanding Browser Compability (Chrome, Edge, Firefox?). 1 point!")} ✅</li>
 		<li>${gettext("Minor: Multiple language support (Some things still need translations!). 1 point!")} ✅</li>
 		<li>${gettext("Major: Server side pong. Already implemented, as soon as the pong bugs are fixed, this can be marked done.")} ✅</li>
-		<li>${gettext("Major: Pong gameplay via CLI. Already implemented AFAIK, as soon as the pong bugs are fixed, this can be marked done.")} ❗</li>
-		</ul>
+	</ul>
 	<br>
 	<h3>${gettext("About:")}</h3>
 	<p>${gettext("This project is part of the core curriculum of 42 and serves as its final project.")}<br>${gettext("This is our take on it.")}</p>

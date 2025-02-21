@@ -7,3 +7,4 @@ backend/media/profile_pics/*
 **/migrations/*.pyc
 **/LC_MESSAGES/*.mo
 backend/certs
+staticfiles

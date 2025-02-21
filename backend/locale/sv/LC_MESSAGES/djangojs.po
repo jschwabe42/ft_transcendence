@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-21 01:01+0100\n"
+"POT-Creation-Date: 2025-02-21 13:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,17 +19,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: dashboard/static/dashboard/js/dashboard.js:6
-#: pong/static/pong/js/overview.js:57
+#: pong/static/pong/js/overview.js:58 staticfiles/dashboard/js/dashboard.js:6
+#: staticfiles/pong/js/overview.js:58
 msgid "Refresh"
 msgstr "Uppdatera"
 
 #: dashboard/static/dashboard/js/dashboard.js:28
 #: dashboard/static/dashboard/js/profile.js:80
 #: dashboard/static/dashboard/js/profile.js:136
+#: staticfiles/dashboard/js/dashboard.js:28
+#: staticfiles/dashboard/js/profile.js:80
+#: staticfiles/dashboard/js/profile.js:136
 msgid "'s profile picture"
 msgstr "'s profilbild"
 
 #: dashboard/static/dashboard/js/profile.js:12
+#: staticfiles/dashboard/js/profile.js:12
 msgid "Blocked Users"
 msgstr "Blockerade användare"
 
@@ -37,35 +42,46 @@ msgstr "Blockerade användare"
 #: dashboard/static/dashboard/js/profile.js:481
 #: dashboard/static/dashboard/js/profile.js:493
 #: dashboard/static/dashboard/js/profile.js:503
+#: staticfiles/dashboard/js/profile.js:16
+#: staticfiles/dashboard/js/profile.js:481
+#: staticfiles/dashboard/js/profile.js:493
+#: staticfiles/dashboard/js/profile.js:503
 msgid "Friends"
 msgstr "Vänner"
 
 #: dashboard/static/dashboard/js/profile.js:18
+#: staticfiles/dashboard/js/profile.js:18
 msgid "Friend Requests"
 msgstr "Förfrågningar om vänner"
 
 #: dashboard/static/dashboard/js/profile.js:24
+#: staticfiles/dashboard/js/profile.js:24
 msgid "Quiz Stats"
 msgstr "Statistik för frågesport"
 
 #: dashboard/static/dashboard/js/profile.js:28
+#: staticfiles/dashboard/js/profile.js:28
 #, fuzzy
 #| msgid "Quiz Stats"
 msgid "Pong Stats"
 msgstr "Statistik för frågesport"
 
 #: dashboard/static/dashboard/js/profile.js:32
+#: staticfiles/dashboard/js/profile.js:32
 #, fuzzy
 #| msgid "Start Game"
 msgid "Last Pong Games"
 msgstr "Starta spelet"
 
 #: dashboard/static/dashboard/js/profile.js:73
+#: staticfiles/dashboard/js/profile.js:73
 msgid "Error loading profile for"
 msgstr "Fel vid inläsning av profil för"
 
 #: dashboard/static/dashboard/js/profile.js:82
 #: dashboard/static/dashboard/js/profile.js:138
+#: staticfiles/dashboard/js/profile.js:82
+#: staticfiles/dashboard/js/profile.js:138
 msgid "'s Profile"
 msgstr "'s Profil"
 
@@ -75,6 +91,12 @@ msgstr "'s Profil"
 #: dashboard/static/dashboard/js/profile.js:412
 #: dashboard/static/dashboard/js/profile.js:425
 #: dashboard/static/dashboard/js/profile.js:460
+#: staticfiles/dashboard/js/profile.js:92
+#: staticfiles/dashboard/js/profile.js:154
+#: staticfiles/dashboard/js/profile.js:184
+#: staticfiles/dashboard/js/profile.js:412
+#: staticfiles/dashboard/js/profile.js:425
+#: staticfiles/dashboard/js/profile.js:460
 msgid "Unblock"
 msgstr "Avblockera"
 
@@ -84,52 +106,72 @@ msgstr "Avblockera"
 #: dashboard/static/dashboard/js/profile.js:159
 #: dashboard/static/dashboard/js/profile.js:210
 #: dashboard/static/dashboard/js/profile.js:439
+#: staticfiles/dashboard/js/profile.js:94
+#: staticfiles/dashboard/js/profile.js:97
+#: staticfiles/dashboard/js/profile.js:156
+#: staticfiles/dashboard/js/profile.js:159
+#: staticfiles/dashboard/js/profile.js:210
+#: staticfiles/dashboard/js/profile.js:439
 msgid "Block"
 msgstr "Block"
 
 #: dashboard/static/dashboard/js/profile.js:114
 #: dashboard/static/dashboard/js/profile.js:124
+#: staticfiles/dashboard/js/profile.js:114
+#: staticfiles/dashboard/js/profile.js:124
 msgid "Games Played:"
 msgstr "Spelade matcher:"
 
 #: dashboard/static/dashboard/js/profile.js:115
 #: dashboard/static/dashboard/js/profile.js:125
+#: staticfiles/dashboard/js/profile.js:115
+#: staticfiles/dashboard/js/profile.js:125
 msgid "Games Won:"
 msgstr "Vunna matcher:"
 
 #: dashboard/static/dashboard/js/profile.js:116
+#: staticfiles/dashboard/js/profile.js:116
 msgid "Total Score:"
 msgstr "Total poäng:"
 
 #: dashboard/static/dashboard/js/profile.js:117
+#: staticfiles/dashboard/js/profile.js:117
 msgid "High Score:"
 msgstr "Högsta poäng:"
 
 #: dashboard/static/dashboard/js/profile.js:118
+#: staticfiles/dashboard/js/profile.js:118
 msgid "Questions Asked:"
 msgstr "Frågor som ställts:"
 
 #: dashboard/static/dashboard/js/profile.js:119
+#: staticfiles/dashboard/js/profile.js:119
 msgid "Correct Answers:"
 msgstr "Korrekta svar:"
 
 #: dashboard/static/dashboard/js/profile.js:126
+#: staticfiles/dashboard/js/profile.js:126
 #, fuzzy
 #| msgid "Games Won:"
 msgid "Games Lost:"
 msgstr "Vunna matcher:"
 
 #: dashboard/static/dashboard/js/profile.js:127
+#: staticfiles/dashboard/js/profile.js:127
 msgid "Win-Loss Ratio:"
 msgstr "Förhållande mellan vinst och förlust:"
 
 #: dashboard/static/dashboard/js/profile.js:144
+#: staticfiles/dashboard/js/profile.js:144
 msgid "This user has blocked you. You cannot view their profile."
 msgstr "Den här användaren har blockerat dig. Du kan inte se deras profil."
 
 #: dashboard/static/dashboard/js/profile.js:228
 #: quiz/static/quiz/js/room_display.js:27
 #: quiz/static/quiz/js/room_display.js:32
+#: staticfiles/dashboard/js/profile.js:228
+#: staticfiles/quiz/js/room_display.js:27
+#: staticfiles/quiz/js/room_display.js:32
 msgid "Settings"
 msgstr "Inställningar"
 
@@ -137,548 +179,682 @@ msgstr "Inställningar"
 #: dashboard/static/dashboard/js/profile.js:254
 #: dashboard/static/dashboard/js/profile.js:316
 #: dashboard/static/dashboard/js/profile.js:348
+#: staticfiles/dashboard/js/profile.js:244
+#: staticfiles/dashboard/js/profile.js:254
+#: staticfiles/dashboard/js/profile.js:316
+#: staticfiles/dashboard/js/profile.js:348
 msgid "Add Friend"
 msgstr "Lägg till vän"
 
 #: dashboard/static/dashboard/js/profile.js:246
 #: dashboard/static/dashboard/js/profile.js:256
 #: dashboard/static/dashboard/js/profile.js:374
+#: staticfiles/dashboard/js/profile.js:246
+#: staticfiles/dashboard/js/profile.js:256
+#: staticfiles/dashboard/js/profile.js:374
 msgid "Remove Friend"
 msgstr "Ta bort vän"
 
 #: dashboard/static/dashboard/js/profile.js:248
 #: dashboard/static/dashboard/js/profile.js:258
 #: dashboard/static/dashboard/js/profile.js:284
+#: staticfiles/dashboard/js/profile.js:248
+#: staticfiles/dashboard/js/profile.js:258
+#: staticfiles/dashboard/js/profile.js:284
 msgid "Cancel Request"
 msgstr "Avbryt förfrågan"
 
 #: dashboard/static/dashboard/js/profile.js:250
 #: dashboard/static/dashboard/js/profile.js:260
+#: staticfiles/dashboard/js/profile.js:250
+#: staticfiles/dashboard/js/profile.js:260
 msgid "Accept Request"
 msgstr "Acceptera förfrågan"
 
 #: dashboard/static/dashboard/js/profile.js:297
+#: staticfiles/dashboard/js/profile.js:297
 msgid "Are you sure you want to remove this friend?"
 msgstr "Är du säker på att du vill ta bort den här vännen?"
 
 #: dashboard/static/dashboard/js/profile.js:329
+#: staticfiles/dashboard/js/profile.js:329
 msgid "Are you sure you want to cancel this friend request?"
 msgstr "Är du säker på att du vill ta bort den här vännen?"
 
 #: dashboard/static/dashboard/js/profile.js:403
+#: staticfiles/dashboard/js/profile.js:403
 msgid "No blocked users"
 msgstr "Inga blockerade användare"
 
 #: dashboard/static/dashboard/js/profile.js:479
 #: dashboard/static/dashboard/js/profile.js:501
+#: staticfiles/dashboard/js/profile.js:479
+#: staticfiles/dashboard/js/profile.js:501
 msgid "Friend"
 msgstr "Vän"
 
 #: dashboard/static/dashboard/js/profile.js:496
+#: staticfiles/dashboard/js/profile.js:496
 msgid "No friends"
 msgstr "Inga vänner"
 
 #: dashboard/static/dashboard/js/profile.js:520
+#: staticfiles/dashboard/js/profile.js:520
 msgid "Fetching friends failed"
 msgstr "Hämtning av vänner misslyckades"
 
 #: dashboard/static/dashboard/js/profile.js:549
+#: staticfiles/dashboard/js/profile.js:549
 msgid "Received Friend Requests:"
 msgstr "Mottagit vänförfrågningar:"
 
 #: dashboard/static/dashboard/js/profile.js:553
+#: staticfiles/dashboard/js/profile.js:553
 msgid "No friend requests"
 msgstr "Inga vänförfrågningar"
 
 #: dashboard/static/dashboard/js/profile.js:561
+#: staticfiles/dashboard/js/profile.js:561
 msgid "Accept"
 msgstr "Acceptera"
 
 #: dashboard/static/dashboard/js/profile.js:562
+#: staticfiles/dashboard/js/profile.js:562
 msgid "Deny"
 msgstr "Förneka"
 
 #: dashboard/static/dashboard/js/profile.js:578
+#: staticfiles/dashboard/js/profile.js:578
 msgid "Sent Friend Requests:"
 msgstr "Skickade vänförfrågningar:"
 
 #: dashboard/static/dashboard/js/profile.js:582
+#: staticfiles/dashboard/js/profile.js:582
 msgid "No sent friend requests"
 msgstr "Inga skickade vänförfrågningar"
 
 #: dashboard/static/dashboard/js/profile.js:590
+#: staticfiles/admin/js/SelectFilter2.js:80
+#: staticfiles/dashboard/js/profile.js:590
 msgid "Remove"
 msgstr "Ta bort"
 
 #: dashboard/static/dashboard/js/profile.js:696
+#: staticfiles/dashboard/js/profile.js:696
 msgid "No recent games."
 msgstr "Inga senaste spelen."
 
-#: pong/static/pong/js/overview.js:36
+#: pong/static/pong/js/overview.js:37 staticfiles/pong/js/overview.js:37
 msgid "pending Tournament game"
 msgstr "i väntan på turnering gam"
 
-#: pong/static/pong/js/overview.js:36 pong/static/pong/js/overview.js:116
+#: pong/static/pong/js/overview.js:37 pong/static/pong/js/overview.js:117
+#: staticfiles/pong/js/overview.js:37 staticfiles/pong/js/overview.js:117
 msgid "pending"
 msgstr "pending"
 
-#: pong/static/pong/js/overview.js:45 pong/static/pong/js/pong_practice.js:13
+#: pong/static/pong/js/overview.js:46 pong/static/pong/js/pong_practice.js:13
+#: staticfiles/pong/js/overview.js:46 staticfiles/pong/js/pong_practice.js:13
 #, fuzzy
 #| msgid "Start Game"
 msgid "Practice Game"
 msgstr "Starta spelet"
 
-#: pong/static/pong/js/overview.js:48
+#: pong/static/pong/js/overview.js:49 staticfiles/pong/js/overview.js:49
 #, fuzzy
 #| msgid "Open Tournaments"
 msgid "New Tournament"
 msgstr "Öppna turneringar"
 
-#: pong/static/pong/js/overview.js:51
+#: pong/static/pong/js/overview.js:52 staticfiles/pong/js/overview.js:52
 #, fuzzy
 #| msgid "Play Game +"
 msgid "Play Game"
 msgstr "Spela Spel"
 
-#: pong/static/pong/js/overview.js:52
+#: pong/static/pong/js/overview.js:53 staticfiles/pong/js/overview.js:53
 #, fuzzy
 #| msgid "Enter room name"
 msgid "Enter opponent Username"
 msgstr "Ange nytt rumsnamn"
 
-#: pong/static/pong/js/overview.js:56
+#: pong/static/pong/js/overview.js:57 staticfiles/pong/js/overview.js:57
 msgid "Recent Games"
 msgstr "Senaste spelen"
 
-#: pong/static/pong/js/overview.js:59
+#: pong/static/pong/js/overview.js:60 staticfiles/pong/js/overview.js:60
 msgid "No games have been played yet."
 msgstr "Inga matcher har spelats ännu."
 
-#: pong/static/pong/js/overview.js:62
+#: pong/static/pong/js/overview.js:63 staticfiles/pong/js/overview.js:63
 #, fuzzy
 #| msgid "Start Game"
 msgid "Pending Games"
 msgstr "Starta spelet"
 
-#: pong/static/pong/js/overview.js:63 pong/static/pong/js/overview.js:110
+#: pong/static/pong/js/overview.js:64 pong/static/pong/js/overview.js:111
+#: staticfiles/pong/js/overview.js:64 staticfiles/pong/js/overview.js:111
 msgid "No pending games."
 msgstr "Inga pågående spel."
 
-#: pong/static/pong/js/overview.js:65
+#: pong/static/pong/js/overview.js:66 staticfiles/pong/js/overview.js:66
 msgid "Open Tournaments"
 msgstr "Öppna turneringar"
 
-#: pong/static/pong/js/overview.js:92 pong/static/pong/js/overview.js:129
+#: pong/static/pong/js/overview.js:93 pong/static/pong/js/overview.js:130
+#: staticfiles/pong/js/overview.js:93 staticfiles/pong/js/overview.js:130
 msgid "Join Open Tournament"
 msgstr "Delta i öppen turnering"
 
-#: pong/static/pong/js/overview.js:97
+#: pong/static/pong/js/overview.js:98 staticfiles/pong/js/overview.js:98
 msgid "No open tournaments."
 msgstr "Inga öppna turneringar."
 
-#: pong/static/pong/js/pong_api.js:37
+#: pong/static/pong/js/pong_api.js:37 staticfiles/pong/js/pong_api.js:37
 msgid "Error, enter a valid Username!!"
-msgstr ""
+msgstr "Fel, ange ett giltigt användarnamn!!"
 
-#: pong/static/pong/js/pong_api.js:45
+#: pong/static/pong/js/pong_api.js:45 staticfiles/pong/js/pong_api.js:45
 msgid "Error, enter a Username!!"
-msgstr ""
+msgstr "Fel, ange ett användarnamn!!!"
 
 #: pong/static/pong/js/pong_display_ingame.js:18
 #: pong/static/pong/js/pong_display_ingame.js:34
+#: staticfiles/pong/js/pong_display_ingame.js:18
+#: staticfiles/pong/js/pong_display_ingame.js:34
 msgid "Ready"
 msgstr "Redo"
 
 #: pong/static/pong/js/pong_display_ingame.js:59
-msgid "back to menu"
+#: staticfiles/pong/js/pong_display_ingame.js:59
+#, fuzzy
+#| msgid "back to menu"
+msgid "Back to Menu"
 msgstr "Tillbaka till menyn"
 
 #: pong/static/pong/js/pong_practice.js:14
+#: staticfiles/pong/js/pong_practice.js:14
 msgid "Left Paddels: W S; Right Paddels: UP DOWN;"
 msgstr "Vänster paddel: W S; Höger paddel: UPP NER;"
 
 #: pong/static/pong/js/pong_practice.js:17
 #: pong/static/pong/js/pong_practice.js:196
 #: quiz/static/quiz/js/room_display.js:16
+#: staticfiles/pong/js/pong_practice.js:17
+#: staticfiles/pong/js/pong_practice.js:196
+#: staticfiles/quiz/js/room_display.js:16
 msgid "Start Game"
 msgstr "Starta spelet"
 
 #: pong/static/pong/js/pong_practice.js:27
 #: pong/static/pong/js/pong_practice.js:31
+#: staticfiles/pong/js/pong_practice.js:27
+#: staticfiles/pong/js/pong_practice.js:31
 msgid "player"
 msgstr "spelare"
 
 #: pong/static/pong/js/pong_practice.js:191
+#: staticfiles/pong/js/pong_practice.js:191
 #, fuzzy
 #| msgid "Start Game"
 msgid "Pause Game"
 msgstr "Starta spelet"
 
 #: pong/static/pong/js/tournament_display.js:30
+#: staticfiles/pong/js/tournament_display.js:30
 msgid "Welcome to Tournament"
 msgstr "Skapa rum"
 
 #: pong/static/pong/js/tournament_display.js:58
+#: staticfiles/pong/js/tournament_display.js:58
 #, fuzzy
 msgid "Play Tournament Games +"
 msgstr "Skapa rum"
 
 #: pong/static/pong/js/tournament_display.js:62
+#: staticfiles/pong/js/tournament_display.js:62
 #, fuzzy
 msgid "Start Final Game"
 msgstr "Starta spelet"
 
 #: pong/static/pong/js/tournament_display.js:65
+#: staticfiles/pong/js/tournament_display.js:65
 msgid "Go to Menu"
 msgstr "Gå till menyn"
 
 #: quiz/static/quiz/js/quiz_logic.js:134 quiz/static/quiz/js/quiz_logic.js:149
-#: quiz/static/quiz/js/quiz_logic.js:153
+#: quiz/static/quiz/js/quiz_logic.js:153 staticfiles/quiz/js/quiz_logic.js:134
+#: staticfiles/quiz/js/quiz_logic.js:149 staticfiles/quiz/js/quiz_logic.js:153
 msgid "points"
 msgstr "poäng"
 
 #: quiz/static/quiz/js/room_display.js:14
 #: quiz/static/quiz/js/room_display.js:395
+#: staticfiles/quiz/js/room_display.js:14
+#: staticfiles/quiz/js/room_display.js:395
 msgid "Welcome to"
 msgstr "Välkommen till"
 
 #: quiz/static/quiz/js/room_display.js:15
+#: staticfiles/quiz/js/room_display.js:15
 msgid "You have successfully joined the room!"
 msgstr "Du har anslutit dig till rummet!"
 
 #: quiz/static/quiz/js/room_display.js:15
+#: staticfiles/quiz/js/room_display.js:15
 msgid "Here you can start participating in the quiz."
 msgstr ""
 "Här kan du börja delta i frågesporten. (Varning: Frågesporten är på engelska)"
 
 #: quiz/static/quiz/js/room_display.js:20
+#: staticfiles/quiz/js/room_display.js:20
 msgid "Leave Room"
 msgstr "Lämna rummet"
 
 #: quiz/static/quiz/js/room_display.js:201
+#: staticfiles/quiz/js/room_display.js:201
 msgid "Participants:"
 msgstr "Deltagare:"
 
 #: quiz/static/quiz/js/room_display.js:345
+#: staticfiles/quiz/js/room_display.js:345
 msgid "Quiz in Progress"
 msgstr "Frågesport pågår"
 
 #: quiz/static/quiz/js/room_display.js:346
+#: staticfiles/quiz/js/room_display.js:346
 msgid "The quiz has started! Good luck!"
 msgstr "Frågesporten har börjat! Lycka till!"
 
 #: quiz/static/quiz/js/room_display.js:396
+#: staticfiles/quiz/js/room_display.js:396
 msgid "The quiz has ended!"
 msgstr "Frågesporten är avslutad!"
 
-#: quiz/static/quiz/js/room_list.js:17
+#: quiz/static/quiz/js/room_list.js:17 staticfiles/quiz/js/room_list.js:17
 msgid "Create a new room"
 msgstr "Skapa ett nytt rum"
 
-#: quiz/static/quiz/js/room_list.js:18
+#: quiz/static/quiz/js/room_list.js:18 staticfiles/quiz/js/room_list.js:18
 msgid "Create Room"
 msgstr "Skapa rum"
 
-#: quiz/static/quiz/js/room_list.js:22
+#: quiz/static/quiz/js/room_list.js:22 staticfiles/quiz/js/room_list.js:22
 msgid "Room Name"
 msgstr "Rummets namn"
 
-#: quiz/static/quiz/js/room_list.js:23
+#: quiz/static/quiz/js/room_list.js:23 staticfiles/quiz/js/room_list.js:23
 msgid "Enter room name"
 msgstr "Ange nytt rumsnamn"
 
-#: quiz/static/quiz/js/room_list.js:25
+#: quiz/static/quiz/js/room_list.js:25 staticfiles/quiz/js/room_list.js:25
+#: staticfiles/users/js/account.js:123
 #: user_management/static/users/js/account.js:123
 msgid "Submit"
 msgstr "Skapa"
 
-#: quiz/static/quiz/js/room_list.js:32
+#: quiz/static/quiz/js/room_list.js:32 staticfiles/quiz/js/room_list.js:32
 msgid "Gratefully using OpenTD"
 msgstr "Använder OpenTD med tacksamhet"
 
-#: quiz/static/quiz/js/room_list.js:85
+#: quiz/static/quiz/js/room_list.js:85 staticfiles/quiz/js/room_list.js:85
 msgid "An error occurred:"
 msgstr "Ett fel har inträffat:"
 
-#: quiz/static/quiz/js/room_list.js:95
+#: quiz/static/quiz/js/room_list.js:95 staticfiles/quiz/js/room_list.js:95
 msgid "Loading rooms..."
 msgstr "Lastning av rum..."
 
-#: quiz/static/quiz/js/room_list.js:138
+#: quiz/static/quiz/js/room_list.js:138 staticfiles/quiz/js/room_list.js:138
 msgid "Error loading rooms. Please try again later."
 msgstr "Fel vid laddning av rum. Vänligen försök igen senare."
 
-#: quiz/static/quiz/js/room_list.js:148
+#: quiz/static/quiz/js/room_list.js:148 staticfiles/quiz/js/room_list.js:148
 msgid "No rooms available. Create a new room to get started."
 msgstr "Inga rum tillgängliga. Skapa ett nytt rum för att komma igång."
 
-#: quiz/static/quiz/js/room_list.js:154
+#: quiz/static/quiz/js/room_list.js:154 staticfiles/quiz/js/room_list.js:154
 msgid "Last activity:"
 msgstr "Senaste aktivitet:"
 
-#: quiz/static/quiz/js/room_list.js:156
+#: quiz/static/quiz/js/room_list.js:156 staticfiles/quiz/js/room_list.js:156
 msgid "Join"
 msgstr "Sammanfoga rum"
 
-#: quiz/static/quiz/js/room_list.js:159
+#: quiz/static/quiz/js/room_list.js:159 staticfiles/quiz/js/room_list.js:159
 msgid "Available Rooms"
 msgstr "Tillgängliga rum"
 
-#: static/js/navbar.js:70
+#: static/js/navbar.js:78 staticfiles/js/navbar.js:78
 msgid "Welcome to the Transcendence Webpage"
 msgstr "Välkommen till vår Transcendence-webbsida"
 
-#: static/js/navbar.js:71
+#: static/js/navbar.js:79 staticfiles/js/navbar.js:79
 msgid "This is a webpage created for the Transcendence project."
 msgstr "Detta är en webbsida som skapats för Transcendence-projektet."
 
-#: static/js/navbar.js:73
+#: static/js/navbar.js:81 staticfiles/js/navbar.js:81
 msgid "Features:"
 msgstr "Egenskaper:"
 
-#: static/js/navbar.js:74
+#: static/js/navbar.js:82 staticfiles/js/navbar.js:82
 msgid "points. (Minor Module = 1 point, Major Module = 2 points!)"
 msgstr "poäng. (Mindre modul = 1 poäng, större modul = 2 poäng!)"
 
-#: static/js/navbar.js:75
+#: static/js/navbar.js:83 staticfiles/js/navbar.js:83
 msgid ""
 "14 points are sufficient for the basic requirements with 19 giving 125%!"
 msgstr "14 poäng är tillräckligt för de grundläggande kraven och 19 ger 125%!"
 
-#: static/js/navbar.js:76
+#: static/js/navbar.js:84 staticfiles/js/navbar.js:84
 msgid "Minimal Requirements (no points, all need to be fullfilled):"
 msgstr ""
 
-#: static/js/navbar.js:78
+#: static/js/navbar.js:86 staticfiles/js/navbar.js:86
 msgid ""
 "Your website must be a single page application, the Back and Forward buttons "
 "of the browser need to work."
 msgstr ""
 
-#: static/js/navbar.js:79
+#: static/js/navbar.js:87 staticfiles/js/navbar.js:87
 msgid ""
 "Your website must be compatible with the latest version of Google Chrome."
 msgstr ""
 
-#: static/js/navbar.js:80
+#: static/js/navbar.js:88 staticfiles/js/navbar.js:88
 msgid "Everything needs to be launched with a single command line. (make)"
 msgstr ""
 
-#: static/js/navbar.js:81
+#: static/js/navbar.js:89 staticfiles/js/navbar.js:89
 msgid "Any password stored in the database must be hashed."
 msgstr ""
 
-#: static/js/navbar.js:82
+#: static/js/navbar.js:90 staticfiles/js/navbar.js:90
 msgid "Your website must be protected against SQL injections/XSS."
 msgstr ""
 
-#: static/js/navbar.js:83
+#: static/js/navbar.js:91 staticfiles/js/navbar.js:91
 msgid "HTTPS must be enabled and WSS needs to be used instead of ws."
 msgstr ""
 
-#: static/js/navbar.js:84
+#: static/js/navbar.js:92 staticfiles/js/navbar.js:92
 msgid "A pong game needs to be implemented. (See issues)."
 msgstr ""
 
-#: static/js/navbar.js:87
+#: static/js/navbar.js:95 staticfiles/js/navbar.js:95
 msgid "Modules:"
 msgstr ""
 
-#: static/js/navbar.js:89
+#: static/js/navbar.js:97 staticfiles/js/navbar.js:97
 msgid "Major: Use a Framwork as backend. 2 points!"
 msgstr ""
 
-#: static/js/navbar.js:90
+#: static/js/navbar.js:98 staticfiles/js/navbar.js:98
 msgid "Minor: Use a frontend framework or toolkit. 1 point!"
 msgstr ""
 
-#: static/js/navbar.js:91
+#: static/js/navbar.js:99 staticfiles/js/navbar.js:99
 msgid "Minor: Use a database for the backend. 1 point!"
 msgstr ""
 
-#: static/js/navbar.js:92
-msgid "Major: User Management. Pong Match history and Online status missing!"
+#: static/js/navbar.js:100
+msgid "Major: User Management is done, but a online status isn't implemented."
 msgstr ""
 
-#: static/js/navbar.js:93
+#: static/js/navbar.js:101 staticfiles/js/navbar.js:101
 msgid "Major: Remote authentication. 2 points!"
 msgstr ""
 
-#: static/js/navbar.js:94
+#: static/js/navbar.js:102 staticfiles/js/navbar.js:102
 msgid "Major: Remote players. 2 points!"
 msgstr ""
 
-#: static/js/navbar.js:95
+#: static/js/navbar.js:103 staticfiles/js/navbar.js:103
 #, javascript-format
 msgid ""
 "Major: Multiple players. 2 points! (Technically, since it isn't "
 "100% specified which game)"
 msgstr ""
 
-#: static/js/navbar.js:96
+#: static/js/navbar.js:104 staticfiles/js/navbar.js:104
 msgid "Major: Add another game with user history and matchmaking. 2 points!"
 msgstr ""
 
-#: static/js/navbar.js:97
+#: static/js/navbar.js:105 staticfiles/js/navbar.js:105
 msgid "Minor: Game Customization options. 1 point!"
 msgstr ""
 
-#: static/js/navbar.js:98
+#: static/js/navbar.js:106 staticfiles/js/navbar.js:106
 msgid ""
 "Minor: User and Game stats dashboard. A way to display pong game outcomes is "
 "missing. Pong/Tournament data needs to be added. A graph should be added "
 "(but i could argue that point if necessary)"
 msgstr ""
 
-#: static/js/navbar.js:99
-msgid "Major: 2FA and JWT. The branch is not yet merged."
+#: static/js/navbar.js:107
+msgid "Major: 2FA and JWT. 2 points."
 msgstr ""
 
-#: static/js/navbar.js:100
+#: static/js/navbar.js:108 staticfiles/js/navbar.js:108
 msgid "Minor: Expanding Browser Compability (Chrome, Edge, Firefox?). 1 point!"
 msgstr ""
 
-#: static/js/navbar.js:101
+#: static/js/navbar.js:109 staticfiles/js/navbar.js:109
 msgid ""
 "Minor: Multiple language support (Some things still need translations!). 1 "
 "point!"
 msgstr ""
 
-#: static/js/navbar.js:102
+#: static/js/navbar.js:110 staticfiles/js/navbar.js:110
 msgid ""
 "Major: Server side pong. Already implemented, as soon as the pong bugs are "
 "fixed, this can be marked done."
 msgstr ""
 
-#: static/js/navbar.js:103
-msgid ""
-"Major: Pong gameplay via CLI. Already implemented AFAIK, as soon as the pong "
-"bugs are fixed, this can be marked done."
-msgstr ""
-
-#: static/js/navbar.js:106
+#: static/js/navbar.js:113 staticfiles/js/navbar.js:114
 msgid "About:"
 msgstr "Om:"
 
-#: static/js/navbar.js:107
+#: static/js/navbar.js:114 staticfiles/js/navbar.js:115
 msgid ""
 "This project is part of the core curriculum of 42 and serves as its final "
 "project."
 msgstr "Detta projekt ingår i kärnämnet 42 och fungerar som dess slutprojekt"
 
-#: static/js/navbar.js:107
+#: static/js/navbar.js:114 staticfiles/js/navbar.js:115
 msgid "This is our take on it."
 msgstr "Detta är vår syn på saken"
 
-#: static/js/navbar.js:108
+#: static/js/navbar.js:115 staticfiles/js/navbar.js:116
 msgid "Our Projects GitHub Repository"
 msgstr "Våra projekt GitHub Repository"
 
-#: static/js/navbar.js:109
+#: static/js/navbar.js:116 staticfiles/js/navbar.js:117
 msgid "The team:"
 msgstr "Teamet:"
 
-#: static/js/navbar.js:118
+#: static/js/navbar.js:125 staticfiles/js/navbar.js:126
 msgid "Ressources used:"
 msgstr "Använda resurser:"
 
-#: static/js/navbar.js:131
+#: static/js/navbar.js:138 staticfiles/js/navbar.js:139
 msgid "Libraries used:"
 msgstr "Använda bibliotek:"
 
-#: static/js/navbar.js:155
+#: static/js/navbar.js:162 staticfiles/js/navbar.js:163
 msgid "Account"
 msgstr "Användarkonto"
 
-#: static/js/navbar.js:156 user_management/static/users/js/logout.js:12
+#: static/js/navbar.js:163 staticfiles/js/navbar.js:164
+#: staticfiles/users/js/logout.js:12
+#: user_management/static/users/js/logout.js:12
 msgid "Logout"
 msgstr "Logga ut"
 
-#: static/js/navbar.js:172 user_management/static/users/js/login.js:56
+#: static/js/navbar.js:179 staticfiles/js/navbar.js:180
+#: staticfiles/users/js/login.js:56 user_management/static/users/js/login.js:56
 msgid "Login"
 msgstr "Logga in"
 
-#: static/js/navbar.js:173 user_management/static/users/js/login.js:78
+#: static/js/navbar.js:180 staticfiles/js/navbar.js:181
+#: staticfiles/users/js/login.js:78 staticfiles/users/js/logout.js:17
+#: user_management/static/users/js/login.js:78
 #: user_management/static/users/js/logout.js:17
 msgid "Register"
 msgstr "Registrera"
 
-#: static/js/router.js:37
+#: static/js/router.js:38 staticfiles/js/router.js:38
 msgid "Page not found!"
 msgstr "Sidan hittades inte!"
 
-#: static/js/router.js:38
+#: static/js/router.js:39 staticfiles/js/router.js:39
 msgid "Please ensure the current URL is correct."
 msgstr "Se till att den aktuella URL:en är korrekt."
 
-#: user_management/static/users/js/account.js:95
-msgid "Your Profile Picture"
-msgstr "Din profilbild"
+#: staticfiles/admin/js/SelectFilter2.js:41
+#, fuzzy, javascript-format
+#| msgid "Available Rooms"
+msgid "Available %s"
+msgstr "Tillgängliga rum"
 
-#: user_management/static/users/js/account.js:107
-msgid "Profile Info:"
-msgstr "Profilinfomation:"
-
-#: user_management/static/users/js/account.js:110
-#: user_management/static/users/js/login.js:58
-#: user_management/static/users/js/register.js:14
-msgid "Username:"
-msgstr "Användarnamn:"
-
-#: user_management/static/users/js/account.js:115
-#: user_management/static/users/js/register.js:20
-msgid "Email:"
-msgstr "E-Post:"
-
-#: user_management/static/users/js/account.js:119
-msgid "Update Profile Data"
-msgstr "Uppdatera profildata"
-
-#: user_management/static/users/js/account.js:122
-msgid "Enter your password"
-msgstr "Ange lösenord"
-
-#: user_management/static/users/js/account.js:128
-msgid "Change Password"
-msgstr "Ändra lösenord"
-
-#: user_management/static/users/js/account.js:131
-msgid "Current Password"
-msgstr "Aktuellt lösenord"
-
-#: user_management/static/users/js/account.js:133
-msgid "New Password"
-msgstr "Nytt lösenord"
-
-#: user_management/static/users/js/account.js:135
-msgid "Repeat New Password"
-msgstr "Upprepa nytt lösenord"
-
-#: user_management/static/users/js/account.js:136
-msgid "Save"
-msgstr "Spara"
-
-#: user_management/static/users/js/account.js:140
-msgid "Two-Factor Authentication Required"
-msgstr ""
-
-#: user_management/static/users/js/account.js:141
+#: staticfiles/admin/js/SelectFilter2.js:47
+#, javascript-format
 msgid ""
-"Please enter your 2FA code to complete this security-sensitive operation:"
+"This is the list of available %s. You may choose some by selecting them in "
+"the box below and then clicking the \"Choose\" arrow between the two boxes."
 msgstr ""
 
-#: user_management/static/users/js/account.js:143
-#: user_management/static/users/js/account.js:162
-#: user_management/static/users/js/account.js:176
-msgid "Enter 2FA Code"
+#: staticfiles/admin/js/SelectFilter2.js:63
+#, javascript-format
+msgid "Type into this box to filter down the list of available %s."
 msgstr ""
 
-#: user_management/static/users/js/account.js:145
-#: user_management/static/users/js/login.js:91
-#: user_management/static/users/js/oauth.js:28
-msgid "Verify"
+#: staticfiles/admin/js/SelectFilter2.js:68
+#: staticfiles/admin/js/SelectFilter2.js:113
+msgid "Filter"
 msgstr ""
 
+#: staticfiles/admin/js/SelectFilter2.js:72
+msgid "Choose all"
+msgstr ""
+
+#: staticfiles/admin/js/SelectFilter2.js:72
+#, javascript-format
+msgid "Click to choose all %s at once."
+msgstr ""
+
+#: staticfiles/admin/js/SelectFilter2.js:78
+msgid "Choose"
+msgstr ""
+
+#: staticfiles/admin/js/SelectFilter2.js:86
+#, javascript-format
+msgid "Chosen %s"
+msgstr ""
+
+#: staticfiles/admin/js/SelectFilter2.js:92
+#, javascript-format
+msgid ""
+"This is the list of chosen %s. You may remove some by selecting them in the "
+"box below and then clicking the \"Remove\" arrow between the two boxes."
+msgstr ""
+
+#: staticfiles/admin/js/SelectFilter2.js:108
+#, javascript-format
+msgid "Type into this box to filter down the list of selected %s."
+msgstr ""
+
+#: staticfiles/admin/js/SelectFilter2.js:123
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove all"
+msgstr "Ta bort"
+
+#: staticfiles/admin/js/SelectFilter2.js:123
+#, javascript-format
+msgid "Click to remove all chosen %s at once."
+msgstr ""
+
+#: staticfiles/admin/js/SelectFilter2.js:214
+#, javascript-format
+msgid "%s selected option not visible"
+msgid_plural "%s selected options not visible"
+msgstr[0] ""
+msgstr[1] ""
+
+#: staticfiles/admin/js/actions.js:67
+msgid "%(sel)s of %(cnt)s selected"
+msgid_plural "%(sel)s of %(cnt)s selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: staticfiles/admin/js/actions.js:161
+msgid ""
+"You have unsaved changes on individual editable fields. If you run an "
+"action, your unsaved changes will be lost."
+msgstr ""
+
+#: staticfiles/admin/js/actions.js:174
+msgid ""
+"You have selected an action, but you haven’t saved your changes to "
+"individual fields yet. Please click OK to save. You’ll need to re-run the "
+"action."
+msgstr ""
+
+#: staticfiles/admin/js/actions.js:175
+msgid ""
+"You have selected an action, and you haven’t made any changes on individual "
+"fields. You’re probably looking for the Go button rather than the Save "
+"button."
+msgstr ""
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:13
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:110
+msgid "Now"
+msgstr ""
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:14
+msgid "Midnight"
+msgstr ""
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:15
+msgid "6 a.m."
+msgstr ""
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:16
+msgid "Noon"
+msgstr ""
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:17
+msgid "6 p.m."
+msgstr ""
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:78
+#, javascript-format
+msgid "Note: You are %s hour ahead of server time."
+msgid_plural "Note: You are %s hours ahead of server time."
+msgstr[0] ""
+msgstr[1] ""
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:86
+#, javascript-format
+msgid "Note: You are %s hour behind server time."
+msgid_plural "Note: You are %s hours behind server time."
+msgstr[0] ""
+msgstr[1] ""
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:128
+msgid "Choose a Time"
+msgstr ""
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:158
+msgid "Choose a time"
+msgstr ""
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:175
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:333
+#: staticfiles/users/js/account.js:146 staticfiles/users/js/account.js:165
+#: staticfiles/users/js/login.js:92 staticfiles/users/js/oauth.js:29
 #: user_management/static/users/js/account.js:146
 #: user_management/static/users/js/account.js:165
 #: user_management/static/users/js/login.js:92
@@ -688,78 +864,422 @@ msgstr ""
 msgid "Cancel"
 msgstr "Avbryt förfrågan"
 
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:238
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:318
+#, fuzzy
+#| msgid "Join Today"
+msgid "Today"
+msgstr "Bli medlem på vår webbplats idag"
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:255
+msgid "Choose a Date"
+msgstr ""
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:312
+msgid "Yesterday"
+msgstr ""
+
+#: staticfiles/admin/js/admin/DateTimeShortcuts.js:324
+msgid "Tomorrow"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:11
+msgid "January"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:12
+msgid "February"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:13
+msgid "March"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:14
+msgid "April"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:15
+msgid "May"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:16
+msgid "June"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:17
+msgid "July"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:18
+msgid "August"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:19
+msgid "September"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:20
+msgid "October"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:21
+msgid "November"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:22
+msgid "December"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:25
+msgctxt "abbrev. month January"
+msgid "Jan"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:26
+msgctxt "abbrev. month February"
+msgid "Feb"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:27
+msgctxt "abbrev. month March"
+msgid "Mar"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:28
+msgctxt "abbrev. month April"
+msgid "Apr"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:29
+msgctxt "abbrev. month May"
+msgid "May"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:30
+msgctxt "abbrev. month June"
+msgid "Jun"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:31
+msgctxt "abbrev. month July"
+msgid "Jul"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:32
+msgctxt "abbrev. month August"
+msgid "Aug"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:33
+msgctxt "abbrev. month September"
+msgid "Sep"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:34
+msgctxt "abbrev. month October"
+msgid "Oct"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:35
+msgctxt "abbrev. month November"
+msgid "Nov"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:36
+msgctxt "abbrev. month December"
+msgid "Dec"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:39
+msgid "Sunday"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:40
+msgid "Monday"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:41
+msgid "Tuesday"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:42
+msgid "Wednesday"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:43
+msgid "Thursday"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:44
+msgid "Friday"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:45
+msgid "Saturday"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:48
+msgctxt "abbrev. day Sunday"
+msgid "Sun"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:49
+msgctxt "abbrev. day Monday"
+msgid "Mon"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:50
+msgctxt "abbrev. day Tuesday"
+msgid "Tue"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:51
+msgctxt "abbrev. day Wednesday"
+msgid "Wed"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:52
+msgctxt "abbrev. day Thursday"
+msgid "Thur"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:53
+#, fuzzy
+#| msgid "Friend"
+msgctxt "abbrev. day Friday"
+msgid "Fri"
+msgstr "Vän"
+
+#: staticfiles/admin/js/calendar.js:54
+msgctxt "abbrev. day Saturday"
+msgid "Sat"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:57
+msgctxt "one letter Sunday"
+msgid "S"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:58
+msgctxt "one letter Monday"
+msgid "M"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:59
+msgctxt "one letter Tuesday"
+msgid "T"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:60
+msgctxt "one letter Wednesday"
+msgid "W"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:61
+msgctxt "one letter Thursday"
+msgid "T"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:62
+msgctxt "one letter Friday"
+msgid "F"
+msgstr ""
+
+#: staticfiles/admin/js/calendar.js:63
+msgctxt "one letter Saturday"
+msgid "S"
+msgstr ""
+
+#: staticfiles/js/navbar.js:100
+msgid "Major: User Management. Pong Match history and Online status missing!"
+msgstr ""
+
+#: staticfiles/js/navbar.js:107
+msgid "Major: 2FA and JWT. The branch is not yet merged."
+msgstr ""
+
+#: staticfiles/js/navbar.js:111
+msgid ""
+"Major: Pong gameplay via CLI. Already implemented AFAIK, as soon as the pong "
+"bugs are fixed, this can be marked done."
+msgstr ""
+
+#: staticfiles/users/js/account.js:95
+#: user_management/static/users/js/account.js:95
+msgid "Your Profile Picture"
+msgstr "Din profilbild"
+
+#: staticfiles/users/js/account.js:107
+#: user_management/static/users/js/account.js:107
+msgid "Profile Info:"
+msgstr "Profilinfomation:"
+
+#: staticfiles/users/js/account.js:110 staticfiles/users/js/login.js:58
+#: staticfiles/users/js/register.js:14
+#: user_management/static/users/js/account.js:110
+#: user_management/static/users/js/login.js:58
+#: user_management/static/users/js/register.js:14
+msgid "Username:"
+msgstr "Användarnamn:"
+
+#: staticfiles/users/js/account.js:115 staticfiles/users/js/register.js:20
+#: user_management/static/users/js/account.js:115
+#: user_management/static/users/js/register.js:20
+msgid "Email:"
+msgstr "E-Post:"
+
+#: staticfiles/users/js/account.js:119
+#: user_management/static/users/js/account.js:119
+msgid "Update Profile Data"
+msgstr "Uppdatera profildata"
+
+#: staticfiles/users/js/account.js:122
+#: user_management/static/users/js/account.js:122
+msgid "Enter your password"
+msgstr "Ange lösenord"
+
+#: staticfiles/users/js/account.js:128
+#: user_management/static/users/js/account.js:128
+msgid "Change Password"
+msgstr "Ändra lösenord"
+
+#: staticfiles/users/js/account.js:131
+#: user_management/static/users/js/account.js:131
+msgid "Current Password"
+msgstr "Aktuellt lösenord"
+
+#: staticfiles/users/js/account.js:133
+#: user_management/static/users/js/account.js:133
+msgid "New Password"
+msgstr "Nytt lösenord"
+
+#: staticfiles/users/js/account.js:135
+#: user_management/static/users/js/account.js:135
+msgid "Repeat New Password"
+msgstr "Upprepa nytt lösenord"
+
+#: staticfiles/users/js/account.js:136
+#: user_management/static/users/js/account.js:136
+msgid "Save"
+msgstr "Spara"
+
+#: staticfiles/users/js/account.js:140
+#: user_management/static/users/js/account.js:140
+msgid "Two-Factor Authentication Required"
+msgstr ""
+
+#: staticfiles/users/js/account.js:141
+#: user_management/static/users/js/account.js:141
+msgid ""
+"Please enter your 2FA code to complete this security-sensitive operation:"
+msgstr ""
+
+#: staticfiles/users/js/account.js:143 staticfiles/users/js/account.js:162
+#: staticfiles/users/js/account.js:176
+#: user_management/static/users/js/account.js:143
+#: user_management/static/users/js/account.js:162
+#: user_management/static/users/js/account.js:176
+msgid "Enter 2FA Code"
+msgstr ""
+
+#: staticfiles/users/js/account.js:145 staticfiles/users/js/login.js:91
+#: staticfiles/users/js/oauth.js:28
+#: user_management/static/users/js/account.js:145
+#: user_management/static/users/js/login.js:91
+#: user_management/static/users/js/oauth.js:28
+msgid "Verify"
+msgstr ""
+
+#: staticfiles/users/js/account.js:152
 #: user_management/static/users/js/account.js:152
 msgid "Two-Factor Authentication (2FA):"
 msgstr ""
 
+#: staticfiles/users/js/account.js:154
 #: user_management/static/users/js/account.js:154
 msgid "Status:"
 msgstr ""
 
+#: staticfiles/users/js/account.js:154 staticfiles/users/js/account.js:329
 #: user_management/static/users/js/account.js:154
 #: user_management/static/users/js/account.js:329
 msgid "Disabled"
 msgstr ""
 
+#: staticfiles/users/js/account.js:156 staticfiles/users/js/account.js:330
 #: user_management/static/users/js/account.js:156
 #: user_management/static/users/js/account.js:330
 msgid "Enable 2FA"
 msgstr ""
 
+#: staticfiles/users/js/account.js:160
 #: user_management/static/users/js/account.js:160
 msgid "Enter your 2FA code to disable:"
 msgstr ""
 
+#: staticfiles/users/js/account.js:164
 #: user_management/static/users/js/account.js:164
 msgid "Confirm Disable"
 msgstr ""
 
+#: staticfiles/users/js/account.js:171
 #: user_management/static/users/js/account.js:171
 msgid "Scan the QR code below with your authenticator app:"
 msgstr ""
 
+#: staticfiles/users/js/account.js:173
 #: user_management/static/users/js/account.js:173
 msgid "Or enter this code manually:"
 msgstr ""
 
+#: staticfiles/users/js/account.js:174
 #: user_management/static/users/js/account.js:174
 msgid "Enter the code from your authenticator app to enable 2FA:"
 msgstr ""
 
+#: staticfiles/users/js/account.js:177
 #: user_management/static/users/js/account.js:177
 msgid "Confirm"
 msgstr ""
 
+#: staticfiles/users/js/account.js:277
 #: user_management/static/users/js/account.js:277
 msgid "Failed to load account details"
 msgstr ""
 
+#: staticfiles/users/js/account.js:326 staticfiles/users/js/account.js:742
 #: user_management/static/users/js/account.js:326
 #: user_management/static/users/js/account.js:742
 msgid "Enabled"
 msgstr ""
 
+#: staticfiles/users/js/account.js:327
 #: user_management/static/users/js/account.js:327
 msgid "Disable 2FA"
 msgstr ""
 
+#: staticfiles/users/js/account.js:359 staticfiles/users/js/login.js:203
 #: user_management/static/users/js/account.js:359
 #: user_management/static/users/js/login.js:203
 msgid "Password is required"
 msgstr "Lösenord krävs"
 
+#: staticfiles/users/js/account.js:419
 #: user_management/static/users/js/account.js:419
 #, fuzzy
 #| msgid "All fields are required."
 msgid "All password fields are required"
 msgstr "Alla fält måste fyllas i."
 
+#: staticfiles/users/js/account.js:424
 #: user_management/static/users/js/account.js:424
 #, fuzzy
 #| msgid "Passwords do not match!"
 msgid "New passwords do not match"
 msgstr "Lösenorden stämmer inte överens!"
 
+#: staticfiles/users/js/account.js:469 staticfiles/users/js/account.js:818
 #: user_management/static/users/js/account.js:469
 #: user_management/static/users/js/account.js:818
 #, fuzzy
@@ -767,6 +1287,9 @@ msgstr "Lösenorden stämmer inte överens!"
 msgid "Failed to change password"
 msgstr "Ändra lösenord"
 
+#: staticfiles/users/js/account.js:484 staticfiles/users/js/account.js:952
+#: staticfiles/users/js/account.js:991 staticfiles/users/js/login.js:269
+#: staticfiles/users/js/oauth.js:157
 #: user_management/static/users/js/account.js:484
 #: user_management/static/users/js/account.js:952
 #: user_management/static/users/js/account.js:991
@@ -775,194 +1298,230 @@ msgstr "Ändra lösenord"
 msgid "Please enter a valid 6-digit code"
 msgstr ""
 
+#: staticfiles/users/js/account.js:489
 #: user_management/static/users/js/account.js:489
 #, fuzzy
 #| msgid "No pending games."
 msgid "No pending password change"
 msgstr "Inga pågående spel."
 
+#: staticfiles/users/js/account.js:531
 #: user_management/static/users/js/account.js:531
 msgid "Failed to verify and update password"
 msgstr ""
 
+#: staticfiles/users/js/account.js:725
 #: user_management/static/users/js/account.js:725
 msgid "Please select an image file"
 msgstr ""
 
+#: staticfiles/users/js/account.js:782
 #: user_management/static/users/js/account.js:782
 msgid "Failed to start 2FA setup"
 msgstr ""
 
+#: staticfiles/users/js/account.js:875
 #: user_management/static/users/js/account.js:875
 #, fuzzy
 #| msgid "No changes detected."
 msgid "No changes detected"
 msgstr "Inga förändringar upptäckta."
 
+#: staticfiles/users/js/account.js:881
 #: user_management/static/users/js/account.js:881
 #, fuzzy
 #| msgid "Password is required to update profile data."
 msgid "Password is required to update profile"
 msgstr "Lösenord krävs för att uppdatera profildata."
 
+#: staticfiles/users/js/account.js:979
 #: user_management/static/users/js/account.js:979
 msgid "Failed to confirm 2FA setup"
 msgstr ""
 
+#: staticfiles/users/js/account.js:1020
 #: user_management/static/users/js/account.js:1020
 msgid "Failed to disable 2FA"
 msgstr ""
 
+#: staticfiles/users/js/login.js:65 staticfiles/users/js/register.js:25
 #: user_management/static/users/js/login.js:65
 #: user_management/static/users/js/register.js:25
 msgid "Password:"
 msgstr "Lösenord:"
 
+#: staticfiles/users/js/login.js:71 staticfiles/users/js/logout.js:22
+#: staticfiles/users/js/register.js:39
 #: user_management/static/users/js/login.js:71
 #: user_management/static/users/js/logout.js:22
 #: user_management/static/users/js/register.js:39
 msgid "Sign In"
 msgstr "Logga in"
 
-#: user_management/static/users/js/login.js:73
+#: staticfiles/users/js/login.js:73 user_management/static/users/js/login.js:73
 msgid "OAuth2 using 42"
 msgstr "OAuth2 med 42"
 
+#: staticfiles/users/js/login.js:77 staticfiles/users/js/logout.js:17
 #: user_management/static/users/js/login.js:77
 #: user_management/static/users/js/logout.js:17
 msgid "Want to create an Account?"
 msgstr "Vill du skapa ett konto?"
 
+#: staticfiles/users/js/login.js:86 staticfiles/users/js/oauth.js:23
 #: user_management/static/users/js/login.js:86
 #: user_management/static/users/js/oauth.js:23
 msgid "Two-Factor Authentication"
 msgstr ""
 
+#: staticfiles/users/js/login.js:87 staticfiles/users/js/oauth.js:24
 #: user_management/static/users/js/login.js:87
 #: user_management/static/users/js/oauth.js:24
 msgid "Please enter your 2FA code:"
 msgstr ""
 
+#: staticfiles/users/js/login.js:89 staticfiles/users/js/oauth.js:26
 #: user_management/static/users/js/login.js:89
 #: user_management/static/users/js/oauth.js:26
 msgid "6-digit code"
 msgstr ""
 
+#: staticfiles/users/js/login.js:174
 #: user_management/static/users/js/login.js:174
 #, fuzzy
 #| msgid "Error loading rooms. Please try again later."
 msgid "Network error. Please try again."
 msgstr "Fel vid laddning av rum. Vänligen försök igen senare."
 
+#: staticfiles/users/js/login.js:196
 #: user_management/static/users/js/login.js:196
 msgid "Username is required"
 msgstr "Användarnamn krävs"
 
+#: staticfiles/users/js/login.js:298 staticfiles/users/js/oauth.js:186
 #: user_management/static/users/js/login.js:298
 #: user_management/static/users/js/oauth.js:186
 msgid "Invalid 2FA code"
 msgstr ""
 
+#: staticfiles/users/js/login.js:307
 #: user_management/static/users/js/login.js:307
 msgid "Verification failed. Please try again."
 msgstr ""
 
+#: staticfiles/users/js/login.js:372
 #: user_management/static/users/js/login.js:372
 msgid "Authentication failed"
 msgstr ""
 
+#: staticfiles/users/js/logout.js:22 staticfiles/users/js/register.js:39
 #: user_management/static/users/js/logout.js:22
 #: user_management/static/users/js/register.js:39
 msgid "Already have an account?"
 msgstr "Har du redan ett konto?"
 
-#: user_management/static/users/js/oauth.js:18
+#: staticfiles/users/js/oauth.js:18 user_management/static/users/js/oauth.js:18
 msgid "42 OAuth Authentication"
 msgstr ""
 
-#: user_management/static/users/js/oauth.js:19
+#: staticfiles/users/js/oauth.js:19 user_management/static/users/js/oauth.js:19
 msgid "Preparing authentication..."
 msgstr ""
 
-#: user_management/static/users/js/oauth.js:51
+#: staticfiles/users/js/oauth.js:51 user_management/static/users/js/oauth.js:51
 msgid "Redirecting to 42's authentication service..."
 msgstr ""
 
-#: user_management/static/users/js/oauth.js:67
+#: staticfiles/users/js/oauth.js:67 user_management/static/users/js/oauth.js:67
 msgid "OAuth initialization failed"
 msgstr ""
 
-#: user_management/static/users/js/oauth.js:73
+#: staticfiles/users/js/oauth.js:73 user_management/static/users/js/oauth.js:73
 msgid "Failed to initialize OAuth:"
 msgstr ""
 
+#: staticfiles/users/js/oauth.js:75 staticfiles/users/js/oauth.js:276
 #: user_management/static/users/js/oauth.js:75
 #: user_management/static/users/js/oauth.js:276
 msgid "Back to Login"
 msgstr "Tillbaka till Logga in"
 
-#: user_management/static/users/js/oauth.js:90
+#: staticfiles/users/js/oauth.js:90 user_management/static/users/js/oauth.js:90
 msgid "Completing Authentication"
 msgstr ""
 
-#: user_management/static/users/js/oauth.js:91
+#: staticfiles/users/js/oauth.js:91 user_management/static/users/js/oauth.js:91
 msgid "Verifying your authentication with 42..."
 msgstr ""
 
+#: staticfiles/users/js/oauth.js:105
 #: user_management/static/users/js/oauth.js:105
 msgid "Missing required OAuth parameters"
 msgstr ""
 
+#: staticfiles/users/js/oauth.js:126
 #: user_management/static/users/js/oauth.js:126
 msgid "OAuth authentication failed"
 msgstr ""
 
+#: staticfiles/users/js/oauth.js:196
 #: user_management/static/users/js/oauth.js:196
 msgid "Verification failed:"
 msgstr ""
 
+#: staticfiles/users/js/oauth.js:250
 #: user_management/static/users/js/oauth.js:250
 msgid "Login successful! Redirecting to dashboard..."
 msgstr ""
 
+#: staticfiles/users/js/oauth.js:273
 #: user_management/static/users/js/oauth.js:273
 #, fuzzy
 #| msgid "OAuth Error"
 msgid "Authentication Error"
 msgstr "OAuth-fel"
 
+#: staticfiles/users/js/register.js:12
 #: user_management/static/users/js/register.js:12
 msgid "Join Today"
 msgstr "Bli medlem på vår webbplats idag"
 
+#: staticfiles/users/js/register.js:30
 #: user_management/static/users/js/register.js:30
 msgid "Confirm Password:"
 msgstr "Bekräfta lösenord:"
 
+#: staticfiles/users/js/register.js:34
 #: user_management/static/users/js/register.js:34
 msgid "Sign Up"
 msgstr "Registrera dig"
 
+#: staticfiles/users/js/register.js:70
 #: user_management/static/users/js/register.js:70
 msgid "Username is required!"
 msgstr "Användarnamn krävs!"
 
+#: staticfiles/users/js/register.js:76
 #: user_management/static/users/js/register.js:76
 msgid "Email is required!"
 msgstr "E-post krävs!"
 
+#: staticfiles/users/js/register.js:80
 #: user_management/static/users/js/register.js:80
 msgid "Invalid email address!"
 msgstr "Ogiltig e-postadress!"
 
+#: staticfiles/users/js/register.js:86
 #: user_management/static/users/js/register.js:86
 msgid "Password is required!"
 msgstr "Lösenord krävs!"
 
+#: staticfiles/users/js/register.js:92
 #: user_management/static/users/js/register.js:92
 msgid "Password confirmation is required!"
 msgstr "Bekräftelse av lösenord krävs!"
 
+#: staticfiles/users/js/register.js:96
 #: user_management/static/users/js/register.js:96
 msgid "Passwords do not match!"
 msgstr "Lösenorden stämmer inte överens!"

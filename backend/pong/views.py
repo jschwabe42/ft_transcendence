@@ -42,7 +42,7 @@ def personal_game_data(request, username):
 	"""
 	try:
 		games = PongGame.objects.filter(
-			Q(player1__username=username) | Q(player2__username=username)
+			(Q(player1__username=username) | Q(player2__username=username)) & Q(pending=False)
 		).order_by('-played_at')[:10]
 
 		data = []
