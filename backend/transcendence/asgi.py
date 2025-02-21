@@ -21,7 +21,6 @@ from django.contrib.staticfiles.handlers import ASGIStaticFilesHandler
 from django.core.asgi import get_asgi_application
 from pong import routing as pong_routing
 from quiz import routing as quiz_routing
-from user_management import routing as user_status_routing
 
 django_application = get_asgi_application()
 
@@ -29,11 +28,7 @@ application = ProtocolTypeRouter(
 	{
 		'http': ASGIStaticFilesHandler(django_application),
 		'websocket': AuthMiddlewareStack(
-			URLRouter(
-				pong_routing.websocket_urlpatterns
-				+ quiz_routing.websocket_urlpatterns
-				+ user_status_routing.websocket_urlpatterns,
-			)
+			URLRouter(pong_routing.websocket_urlpatterns + quiz_routing.websocket_urlpatterns)
 		),
 	}
 )
