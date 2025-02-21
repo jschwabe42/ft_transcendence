@@ -3,7 +3,7 @@ import router from '/static/js/router.js';
 export function loadDashboard() {
 	const dashboardAppContent = document.getElementById('dashboard-app-content');
 	dashboardAppContent.innerHTML = `
-		<button id="refresh-button" class="btn btn-primary">${gettext("Refresh")}</button>
+		<button id="db-refresh-button" class="btn btn-primary">${gettext("Refresh")}</button>
 		<div id="profile-list"></div>
 	`;
 	fetchAndLoadProfiles();
@@ -60,6 +60,6 @@ function fetchAndLoadProfiles() {
 }
 
 function addEventListeners() {
-	const refreshButton = document.getElementById('refresh-button');
+	const refreshButton = document.getElementById('db-refresh-button');
 	refreshButton.addEventListener('click', fetchAndLoadProfiles);
 }
