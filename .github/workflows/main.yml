@@ -32,6 +32,11 @@ jobs:
           echo -n "$POSTGRES_PASS" >> ./secrets/postgres_password
           echo -n "$PGADMIN_PASS" >> ./secrets/pgadmin_password
           echo -n "$OAUTH_PASS" >> ./secrets/oauth_api_secret
+      - name: setup ssl certificates
+        run: |
+          mkdir -p ./secrets/certs
+          echo -n "$SSL_KEY" >> ./secrets/certs/dev.key
+          echo -n "$SSL_CERT" >> ./secrets/certs/dev.crt
         env:
           POSTGRES_PASS: ${{ secrets.POSTGRES_PASS }}
           PGADMIN_PASS: ${{ secrets.PGADMIN_PASS }}
@@ -45,7 +50,7 @@ jobs:
           docker compose up -d
       - name: check settings.py for exceptions
         run: |
-          docker compose exec backend python transcendence/settings.py
+          docker compose exec pongus_magnificus python transcendence/settings.py
   check:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
