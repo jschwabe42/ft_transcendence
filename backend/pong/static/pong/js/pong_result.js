@@ -20,26 +20,26 @@ export function PongResult(params) {
 			}
 			contentElement.classList.add("active");
 			contentElement.innerHTML = `
-			<div class="pong-container">
-			<div class="profile-container" style="text-align: center;">
-				<h1>${model.score1} - ${model.score2}</h1>
-				<p class="profile-date" style="text-align: center;">
-					${new Date(model.played_at).toLocaleDateString()} @ ${new Date(model.played_at).toLocaleTimeString()}
-				</p>
-			</div>
-			<div class="games-container" style="display: flex; justify-content: center;">
-				<div class="player-one" style="display: flex; justify-content: center; padding-right: 100px;">
-					<h3>
-						<p class="index-base-link" id="pong-result-player-one">${model.player1}</p>
-					</h3>
-						</div>
-						<div class="player-two" style="display: flex; justify-content: center; padding-left: 100px;">
-					<h3>
-						<p class="index-base-link" id="pong-result-player-two">${model.player2}</p>
-					</h3>
+			<div class="pong-result-info">
+				<div class="pong-profile-container">
+					<h1>${model.score1} - ${model.score2}</h1>
+					<p class="profile-date">
+						${new Date(model.played_at).toLocaleDateString()} @ ${new Date(model.played_at).toLocaleTimeString()}
+					</p>
+				</div>
+				<div class="games-container">
+					<div class="player-one">
+						<h3>
+							<p class="pong_result_link" id="pong-result-player-one">${model.player1}</p>
+						</h3>
+					</div>
+					<div class="player-two">
+						<h3>
+							<p class="pong_result_link" id="pong-result-player-two">${model.player2}</p>
+						</h3>
+					</div>
 				</div>
 			</div>
-		</div>
 		`;
 			document.getElementById('pong-result-player-one').addEventListener('click', function () {
 				router.navigateTo(`/dashboard/${model.player1}/`);
