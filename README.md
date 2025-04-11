@@ -5,7 +5,7 @@
 	<p>A modern Webapp</p>
 </h2>
 
->## <p align="center"> <sup>A team project created by: [Jonas](https://github.com/Jonstep101010),  [Jan](https://github.com/Jano844),  [Alex](https://github.com/aceauses),  [Moe](https://github.com/mben-has),  and me.</sup>
+>## <p align="center"> <sup>A team project created by: [Jonas](https://github.com/Jonstep101010),  [Jan](https://github.com/Jano844),  [Alex](https://github.com/aceauses),  [Moe](https://github.com/mben-has),  and [Eugen](https://github.com/itseugen).</sup>
 </p>
 
 <p align="center">
